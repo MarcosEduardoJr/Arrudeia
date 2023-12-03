@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Allows us to override night specific attributes in the
+         values-night folder. -->
+    <style name="Theme.Arrudeia.App" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <!-- The final theme we use -->
+    <style name="Theme.Arrudeia" parent="Theme.Arrudeia.App" />
+
+    <style name="Arrudeia.Theme.Splash" parent="Theme.Arrudeia">
+        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
+    </style>
+
+    <style name="Theme.Arrudeia.Splash" parent="Arrudeia.Theme.Splash">
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_arrudeia_logo</item>
+        <item name="windowSplashScreenAnimationDuration">2000</item>
+        <item name="postSplashScreenTheme">@style/Theme.Arrudeia</item>
+    </style>
+
+</resources>

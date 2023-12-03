@@ -1,0 +1,36 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="@dimen/size_12"
+    android:height="@dimen/size_12"
+    android:viewportWidth="80"
+    android:viewportHeight="80">
+    <path
+        android:fillColor="#4D4D4D"
+        android:pathData="M66,12H60.1V16H66C67.1,16 68,17 68,18.3V24H12V18.2C12,16.9 12.9,15.9 14,15.9H20V11.9H14C10.7,11.9 8,14.7 8,18.2V65.6C8,69.1 10.7,71.9 14,71.9H66C69.3,71.9 72,69.1 72,65.6V18.3C72,14.8 69.3,12 66,12ZM66,68H14C12.9,68 12,67 12,65.7V28H68V65.7C68,67 67.1,68 66,68Z" />
+    <path
+        android:fillColor="#4D4D4D"
+        android:pathData="M56.1,8H52.1V20H56.1V8Z" />
+    <path
+        android:fillColor="#4D4D4D"
+        android:pathData="M28,8H24V20H28V8Z" />
+    <path
+        android:fillColor="#4D4D4D"
+        android:pathData="M48,12H32V16H48V12Z" />
+    <path
+        android:fillColor="#4D4D4D"
+        android:pathData="M24,44C26.2091,44 28,42.2091 28,40C28,37.7909 26.2091,36 24,36C21.7909,36 20,37.7909 20,40C20,42.2091 21.7909,44 24,44Z" />
+    <path
+        android:fillColor="#4D4D4D"
+        android:pathData="M56.1,44C58.3091,44 60.1,42.2091 60.1,40C60.1,37.7909 58.3091,36 56.1,36C53.8909,36 52.1,37.7909 52.1,40C52.1,42.2091 53.8909,44 56.1,44Z" />
+    <path
+        android:fillColor="#4D4D4D"
+        android:pathData="M40,44C42.2091,44 44,42.2091 44,40C44,37.7909 42.2091,36 40,36C37.7909,36 36,37.7909 36,40C36,42.2091 37.7909,44 40,44Z" />
+    <path
+        android:fillColor="#4D4D4D"
+        android:pathData="M24,60C26.2091,60 28,58.2091 28,56C28,53.7909 26.2091,52 24,52C21.7909,52 20,53.7909 20,56C20,58.2091 21.7909,60 24,60Z" />
+    <path
+        android:fillColor="#4D4D4D"
+        android:pathData="M56.1,60C58.3091,60 60.1,58.2091 60.1,56C60.1,53.7909 58.3091,52 56.1,52C53.8909,52 52.1,53.7909 52.1,56C52.1,58.2091 53.8909,60 56.1,60Z" />
+    <path
+        android:fillColor="#4D4D4D"
+        android:pathData="M40,60C42.2091,60 44,58.2091 44,56C44,53.7909 42.2091,52 40,52C37.7909,52 36,53.7909 36,56C36,58.2091 37.7909,60 40,60Z" />
+</vector>

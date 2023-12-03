@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string name="onboarding_saved">Saved</string>
+    <string name="onboarding_saved_loading">Loading saved…</string>
+    <string name="onboarding_empty_error">No saved updates</string>
+    <string name="onboarding_empty_description">Updates you save will be stored here\nto read later</string>
+    <string name="onboarding_removed">Bookmark removed</string>
+    <string name="onboarding_undo">UNDO</string>
+    <string name="start">Começar</string>
+    <string name="title_sign">Entrar</string>
+     <string name="sign_description_tired_job"><![CDATA[Ta com a semana cansativa no trabalho? <a href="link_1">Arrudeia</a> e divirta-se pois você merece!]]></string>
+    <string name="please_sign_in_to_continue_our_app">Por favor, faça login para continuar usando nosso aplicativo.</string>
+</resources>
