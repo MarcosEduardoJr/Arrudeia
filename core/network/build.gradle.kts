@@ -35,4 +35,7 @@ dependencies {
     implementation(libs.retrofit.kotlin.serialization)
 
     testImplementation(project(":core:testing"))
+    implementation(libs.converter.gson)
+    implementation(libs.material)
+    //implementation(libs.moshi)
 }

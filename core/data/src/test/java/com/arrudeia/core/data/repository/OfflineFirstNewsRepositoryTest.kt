@@ -6,7 +6,7 @@ import com.arrudeia.core.data.model.topicCrossReferences
 import com.arrudeia.core.data.model.topicEntityShells
 import com.arrudeia.core.data.testdoubles.CollectionType
 import com.arrudeia.core.data.testdoubles.TestNewsResourceDao
-import com.arrudeia.core.data.testdoubles.TestNiaNetworkDataSource
+import com.arrudeia.core.data.testdoubles.TestRetrofitNetworkDataSource
 import com.arrudeia.core.data.testdoubles.TestTopicDao
 import com.arrudeia.core.data.testdoubles.filteredInterestsIds
 import com.arrudeia.core.data.testdoubles.nonPresentInterestsIds
@@ -45,7 +45,7 @@ class OfflineFirstNewsRepositoryTest {
 
     private lateinit var topicDao: TestTopicDao
 
-    private lateinit var network: TestNiaNetworkDataSource
+    private lateinit var network: TestRetrofitNetworkDataSource
 
     private lateinit var notifier: TestNotifier
 
@@ -61,7 +61,7 @@ class OfflineFirstNewsRepositoryTest {
         )
         newsResourceDao = TestNewsResourceDao()
         topicDao = TestTopicDao()
-        network = TestNiaNetworkDataSource()
+        network = TestRetrofitNetworkDataSource()
         notifier = TestNotifier()
         synchronizer = TestSynchronizer(
             niaPreferencesDataSource,

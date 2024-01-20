@@ -3,7 +3,7 @@ package com.arrudeia.core.data.repository
 import com.arrudeia.core.data.Synchronizer
 import com.arrudeia.core.data.model.asEntity
 import com.arrudeia.core.data.testdoubles.CollectionType
-import com.arrudeia.core.data.testdoubles.TestNiaNetworkDataSource
+import com.arrudeia.core.data.testdoubles.TestRetrofitNetworkDataSource
 import com.arrudeia.core.data.testdoubles.TestTopicDao
 import com.arrudeia.core.database.dao.TopicDao
 import com.arrudeia.core.database.model.TopicEntity
@@ -30,7 +30,7 @@ class OfflineFirstTopicsRepositoryTest {
 
     private lateinit var topicDao: TopicDao
 
-    private lateinit var network: TestNiaNetworkDataSource
+    private lateinit var network: TestRetrofitNetworkDataSource
 
     private lateinit var niaPreferences: ArrudeiaPreferencesDataSource
 
@@ -42,7 +42,7 @@ class OfflineFirstTopicsRepositoryTest {
     @Before
     fun setup() {
         topicDao = TestTopicDao()
-        network = TestNiaNetworkDataSource()
+        network = TestRetrofitNetworkDataSource()
         niaPreferences = ArrudeiaPreferencesDataSource(
             tmpFolder.testUserPreferencesDataStore(testScope),
         )

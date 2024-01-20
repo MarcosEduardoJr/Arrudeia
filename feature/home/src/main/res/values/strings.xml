@@ -18,4 +18,7 @@
     <string name="destiny">Destino</string>
     <string name="arrudeia_tv">Arrudeia TV</string>
     <string name="recife_pe">Recife, PE</string>
+
+    <string name="erro_message_list_travels">Estamos em manutenção, tente novamente mais tarde.</string>
+    <string name="loading">Carregando</string>
 </resources>

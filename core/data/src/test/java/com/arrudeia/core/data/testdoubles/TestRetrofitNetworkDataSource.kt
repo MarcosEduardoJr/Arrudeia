@@ -1,7 +1,7 @@
 package com.arrudeia.core.data.testdoubles
 
-import com.arrudeia.core.network.NiaNetworkDataSource
-import com.arrudeia.core.network.fake.FakeNiaNetworkDataSource
+import com.arrudeia.core.network.RetrofitNetworkDataSource
+import com.arrudeia.core.network.fake.FakeRetrofitNetworkDataSource
 import com.arrudeia.core.network.model.NetworkChangeList
 import com.arrudeia.core.network.model.NetworkNewsResource
 import com.arrudeia.core.network.model.NetworkTopic
@@ -15,11 +15,11 @@ enum class CollectionType {
 }
 
 /**
- * Test double for [NiaNetworkDataSource]
+ * Test double for [RetrofitNetworkDataSource]
  */
-class TestNiaNetworkDataSource : NiaNetworkDataSource {
+class TestRetrofitNetworkDataSource : RetrofitNetworkDataSource {
 
-    private val source = FakeNiaNetworkDataSource(
+    private val source = FakeRetrofitNetworkDataSource(
         UnconfinedTestDispatcher(),
         Json { ignoreUnknownKeys = true },
     )

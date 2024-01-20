@@ -15,13 +15,13 @@ import kotlin.test.assertEquals
 
 class FakeNiaNetworkDataSourceTest {
 
-    private lateinit var subject: FakeNiaNetworkDataSource
+    private lateinit var subject: FakeRetrofitNetworkDataSource
 
     private val testDispatcher = StandardTestDispatcher()
 
     @Before
     fun setUp() {
-        subject = FakeNiaNetworkDataSource(
+        subject = FakeRetrofitNetworkDataSource(
             ioDispatcher = testDispatcher,
             networkJson = Json { ignoreUnknownKeys = true },
             assets = JvmUnitTestFakeAssetManager,

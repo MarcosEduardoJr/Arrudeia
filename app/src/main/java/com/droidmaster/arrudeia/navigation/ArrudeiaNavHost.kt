@@ -10,6 +10,7 @@ import com.arrudeia.feature.sign.navigation.onboardingScreen
 import com.arrudeia.feature.trip.navigation.tripDetailScreen
 import com.arrudeia.navigation.onboardingRoute
 import com.arrudeia.feature.sign.navigation.signScreen
+import com.arrudeia.navigation.homeRoute
 import java.net.URLEncoder
 
 /**
@@ -24,7 +25,7 @@ fun ArrudeiaNavHost(
     appState: ArrudeiaAppState,
     onShowSnackbar: suspend (String, String?) -> Boolean,
     modifier: Modifier = Modifier,
-    startDestination: String = onboardingRoute,
+    startDestination: String = homeRoute,
 ) {
     val navController = appState.navController
     NavHost(

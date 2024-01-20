@@ -1,0 +1,19 @@
+package com.arrudeia.core.model.data
+
+/**
+ * External data layer representation of a NiA Topic
+ */
+data class HomeTravel(
+    val id: Long,
+    val name: String = "",
+    val city: String = "",
+    val state: String = "",
+    val day: Int = 0,
+    val month: Int = 0,
+    val year: Int = 0,
+    val price: Float = 0.0f,
+    val discount: Int = 0,
+    val cover_image_url: String = "",
+    val whatsapp: Int = 0,
+
+    )

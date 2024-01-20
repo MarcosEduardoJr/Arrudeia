@@ -1,5 +1,8 @@
 package com.arrudeia.feature.home
 
+
+import android.graphics.drawable.ColorDrawable
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -25,18 +28,24 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ChipColors
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.SuggestionChip
+import androidx.compose.material3.SuggestionChipDefaults.suggestionChipBorder
+import androidx.compose.material3.SuggestionChipDefaults.suggestionChipColors
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -46,28 +55,28 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-
-import com.arrudeia.core.designsystem.R.color.colorPrimary
-
-import com.arrudeia.core.designsystem.R.drawable.ic_notification_on
-import com.arrudeia.core.designsystem.R.drawable.ic_calendar
-import com.arrudeia.core.designsystem.R.drawable.ic_bus_dessert
-import com.arrudeia.core.designsystem.R.drawable.ic_bg_beach
-import com.arrudeia.core.designsystem.R.drawable.ic_preview_profile_image
-import com.arrudeia.core.designsystem.R.drawable.ic_arrow_down
-import com.arrudeia.core.designsystem.R.drawable.ic_pin
-import com.arrudeia.core.designsystem.R.drawable.ic_search
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.arrudeia.core.designsystem.R.color.background_grey_F7F7F9
-
-
+import com.arrudeia.core.designsystem.R.color.colorPrimary
+import com.arrudeia.core.designsystem.R.drawable.ic_arrow_down
+import com.arrudeia.core.designsystem.R.drawable.ic_bg_beach
+import com.arrudeia.core.designsystem.R.drawable.ic_calendar
+import com.arrudeia.core.designsystem.R.drawable.ic_notification_on
+import com.arrudeia.core.designsystem.R.drawable.ic_pin
+import com.arrudeia.core.designsystem.R.drawable.ic_preview_profile_image
+import com.arrudeia.core.designsystem.R.drawable.ic_search
+import com.arrudeia.core.designsystem.component.NiaLoadingWheel
 import com.arrudeia.feature.home.R.string.arrudeia_tv
-import com.arrudeia.feature.home.R.string.near_to_you
 import com.arrudeia.feature.home.R.string.destiny
-
-import androidx.compose.material3.SuggestionChip
-import androidx.compose.material3.contentColorFor
-import androidx.compose.material3.SuggestionChipDefaults.suggestionChipColors
+import com.arrudeia.feature.home.R.string.near_to_you
+import com.arrudeia.feature.home.model.ArrudeiaTvUIModel
+import com.arrudeia.feature.home.model.TravelUIModel
 import com.arrudeia.navigation.tripDetailRoute
+import com.arrudeia.util.toCurrencyReal
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
+import com.bumptech.glide.integration.compose.placeholder
+
 
 private const val LINK_1 = "link_1"
 private const val LINK_2 = "link_2"
@@ -81,13 +90,15 @@ internal fun SignRoute(
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
-    ListItemView(onRouteClick)
+
+
+    ListItemView(onRouteClick, viewModel)
 }
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ListItemView(onRouteClick: (String) -> Unit) {
+fun ListItemView(onRouteClick: (String) -> Unit, viewModel: HomeViewModel = hiltViewModel()) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -135,13 +146,47 @@ fun ListItemView(onRouteClick: (String) -> Unit) {
                         .align(Alignment.CenterHorizontally)
                         .verticalScroll(rememberScrollState())
                 ) {
-                    val list = (0..10)
-                    LazyRow(modifier = Modifier.fillMaxHeight()) {
-                        items(items = list.toList(), itemContent = {
-                            Spacer(modifier = Modifier.size(8.dp))
-                            arrudeiaTvItem(Modifier.align(Alignment.Center))
-                        })
+
+                    val arrTvUiState by viewModel.arrTvSharedFlow.collectAsStateWithLifecycle()
+                    viewModel.fetchDataArrTv()
+                    when (arrTvUiState) {
+                        is ArrudeiaTvUiState.Loading -> {
+                            NiaLoadingWheel(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(50.dp),
+                                contentDesc = stringResource(id = R.string.loading),
+                            )
+                        }
+
+                        is ArrudeiaTvUiState.Error -> {
+                            Text(
+                                text = stringResource((arrTvUiState as ArrudeiaTvUiState.Error).message),
+                                modifier = Modifier.padding(4.dp)
+                            )
+                        }
+
+                        is ArrudeiaTvUiState.Success -> {
+
+                            val list = (arrTvUiState as ArrudeiaTvUiState.Success).list
+                            LazyRow(modifier = Modifier.fillMaxHeight()) {
+                                items(items = list.toList(), itemContent = {
+                                    Spacer(modifier = Modifier.size(8.dp))
+                                    arrudeiaTvItem(Modifier.align(Alignment.Center), it)
+                                })
+                            }
+                        }
+
+                        else -> {
+                            Toast.makeText(
+                                LocalContext.current,
+                                arrTvUiState.toString(),
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                        }
                     }
+
                 }
 
                 Spacer(modifier = Modifier.size(20.dp))
@@ -154,15 +199,45 @@ fun ListItemView(onRouteClick: (String) -> Unit) {
                     textAlign = TextAlign.Start
                 )
 
-                val list = (0..10)
-                LazyColumn() {
-                    items(items = list.toList(), itemContent = {
-                        Spacer(modifier = Modifier.size(8.dp))
-                        travelItem(onRouteClick)
-                        if (it == 10)
-                            Spacer(modifier = Modifier.size(20.dp))
-                    })
+                val uiState by viewModel.travelSharedFlow.collectAsStateWithLifecycle()
+                viewModel.fetchDataTravels()
+                when (uiState) {
+                    is TravelUiState.Loading -> {
+                        NiaLoadingWheel(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(50.dp)
+                                .align(
+                                    CenterHorizontally
+                                ),
+                            contentDesc = stringResource(id = R.string.loading),
+                        )
+                    }
+
+                    is TravelUiState.Error -> {
+                        Text(
+                            text = stringResource((uiState as TravelUiState.Error).message),
+                            modifier = Modifier.padding(4.dp)
+                        )
+                    }
+
+                    is TravelUiState.Success -> {
+                        val list = (uiState as TravelUiState.Success).list
+                        LazyColumn() {
+                            items(items = list.toList(), itemContent = {
+                                Spacer(modifier = Modifier.size(8.dp))
+                                travelItem(onRouteClick, it)
+                            })
+                        }
+                        Spacer(modifier = Modifier.height(40.dp))
+                    }
+
+                    else -> {
+                        Toast.makeText(LocalContext.current, uiState.toString(), Toast.LENGTH_SHORT)
+                            .show()
+                    }
                 }
+
 
             }
         }
@@ -268,8 +343,9 @@ fun avatar(modifier: Modifier) {
     }
 }
 
+@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun arrudeiaTvItem(modifier: Modifier) {
+fun arrudeiaTvItem(modifier: Modifier, item: ArrudeiaTvUIModel) {
     Card(
         modifier = modifier,
         shape = RoundedCornerShape(percent = 50),
@@ -284,10 +360,11 @@ fun arrudeiaTvItem(modifier: Modifier) {
                 .background(color = colorResource(id = colorPrimary))
                 .fillMaxSize()
         ) {
-            Image(
-                painter = painterResource(ic_bg_beach),
+            GlideImage(
+                loading = placeholder(ColorDrawable(colorResource(id = background_grey_F7F7F9).toArgb())),
+                model = item.imageUrl,
                 contentDescription = null,
-                contentScale = ContentScale.Crop,            // crop the image if it's not a square
+                contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .size(60.dp)
                     .clip(CircleShape)
@@ -296,8 +373,9 @@ fun arrudeiaTvItem(modifier: Modifier) {
     }
 }
 
+@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun travelItem(onRouteClick: (String) -> Unit) {
+fun travelItem(onRouteClick: (String) -> Unit, item: TravelUIModel) {
 
     Column() {
         Card(
@@ -314,8 +392,9 @@ fun travelItem(onRouteClick: (String) -> Unit) {
                 Card(
                     shape = RoundedCornerShape(12.dp)
                 ) {
-                    Image(
-                        painter = painterResource(ic_bus_dessert),
+                    GlideImage(
+                        loading = placeholder(ColorDrawable(colorResource(id = background_grey_F7F7F9).toArgb())),
+                        model = item.cover_image_url,
                         contentDescription = null,
                         modifier = Modifier.size(80.dp),
                         contentScale = ContentScale.Crop,
@@ -329,7 +408,7 @@ fun travelItem(onRouteClick: (String) -> Unit) {
                     verticalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        text = "Praia de Pipa",
+                        text = item.name,
                         fontWeight = FontWeight.Bold,
                         fontSize = 14.sp,
                         color = Color.Black
@@ -342,7 +421,7 @@ fun travelItem(onRouteClick: (String) -> Unit) {
                             modifier = Modifier.padding(end = 2.dp)
                         )
                         Text(
-                            text = "Tibau do sul, RN",
+                            text = item.shortLocation(),
                             fontSize = 12.sp,
                             color = Color.Gray
                         )
@@ -355,7 +434,7 @@ fun travelItem(onRouteClick: (String) -> Unit) {
                             modifier = Modifier.padding(end = 2.dp)
                         )
                         Text(
-                            text = "20 Jun",
+                            text = item.date(),
                             fontSize = 12.sp,
                             color = Color.Gray
                         )
@@ -367,9 +446,10 @@ fun travelItem(onRouteClick: (String) -> Unit) {
                         .height(18.dp)
                         .align(Alignment.Top),
                     colors = suggestionChipColors(containerColor = colorResource(id = colorPrimary)),
-                    onClick = { /* Do something! */ },
+                    border = suggestionChipBorder(borderColor = Color.Transparent),
+                    onClick = { },
                     label = {
-                        Text("R\$123", fontSize = 11.sp, color = Color.White)
+                        Text(item.price.toCurrencyReal(), fontSize = 11.sp, color = Color.White)
                     }
                 )
             }
@@ -380,7 +460,7 @@ fun travelItem(onRouteClick: (String) -> Unit) {
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun PreviewMyList() {
-    ListItemView {}
+    ListItemView({})
 }
 
 @Composable
@@ -392,9 +472,9 @@ fun notification(modifier: Modifier) {
     ) {
         Column(
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
+            horizontalAlignment = CenterHorizontally,
             modifier = Modifier
-                .align(Alignment.CenterHorizontally)
+                .align(CenterHorizontally)
                 .background(color = Color.White)
                 .fillMaxSize()
         ) {
@@ -404,7 +484,7 @@ fun notification(modifier: Modifier) {
                 modifier = Modifier
                     .size(24.dp)
                     .background(Color.White)
-                    .align(Alignment.CenterHorizontally)
+                    .align(CenterHorizontally)
             )
         }
     }

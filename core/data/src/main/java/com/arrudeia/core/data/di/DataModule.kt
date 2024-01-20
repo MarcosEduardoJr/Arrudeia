@@ -1,5 +1,6 @@
 package com.arrudeia.core.data.di
 
+import com.arrudeia.core.data.repository.DefaultHomeTravelsRepository
 import com.arrudeia.core.data.repository.DefaultRecentSearchRepository
 import com.arrudeia.core.data.repository.DefaultSearchContentsRepository
 import com.arrudeia.core.data.repository.OfflineFirstUserDataRepository
@@ -37,4 +38,5 @@ interface DataModule {
     fun bindsNetworkMonitor(
         networkMonitor: ConnectivityManagerNetworkMonitor,
     ): NetworkMonitor
+
 }
