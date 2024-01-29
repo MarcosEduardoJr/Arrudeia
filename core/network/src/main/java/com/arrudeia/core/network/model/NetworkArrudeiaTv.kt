@@ -9,6 +9,8 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class NetworkArrudeiaTv(
+    @SerializedName("id")
+    val id: Int = 0,
     @SerializedName("image_url")
     val imageUrl: String = "",
 )

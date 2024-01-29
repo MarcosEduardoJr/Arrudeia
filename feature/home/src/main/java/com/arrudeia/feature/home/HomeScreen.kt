@@ -38,6 +38,9 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -51,7 +54,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -59,7 +61,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.arrudeia.core.designsystem.R.color.background_grey_F7F7F9
 import com.arrudeia.core.designsystem.R.color.colorPrimary
 import com.arrudeia.core.designsystem.R.drawable.ic_arrow_down
-import com.arrudeia.core.designsystem.R.drawable.ic_bg_beach
 import com.arrudeia.core.designsystem.R.drawable.ic_calendar
 import com.arrudeia.core.designsystem.R.drawable.ic_notification_on
 import com.arrudeia.core.designsystem.R.drawable.ic_pin
@@ -76,6 +77,7 @@ import com.arrudeia.util.toCurrencyReal
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
+import java.util.Locale
 
 
 private const val LINK_1 = "link_1"
@@ -86,19 +88,24 @@ private const val SPACING_FIX = 3f
 @Composable
 internal fun SignRoute(
     onRouteClick: (String) -> Unit,
-    onShowSnackbar: suspend (String, String?) -> Boolean,
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel(),
+    onStoriesClick: (String) -> Unit,
 ) {
 
 
-    ListItemView(onRouteClick, viewModel)
+    ListItemView(onRouteClick, viewModel, onStoriesClick)
 }
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ListItemView(onRouteClick: (String) -> Unit, viewModel: HomeViewModel = hiltViewModel()) {
+fun ListItemView(
+    onRouteClick: (String) -> Unit,
+    viewModel: HomeViewModel = hiltViewModel(),
+    onStoriesClick: (String) -> Unit
+) {
+    var searchTravel by rememberSaveable { mutableStateOf("") }
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -127,7 +134,9 @@ fun ListItemView(onRouteClick: (String) -> Unit, viewModel: HomeViewModel = hilt
                     modifier = Modifier
                         .fillMaxWidth()
                         .wrapContentHeight(Alignment.CenterVertically)
-                        .clip(CircleShape)
+                        .clip(CircleShape),
+                    searchTravel,
+                    onSearchTravelChange = { searchTravel = it }
                 )
 
                 Spacer(modifier = Modifier.size(30.dp))
@@ -172,7 +181,11 @@ fun ListItemView(onRouteClick: (String) -> Unit, viewModel: HomeViewModel = hilt
                             LazyRow(modifier = Modifier.fillMaxHeight()) {
                                 items(items = list.toList(), itemContent = {
                                     Spacer(modifier = Modifier.size(8.dp))
-                                    arrudeiaTvItem(Modifier.align(Alignment.Center), it)
+                                    arrudeiaTvItem(
+                                        Modifier
+                                            .align(Alignment.Center)
+                                            .clickable { onStoriesClick(it.id.toString()) }, it
+                                    )
                                 })
                             }
                         }
@@ -222,7 +235,8 @@ fun ListItemView(onRouteClick: (String) -> Unit, viewModel: HomeViewModel = hilt
                     }
 
                     is TravelUiState.Success -> {
-                        val list = (uiState as TravelUiState.Success).list
+                        var list = (uiState as TravelUiState.Success).list
+                        list = filterSearchList(searchTravel, list)
                         LazyColumn() {
                             items(items = list.toList(), itemContent = {
                                 Spacer(modifier = Modifier.size(8.dp))
@@ -244,13 +258,21 @@ fun ListItemView(onRouteClick: (String) -> Unit, viewModel: HomeViewModel = hilt
     }
 }
 
+fun filterSearchList(searchTravel: String, list: List<TravelUIModel>): List<TravelUIModel> {
+    return list.filter {
+        it.name.lowercase(Locale.getDefault()).contains(searchTravel.lowercase(Locale.getDefault()))
+                || it.city.lowercase(Locale.getDefault())
+            .contains(searchTravel.lowercase(Locale.getDefault()))
+    }
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun search(modifier: Modifier) {
+fun search(modifier: Modifier, searchTravel: String, onSearchTravelChange: (String) -> Unit) {
     TextField(
         modifier = modifier,
-        value = "",
-        onValueChange = {},
+        value = searchTravel,
+        onValueChange = onSearchTravelChange,
         label = { Text(text = stringResource(destiny)) },
         singleLine = true,
         leadingIcon = {
@@ -457,11 +479,6 @@ fun travelItem(onRouteClick: (String) -> Unit, item: TravelUIModel) {
     }
 }
 
-@Preview(showSystemUi = true, showBackground = true)
-@Composable
-fun PreviewMyList() {
-    ListItemView({})
-}
 
 @Composable
 fun notification(modifier: Modifier) {

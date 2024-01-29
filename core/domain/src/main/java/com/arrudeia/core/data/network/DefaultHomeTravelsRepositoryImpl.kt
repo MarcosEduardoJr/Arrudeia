@@ -91,6 +91,7 @@ class DefaultHomeTravelsRepositoryImpl @Inject constructor(
         var resultList = mutableListOf<ArrudeiaTvRepositoryEntity>()
         forEach {
             val item = ArrudeiaTvRepositoryEntity(
+                id = it.id,
                 image_url = it.imageUrl
             )
             resultList.add(item)

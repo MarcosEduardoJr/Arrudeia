@@ -1,5 +1,6 @@
 package com.droidmaster.arrudeia
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -14,6 +15,9 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
+import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -26,6 +30,7 @@ import com.droidmaster.arrudeia.ui.ArrudeiaApp
 import com.arrudeia.core.analytics.AnalyticsHelper
 import com.arrudeia.core.analytics.LocalAnalyticsHelper
 import com.arrudeia.core.data.util.NetworkMonitor
+import com.arrudeia.core.designsystem.R
 import com.arrudeia.core.designsystem.theme.ArrudeiaTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -96,8 +101,8 @@ class MainActivity : ComponentActivity() {
             DisposableEffect(false) {
                 enableEdgeToEdge(
                     statusBarStyle = SystemBarStyle.auto(
-                        android.graphics.Color.TRANSPARENT,
-                        android.graphics.Color.TRANSPARENT,
+                        ContextCompat.getColor(applicationContext, R.color.background_grey_F7F7F9),
+                        ContextCompat.getColor(applicationContext, R.color.background_grey_F7F7F9),
                     ) { false },
                     navigationBarStyle = SystemBarStyle.auto(
                         lightScrim,
@@ -162,6 +167,7 @@ class MainActivity : ComponentActivity() {
                     status.isCompiledWithProfile -> "ProfileInstaller: is compiled with profile"
                     status.hasProfileEnqueuedForCompilation() ->
                         "ProfileInstaller: Enqueued for compilation"
+
                     else -> "Profile not compiled or enqueued"
                 },
             )

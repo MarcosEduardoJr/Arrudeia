@@ -68,6 +68,7 @@ dependencies {
     implementation(project(":feature:sign"))
     implementation(project(":feature:home"))
     implementation(project(":feature:trip"))
+    implementation(project(":feature:stories"))
 
     implementation(libs.androidx.material3)
 

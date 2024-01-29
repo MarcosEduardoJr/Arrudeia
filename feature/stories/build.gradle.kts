@@ -5,18 +5,16 @@ plugins {
 }
 
 android {
-    namespace = "com.arrudeia.feature.home"
+    namespace = "com.arrudeia.feature.stories"
 }
 
 dependencies {
     implementation(libs.androidx.compose.material3.windowSizeClass)
     implementation(project(":core:designsystem"))
+
     implementation(project(":core:common"))
-    implementation(project(":feature:stories"))
     implementation(libs.androidx.compose.material3)
     implementation(libs.glide.compose)
 
     implementation(libs.kotlinx.serialization.json)
 }
-
-

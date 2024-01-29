@@ -11,6 +11,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven ("jitpack.io")
     }
 }
 
@@ -41,6 +42,7 @@ include(":feature:onboarding")
 include(":feature:sign")
 include(":feature:home")
 include(":feature:trip")
+include(":feature:stories")
 include(":lint")
 include(":sync:work")
 include(":sync:sync-test")

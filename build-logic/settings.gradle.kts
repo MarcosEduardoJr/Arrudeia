@@ -2,6 +2,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven ("jitpack.io")
     }
     versionCatalogs {
         create("libs") {

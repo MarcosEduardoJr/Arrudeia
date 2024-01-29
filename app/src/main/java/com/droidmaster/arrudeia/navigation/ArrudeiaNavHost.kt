@@ -4,13 +4,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
-import com.droidmaster.arrudeia.ui.ArrudeiaAppState
 import com.arrudeia.feature.home.navigation.homeScreen
 import com.arrudeia.feature.sign.navigation.onboardingScreen
-import com.arrudeia.feature.trip.navigation.tripDetailScreen
-import com.arrudeia.navigation.onboardingRoute
 import com.arrudeia.feature.sign.navigation.signScreen
+import com.arrudeia.feature.stories.navigation.navigateToStories
+import com.arrudeia.feature.stories.navigation.storiesGraph
+import com.arrudeia.feature.stories.navigation.storiesScreen
+import com.arrudeia.feature.trip.navigation.tripDetailScreen
 import com.arrudeia.navigation.homeRoute
+import com.droidmaster.arrudeia.ui.ArrudeiaAppState
 import java.net.URLEncoder
 
 /**
@@ -43,11 +45,19 @@ fun ArrudeiaNavHost(
         )
         homeScreen(
             onRouteClick = navController::navigateToRoute,
-            onShowSnackbar = onShowSnackbar,
+            onStoriesClick = navController::navigateToStories
         )
         tripDetailScreen(
             onRouteClick = navController::navigateToRoute,
             onShowSnackbar = onShowSnackbar,
+        )
+        storiesGraph(
+            onStoriesClick = navController::navigateToStories,
+            nestedGraphs = {
+                storiesScreen(
+                    onStoriesClick = navController::navigateToStories
+                )
+            }
         )
     }
 }
