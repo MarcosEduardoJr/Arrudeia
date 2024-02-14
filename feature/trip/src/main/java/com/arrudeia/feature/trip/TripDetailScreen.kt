@@ -43,8 +43,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.arrudeia.core.designsystem.R.color.background_grey_F7F7F9
 import com.arrudeia.core.designsystem.R.color.colorPrimary
-import com.arrudeia.core.designsystem.component.NiaButtonColor
-import com.arrudeia.core.designsystem.component.NiaLoadingWheel
+import com.arrudeia.core.designsystem.component.ArrudeiaButtonColor
+import com.arrudeia.core.designsystem.component.ArrudeiaLoadingWheel
 import com.arrudeia.core.designsystem.theme.ArrudeiaTheme
 import com.arrudeia.feature.trip.R.drawable.ic_bg_onboarding
 import com.arrudeia.feature.trip.R.string.description
@@ -77,7 +77,7 @@ internal fun TripDetailRoute(
 
     when (arrTvUiState) {
         is Loading -> {
-            NiaLoadingWheel(
+            ArrudeiaLoadingWheel(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp),
@@ -222,7 +222,7 @@ internal fun TripDetail(item: TripUIModel?) {
                                         textAlign = TextAlign.Start
                                     )
                                 }
-                                NiaButtonColor(
+                                ArrudeiaButtonColor(
                                     onClick = {
                                         context.startActivity(intent)
                                     },

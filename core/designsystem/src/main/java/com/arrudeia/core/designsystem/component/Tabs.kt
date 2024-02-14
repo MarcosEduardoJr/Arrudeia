@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
  * @param text The text label content.
  */
 @Composable
-fun NiaTab(
+fun ArrudeiaTab(
     selected: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -42,7 +42,7 @@ fun NiaTab(
             ProvideTextStyle(
                 value = style,
                 content = {
-                    Box(modifier = Modifier.padding(top = NiaTabDefaults.TabTopPadding)) {
+                    Box(modifier = Modifier.padding(top = ArrudeiaTabDefaults.TabTopPadding)) {
                         text()
                     }
                 },
@@ -56,11 +56,11 @@ fun NiaTab(
  *
  * @param selectedTabIndex The index of the currently selected tab.
  * @param modifier Modifier to be applied to the tab row.
- * @param tabs The tabs inside this tab row. Typically this will be multiple [NiaTab]s. Each element
+ * @param tabs The tabs inside this tab row. Typically this will be multiple [ArrudeiaTab]s. Each element
  * inside this lambda will be measured and placed evenly across the row, each taking up equal space.
  */
 @Composable
-fun NiaTabRow(
+fun ArrudeiaTabRow(
     selectedTabIndex: Int,
     modifier: Modifier = Modifier,
     tabs: @Composable () -> Unit,
@@ -81,6 +81,6 @@ fun NiaTabRow(
     )
 }
 
-object NiaTabDefaults {
+object ArrudeiaTabDefaults {
     val TabTopPadding = 7.dp
 }

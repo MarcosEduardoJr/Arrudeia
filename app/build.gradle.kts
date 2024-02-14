@@ -12,8 +12,8 @@ plugins {
 android {
     defaultConfig {
         applicationId = "com.droidmaster.arrudeia"
-        versionCode = 20
-        versionName = "1.7.1" // X.Y.Z; X = Major, Y = minor, Z = Patch level
+        versionCode = 21
+        versionName = "1.7.2" // X.Y.Z; X = Major, Y = minor, Z = Patch level
 
         // Custom test runner to set up Hilt dependency graph
         //testInstrumentationRunner = "com.arrudeia.core.testing.ArrudeiaTestRunner"

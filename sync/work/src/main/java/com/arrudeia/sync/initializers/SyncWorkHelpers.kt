@@ -55,7 +55,7 @@ private fun Context.syncWorkNotification(): Notification {
         SYNC_NOTIFICATION_CHANNEL_ID,
     )
         .setSmallIcon(
-            com.arrudeia.core.common.R.drawable.ic_nia_notification,
+            com.arrudeia.core.common.R.drawable.ic_arrudeia_notification,
         )
         .setContentTitle(getString(R.string.sync_notification_title))
         .setPriority(NotificationCompat.PRIORITY_DEFAULT)

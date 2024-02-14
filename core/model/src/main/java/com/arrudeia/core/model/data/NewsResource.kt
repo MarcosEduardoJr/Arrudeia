@@ -3,7 +3,7 @@ package com.arrudeia.core.model.data
 import kotlinx.datetime.Instant
 
 /**
- * External data layer representation of a fully populated NiA news resource
+ * External data layer representation of a fully populated Arrudeia news resource
  */
 data class NewsResource(
     val id: String,

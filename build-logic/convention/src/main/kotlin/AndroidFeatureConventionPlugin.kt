@@ -17,7 +17,7 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
             extensions.configure<LibraryExtension> {
                 defaultConfig {
                     testInstrumentationRunner =
-                        "com.droidmaster.arrudeia.core.testing.NiaTestRunner"
+                        "com.droidmaster.arrudeia.core.testing.ArrudeiaTestRunner"
                 }
                 configureGradleManagedDevices(this)
             }

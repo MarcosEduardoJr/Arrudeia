@@ -6,7 +6,7 @@ import androidx.room.Relation
 import com.arrudeia.core.model.data.NewsResource
 
 /**
- * External data layer representation of a fully populated NiA news resource
+ * External data layer representation of a fully populated Arrudeia news resource
  */
 data class PopulatedNewsResource(
     @Embedded

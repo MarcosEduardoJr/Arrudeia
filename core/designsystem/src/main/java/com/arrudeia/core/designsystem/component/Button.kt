@@ -34,7 +34,7 @@ import com.arrudeia.core.designsystem.R
  * @param content The button content.
  */
 @Composable
-fun NiaButtonColor(
+fun ArrudeiaButtonColor(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     colorButton: Color,
@@ -55,7 +55,7 @@ fun NiaButtonColor(
 }
 
 @Composable
-fun NiaButton(
+fun ArrudeiaButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
@@ -85,14 +85,14 @@ fun NiaButton(
  * @param leadingIcon The button leading icon content. Pass `null` here for no leading icon.
  */
 @Composable
-fun NiaButton(
+fun ArrudeiaButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     text: @Composable () -> Unit,
     leadingIcon: @Composable (() -> Unit)? = null,
 ) {
-    NiaButton(
+    ArrudeiaButton(
         onClick = onClick,
         modifier = modifier,
         enabled = enabled,
@@ -102,7 +102,7 @@ fun NiaButton(
             ButtonDefaults.ContentPadding
         },
     ) {
-        NiaButtonContent(
+        ArrudeiaButtonContent(
             text = text,
             leadingIcon = leadingIcon,
         )
@@ -121,7 +121,7 @@ fun NiaButton(
  * @param content The button content.
  */
 @Composable
-fun NiaOutlinedButton(
+fun ArrudeiaOutlinedButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
@@ -136,12 +136,12 @@ fun NiaOutlinedButton(
             contentColor = MaterialTheme.colorScheme.onBackground,
         ),
         border = BorderStroke(
-            width = NiaButtonDefaults.OutlinedButtonBorderWidth,
+            width = ArrudeiaButtonDefaults.OutlinedButtonBorderWidth,
             color = if (enabled) {
                 MaterialTheme.colorScheme.outline
             } else {
                 MaterialTheme.colorScheme.onSurface.copy(
-                    alpha = NiaButtonDefaults.DisabledOutlinedButtonBorderAlpha,
+                    alpha = ArrudeiaButtonDefaults.DisabledOutlinedButtonBorderAlpha,
                 )
             },
         ),
@@ -161,14 +161,14 @@ fun NiaOutlinedButton(
  * @param leadingIcon The button leading icon content. Pass `null` here for no leading icon.
  */
 @Composable
-fun NiaOutlinedButton(
+fun ArrudeiaOutlinedButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     text: @Composable () -> Unit,
     leadingIcon: @Composable (() -> Unit)? = null,
 ) {
-    NiaOutlinedButton(
+    ArrudeiaOutlinedButton(
         onClick = onClick,
         modifier = modifier,
         enabled = enabled,
@@ -178,7 +178,7 @@ fun NiaOutlinedButton(
             ButtonDefaults.ContentPadding
         },
     ) {
-        NiaButtonContent(
+        ArrudeiaButtonContent(
             text = text,
             leadingIcon = leadingIcon,
         )
@@ -195,7 +195,7 @@ fun NiaOutlinedButton(
  * @param content The button content.
  */
 @Composable
-fun NiaTextButton(
+fun ArrudeiaTextButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
@@ -223,19 +223,19 @@ fun NiaTextButton(
  * @param leadingIcon The button leading icon content. Pass `null` here for no leading icon.
  */
 @Composable
-fun NiaTextButton(
+fun ArrudeiaTextButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     text: @Composable () -> Unit,
     leadingIcon: @Composable (() -> Unit)? = null,
 ) {
-    NiaTextButton(
+    ArrudeiaTextButton(
         onClick = onClick,
         modifier = modifier,
         enabled = enabled,
     ) {
-        NiaButtonContent(
+        ArrudeiaButtonContent(
             text = text,
             leadingIcon = leadingIcon,
         )
@@ -249,7 +249,7 @@ fun NiaTextButton(
  * @param leadingIcon The button leading icon content. Default is `null` for no leading icon.Ï
  */
 @Composable
-private fun NiaButtonContent(
+private fun ArrudeiaButtonContent(
     text: @Composable () -> Unit,
     leadingIcon: @Composable (() -> Unit)? = null,
 ) {
@@ -275,7 +275,7 @@ private fun NiaButtonContent(
 /**
  *  button default values.
  */
-object NiaButtonDefaults {
+object ArrudeiaButtonDefaults {
     // TODO: File bug
     // OutlinedButton border color doesn't respect disabled state by default
     const val DisabledOutlinedButtonBorderAlpha = 0.12f

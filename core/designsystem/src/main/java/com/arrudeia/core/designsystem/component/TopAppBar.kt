@@ -53,7 +53,7 @@ fun ArrudeiaTopAppBar(
             }
         },
         colors = colors,
-        modifier = modifier.testTag("niaTopAppBar"),
+        modifier = modifier.testTag("ArrudeiaTopAppBar"),
     )
 }
 
@@ -82,7 +82,7 @@ fun ArrudeiaTopAppBar(
             }
         },
         colors = colors,
-        modifier = modifier.testTag("niaTopAppBar"),
+        modifier = modifier.testTag("ArrudeiaTopAppBar"),
     )
 }
 

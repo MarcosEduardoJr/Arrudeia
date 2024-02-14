@@ -38,7 +38,7 @@ import com.arrudeia.feature.stories.R.drawable.ic_bg_onboarding
 import com.arrudeia.feature.stories.stories.Stories
 
 import com.arrudeia.core.designsystem.R.color.colorWhite
-import com.arrudeia.core.designsystem.component.NiaLoadingWheel
+import com.arrudeia.core.designsystem.component.ArrudeiaLoadingWheel
 import com.arrudeia.feature.stories.StoriesViewModel.StoriesUiState
 import com.arrudeia.feature.stories.model.StoriesUIModel
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
@@ -60,7 +60,7 @@ fun StoriesRoute(
     viewModel.fetchStories()
     when (uiState) {
         is StoriesUiState.Loading -> {
-            NiaLoadingWheel(
+            ArrudeiaLoadingWheel(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp),

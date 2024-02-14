@@ -25,7 +25,7 @@ import com.arrudeia.core.designsystem.icon.ArrudeiaIcons
  */
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-fun NiaFilterChip(
+fun ArrudeiaFilterChip(
     selected: Boolean,
     onSelectedChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
@@ -57,28 +57,28 @@ fun NiaFilterChip(
             borderColor = MaterialTheme.colorScheme.onBackground,
             selectedBorderColor = MaterialTheme.colorScheme.onBackground,
             disabledBorderColor = MaterialTheme.colorScheme.onBackground.copy(
-                alpha = NiaChipDefaults.DisabledChipContentAlpha,
+                alpha = ArrudeiaChipDefaults.DisabledChipContentAlpha,
             ),
             disabledSelectedBorderColor = MaterialTheme.colorScheme.onBackground.copy(
-                alpha = NiaChipDefaults.DisabledChipContentAlpha,
+                alpha = ArrudeiaChipDefaults.DisabledChipContentAlpha,
             ),
-            selectedBorderWidth = NiaChipDefaults.ChipBorderWidth,
+            selectedBorderWidth = ArrudeiaChipDefaults.ChipBorderWidth,
         ),
         colors = FilterChipDefaults.filterChipColors(
             labelColor = MaterialTheme.colorScheme.onBackground,
             iconColor = MaterialTheme.colorScheme.onBackground,
             disabledContainerColor = if (selected) {
                 MaterialTheme.colorScheme.onBackground.copy(
-                    alpha = NiaChipDefaults.DisabledChipContainerAlpha,
+                    alpha = ArrudeiaChipDefaults.DisabledChipContainerAlpha,
                 )
             } else {
                 Color.Transparent
             },
             disabledLabelColor = MaterialTheme.colorScheme.onBackground.copy(
-                alpha = NiaChipDefaults.DisabledChipContentAlpha,
+                alpha = ArrudeiaChipDefaults.DisabledChipContentAlpha,
             ),
             disabledLeadingIconColor = MaterialTheme.colorScheme.onBackground.copy(
-                alpha = NiaChipDefaults.DisabledChipContentAlpha,
+                alpha = ArrudeiaChipDefaults.DisabledChipContentAlpha,
             ),
             selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
             selectedLabelColor = MaterialTheme.colorScheme.onBackground,
@@ -90,7 +90,7 @@ fun NiaFilterChip(
 /**
  *  chip default values.
  */
-object NiaChipDefaults {
+object ArrudeiaChipDefaults {
     // TODO: File bug
     // FilterChip default values aren't exposed via FilterChipDefaults
     const val DisabledChipContainerAlpha = 0.12f

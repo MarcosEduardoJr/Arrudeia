@@ -21,7 +21,7 @@ import androidx.compose.ui.graphics.Color
  * @param checkedIcon The icon content to show when checked.
  */
 @Composable
-fun NiaIconToggleButton(
+fun ArrudeiaIconToggleButton(
     checked: Boolean,
     onCheckedChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
@@ -41,7 +41,7 @@ fun NiaIconToggleButton(
             checkedContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
             disabledContainerColor = if (checked) {
                 MaterialTheme.colorScheme.onBackground.copy(
-                    alpha = NiaIconButtonDefaults.DisabledIconButtonContainerAlpha,
+                    alpha = ArrudeiaIconButtonDefaults.DisabledIconButtonContainerAlpha,
                 )
             } else {
                 Color.Transparent
@@ -55,7 +55,7 @@ fun NiaIconToggleButton(
 /**
  *  icon button default values.
  */
-object NiaIconButtonDefaults {
+object ArrudeiaIconButtonDefaults {
     // TODO: File bug
     // IconToggleButton disabled container alpha not exposed by IconButtonDefaults
     const val DisabledIconButtonContainerAlpha = 0.12f

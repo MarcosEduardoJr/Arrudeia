@@ -7,7 +7,7 @@ import com.arrudeia.core.model.data.NewsResource
 import kotlinx.datetime.Instant
 
 /**
- * Defines an NiA news resource.
+ * Defines an Arrudeia news resource.
  */
 @Entity(
     tableName = "news_resources",

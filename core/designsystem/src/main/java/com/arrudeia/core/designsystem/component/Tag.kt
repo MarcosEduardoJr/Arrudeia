@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-fun NiaTopicTag(
+fun ArrudeiaTopicTag(
     modifier: Modifier = Modifier,
     followed: Boolean,
     onClick: () -> Unit,
@@ -22,7 +22,7 @@ fun NiaTopicTag(
             MaterialTheme.colorScheme.primaryContainer
         } else {
             MaterialTheme.colorScheme.surfaceVariant.copy(
-                alpha = NiaTagDefaults.UnfollowedTopicTagContainerAlpha,
+                alpha = ArrudeiaTagDefaults.UnfollowedTopicTagContainerAlpha,
             )
         }
         TextButton(
@@ -32,7 +32,7 @@ fun NiaTopicTag(
                 containerColor = containerColor,
                 contentColor = contentColorFor(backgroundColor = containerColor),
                 disabledContainerColor = MaterialTheme.colorScheme.onSurface.copy(
-                    alpha = NiaTagDefaults.DisabledTopicTagContainerAlpha,
+                    alpha = ArrudeiaTagDefaults.DisabledTopicTagContainerAlpha,
                 ),
             ),
         ) {
@@ -46,7 +46,7 @@ fun NiaTopicTag(
 /**
  *  tag default values.
  */
-object NiaTagDefaults {
+object ArrudeiaTagDefaults {
     const val UnfollowedTopicTagContainerAlpha = 0.5f
 
     // TODO: File bug

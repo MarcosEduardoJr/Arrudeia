@@ -26,7 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.arrudeia.core.designsystem.R.color.colorPrimary
-import com.arrudeia.core.designsystem.component.NiaButtonColor
+import com.arrudeia.core.designsystem.component.ArrudeiaButtonColor
 import com.arrudeia.core.designsystem.theme.ArrudeiaTheme
 import com.arrudeia.feature.onboarding.R.drawable.ic_bg_onboarding
 import com.arrudeia.feature.onboarding.R.string.onboarding_description_tired_job
@@ -87,7 +87,7 @@ internal fun Onboarding(onTopicClick: (String) -> Unit,) {
                     style = MaterialTheme.typography.headlineMedium
                 )
 
-                NiaButtonColor(
+                ArrudeiaButtonColor(
                     onClick = { onTopicClick(signRoute) },
                     modifier = Modifier
                         .padding(16.dp)

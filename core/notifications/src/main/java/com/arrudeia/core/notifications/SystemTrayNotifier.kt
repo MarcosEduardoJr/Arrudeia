@@ -56,7 +56,7 @@ class SystemTrayNotifier @Inject constructor(
             .map { newsResource ->
                 createNewsNotification {
                     setSmallIcon(
-                        com.arrudeia.core.common.R.drawable.ic_nia_notification,
+                        com.arrudeia.core.common.R.drawable.ic_arrudeia_notification,
                     )
                         .setContentTitle(newsResource.title)
                         .setContentText(newsResource.content)
@@ -73,7 +73,7 @@ class SystemTrayNotifier @Inject constructor(
             setContentTitle(title)
                 .setContentText(title)
                 .setSmallIcon(
-                    com.arrudeia.core.common.R.drawable.ic_nia_notification,
+                    com.arrudeia.core.common.R.drawable.ic_arrudeia_notification,
                 )
                 // Build summary info into InboxStyle template.
                 .setStyle(newsNotificationStyle(truncatedNewsResources, title))

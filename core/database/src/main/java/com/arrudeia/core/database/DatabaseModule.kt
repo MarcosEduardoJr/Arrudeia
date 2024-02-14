@@ -14,11 +14,11 @@ import javax.inject.Singleton
 object DatabaseModule {
     @Provides
     @Singleton
-    fun providesNiaDatabase(
+    fun providesArrudeiaDatabase(
         @ApplicationContext context: Context,
     ): ArrudeiaDatabase = Room.databaseBuilder(
         context,
         ArrudeiaDatabase::class.java,
-        "nia-database",
+        "Arrudeia-database",
     ).build()
 }

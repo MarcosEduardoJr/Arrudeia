@@ -69,7 +69,7 @@ import com.arrudeia.core.designsystem.R.drawable.ic_notification_on
 import com.arrudeia.core.designsystem.R.drawable.ic_pin
 import com.arrudeia.core.designsystem.R.drawable.ic_preview_profile_image
 import com.arrudeia.core.designsystem.R.drawable.ic_search
-import com.arrudeia.core.designsystem.component.NiaLoadingWheel
+import com.arrudeia.core.designsystem.component.ArrudeiaLoadingWheel
 import com.arrudeia.feature.home.R.string.arrudeia_tv
 import com.arrudeia.feature.home.R.string.destiny
 import com.arrudeia.feature.home.R.string.near_to_you
@@ -156,7 +156,7 @@ fun ListItemView(
                     viewModel.fetchDataArrTv()
                     when (arrTvUiState) {
                         is ArrudeiaTvUiState.Loading -> {
-                            NiaLoadingWheel(
+                            ArrudeiaLoadingWheel(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .height(50.dp),
@@ -212,7 +212,7 @@ fun ListItemView(
                 viewModel.fetchDataTravels()
                 when (uiState) {
                     is TravelUiState.Loading -> {
-                        NiaLoadingWheel(
+                        ArrudeiaLoadingWheel(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(50.dp)

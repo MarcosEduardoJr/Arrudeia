@@ -50,11 +50,11 @@ fun RowScope.ArrudeiaNavigationBarItem(
         label = label,
         alwaysShowLabel = alwaysShowLabel,
         colors = NavigationBarItemDefaults.colors(
-            selectedIconColor = NiaNavigationDefaults.navigationSelectedItemColor(),
-            unselectedIconColor = NiaNavigationDefaults.navigationContentColor(),
-            selectedTextColor = NiaNavigationDefaults.navigationSelectedItemColor(),
-            unselectedTextColor = NiaNavigationDefaults.navigationContentColor(),
-            indicatorColor = NiaNavigationDefaults.navigationIndicatorColor(),
+            selectedIconColor = ArrudeiaNavigationDefaults.navigationSelectedItemColor(),
+            unselectedIconColor = ArrudeiaNavigationDefaults.navigationContentColor(),
+            selectedTextColor = ArrudeiaNavigationDefaults.navigationSelectedItemColor(),
+            unselectedTextColor = ArrudeiaNavigationDefaults.navigationContentColor(),
+            indicatorColor = ArrudeiaNavigationDefaults.navigationIndicatorColor(),
         ),
     )
 }
@@ -73,7 +73,7 @@ fun ArrudeiaNavigationBar(
 ) {
     NavigationBar(
         modifier = modifier,
-        contentColor = NiaNavigationDefaults.navigationContentColor(),
+        contentColor = ArrudeiaNavigationDefaults.navigationContentColor(),
         tonalElevation = 0.dp,
         content = content,
     )
@@ -114,11 +114,11 @@ fun ArrudeiaNavigationRailItem(
         label = label,
         alwaysShowLabel = alwaysShowLabel,
         colors = NavigationRailItemDefaults.colors(
-            selectedIconColor = NiaNavigationDefaults.navigationSelectedItemColor(),
-            unselectedIconColor = NiaNavigationDefaults.navigationContentColor(),
-            selectedTextColor = NiaNavigationDefaults.navigationSelectedItemColor(),
-            unselectedTextColor = NiaNavigationDefaults.navigationContentColor(),
-            indicatorColor = NiaNavigationDefaults.navigationIndicatorColor(),
+            selectedIconColor = ArrudeiaNavigationDefaults.navigationSelectedItemColor(),
+            unselectedIconColor = ArrudeiaNavigationDefaults.navigationContentColor(),
+            selectedTextColor = ArrudeiaNavigationDefaults.navigationSelectedItemColor(),
+            unselectedTextColor = ArrudeiaNavigationDefaults.navigationContentColor(),
+            indicatorColor = ArrudeiaNavigationDefaults.navigationIndicatorColor(),
         ),
     )
 }
@@ -140,7 +140,7 @@ fun ArrudeiaNavigationRail(
     NavigationRail(
         modifier = modifier,
         containerColor = Color.Transparent,
-        contentColor = NiaNavigationDefaults.navigationContentColor(),
+        contentColor = ArrudeiaNavigationDefaults.navigationContentColor(),
         header = header,
         content = content,
     )
@@ -149,7 +149,7 @@ fun ArrudeiaNavigationRail(
 /**
  *  navigation default values.
  */
-object NiaNavigationDefaults {
+object ArrudeiaNavigationDefaults {
     @Composable
     fun navigationContentColor() = MaterialTheme.colorScheme.onSurfaceVariant
 

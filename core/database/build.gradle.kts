@@ -8,7 +8,7 @@ plugins {
 android {
     defaultConfig {
         testInstrumentationRunner =
-            "com.arrudeia.core.testing.NiaTestRunner"
+            "com.arrudeia.core.testing.ArrudeiaTestRunner"
     }
     namespace = "com.arrudeia.core.database"
 }

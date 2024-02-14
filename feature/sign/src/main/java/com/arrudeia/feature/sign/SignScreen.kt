@@ -77,7 +77,7 @@ import com.arrudeia.core.designsystem.R.color.colorWhite
 
 import com.arrudeia.core.designsystem.R.color.colorBlack
 import com.arrudeia.core.designsystem.component.DefaultLinkMovementMethod
-import com.arrudeia.core.designsystem.component.NiaButtonColor
+import com.arrudeia.core.designsystem.component.ArrudeiaButtonColor
 import com.arrudeia.core.designsystem.icon.ArrudeiaIcons
 import com.arrudeia.core.designsystem.theme.ArrudeiaTheme
 import com.arrudeia.feature.sign.R.drawable.ic_bg_onboarding
@@ -303,7 +303,7 @@ internal fun Sign(onRouteClick: (String) -> Unit) {
                         enableBtn = false
                     }
 
-                    NiaButtonColor(
+                    ArrudeiaButtonColor(
                         onClick = {
                             scope.launch {
                                 signClient(

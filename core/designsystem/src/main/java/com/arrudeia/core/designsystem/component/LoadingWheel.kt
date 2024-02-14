@@ -35,7 +35,7 @@ import com.arrudeia.core.designsystem.theme.ArrudeiaTheme
 import kotlinx.coroutines.launch
 
 @Composable
-fun NiaLoadingWheel(
+fun ArrudeiaLoadingWheel(
     contentDesc: String,
     modifier: Modifier = Modifier,
 ) {
@@ -115,7 +115,7 @@ fun NiaLoadingWheel(
 }
 
 @Composable
-fun NiaOverlayLoadingWheel(
+fun ArrudeiaOverlayLoadingWheel(
     contentDesc: String,
     modifier: Modifier = Modifier,
 ) {
@@ -126,7 +126,7 @@ fun NiaOverlayLoadingWheel(
         modifier = modifier
             .size(60.dp),
     ) {
-        NiaLoadingWheel(
+        ArrudeiaLoadingWheel(
             contentDesc = contentDesc,
         )
     }
@@ -134,20 +134,20 @@ fun NiaOverlayLoadingWheel(
 
 @ThemePreviews
 @Composable
-fun NiaLoadingWheelPreview() {
+fun ArrudeiaLoadingWheelPreview() {
     ArrudeiaTheme {
         Surface {
-            NiaLoadingWheel(contentDesc = "LoadingWheel")
+            ArrudeiaLoadingWheel(contentDesc = "LoadingWheel")
         }
     }
 }
 
 @ThemePreviews
 @Composable
-fun NiaOverlayLoadingWheelPreview() {
+fun ArrudeiaOverlayLoadingWheelPreview() {
     ArrudeiaTheme {
         Surface {
-            NiaOverlayLoadingWheel(contentDesc = "LoadingWheel")
+            ArrudeiaOverlayLoadingWheel(contentDesc = "LoadingWheel")
         }
     }
 }
