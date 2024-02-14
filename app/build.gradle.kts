@@ -12,8 +12,8 @@ plugins {
 android {
     defaultConfig {
         applicationId = "com.droidmaster.arrudeia"
-        versionCode = 19
-        versionName = "1.7" // X.Y.Z; X = Major, Y = minor, Z = Patch level
+        versionCode = 20
+        versionName = "1.7.1" // X.Y.Z; X = Major, Y = minor, Z = Patch level
 
         // Custom test runner to set up Hilt dependency graph
         //testInstrumentationRunner = "com.arrudeia.core.testing.ArrudeiaTestRunner"
@@ -103,11 +103,6 @@ dependencies {
     implementation(libs.coil.kt)
     implementation(libs.androidx.metrics)
 
-    // Core functions
-    //testImplementation(project(":core:testing"))
-    //testImplementation(project(":core:datastore-test"))
-    //testImplementation(project(":core:data-test"))
-    //testImplementation(project(":core:network"))
     testImplementation(libs.androidx.navigation.testing)
     testImplementation(libs.accompanist.testharness)
     testImplementation(kotlin("test"))
