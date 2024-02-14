@@ -1,4 +1,4 @@
-package com.nowinandroid.core.data.repository
+package com.arrudeia.core.data.repository
 
 import com.arrudeia.core.analytics.NoOpAnalyticsHelper
 import com.arrudeia.core.data.repository.OfflineFirstUserDataRepository
