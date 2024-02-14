@@ -10,9 +10,6 @@ import androidx.work.OutOfQuotaPolicy
 import androidx.work.WorkerParameters
 import com.arrudeia.core.analytics.AnalyticsHelper
 import com.arrudeia.core.data.Synchronizer
-import com.arrudeia.core.data.repository.SearchContentsRepository
-import com.arrudeia.core.datastore.ChangeListVersions
-import com.arrudeia.core.datastore.ArrudeiaPreferencesDataSource
 import com.arrudeia.core.network.Dispatcher
 import com.arrudeia.core.network.ArrudeiaDispatchers.IO
 import com.arrudeia.sync.initializers.SyncConstraints
@@ -33,8 +30,6 @@ import kotlinx.coroutines.withContext
 class SyncWorker @AssistedInject constructor(
     @Assisted private val appContext: Context,
     @Assisted workerParams: WorkerParameters,
-    private val niaPreferences: ArrudeiaPreferencesDataSource,
-    private val searchContentsRepository: SearchContentsRepository,
     @Dispatcher(IO) private val ioDispatcher: CoroutineDispatcher,
     private val analyticsHelper: AnalyticsHelper,
     private val syncSubscriber: SyncSubscriber,
@@ -53,13 +48,6 @@ class SyncWorker @AssistedInject constructor(
             Result.success()
         }
     }
-
-    override suspend fun getChangeListVersions(): ChangeListVersions =
-        niaPreferences.getChangeListVersions()
-
-    override suspend fun updateChangeListVersions(
-        update: ChangeListVersions.() -> ChangeListVersions,
-    ) = niaPreferences.updateChangeListVersion(update)
 
     companion object {
         /**
