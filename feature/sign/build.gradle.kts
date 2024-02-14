@@ -16,5 +16,6 @@ dependencies {
   //  implementation(libs.kotlinx.coroutines.play.services)
    // implementation(libs.androix.credentials)
     implementation(libs.firebase.auth)
+    implementation(libs.firebase.crashlytics)
     implementation(libs.androidx.material3)
 }

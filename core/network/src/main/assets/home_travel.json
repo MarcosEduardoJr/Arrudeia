@@ -1,0 +1,151 @@
+[
+  {
+    "id": 1,
+    "name": "Porto de Galinhas Paradise",
+    "city": "Ipojuca",
+    "state": "PE",
+    "day": 10,
+    "month": 4,
+    "year": 2023,
+    "price": 18000,
+    "discount": 15,
+    "cover_image_url": "https://picsum.photos/1600/900",
+    "whatsapp": "+5581996795183",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+  },
+  {
+    "id": 2,
+    "name": "Praia do Forte Relaxation",
+    "city": "Mata de São João",
+    "state": "BA",
+    "day": 15,
+    "month": 6,
+    "year": 2023,
+    "price": 20000,
+    "discount": 10,
+    "cover_image_url": "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcQUr-OzfBhul_VVrAAZjZtj1xhcLsH5FZ_xaSvjQ_LDHOrzJ6z_ip3VFusrvimwjY3wgkj635HjTjPvHWJOWdn8xk4XiEUbjhqdb2zIgPU",
+    "whatsapp":  "+5581996795183",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+
+  },
+  {
+    "id": 3,
+    "name": "Jericoacoara Beach Escape",
+    "city": "Jijoca de Jericoacoara",
+    "state": "CE",
+    "day": 5,
+    "month": 8,
+    "year": 2023,
+    "price": 25000,
+    "discount": 12,
+    "cover_image_url": "https://picsum.photos/1600/900",
+    "whatsapp":  "+5581996795183",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+
+  },
+  {
+    "id": 4,
+    "name": "Maragogi Coral Reefs Adventure",
+    "city": "Maragogi",
+    "state": "AL",
+    "day": 20,
+    "month": 9,
+    "year": 2023,
+    "price": 20000,
+    "discount": 18,
+    "cover_image_url": "https://picsum.photos/1600/900",
+    "whatsapp":  "+5581996795183",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+
+  },
+  {
+    "id": 5,
+    "name": "Canoa Quebrada Sun and Sand",
+    "city": "Aracati",
+    "state": "CE",
+    "day": 8,
+    "month": 11,
+    "year": 2023,
+    "price": 19000,
+    "discount": 15,
+    "cover_image_url": "https://picsum.photos/1600/900",
+    "whatsapp":  "+5581996795183",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+
+  },
+  {
+    "id": 6,
+    "name": "Flecheiras Beachfront Bliss",
+    "city": "Trairi",
+    "state": "CE",
+    "day": 12,
+    "month": 2,
+    "year": 2023,
+    "price": 28000,
+    "discount": 20,
+    "cover_image_url": "https://picsum.photos/1600/900",
+    "whatsapp":  "+5581996795183",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+
+  },
+  {
+    "id": 7,
+    "name": "Barra Grande Seaside Retreat",
+    "city": "Cairu",
+    "state": "BA",
+    "day": 18,
+    "month": 4,
+    "year": 2023,
+    "price": 23000,
+    "discount": 10,
+    "cover_image_url": "https://picsum.photos/1600/900",
+    "whatsapp":  "+5581996795183",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+
+  },
+  {
+    "id": 8,
+    "name": "Cumbuco Dunes and Waves",
+    "city": "Caucaia",
+    "state": "CE",
+    "day": 22,
+    "month": 7,
+    "year": 2023,
+    "price": 16000,
+    "discount": 8,
+    "cover_image_url": "https://picsum.photos/1600/900",
+    "whatsapp":  "+5581996795183",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+
+  },
+  {
+    "id": 9,
+    "name": "Tamandaré Coastal Beauty",
+    "city": "Tamandaré",
+    "state": "PE",
+    "day": 14,
+    "month": 10,
+    "year": 2023,
+    "price": 21000,
+    "discount": 12,
+    "cover_image_url": "https://picsum.photos/1600/900",
+    "whatsapp":  "+5581996795183",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+
+  },
+  {
+    "id": 10,
+    "name": "Genipabu Sand Dunes Adventure",
+    "city": "Extremoz",
+    "state": "RN",
+    "day": 28,
+    "month": 12,
+    "year": 2023,
+    "price": 24000,
+    "discount": 15,
+    "cover_image_url": "https://picsum.photos/1600/900",
+    "whatsapp":  "+5581996795183",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+
+  }
+]

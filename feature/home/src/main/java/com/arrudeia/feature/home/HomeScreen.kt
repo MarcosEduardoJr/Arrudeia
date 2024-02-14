@@ -1,6 +1,7 @@
 package com.arrudeia.feature.home
 
 
+import android.app.Activity
 import android.graphics.drawable.ColorDrawable
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -37,6 +38,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -49,6 +51,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -72,7 +75,6 @@ import com.arrudeia.feature.home.R.string.destiny
 import com.arrudeia.feature.home.R.string.near_to_you
 import com.arrudeia.feature.home.model.ArrudeiaTvUIModel
 import com.arrudeia.feature.home.model.TravelUIModel
-import com.arrudeia.navigation.tripDetailRoute
 import com.arrudeia.util.toCurrencyReal
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
@@ -80,21 +82,17 @@ import com.bumptech.glide.integration.compose.placeholder
 import java.util.Locale
 
 
-private const val LINK_1 = "link_1"
-private const val LINK_2 = "link_2"
-private const val SPACING_FIX = 3f
-
 
 @Composable
-internal fun SignRoute(
+internal fun HomeRoute(
     onRouteClick: (String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel(),
     onStoriesClick: (String) -> Unit,
+    onTripDetailClick: (String) -> Unit,
 ) {
+    ListItemView(onRouteClick, viewModel, onStoriesClick, onTripDetailClick)
 
-
-    ListItemView(onRouteClick, viewModel, onStoriesClick)
 }
 
 
@@ -103,8 +101,10 @@ internal fun SignRoute(
 fun ListItemView(
     onRouteClick: (String) -> Unit,
     viewModel: HomeViewModel = hiltViewModel(),
-    onStoriesClick: (String) -> Unit
+    onStoriesClick: (String) -> Unit,
+    onTripDetailClick: (String) -> Unit,
 ) {
+
     var searchTravel by rememberSaveable { mutableStateOf("") }
     Box(
         modifier = Modifier
@@ -123,10 +123,6 @@ fun ListItemView(
                     .fillMaxWidth()
                     .align(Alignment.TopCenter)
             ) {
-                header(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                )
 
                 Spacer(modifier = Modifier.size(30.dp))
 
@@ -240,7 +236,10 @@ fun ListItemView(
                         LazyColumn() {
                             items(items = list.toList(), itemContent = {
                                 Spacer(modifier = Modifier.size(8.dp))
-                                travelItem(onRouteClick, it)
+                                travelItem(
+                                    onRouteClick,
+                                    it,
+                                    Modifier.clickable { onTripDetailClick(it.id.toString()) })
                             })
                         }
                         Spacer(modifier = Modifier.height(40.dp))
@@ -397,11 +396,11 @@ fun arrudeiaTvItem(modifier: Modifier, item: ArrudeiaTvUIModel) {
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun travelItem(onRouteClick: (String) -> Unit, item: TravelUIModel) {
+fun travelItem(onRouteClick: (String) -> Unit, item: TravelUIModel, modifier: Modifier) {
 
     Column() {
         Card(
-            modifier = Modifier.clickable { onRouteClick(tripDetailRoute) },
+            modifier = modifier,
             elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
             shape = RoundedCornerShape(8.dp)
         ) {

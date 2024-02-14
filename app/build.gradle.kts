@@ -6,14 +6,14 @@ plugins {
     id("arrudeia.android.hilt")
     id("jacoco")
     id("arrudeia.android.application.firebase")
-    id("com.google.android.gms.oss-licenses-plugin")
+    //id("com.google.android.gms.oss-licenses-plugin")
 }
 
 android {
     defaultConfig {
         applicationId = "com.droidmaster.arrudeia"
-        versionCode = 8
-        versionName = "0.1.2" // X.Y.Z; X = Major, Y = minor, Z = Patch level
+        versionCode = 19
+        versionName = "1.7" // X.Y.Z; X = Major, Y = minor, Z = Patch level
 
         // Custom test runner to set up Hilt dependency graph
         //testInstrumentationRunner = "com.arrudeia.core.testing.ArrudeiaTestRunner"

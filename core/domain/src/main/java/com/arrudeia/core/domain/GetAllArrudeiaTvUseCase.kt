@@ -11,24 +11,19 @@ import javax.inject.Inject
 class GetAllArrudeiaTvUseCase @Inject constructor(
     private val repository: DefaultHomeTravelsRepositoryImpl,
 ) {
-    suspend operator fun invoke(): Result<List<ArrudeiaUseCaseEntity>?> =
+    suspend operator fun invoke(): List<ArrudeiaUseCaseEntity>? =
         repository.getAllArrudeiaTv().mapTolUseCaseEntity()
 
-    private fun Result<List<ArrudeiaTvRepositoryEntity>?>.mapTolUseCaseEntity(): Result<List<ArrudeiaUseCaseEntity>?> {
-        return when (this) {
-            is Result.Success -> {
-                var listResult = mutableListOf<ArrudeiaUseCaseEntity>()
-                this.result?.forEach {
-                    listResult.add(
-                        ArrudeiaUseCaseEntity(
-                            imageUrl = it.image_url
-                        )
-                    )
-                }
-                Result.Success(listResult)
-            }
-            else -> Result.Failure(Exception())
+    private fun List<ArrudeiaTvRepositoryEntity>?.mapTolUseCaseEntity(): List<ArrudeiaUseCaseEntity>? {
+        var listResult = mutableListOf<ArrudeiaUseCaseEntity>()
+        this?.forEach {
+            listResult.add(
+                ArrudeiaUseCaseEntity(
+                    imageUrl = it.image_url
+                )
+            )
         }
+        return listResult
     }
 
 }

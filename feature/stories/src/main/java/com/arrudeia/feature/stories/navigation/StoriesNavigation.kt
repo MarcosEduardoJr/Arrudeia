@@ -15,8 +15,6 @@ import java.net.URLDecoder
 import java.net.URLEncoder
 
 
-
-
 private val URL_CHARACTER_ENCODING = Charsets.UTF_8.name()
 
 @VisibleForTesting
@@ -24,7 +22,12 @@ internal const val storiesIdArg = "storiesIdArg"
 
 internal class StoriesArgs(val storiesId: String) {
     constructor(savedStateHandle: SavedStateHandle) :
-            this(URLDecoder.decode(checkNotNull(savedStateHandle[storiesIdArg]), URL_CHARACTER_ENCODING))
+            this(
+                URLDecoder.decode(
+                    checkNotNull(savedStateHandle[storiesIdArg]),
+                    URL_CHARACTER_ENCODING
+                )
+            )
 }
 
 fun NavController.navigateToStories(storiesId: String) {
@@ -36,6 +39,7 @@ fun NavController.navigateToStories(storiesId: String) {
 
 fun NavGraphBuilder.storiesScreen(
     onStoriesClick: (String) -> Unit,
+    onBackClick: () -> Unit
 ) {
     composable(
         route = "$storiesRoute/{$storiesIdArg}",
@@ -43,7 +47,7 @@ fun NavGraphBuilder.storiesScreen(
             navArgument(storiesIdArg) { type = NavType.StringType },
         ),
     ) {
-        StoriesRoute(onStoriesId = onStoriesClick)
+        StoriesRoute(onStoriesId = onStoriesClick, onBackClick = onBackClick)
     }
 }
 
@@ -55,19 +59,6 @@ fun NavController.navigateToInterestsGraph(navOptions: NavOptions? = null) {
     this.navigate(STORIES_GRAPH_ROUTE_PATTERN, navOptions)
 }
 
-fun NavGraphBuilder.storiesGraph(
-    onStoriesClick: (String) -> Unit,
-    nestedGraphs: NavGraphBuilder.() -> Unit,
-) {
-    navigation(
-        route = STORIES_GRAPH_ROUTE_PATTERN,
-        startDestination = storiesRoute,
-    ) {
-        composable(route = storiesRoute) {
-            StoriesRoute(onStoriesClick)
-        }
-        nestedGraphs()
-    }
-}
+
 
 

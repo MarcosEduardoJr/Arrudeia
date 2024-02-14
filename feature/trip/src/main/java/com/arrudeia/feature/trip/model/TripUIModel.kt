@@ -1,9 +1,9 @@
-package com.arrudeia.core.data.repository
+package com.arrudeia.feature.trip.model
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class TravelRepositoryEntity(
+data class TripUIModel(
     val id: Long,
     val name: String = "",
     val city: String = "",
@@ -16,4 +16,8 @@ data class TravelRepositoryEntity(
     val cover_image_url: String = "",
     val whatsapp: String = "",
     val description: String = "",
-    )
+    ){
+
+    fun shortLocation() = city.plus(", ").plus(state)
+    fun date() = day.toString().plus("/").plus(month.toString())
+}

@@ -18,4 +18,7 @@
     <string name="description">Descrição</string>
     <string name="tools_lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Arcu amet tempor, in massa, habitasse habitasse fermentum, sed faucibus. Augue arcu, ac proin accumsan urna.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Arcu amet tempor, in massa, habitasse habitasse fermentum, sed faucibus. Augue arcu, ac proin accumsan urna.</string>
 <string name="talk_with_agency">Falar com a agência</string>
+    <string name="erro_message_list_travels">Estamos em manutenção, tente novamente mais tarde.</string>
+    <string name="loading">Carregando</string>
+    <string name="whatsapp_contact_message">Olá, tudo bem?\nDesejo saber mais informações sobre a viagem para %1$s no dia %2$s.</string>
 </resources>

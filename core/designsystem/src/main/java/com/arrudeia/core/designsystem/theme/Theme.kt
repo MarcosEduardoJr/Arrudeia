@@ -1,5 +1,6 @@
 package com.arrudeia.core.designsystem.theme
 
+import android.app.Activity
 import android.os.Build
 import androidx.annotation.ChecksSdkIntAtLeast
 import androidx.annotation.VisibleForTesting
@@ -9,6 +10,8 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalView
 
 /**
  * Light default theme color scheme
@@ -82,6 +85,10 @@ fun ArrudeiaTheme(
         LocalBackgroundTheme provides backgroundTheme,
         LocalTintTheme provides tintTheme,
     ) {
+        val view = LocalView.current
+        val window = (view.context as Activity).window
+        window.statusBarColor = Color.White.toArgb() // change color status bar here
+
         MaterialTheme(
             colorScheme = colorScheme,
             typography = ArrudeiaTypography,

@@ -1,6 +1,11 @@
 package com.arrudeia.feature.trip
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,11 +23,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -31,22 +38,30 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat.startActivity
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.arrudeia.core.designsystem.R.color.background_grey_F7F7F9
 import com.arrudeia.core.designsystem.R.color.colorPrimary
 import com.arrudeia.core.designsystem.component.NiaButtonColor
+import com.arrudeia.core.designsystem.component.NiaLoadingWheel
 import com.arrudeia.core.designsystem.theme.ArrudeiaTheme
 import com.arrudeia.feature.trip.R.drawable.ic_bg_onboarding
-import com.arrudeia.feature.trip.R.string.tools_title_trip_detail_name
-import com.arrudeia.feature.trip.R.string.tools_currency_price
-import com.arrudeia.feature.trip.R.string.from
-import com.arrudeia.feature.trip.R.string.tools_subtitle_trip_detail_name
 import com.arrudeia.feature.trip.R.string.description
-import com.arrudeia.feature.trip.R.string.tools_lorem_ipsum
-
+import com.arrudeia.feature.trip.R.string.from
 import com.arrudeia.feature.trip.R.string.talk_with_agency
-import com.arrudeia.navigation.homeRoute
-
+import com.arrudeia.feature.trip.R.string.whatsapp_contact_message
+import com.arrudeia.feature.trip.R.string.tools_currency_price
+import com.arrudeia.feature.trip.R.string.tools_lorem_ipsum
+import com.arrudeia.feature.trip.R.string.tools_subtitle_trip_detail_name
+import com.arrudeia.feature.trip.R.string.tools_title_trip_detail_name
+import com.arrudeia.feature.trip.TripDetailViewModel.TripDetailUiState.Success
+import com.arrudeia.feature.trip.TripDetailViewModel.TripDetailUiState.Loading
+import com.arrudeia.feature.trip.TripDetailViewModel.TripDetailUiState.Error
+import com.arrudeia.feature.trip.model.TripUIModel
+import com.arrudeia.util.toCurrencyReal
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
 
 private const val LINK_1 = "link_1"
 private const val LINK_2 = "link_2"
@@ -55,19 +70,52 @@ private const val SPACING_FIX = 3f
 
 @Composable
 internal fun TripDetailRoute(
-    onRouteClick: (String) -> Unit,
-    onShowSnackbar: suspend (String, String?) -> Boolean,
-    modifier: Modifier = Modifier,
     viewModel: TripDetailViewModel = hiltViewModel(),
 ) {
-    TripDetail(
-        onRouteClick
-    )
+    val arrTvUiState by viewModel.travelSharedFlow.collectAsStateWithLifecycle()
+    viewModel.fetchData()
+
+    when (arrTvUiState) {
+        is Loading -> {
+            NiaLoadingWheel(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(50.dp),
+                contentDesc = stringResource(id = R.string.loading),
+            )
+        }
+
+        is Error -> {
+            Text(
+                text = stringResource((arrTvUiState as Error).message),
+                modifier = Modifier.padding(4.dp)
+            )
+        }
+
+        is Success -> {
+            val item = (arrTvUiState as Success).item
+            TripDetail(
+                item
+            )
+        }
+    }
 }
 
+@OptIn(ExperimentalGlideComposeApi::class)
 @SuppressLint("DesignSystem")
 @Composable
-internal fun TripDetail(onRouteClick: (String) -> Unit) {
+internal fun TripDetail(item: TripUIModel?) {
+    val context = LocalContext.current as Context
+    val packageManager = LocalContext.current.packageManager
+    val url =
+        "https://api.whatsapp.com/send?phone=${item?.whatsapp.orEmpty()}&text=${
+            stringResource(
+                id = whatsapp_contact_message,
+                item?.shortLocation().toString(),
+                item?.date().orEmpty()
+            )
+        }"
+    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
     ArrudeiaTheme {
         Box(
             modifier = Modifier
@@ -83,8 +131,8 @@ internal fun TripDetail(onRouteClick: (String) -> Unit) {
                         fillMaxSize()
                     })
                 {
-                    Image(
-                        painter = painterResource(ic_bg_onboarding),
+                    GlideImage(
+                        model = item?.cover_image_url,
                         contentDescription = null,
                         modifier = Modifier
                             .height(300.dp)
@@ -121,7 +169,7 @@ internal fun TripDetail(onRouteClick: (String) -> Unit) {
                                         .clipToBounds(),
                                 ) {
                                     Text(
-                                        text = stringResource(tools_title_trip_detail_name),
+                                        text = item?.name.orEmpty(),
                                         color = Color.Black,
                                         fontSize = 18.sp,
                                         fontWeight = FontWeight.Bold,
@@ -134,7 +182,7 @@ internal fun TripDetail(onRouteClick: (String) -> Unit) {
                                         Text(
                                             modifier = Modifier
                                                 .align(Alignment.CenterStart),
-                                            text = stringResource(tools_subtitle_trip_detail_name),
+                                            text = item?.shortLocation().orEmpty(),
                                             color = Color.Gray,
                                             fontSize = 14.sp,
                                             textAlign = TextAlign.Start
@@ -151,7 +199,7 @@ internal fun TripDetail(onRouteClick: (String) -> Unit) {
                                             )
                                             Spacer(modifier = Modifier.size(2.dp))
                                             Text(
-                                                text = stringResource(tools_currency_price),
+                                                text = item?.price?.toCurrencyReal().orEmpty(),
                                                 color = colorResource(id = colorPrimary),
                                                 fontSize = 14.sp,
                                                 textAlign = TextAlign.Start
@@ -168,17 +216,20 @@ internal fun TripDetail(onRouteClick: (String) -> Unit) {
                                     )
                                     Spacer(modifier = Modifier.size(10.dp))
                                     Text(
-                                        text = stringResource(tools_lorem_ipsum),
+                                        text = item?.description.orEmpty(),
                                         color = Color.Gray,
                                         fontSize = 14.sp,
                                         textAlign = TextAlign.Start
                                     )
                                 }
                                 NiaButtonColor(
-                                    onClick = { onRouteClick(homeRoute) },
+                                    onClick = {
+                                        context.startActivity(intent)
+                                    },
                                     modifier = Modifier
                                         .align(Alignment.BottomCenter)
-                                        .padding(16.dp).fillMaxWidth(),
+                                        .padding(16.dp)
+                                        .fillMaxWidth(),
                                     colorButton = colorResource(colorPrimary),
                                 ) {
                                     Text(
@@ -196,9 +247,9 @@ internal fun TripDetail(onRouteClick: (String) -> Unit) {
     }
 }
 
-@Preview(showSystemUi = true, showBackground = true)
 @Composable
-fun PreviewAux() {
-    TripDetail {}
+fun OpenWhatsapp(number: String) {
+
 }
+
 

@@ -4,14 +4,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
+import com.arrudeia.feature.home.navigation.homeGraph
 import com.arrudeia.feature.home.navigation.homeScreen
 import com.arrudeia.feature.sign.navigation.onboardingScreen
 import com.arrudeia.feature.sign.navigation.signScreen
 import com.arrudeia.feature.stories.navigation.navigateToStories
-import com.arrudeia.feature.stories.navigation.storiesGraph
 import com.arrudeia.feature.stories.navigation.storiesScreen
+import com.arrudeia.feature.trip.navigation.navigateToTripDetail
 import com.arrudeia.feature.trip.navigation.tripDetailScreen
 import com.arrudeia.navigation.homeRoute
+import com.arrudeia.navigation.onboardingRoute
 import com.droidmaster.arrudeia.ui.ArrudeiaAppState
 import java.net.URLEncoder
 
@@ -27,7 +29,7 @@ fun ArrudeiaNavHost(
     appState: ArrudeiaAppState,
     onShowSnackbar: suspend (String, String?) -> Boolean,
     modifier: Modifier = Modifier,
-    startDestination: String = homeRoute,
+    startDestination: String = onboardingRoute,
 ) {
     val navController = appState.navController
     NavHost(
@@ -45,19 +47,20 @@ fun ArrudeiaNavHost(
         )
         homeScreen(
             onRouteClick = navController::navigateToRoute,
-            onStoriesClick = navController::navigateToStories
+            onStoriesClick = navController::navigateToStories,
+            onTripDetailClick = navController::navigateToTripDetail
         )
-        tripDetailScreen(
-            onRouteClick = navController::navigateToRoute,
-            onShowSnackbar = onShowSnackbar,
-        )
-        storiesGraph(
+        homeGraph(
             onStoriesClick = navController::navigateToStories,
             nestedGraphs = {
                 storiesScreen(
-                    onStoriesClick = navController::navigateToStories
+                    onStoriesClick = navController::navigateToStories,
+                    onBackClick = navController::popBackStack
                 )
-            }
+                tripDetailScreen(
+                )
+            },
+            onBackClick = navController::popBackStack
         )
     }
 }

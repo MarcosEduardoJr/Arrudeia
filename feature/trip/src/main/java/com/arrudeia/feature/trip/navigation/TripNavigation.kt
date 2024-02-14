@@ -1,21 +1,48 @@
 package com.arrudeia.feature.trip.navigation
 
+import androidx.annotation.VisibleForTesting
+import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavOptions
+import androidx.navigation.NavType
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.arrudeia.feature.trip.TripDetailRoute
 import com.arrudeia.navigation.tripDetailRoute
+import java.net.URLDecoder
+import java.net.URLEncoder
 
-fun NavController.navigateToTripDetail(navOptions: NavOptions? = null) {
-    this.navigate(tripDetailRoute, navOptions)
+
+private val URL_CHARACTER_ENCODING = Charsets.UTF_8.name()
+
+@VisibleForTesting
+internal const val tripIdArg = "tripIdArg"
+
+internal class TripArgs(val id: String) {
+    constructor(savedStateHandle: SavedStateHandle) :
+            this(
+                URLDecoder.decode(
+                    checkNotNull(savedStateHandle[tripIdArg]),
+                    URL_CHARACTER_ENCODING
+                )
+            )
+}
+
+fun NavController.navigateToTripDetail(id: String) {
+    val encodedId = URLEncoder.encode(id, URL_CHARACTER_ENCODING)
+    this.navigate("$tripDetailRoute/$encodedId") {
+        launchSingleTop = true
+    }
 }
 
 fun NavGraphBuilder.tripDetailScreen(
-    onRouteClick: (String) -> Unit,
-    onShowSnackbar: suspend (String, String?) -> Boolean,
 ) {
-    composable(route = tripDetailRoute) {
-        TripDetailRoute(onRouteClick, onShowSnackbar)
+    composable(
+        route = "$tripDetailRoute/{$tripIdArg}",
+        arguments = listOf(
+            navArgument(tripIdArg) { type = NavType.StringType },
+        ),
+    ) {
+        TripDetailRoute()
     }
 }

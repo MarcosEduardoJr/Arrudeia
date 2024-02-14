@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" >
+    <!--
+     Firebase automatically adds the AD_ID permission, even though we don't use it. If you use this
+     permission you must declare how you're using it to Google Play, otherwise the app will be
+     rejected when publishing it. To avoid this we remove the permission entirely.
+     -->
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID" tools:node="remove"/>
 
     <application
         android:allowBackup="true"
@@ -16,7 +22,6 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/title_activity_main"
             android:theme="@style/Theme.Arrudeia" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

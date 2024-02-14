@@ -27,6 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
@@ -37,7 +38,7 @@ import com.arrudeia.core.designsystem.component.ArrudeiaGradientBackground
 import com.arrudeia.core.designsystem.theme.GradientColors
 import com.droidmaster.arrudeia.R
 import com.droidmaster.arrudeia.navigation.ArrudeiaNavHost
-
+import com.arrudeia.core.designsystem.R.color.background_grey_F7F7F9
 @OptIn(
     ExperimentalMaterial3Api::class,
     ExperimentalLayoutApi::class,
@@ -76,7 +77,7 @@ fun ArrudeiaApp(
                 modifier = Modifier.semantics {
                     testTagsAsResourceId = true
                 },
-                containerColor = Color.Transparent,
+                containerColor =  colorResource(id = background_grey_F7F7F9),
                 contentColor = MaterialTheme.colorScheme.onBackground,
                 snackbarHost = { SnackbarHost(snackbarHostState) },
                 bottomBar = {

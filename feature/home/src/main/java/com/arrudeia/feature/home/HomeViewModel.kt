@@ -41,33 +41,28 @@ class HomeViewModel @Inject constructor(
 
     fun fetchDataArrTv() {
         viewModelScope.launch {
-            when (val result = arrTvUseCase.invoke()) {
-                is Success -> {
-                    arrTvUiState.value = ArrudeiaTvUiState.Success(
-                        list = result.result.mapArrTvToUiModel()
-                    )
-                }
-
-                else -> {
-                    arrTvUiState.value = ArrudeiaTvUiState.Error(erro_message_list_travels)
-                }
+            val result = arrTvUseCase.invoke()
+            if (!result.isNullOrEmpty())
+                arrTvUiState.value = ArrudeiaTvUiState.Success(
+                    list = result.mapArrTvToUiModel()
+                )
+            else {
+                arrTvUiState.value = ArrudeiaTvUiState.Error(erro_message_list_travels)
             }
         }
     }
 
     fun fetchDataTravels() {
         viewModelScope.launch {
-            when (val result = travelUseCase.invoke()) {
-                is Success -> {
-                    travelUiState.value = TravelUiState.Success(
-                        list = result.result.mapTravelsToUiModel()
-                    )
-                }
-
-                else -> {
-                    travelUiState.value = TravelUiState.Error(erro_message_list_travels)
-                }
-            }
+            val result = travelUseCase.invoke()
+            if (!result.isNullOrEmpty())
+                travelUiState.value = TravelUiState.Success(
+                    list = result.mapTravelsToUiModel()
+                )
+            else
+                travelUiState.value = TravelUiState.Error(
+                    erro_message_list_travels
+                )
         }
     }
 
@@ -106,16 +101,17 @@ class HomeViewModel @Inject constructor(
         return listResult
     }
 }
-    sealed interface TravelUiState {
-        data class Success(val list: List<TravelUIModel>) : TravelUiState
-        data class Error(val message: Int) : TravelUiState
-        data object Loading : TravelUiState
-    }
 
-    sealed interface ArrudeiaTvUiState {
-        data class Success(val list: List<ArrudeiaTvUIModel>) : ArrudeiaTvUiState
-        data class Error(val message: Int) : ArrudeiaTvUiState
-        data object Loading : ArrudeiaTvUiState
-    }
+sealed interface TravelUiState {
+    data class Success(val list: List<TravelUIModel>) : TravelUiState
+    data class Error(val message: Int) : TravelUiState
+    data object Loading : TravelUiState
+}
+
+sealed interface ArrudeiaTvUiState {
+    data class Success(val list: List<ArrudeiaTvUIModel>) : ArrudeiaTvUiState
+    data class Error(val message: Int) : ArrudeiaTvUiState
+    data object Loading : ArrudeiaTvUiState
+}
 
 

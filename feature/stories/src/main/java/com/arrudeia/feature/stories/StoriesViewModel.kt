@@ -1,37 +1,67 @@
 package com.arrudeia.feature.stories
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.arrudeia.core.data.repository.UserDataRepository
-import com.arrudeia.core.model.data.UserNewsResource
-import com.arrudeia.core.ui.NewsFeedUiState
-import com.arrudeia.core.ui.NewsFeedUiState.Loading
+import com.arrudeia.core.domain.GetAllStoriesByIdUseCase
+import com.arrudeia.core.entity.StoryUseCaseEntity
+import com.arrudeia.feature.stories.model.StoriesUIModel
+import com.arrudeia.feature.stories.navigation.StoriesArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+import com.arrudeia.feature.stories.R.string.erro_message_list_travels
 @HiltViewModel
 class StoriesViewModel @Inject constructor(
-    private val userDataRepository: UserDataRepository,
-) : ViewModel() {
+    savedStateHandle: SavedStateHandle,
+    private val useCase: GetAllStoriesByIdUseCase,
+    ) : ViewModel() {
 
-    var shouldDisplayUndoBookmark by mutableStateOf(false)
-    private var lastRemovedBookmarkId: String? = null
+    private val args: StoriesArgs = StoriesArgs(savedStateHandle)
 
- 
+    val storiesId = args.storiesId
 
+    private var uiState: MutableStateFlow<StoriesUiState> =
+        MutableStateFlow(StoriesUiState.Loading)
+    val storiesSharedFlow = uiState.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(),
+        initialValue = StoriesUiState.Loading
+    )
 
-
-    fun clearUndoState() {
-        shouldDisplayUndoBookmark = false
-        lastRemovedBookmarkId = null
+    fun fetchStories() {
+        viewModelScope.launch {
+           val result = useCase.invoke(storiesId.toLong())
+            if(result.isNullOrEmpty())
+                uiState.value = StoriesUiState.Error(erro_message_list_travels)
+            else
+                uiState.value = StoriesUiState.Success(
+                    result.mapStoriesToUiModel()
+                )
+        }
     }
+
+    private fun List<StoryUseCaseEntity>?.mapStoriesToUiModel(): List<StoriesUIModel> {
+        val listResult = mutableListOf<StoriesUIModel>()
+        this?.forEach {
+            listResult.add(
+                StoriesUIModel(
+                    image = it.image
+                )
+            )
+        }
+        return listResult
+    }
+
+    sealed interface StoriesUiState {
+        data class Success(val list: List<StoriesUIModel>) : StoriesUiState
+        data class Error(val message: Int) : StoriesUiState
+        data object Loading : StoriesUiState
+    }
+
+
 }

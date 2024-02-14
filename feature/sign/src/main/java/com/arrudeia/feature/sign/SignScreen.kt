@@ -98,7 +98,11 @@ import com.arrudeia.feature.sign.R.string.sign_error_sign
 
 
 import com.arrudeia.navigation.homeRoute
+import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.firebase.crashlytics.internal.common.CrashlyticsCore
+import com.google.firebase.crashlytics.internal.model.CrashlyticsReport
 import kotlinx.coroutines.launch
 import kotlin.math.max
 
@@ -114,6 +118,10 @@ internal fun SignRoute(
     modifier: Modifier = Modifier,
     viewModel: SignViewModel = hiltViewModel(),
 ) {
+    val context = LocalContext.current
+
+    FirebaseApp.initializeApp(context);
+    FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true);
 
     Sign(
         onRouteClick
@@ -529,19 +537,20 @@ suspend fun signClient(
                     //  updateUI(user)
                     onRouteClick(homeRoute)
                 } else {
-                    // If sign in fails, display a message to the user.
-                    //  Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                    //      Toast.makeText(
-                    //          baseContext,
-                    //          "Authentication failed.",
-                    //          Toast.LENGTH_SHORT,
-                    //     ).show()
-                    //   updateUI(null)
-                    Toast.makeText(
-                        context,
-                        context.getString(  sign_error_register),
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    //  Crashlytics.logException(throwable)
+                    FirebaseCrashlytics.getInstance().recordException(Throwable(task.exception?.message.toString()))
+                    // Log.w(TAG, "createUserWithEmail:failure", task.exception)
+                    /*    Toast.makeText(
+                           baseContext,
+                           "Authentication failed.",
+                           Toast.LENGTH_SHORT,
+                       ).show()
+                       updateUI(null)*/
+                        Toast.makeText(
+                             context,
+                             context.getString(  sign_error_register),
+                             Toast.LENGTH_SHORT
+                         ).show()
                 }
             }
     else
@@ -555,6 +564,9 @@ suspend fun signClient(
 
                     //    updateUI(user)
                 } else {
+                    FirebaseCrashlytics.getInstance()
+                        .recordException(Throwable(task.exception?.message.toString()))
+                    //Text(text = task.exception?.message.orEmpty())
                     // If sign in fails, display a message to the user.
                     //     Log.w(TAG, "signInWithEmail:failure", task.exception)
                     //    Toast.makeText(
@@ -563,11 +575,11 @@ suspend fun signClient(
                     //          Toast.LENGTH_SHORT,
                     //     ).show()
                     //    updateUI(null)
-                    Toast.makeText(
-                        context,
-                        context.getString(  sign_error_sign),
-                        Toast.LENGTH_SHORT
-                    ).show()
+                        Toast.makeText(
+                            context,
+                            context.getString(sign_error_sign),
+                            Toast.LENGTH_SHORT
+                        ).show()
                 }
             }
 

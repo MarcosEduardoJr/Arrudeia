@@ -2,6 +2,7 @@ package com.arrudeia.core.network.retrofit.service
 
 
 import com.arrudeia.core.network.model.NetworkArrudeiaTv
+import com.arrudeia.core.network.model.NetworkArrudeiaTvListImages
 import com.arrudeia.core.network.model.NetworkTravel
 import kotlinx.serialization.Serializable
 import retrofit2.Response
@@ -17,10 +18,16 @@ interface RetrofitArrudeiaNetworkService {
     ): Response<List<NetworkTravel>>
 
     @GET(value = "uc")
-    suspend fun getAllArrudeiaTv(
+    suspend fun getAllArrudeiaTvIds(
         @Query("id") id: String?,
         @Query("export") exportType: String?,
     ): Response<List<NetworkArrudeiaTv>>
+
+    @GET(value = "uc")
+    suspend fun getAllArrudeiaTvListById(
+        @Query("id") id: String?,
+        @Query("export") exportType: String?,
+    ): Response<List<NetworkArrudeiaTvListImages>>
 
 
 }
