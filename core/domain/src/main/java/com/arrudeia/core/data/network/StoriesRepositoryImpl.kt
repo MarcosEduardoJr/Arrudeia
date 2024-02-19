@@ -34,9 +34,9 @@ class StoriesRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getStoriesById(id: Long): List<StoryRepositoryEntity>? {
-        var result: List<StoryRepositoryEntity>? = null
-        getStories()?.forEach { if (it.id == id) result = it.images }
+    override suspend fun getStoriesById(id: Long): List<StoryRepositoryEntity> {
+        var result = mutableListOf<StoryRepositoryEntity>()
+        getStories().forEach { if (it.id == id && it.images.isNullOrEmpty()) result = it.images!!.toMutableList() }
         return result
     }
 
