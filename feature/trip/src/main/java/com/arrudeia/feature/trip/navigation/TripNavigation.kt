@@ -16,7 +16,7 @@ import java.net.URLEncoder
 private val URL_CHARACTER_ENCODING = Charsets.UTF_8.name()
 
 @VisibleForTesting
-internal const val tripIdArg = "tripIdArg"
+const val tripIdArg = "tripIdArg"
 
 internal class TripArgs(val id: String) {
     constructor(savedStateHandle: SavedStateHandle) :
