@@ -1,4 +1,3 @@
-
 plugins {
     id("arrudeia.android.library")
     id("arrudeia.android.library.jacoco")
@@ -21,7 +20,6 @@ dependencies {
     kapt(libs.hilt.compiler)
 
     implementation(libs.kotlinx.serialization.json)
-    testImplementation(project(":core:testing"))
 
     implementation(libs.okhttp.logging)
     implementation(libs.retrofit.core)
@@ -31,5 +29,6 @@ dependencies {
     implementation(libs.coil.kt.svg)
     implementation(libs.converter.moshi)
     implementation(libs.converter.gson)
-
+    implementation(libs.firebase.firestore)
+    implementation(libs.mockito.core)
 }

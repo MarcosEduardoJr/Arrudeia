@@ -58,8 +58,13 @@ secrets = "2.0.1"
 turbine = "0.12.1"
 glideVer = "1.0.0-beta01"
 androixCredentialsVer = "1.0.0-alpha02"
+firebaseFirestoreVer = "22.0.1"
+mockkVer = "1.13.5"
+mockitoVer = "5.10.0"
 [libraries]
 
+mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mockitoVer" }
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockkVer" }
 glide-compose = { group = "com.github.bumptech.glide", name = "compose", version.ref = "glideVer" }
 converter-moshi = { group = "com.squareup.retrofit2", name = "converter-moshi", version.ref = "retrofit" }
 converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
@@ -112,6 +117,7 @@ coil-kt-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "
 coil-kt-svg = { group = "io.coil-kt", name = "coil-svg", version.ref = "coil" }
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
+firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestoreVer"}
 firebase-cloud-messaging = { group = "com.google.firebase", name = "firebase-messaging-ktx" }
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }
 firebase-performance = { group = "com.google.firebase", name = "firebase-perf-ktx" }

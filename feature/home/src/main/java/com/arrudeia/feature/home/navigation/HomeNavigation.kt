@@ -22,6 +22,7 @@ fun NavGraphBuilder.homeScreen(
     onStoriesClick: (String) -> Unit,
     onTripDetailClick: (String) -> Unit,
 ) {
+
     composable(route = homeRoute) {
         HomeRoute(onRouteClick, onStoriesClick =onStoriesClick, onTripDetailClick = onTripDetailClick)
     }

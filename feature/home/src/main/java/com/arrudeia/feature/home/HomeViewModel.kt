@@ -55,7 +55,7 @@ class HomeViewModel @Inject constructor(
     fun fetchDataTravels() {
         viewModelScope.launch {
             val result = travelUseCase.invoke()
-            if (!result.isNullOrEmpty())
+            if (result.isNotEmpty())
                 travelUiState.value = TravelUiState.Success(
                     list = result.mapTravelsToUiModel()
                 )

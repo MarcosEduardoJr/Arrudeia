@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class TravelRepositoryEntity(
-    val id: Long,
+    val id: Long = 0,
     val name: String = "",
     val city: String = "",
     val state: String = "",

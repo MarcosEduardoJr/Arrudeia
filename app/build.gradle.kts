@@ -103,6 +103,8 @@ dependencies {
     implementation(libs.coil.kt)
     implementation(libs.androidx.metrics)
 
+    implementation(libs.firebase.firestore)
+
     testImplementation(libs.androidx.navigation.testing)
     testImplementation(libs.accompanist.testharness)
     testImplementation(kotlin("test"))

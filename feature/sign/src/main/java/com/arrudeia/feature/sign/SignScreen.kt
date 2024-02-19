@@ -120,8 +120,6 @@ internal fun SignRoute(
 ) {
     val context = LocalContext.current
 
-    FirebaseApp.initializeApp(context);
-    FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true);
 
     Sign(
         onRouteClick

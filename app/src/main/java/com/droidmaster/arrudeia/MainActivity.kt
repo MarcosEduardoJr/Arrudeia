@@ -22,6 +22,10 @@ import com.arrudeia.core.data.util.NetworkMonitor
 import com.arrudeia.core.designsystem.R
 import com.arrudeia.core.designsystem.theme.ArrudeiaTheme
 import com.droidmaster.arrudeia.ui.ArrudeiaApp
+import com.google.firebase.FirebaseApp
+import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreSettings
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.guava.await
@@ -53,8 +57,11 @@ class MainActivity : ComponentActivity() {
         val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
 
+        FirebaseApp.initializeApp(this);
+        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true);
 
-
+        FirebaseFirestore.getInstance().firestoreSettings =
+            FirebaseFirestoreSettings.Builder().setPersistenceEnabled(true).build()
 
 
         // Turn off the decor fitting system windows, which allows us to handle insets,

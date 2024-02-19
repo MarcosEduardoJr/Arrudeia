@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class StoriesRepositoryEntity(
     val id: Long = 0,
-    val images: List<StoryRepositoryEntity>?,
+    val images: List<StoryRepositoryEntity>? = listOf(),
 )
 
 @Serializable
