@@ -29,7 +29,7 @@ fun ArrudeiaNavHost(
     appState: ArrudeiaAppState,
     onShowSnackbar: suspend (String, String?) -> Boolean,
     modifier: Modifier = Modifier,
-    startDestination: String = homeRoute,
+    startDestination: String = onboardingRoute,
 ) {
     val navController = appState.navController
     NavHost(
