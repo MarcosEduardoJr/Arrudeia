@@ -2,12 +2,12 @@ package com.arrudeia.feature.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.arrudeia.core.data.interactions.Result.Success
 import com.arrudeia.core.domain.GetAllArrudeiaTvUseCase
 import com.arrudeia.core.domain.GetAllTravelHomeUseCase
 import com.arrudeia.core.entity.ArrudeiaUseCaseEntity
-import com.arrudeia.core.entity.TravelUseCaseEntity
 import com.arrudeia.feature.home.R.string.erro_message_list_travels
+import com.arrudeia.feature.home.map.mapArrTvToUiModel
+import com.arrudeia.feature.home.map.mapTravelsToUiModel
 import com.arrudeia.feature.home.model.ArrudeiaTvUIModel
 import com.arrudeia.feature.home.model.TravelUIModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,7 +23,7 @@ class HomeViewModel @Inject constructor(
     private val arrTvUseCase: GetAllArrudeiaTvUseCase,
 ) : ViewModel() {
 
-    private var travelUiState: MutableStateFlow<TravelUiState> =
+    var travelUiState: MutableStateFlow<TravelUiState> =
         MutableStateFlow(TravelUiState.Loading)
     val travelSharedFlow = travelUiState.stateIn(
         scope = viewModelScope,
@@ -31,7 +31,7 @@ class HomeViewModel @Inject constructor(
         initialValue = ResultUiState.Loading
     )
 
-    private var arrTvUiState: MutableStateFlow<ArrudeiaTvUiState> =
+     var arrTvUiState: MutableStateFlow<ArrudeiaTvUiState> =
         MutableStateFlow(ArrudeiaTvUiState.Loading)
     val arrTvSharedFlow = arrTvUiState.stateIn(
         scope = viewModelScope,
@@ -64,41 +64,6 @@ class HomeViewModel @Inject constructor(
                     erro_message_list_travels
                 )
         }
-    }
-
-
-    private fun List<TravelUseCaseEntity>?.mapTravelsToUiModel(): List<TravelUIModel> {
-        val listResult = mutableListOf<TravelUIModel>()
-        this?.forEach {
-            listResult.add(
-                TravelUIModel(
-                    id = it.id,
-                    name = it.name,
-                    city = it.city,
-                    state = it.state,
-                    day = it.day,
-                    month = it.month,
-                    year = it.year,
-                    price = it.price,
-                    discount = it.discount,
-                    cover_image_url = it.cover_image_url,
-                    whatsapp = it.whatsapp
-                )
-            )
-        }
-        return listResult
-    }
-
-    private fun List<ArrudeiaUseCaseEntity>?.mapArrTvToUiModel(): List<ArrudeiaTvUIModel> {
-        val listResult = mutableListOf<ArrudeiaTvUIModel>()
-        this?.forEach {
-            listResult.add(
-                ArrudeiaTvUIModel(
-                    imageUrl = it.imageUrl
-                )
-            )
-        }
-        return listResult
     }
 }
 

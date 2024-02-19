@@ -28,5 +28,4 @@ dependencies {
     implementation(libs.kotlinx.datetime)
     implementation(libs.kotlinx.serialization.json)
 
-    testImplementation(project(":core:testing"))
 }

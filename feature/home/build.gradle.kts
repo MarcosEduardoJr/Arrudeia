@@ -18,6 +18,8 @@ dependencies {
     implementation(libs.glide.compose)
 
     implementation(libs.kotlinx.serialization.json)
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.kotlinx.coroutines.test)
 }
 
 
