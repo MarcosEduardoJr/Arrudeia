@@ -13,8 +13,9 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
 import com.arrudeia.feature.stories.R.string.erro_message_list_travels
+import com.arrudeia.feature.stories.navigation.map.mapStoriesToUiModel
+
 @HiltViewModel
 class StoriesViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
@@ -25,7 +26,7 @@ class StoriesViewModel @Inject constructor(
 
     val storiesId = args.storiesId
 
-    private var uiState: MutableStateFlow<StoriesUiState> =
+     var uiState: MutableStateFlow<StoriesUiState> =
         MutableStateFlow(StoriesUiState.Loading)
     val storiesSharedFlow = uiState.stateIn(
         scope = viewModelScope,
@@ -45,17 +46,7 @@ class StoriesViewModel @Inject constructor(
         }
     }
 
-    private fun List<StoryUseCaseEntity>?.mapStoriesToUiModel(): List<StoriesUIModel> {
-        val listResult = mutableListOf<StoriesUIModel>()
-        this?.forEach {
-            listResult.add(
-                StoriesUIModel(
-                    image = it.image
-                )
-            )
-        }
-        return listResult
-    }
+
 
     sealed interface StoriesUiState {
         data class Success(val list: List<StoriesUIModel>) : StoriesUiState
