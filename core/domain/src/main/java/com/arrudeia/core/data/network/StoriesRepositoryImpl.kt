@@ -17,7 +17,7 @@ class StoriesRepositoryImpl @Inject constructor(
     private val db: FirebaseFirestore
 ) : StoriesRepository {
 
-    override suspend fun getStories(): List<StoriesRepositoryEntity>? {
+    override suspend fun getStories(): List<StoriesRepositoryEntity> {
         val list = mutableListOf<StoriesRepositoryEntity>()
         return suspendCancellableCoroutine { continuation ->
             db.collection(ARRUDEIA_TV).get()
@@ -29,7 +29,7 @@ class StoriesRepositoryImpl @Inject constructor(
                     continuation.resume(list)
                 }
                 .addOnFailureListener { exception ->
-                    continuation.resumeWithException(exception)
+                    continuation.resume(listOf())
                 }
         }
     }

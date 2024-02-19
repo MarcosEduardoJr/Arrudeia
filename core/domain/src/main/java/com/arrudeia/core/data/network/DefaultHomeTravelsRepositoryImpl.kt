@@ -27,7 +27,7 @@ class DefaultHomeTravelsRepositoryImpl @Inject constructor(
                     continuation.resume(list)
                 }
                 .addOnFailureListener { exception ->
-                    continuation.resumeWithException(exception)
+                    continuation.resume(listOf())
                 }
         }
     }
@@ -44,7 +44,7 @@ class DefaultHomeTravelsRepositoryImpl @Inject constructor(
                     continuation.resume(list)
                 }
                 .addOnFailureListener { exception ->
-                    continuation.resumeWithException(exception)
+                    continuation.resume(listOf())
                 }
         }
     }
