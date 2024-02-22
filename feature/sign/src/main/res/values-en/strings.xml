@@ -5,8 +5,8 @@
     <string name="onboarding_empty_description">Updates you save will be stored here\nto read later</string>
     <string name="onboarding_removed">Bookmark removed</string>
     <string name="onboarding_undo">UNDO</string>
-    <string name="start">To start</string>
-    <string name="sign">To enter</string>
+    <string name="start">start</string>
+    <string name="sign">enter</string>
     <string name="sign_register">Register</string>
     <string name="sign_email">Email</string>
     <string name="sign_password">Password</string>
