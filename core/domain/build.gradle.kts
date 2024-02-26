@@ -31,4 +31,7 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.firebase.firestore)
     implementation(libs.mockito.core)
+    implementation(libs.firebase.auth)
+    implementation(libs.androidx.dataStore.core)
+    implementation(libs.androidx.dataStore.preferences)
 }

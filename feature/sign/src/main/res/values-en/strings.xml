@@ -22,4 +22,5 @@
     <string name="sign_content_description_email">Enter your email</string>
     <string name="sign_content_description_password">Type the password</string>
     <string name="sign_content_description_password_again">Enter the same password again</string>
+    <string name="erro_sign_user">We are undergoing maintenance, please try again later.</string>
 </resources>

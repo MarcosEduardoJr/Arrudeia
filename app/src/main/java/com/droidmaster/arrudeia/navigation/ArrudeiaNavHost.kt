@@ -6,7 +6,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import com.arrudeia.feature.home.navigation.homeGraph
 import com.arrudeia.feature.home.navigation.homeScreen
-import com.arrudeia.feature.sign.navigation.onboardingScreen
+import com.arrudeia.feature.onboarding.navigation.onboardingScreen
 import com.arrudeia.feature.sign.navigation.signScreen
 import com.arrudeia.feature.stories.navigation.navigateToStories
 import com.arrudeia.feature.stories.navigation.storiesScreen
@@ -42,8 +42,7 @@ fun ArrudeiaNavHost(
             onShowSnackbar = onShowSnackbar,
         )
         onboardingScreen(
-            onRouteClick = navController::navigateToRoute,
-            onShowSnackbar = onShowSnackbar,
+            onRouteClick = navController::navigateToRoute
         )
         homeScreen(
             onRouteClick = navController::navigateToRoute,

@@ -1,4 +1,4 @@
-package com.arrudeia.feature.sign
+package com.arrudeia.feature.onboarding
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -6,12 +6,14 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
@@ -25,29 +27,43 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.arrudeia.core.designsystem.R.color.colorPrimary
 import com.arrudeia.core.designsystem.component.ArrudeiaButtonColor
+import com.arrudeia.core.designsystem.component.ArrudeiaLoadingWheel
 import com.arrudeia.core.designsystem.theme.ArrudeiaTheme
 import com.arrudeia.feature.onboarding.R.drawable.ic_bg_onboarding
 import com.arrudeia.feature.onboarding.R.string.onboarding_description_tired_job
 import com.arrudeia.feature.onboarding.R.string.start
+import com.arrudeia.navigation.homeRoute
 import com.arrudeia.navigation.signRoute
+import com.arrudeia.feature.onboarding.OnboardingViewModel.CurrentUserUiState
 
 @Composable
 internal fun OnboardingRoute(
-    onTopicClick: (String) -> Unit,
-    onShowSnackbar: suspend (String, String?) -> Boolean,
-    modifier: Modifier = Modifier,
+    onRouteClick: (String) -> Unit,
     viewModel: OnboardingViewModel = hiltViewModel(),
 ) {
-    Onboarding(
-        onTopicClick
-    )
+
+    val currentUserSharedFlow by viewModel.currentUserSharedFlow.collectAsStateWithLifecycle()
+
+    when (currentUserSharedFlow) {
+        is CurrentUserUiState.Success -> {
+            onRouteClick(homeRoute)
+        }
+
+        is CurrentUserUiState.Error -> {
+            Onboarding(onRouteClick)
+        }
+
+        else -> {}
+    }
+    viewModel.getCurrentUser()
 }
 
 
 @Composable
-internal fun Onboarding(onTopicClick: (String) -> Unit,) {
+internal fun Onboarding(onRouteClick: (String) -> Unit) {
     ArrudeiaTheme {
         Scaffold(
             modifier = Modifier.fillMaxSize(),
@@ -88,7 +104,7 @@ internal fun Onboarding(onTopicClick: (String) -> Unit,) {
                 )
 
                 ArrudeiaButtonColor(
-                    onClick = { onTopicClick(signRoute) },
+                    onClick = { onRouteClick(signRoute) },
                     modifier = Modifier
                         .padding(16.dp)
                         .fillMaxWidth()
@@ -104,10 +120,4 @@ internal fun Onboarding(onTopicClick: (String) -> Unit,) {
             }
         }
     }
-}
-
-@Preview(showSystemUi = true, showBackground = true)
-@Composable
-fun OnboardingPreview() {
-    Onboarding {}
 }

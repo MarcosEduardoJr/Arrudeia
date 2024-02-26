@@ -10,8 +10,6 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -20,15 +18,14 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -64,46 +61,43 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.text.HtmlCompat
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.arrudeia.core.designsystem.R.color.colorPrimary
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.arrudeia.core.designsystem.R.color.background_green_008000
 import com.arrudeia.core.designsystem.R.color.background_grey_F7F7F9
 import com.arrudeia.core.designsystem.R.color.background_red_FF0000
-import com.arrudeia.core.designsystem.R.color.colorWhite
-
 import com.arrudeia.core.designsystem.R.color.colorBlack
-import com.arrudeia.core.designsystem.component.DefaultLinkMovementMethod
+import com.arrudeia.core.designsystem.R.color.colorPrimary
+import com.arrudeia.core.designsystem.R.color.colorWhite
 import com.arrudeia.core.designsystem.component.ArrudeiaButtonColor
+import com.arrudeia.core.designsystem.component.ArrudeiaLoadingWheel
+import com.arrudeia.core.designsystem.component.DefaultLinkMovementMethod
 import com.arrudeia.core.designsystem.icon.ArrudeiaIcons
 import com.arrudeia.core.designsystem.theme.ArrudeiaTheme
 import com.arrudeia.feature.sign.R.drawable.ic_bg_onboarding
 import com.arrudeia.feature.sign.R.string.please_sign_in_to_continue_our_app
 import com.arrudeia.feature.sign.R.string.sign
-import com.arrudeia.feature.sign.R.string.sign_content_description_email
-import com.arrudeia.feature.sign.R.string.sign_content_description_password
-import com.arrudeia.feature.sign.R.string.sign_content_description_password_again
 import com.arrudeia.feature.sign.R.string.sign_description_tired_job
 import com.arrudeia.feature.sign.R.string.sign_email
+import com.arrudeia.feature.sign.R.string.sign_error_sign
 import com.arrudeia.feature.sign.R.string.sign_password
 import com.arrudeia.feature.sign.R.string.sign_password_again
-import com.arrudeia.feature.sign.R.string.sign_register
 import com.arrudeia.feature.sign.R.string.sign_password_lenght_error
 import com.arrudeia.feature.sign.R.string.sign_password_not_equals_to_confirm_password_error
-import com.arrudeia.feature.sign.R.string.sign_error_register
-import com.arrudeia.feature.sign.R.string.sign_error_sign
-
-
+import com.arrudeia.feature.sign.R.string.sign_register
+import com.arrudeia.feature.sign.SignViewModel.SignUiState
 import com.arrudeia.navigation.homeRoute
-import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import com.google.firebase.crashlytics.internal.common.CrashlyticsCore
-import com.google.firebase.crashlytics.internal.model.CrashlyticsReport
+import com.google.samples.apps.arrudeia.core.ui.ErrorSnackbar
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlin.math.max
 
 private const val LINK_1 = "link_1"
@@ -118,19 +112,22 @@ internal fun SignRoute(
     modifier: Modifier = Modifier,
     viewModel: SignViewModel = hiltViewModel(),
 ) {
-    val context = LocalContext.current
-
-
     Sign(
-        onRouteClick
+        onRouteClick,
+        viewModel,
+        onShowSnackbar
     )
 }
 
-
-@OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("DesignSystem")
 @Composable
-internal fun Sign(onRouteClick: (String) -> Unit) {
+internal fun Sign(
+    onRouteClick: (String) -> Unit,
+    viewModel: SignViewModel,
+    onShowSnackbar: suspend (String, String?) -> Boolean
+) {
+
+
     var isRegisterState by remember { mutableStateOf(false) }
 
     var emailValueState by rememberSaveable { mutableStateOf("") }
@@ -140,9 +137,28 @@ internal fun Sign(onRouteClick: (String) -> Unit) {
     var confirmPasswordValueState by rememberSaveable { mutableStateOf("") }
     var confirmPasswordIconValueState by rememberSaveable { mutableStateOf(false) }
 
-    lateinit var auth: FirebaseAuth
+    val sharedFlow by viewModel.sharedFlow.collectAsStateWithLifecycle()
+    when (sharedFlow) {
+        is SignUiState.Loading -> {
+            ArrudeiaLoadingWheel(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(50.dp),
+                contentDesc = stringResource(id = R.string.loading),
+            )
+        }
 
-    val context = LocalContext.current
+        is SignUiState.Success -> {
+            onRouteClick(homeRoute)
+        }
+
+        is SignUiState.Error -> {
+            val message = stringResource((sharedFlow as SignUiState.Error).message)
+            LaunchedEffect(true) {
+                onShowSnackbar(message, null)
+            }
+        }
+    }
 
     val launcher = rememberLauncherForActivityResult(
         ActivityResultContracts.StartIntentSenderForResult()
@@ -206,10 +222,7 @@ internal fun Sign(onRouteClick: (String) -> Unit) {
                         imeAction = ImeAction.Next,
                         requestFocus = false,
                         placeHolderValue = stringResource(id = sign_email),
-                        contentDescriptionInputValue = stringResource(id = sign_content_description_email),
                         keyboardType = KeyboardType.Email,
-                        errorText = "error aconteceu",
-                        isValidText = { isValidEmail("") },
                         onTextChange = { emailValueState = it },
                         statusIconValid = { emailIconValueState },
                         showIconIsvalid = isRegisterState
@@ -226,11 +239,8 @@ internal fun Sign(onRouteClick: (String) -> Unit) {
                         imeAction = ImeAction.Done,
                         requestFocus = false,
                         placeHolderValue = stringResource(id = sign_password),
-                        contentDescriptionInputValue = stringResource(id = sign_content_description_password),
                         useMaskDots = true,
                         keyboardType = KeyboardType.Password,
-                        errorText = "error aconteceu",
-                        isValidText = { isValidPassword("") },
                         onTextChange = { passwordValueState = it },
                         statusIconValid = { passwordIconValueState },
                         showIconIsvalid = isRegisterState
@@ -252,11 +262,8 @@ internal fun Sign(onRouteClick: (String) -> Unit) {
                             imeAction = ImeAction.Done,
                             requestFocus = false,
                             placeHolderValue = stringResource(id = sign_password_again),
-                            contentDescriptionInputValue = stringResource(id = sign_content_description_password_again),
                             useMaskDots = true,
                             keyboardType = KeyboardType.Password,
-                            errorText = "error aconteceu",
-                            isValidText = { isValidPassword("") },
                             onTextChange = { confirmPasswordValueState = it },
                             statusIconValid = { confirmPasswordIconValueState },
                             showIconIsvalid = isRegisterState
@@ -305,12 +312,10 @@ internal fun Sign(onRouteClick: (String) -> Unit) {
                         onClick = {
                             scope.launch {
                                 signClient(
-                                    context,
-                                    launcher,
                                     isRegisterState,
-                                    onRouteClick = onRouteClick,
                                     email = emailValueState,
-                                    password = passwordValueState
+                                    password = passwordValueState,
+                                    viewmodel = viewModel
                                 )
                             }
                         },
@@ -351,13 +356,6 @@ internal fun Sign(onRouteClick: (String) -> Unit) {
         }
     }
 }
-
-@Composable
-private fun formIsValid(
-    emailIconValueState: Boolean,
-    passwordIconValueState: Boolean,
-    confirmPasswordIconValueState: Boolean = true
-) = emailIconValueState && passwordIconValueState && confirmPasswordIconValueState
 
 @Composable
 private fun passwordBehaviour(
@@ -401,18 +399,12 @@ private fun signTextField(
     imeAction: ImeAction,
     requestFocus: Boolean,
     placeHolderValue: String,
-    contentDescriptionInputValue: String,
     useMaskDots: Boolean = false,
     keyboardType: KeyboardType,
-    errorText: String,
-    isValidText: (String) -> Boolean,
     onTextChange: (String) -> Unit,
     statusIconValid: () -> Boolean,
     showIconIsvalid: Boolean,
 ) {
-    var isError by remember { mutableStateOf(false) }
-
-
     var focusRequester = FocusRequester()
 
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -478,7 +470,6 @@ private fun signTextField(
         },
         value = textValueFieldParam,
         onValueChange = { onTextChange(it) },
-        // isError = isValidText(textValueField),
         modifier = Modifier
             .fillMaxWidth()
             .padding(bottom = 10.dp, start = 16.dp, end = 16.dp)
@@ -510,85 +501,20 @@ private fun signTextField(
         if (requestFocus)
             focusRequester.requestFocus()
     }
-    // if (isValidText(textValueField)) {
-    //    Text(text = errorText, color = Color.Red)
-    //}
 }
 
-suspend fun signClient(
-    context: Context,
-    launcher: ActivityResultLauncher<IntentSenderRequest>,
+fun signClient(
     isRegister: Boolean,
-    auth: FirebaseAuth = FirebaseAuth.getInstance(),
-    onRouteClick: (String) -> Unit,
     email: String,
-    password: String
+    password: String,
+    viewmodel: SignViewModel
 ) {
-    val scopeActivity = context as Activity
     if (isRegister)
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(scopeActivity) { task ->
-                if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    //  Log.d(TAG, "createUserWithEmail:success")
-                    val user = auth.currentUser
-                    //  updateUI(user)
-                    onRouteClick(homeRoute)
-                } else {
-                    //  Crashlytics.logException(throwable)
-                    FirebaseCrashlytics.getInstance().recordException(Throwable(task.exception?.message.toString()))
-                    // Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                    /*    Toast.makeText(
-                           baseContext,
-                           "Authentication failed.",
-                           Toast.LENGTH_SHORT,
-                       ).show()
-                       updateUI(null)*/
-                        Toast.makeText(
-                             context,
-                             context.getString(  sign_error_register),
-                             Toast.LENGTH_SHORT
-                         ).show()
-                }
-            }
+        viewmodel.signUp(email, password)
     else
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener(scopeActivity) { task ->
-                if (task.isSuccessful) {
-                    val user = auth.currentUser
-                    onRouteClick(homeRoute)
-                    // Sign in success, update UI with the signed-in user's information
-                    //   Log.d(TAG, "signInWithEmail:success")
-
-                    //    updateUI(user)
-                } else {
-                    FirebaseCrashlytics.getInstance()
-                        .recordException(Throwable(task.exception?.message.toString()))
-                    //Text(text = task.exception?.message.orEmpty())
-                    // If sign in fails, display a message to the user.
-                    //     Log.w(TAG, "signInWithEmail:failure", task.exception)
-                    //    Toast.makeText(
-                    //           baseContext,
-                    //          "Authentication failed.",
-                    //          Toast.LENGTH_SHORT,
-                    //     ).show()
-                    //    updateUI(null)
-                        Toast.makeText(
-                            context,
-                            context.getString(sign_error_sign),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                }
-            }
+        viewmodel.signIn(email, password)
 
 }
-
-@Preview(showSystemUi = true, showBackground = true)
-@Composable
-fun OnboardingPreview() {
-    Sign {}
-}
-
 
 @Composable
 fun HtmlText(
@@ -610,14 +536,9 @@ fun HtmlText(
                 TextAlign.End -> Gravity.END
                 else -> Gravity.START
             }
-            /*val fontResId = when (textStyle.fontWeight) {
-                FontWeight.Medium -> R.font.inter_medium
-                else -> R.font.inter_regular
-            }*/
-            //  val font = ResourcesCompat.getFont(context, fontResId)
 
             TextView(context).apply {
-                // general style
+
                 textAlignment = View.TEXT_ALIGNMENT_CENTER
                 textSize = textStyle.fontSize.value
                 setLineSpacing(extraSpacing, 1f)
@@ -630,8 +551,6 @@ fun HtmlText(
                     colorText
                 )
                 setGravity(gravity)
-                //typeface = font
-                // links
                 val colorTextHighLight = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     resources.getColorStateList(colorPrimary, null)
                 } else {

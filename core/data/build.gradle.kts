@@ -1,4 +1,3 @@
-
 plugins {
     id("arrudeia.android.library")
     id("arrudeia.android.library.jacoco")
@@ -27,5 +26,5 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.datetime)
     implementation(libs.kotlinx.serialization.json)
-
+    implementation(libs.firebase.auth)
 }

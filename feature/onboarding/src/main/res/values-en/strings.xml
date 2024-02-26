@@ -1,4 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+
 <resources>
+    <string name="loading">Carregando</string>
     <string name="onboarding_saved">Saved</string>
     <string name="onboarding_saved_loading">Loading saved…</string>
     <string name="onboarding_empty_error">No saved updates</string>
@@ -7,5 +10,4 @@
     <string name="onboarding_undo">UNDO</string>
     <string name="start">start</string>
     <string name="onboarding_description_tired_job">Do you have a tiring week at work\? <font color="#FF6421">Arrudeia</font> with day trips and have fun because you deserve it!</string>
-
 </resources>

@@ -24,4 +24,6 @@
     <string name="sign_content_description_email">Digite o seu email</string>
     <string name="sign_content_description_password">Digite a senha</string>
     <string name="sign_content_description_password_again">Digite novamente a mesma senha</string>
+    <string name="erro_sign_user">Estamos em manutenção, tente novamente mais tarde.</string>
+    <string name="loading">Carregando</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.droidmaster.arrudeia.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarDuration.Indefinite
 import androidx.compose.material3.SnackbarDuration.Short
 import androidx.compose.material3.SnackbarHost
@@ -39,6 +41,7 @@ import com.arrudeia.core.designsystem.theme.GradientColors
 import com.droidmaster.arrudeia.R
 import com.droidmaster.arrudeia.navigation.ArrudeiaNavHost
 import com.arrudeia.core.designsystem.R.color.background_grey_F7F7F9
+
 @OptIn(
     ExperimentalMaterial3Api::class,
     ExperimentalLayoutApi::class,
@@ -77,9 +80,20 @@ fun ArrudeiaApp(
                 modifier = Modifier.semantics {
                     testTagsAsResourceId = true
                 },
-                containerColor =  colorResource(id = background_grey_F7F7F9),
+                containerColor = colorResource(id = background_grey_F7F7F9),
                 contentColor = MaterialTheme.colorScheme.onBackground,
-                snackbarHost = { SnackbarHost(snackbarHostState) },
+                snackbarHost = {
+                    SnackbarHost(
+                        snackbarHostState,
+                    ) {
+                        Snackbar(
+                            snackbarData = it,
+                            actionColor = Color.White,
+                            contentColor = Color.White,
+                            containerColor = Color.Black
+                        )
+                    }
+                },
                 bottomBar = {
 
                 },
