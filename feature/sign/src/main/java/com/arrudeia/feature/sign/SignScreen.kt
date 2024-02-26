@@ -8,7 +8,6 @@ import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
@@ -82,7 +81,6 @@ import com.arrudeia.feature.sign.R.string.please_sign_in_to_continue_our_app
 import com.arrudeia.feature.sign.R.string.sign
 import com.arrudeia.feature.sign.R.string.sign_description_tired_job
 import com.arrudeia.feature.sign.R.string.sign_email
-import com.arrudeia.feature.sign.R.string.sign_error_sign
 import com.arrudeia.feature.sign.R.string.sign_password
 import com.arrudeia.feature.sign.R.string.sign_password_again
 import com.arrudeia.feature.sign.R.string.sign_password_lenght_error
@@ -90,14 +88,7 @@ import com.arrudeia.feature.sign.R.string.sign_password_not_equals_to_confirm_pa
 import com.arrudeia.feature.sign.R.string.sign_register
 import com.arrudeia.feature.sign.SignViewModel.SignUiState
 import com.arrudeia.navigation.homeRoute
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.crashlytics.FirebaseCrashlytics
-import com.google.samples.apps.arrudeia.core.ui.ErrorSnackbar
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import kotlin.math.max
 
 private const val LINK_1 = "link_1"
