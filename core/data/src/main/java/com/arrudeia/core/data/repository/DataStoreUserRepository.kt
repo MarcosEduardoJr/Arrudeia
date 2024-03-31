@@ -1,8 +1,6 @@
 package com.arrudeia.core.data.repository
 
-import com.arrudeia.core.data.interactions.Result
-import com.google.firebase.auth.FirebaseUser
-import kotlinx.coroutines.flow.Flow
+import com.arrudeia.core.data.entity.DataStoreUserRepositoryEntity
 
 interface DataStoreUserRepository {
 

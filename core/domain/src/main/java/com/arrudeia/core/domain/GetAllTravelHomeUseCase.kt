@@ -1,12 +1,8 @@
 package com.arrudeia.core.domain
 
-import com.arrudeia.core.result.Result
 import com.arrudeia.core.data.network.DefaultHomeTravelsRepositoryImpl
-import com.arrudeia.core.data.repository.TravelRepositoryEntity
+import com.arrudeia.core.data.entity.TravelRepositoryEntity
 import com.arrudeia.core.entity.TravelUseCaseEntity
-import com.arrudeia.core.result.asResult
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class GetAllTravelHomeUseCase @Inject constructor(

@@ -28,15 +28,19 @@ import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.arrudeia.core.designsystem.theme.ArrudeiaTheme
 import kotlinx.coroutines.launch
 
+import com.arrudeia.core.designsystem.R.color.colorPrimary
+import com.arrudeia.core.designsystem.R.string.loading
+
 @Composable
 fun ArrudeiaLoadingWheel(
-    contentDesc: String,
     modifier: Modifier = Modifier,
 ) {
     val infiniteTransition = rememberInfiniteTransition(label = "wheel transition")
@@ -70,8 +74,8 @@ fun ArrudeiaLoadingWheel(
     )
 
     // Specifies the color animation for the base-to-progress line color change
-    val baseLineColor = MaterialTheme.colorScheme.onBackground
-    val progressLineColor = MaterialTheme.colorScheme.inversePrimary
+    val baseLineColor = colorResource(id = colorPrimary)
+    val progressLineColor = colorResource(id = colorPrimary)
     val colorAnimValues = (0 until NUM_OF_LINES).map { index ->
         infiniteTransition.animateColor(
             initialValue = baseLineColor,
@@ -88,14 +92,14 @@ fun ArrudeiaLoadingWheel(
             label = "wheel color animation",
         )
     }
-
+    val loadingContetDescription = stringResource(id = loading)
     // Draws out the LoadingWheel Canvas composable and sets the animations
     Canvas(
         modifier = modifier
             .size(48.dp)
             .padding(8.dp)
             .graphicsLayer { rotationZ = rotationAnim }
-            .semantics { contentDescription = contentDesc }
+            .semantics { contentDescription = loadingContetDescription }
             .testTag("loadingWheel"),
     ) {
         repeat(NUM_OF_LINES) { index ->
@@ -122,12 +126,11 @@ fun ArrudeiaOverlayLoadingWheel(
     Surface(
         shape = RoundedCornerShape(60.dp),
         shadowElevation = 8.dp,
-        color = MaterialTheme.colorScheme.surface.copy(alpha = 0.83f),
+        color = colorResource(id = colorPrimary),
         modifier = modifier
             .size(60.dp),
     ) {
         ArrudeiaLoadingWheel(
-            contentDesc = contentDesc,
         )
     }
 }
@@ -137,7 +140,7 @@ fun ArrudeiaOverlayLoadingWheel(
 fun ArrudeiaLoadingWheelPreview() {
     ArrudeiaTheme {
         Surface {
-            ArrudeiaLoadingWheel(contentDesc = "LoadingWheel")
+            ArrudeiaLoadingWheel()
         }
     }
 }

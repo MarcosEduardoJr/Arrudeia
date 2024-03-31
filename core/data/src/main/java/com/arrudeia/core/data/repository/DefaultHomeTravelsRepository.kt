@@ -1,6 +1,6 @@
 package com.arrudeia.core.data.repository
-import com.arrudeia.core.data.interactions.Result
-import kotlinx.coroutines.flow.Flow
+import com.arrudeia.core.data.entity.ArrudeiaTvRepositoryEntity
+import com.arrudeia.core.data.entity.TravelRepositoryEntity
 
 /**
  * Interface representing network calls to the Arrudeia backend

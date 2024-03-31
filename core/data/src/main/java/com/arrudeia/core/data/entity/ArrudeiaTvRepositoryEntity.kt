@@ -1,4 +1,4 @@
-package com.arrudeia.core.data.repository
+package com.arrudeia.core.data.entity
 
 import kotlinx.serialization.Serializable
 

@@ -1,8 +1,7 @@
 package com.arrudeia.core.domain
 
 import com.arrudeia.core.data.network.DefaultHomeTravelsRepositoryImpl
-import com.arrudeia.core.data.repository.ArrudeiaTvRepositoryEntity
-import com.arrudeia.core.data.repository.TravelRepositoryEntity
+import com.arrudeia.core.data.entity.ArrudeiaTvRepositoryEntity
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test

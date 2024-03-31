@@ -1,8 +1,7 @@
 package com.arrudeia.core.data.repository
 
-import com.arrudeia.core.data.interactions.Result
-import com.google.firebase.auth.FirebaseUser
-import kotlinx.coroutines.flow.Flow
+import android.net.Uri
+import com.arrudeia.core.data.entity.FirebaseUserRepositoryEntity
 
 interface FirebaseUserRepository {
 
@@ -18,4 +17,7 @@ interface FirebaseUserRepository {
         password: String
     ) : FirebaseUserRepositoryEntity?
 
+    suspend fun saveUserImage(
+        uri: Uri
+    ) : String?
 }

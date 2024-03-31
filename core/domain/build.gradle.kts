@@ -4,6 +4,9 @@ plugins {
     kotlin("kapt")
 }
 
+
+
+
 android {
     namespace = "com.arrudeia.core.domain"
 }
@@ -34,4 +37,8 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.androidx.dataStore.core)
     implementation(libs.androidx.dataStore.preferences)
+    implementation(libs.apollo.runtime)
+
+    implementation(libs.firebase.bom)
+    implementation(libs.firebase.storage)
 }

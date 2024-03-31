@@ -81,7 +81,6 @@ internal fun TripDetailRoute(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp),
-                contentDesc = stringResource(id = R.string.loading),
             )
         }
 

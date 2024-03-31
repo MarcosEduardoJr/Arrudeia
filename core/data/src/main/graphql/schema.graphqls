@@ -1,0 +1,72 @@
+type UserGraph {
+    uuid: String
+    name: String
+    email: String
+    phone: String
+    idDocument: String
+    birthDate: String
+    profileImage: String
+    zipCode: String
+    street: String
+    number: Int
+    district: String
+    city: String
+    state: String
+    country: String
+}
+
+type Query {
+    _entities(representations: [_Any!]!): [_Entity]!
+
+    _service: _Service!
+
+     user(uuid: String!): UserGraph
+}
+
+type Mutation {
+    updateUser(
+        uuid: String,
+        name: String,
+        email: String,
+        phone: String,
+        idDocument: String,
+        birthDate: String,
+        profileImage: String,
+        zipCode: String,
+        street: String,
+        number: Int,
+        district: String,
+        city: String,
+        state: String,
+        country: String
+    ) : String
+
+    updateUserAddress(
+        uuid: String,
+        zipCode: String
+        street: String
+        number: Int
+        district: String
+        city: String
+        state: String
+        country: String
+    ) : String
+}
+
+
+
+union _Entity = UserGraph
+
+scalar _Any
+
+type _Service {
+    """
+    The sdl representing the federated service capabilities. Includes federation directives, removes federation types, and includes rest of full schema after schema directives have been applied
+    """
+    sdl: String
+}
+
+schema {
+    query: Query
+    mutation: Mutation
+}

@@ -135,7 +135,6 @@ internal fun Sign(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp),
-                contentDesc = stringResource(id = R.string.loading),
             )
         }
 

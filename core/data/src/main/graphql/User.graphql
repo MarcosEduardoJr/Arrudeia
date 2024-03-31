@@ -1,0 +1,49 @@
+query GetUserGraph($uuidUser: String!) {
+    user(uuid: $uuidUser) {
+        uuid
+        name
+        email
+        idDocument
+        phone
+        profileImage
+        birthDate
+    }
+}
+
+mutation UpdateUserPersonalInfoGraph($uuid: String!, $name: String!, $email: String!, $phone: String!, $idDocument: String!, $birthDate: String!, $profileImage: String!) {
+    updateUser(
+        uuid: $uuid,
+        name: $name,
+        email: $email,
+        phone: $phone,
+        idDocument: $idDocument,
+        birthDate: $birthDate,
+        profileImage: $profileImage
+    )
+}
+
+query GetUserAddressGraph($uuidUser: String!) {
+    user(uuid: $uuidUser) {
+        uuid
+        zipCode
+        street
+        number
+        district
+        city
+        state
+        country
+    }
+}
+
+mutation UpdateUserAddressGraph($uuid: String!, $zipCode: String!, $street: String!, $number: Int!, $district: String!, $city: String!, $state: String!, $country: String!) {
+    updateUser(
+        uuid: $uuid,
+        zipCode: $zipCode,
+        street: $street,
+        number: $number,
+        district: $district,
+        city: $city,
+        state: $state,
+        country: $country
+    )
+}

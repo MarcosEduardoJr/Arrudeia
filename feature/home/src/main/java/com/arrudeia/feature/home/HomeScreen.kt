@@ -1,12 +1,11 @@
 package com.arrudeia.feature.home
 
 
-import android.app.Activity
+import android.R
+import android.R.id
 import android.graphics.drawable.ColorDrawable
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -38,7 +37,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -50,8 +48,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -67,20 +63,24 @@ import com.arrudeia.core.designsystem.R.drawable.ic_arrow_down
 import com.arrudeia.core.designsystem.R.drawable.ic_calendar
 import com.arrudeia.core.designsystem.R.drawable.ic_notification_on
 import com.arrudeia.core.designsystem.R.drawable.ic_pin
-import com.arrudeia.core.designsystem.R.drawable.ic_preview_profile_image
+import com.arrudeia.core.designsystem.R.drawable.ic_profile_edit
 import com.arrudeia.core.designsystem.R.drawable.ic_search
 import com.arrudeia.core.designsystem.component.ArrudeiaLoadingWheel
 import com.arrudeia.feature.home.R.string.arrudeia_tv
 import com.arrudeia.feature.home.R.string.destiny
 import com.arrudeia.feature.home.R.string.near_to_you
+import com.arrudeia.feature.home.R.string.travels_only_this_city
 import com.arrudeia.feature.home.model.ArrudeiaTvUIModel
 import com.arrudeia.feature.home.model.TravelUIModel
+import com.arrudeia.navigation.profileRoute
 import com.arrudeia.util.toCurrencyReal
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.Locale
-
 
 
 @Composable
@@ -90,8 +90,10 @@ internal fun HomeRoute(
     viewModel: HomeViewModel = hiltViewModel(),
     onStoriesClick: (String) -> Unit,
     onTripDetailClick: (String) -> Unit,
+    onShowSnackbar: suspend (String, String?) -> Boolean,
 ) {
-    ListItemView(onRouteClick, viewModel, onStoriesClick, onTripDetailClick)
+    viewModel.getUserPersonalInformation()
+    ListItemView(onRouteClick, viewModel, onStoriesClick, onTripDetailClick, onShowSnackbar)
 
 }
 
@@ -103,6 +105,7 @@ fun ListItemView(
     viewModel: HomeViewModel = hiltViewModel(),
     onStoriesClick: (String) -> Unit,
     onTripDetailClick: (String) -> Unit,
+    onShowSnackbar: suspend (String, String?) -> Boolean,
 ) {
 
     var searchTravel by rememberSaveable { mutableStateOf("") }
@@ -126,13 +129,17 @@ fun ListItemView(
 
                 Spacer(modifier = Modifier.size(30.dp))
 
+                header(modifier = Modifier.fillMaxWidth(), onShowSnackbar, onRouteClick, viewModel)
+
+                Spacer(modifier = Modifier.size(30.dp))
+
                 search(
                     modifier = Modifier
                         .fillMaxWidth()
                         .wrapContentHeight(Alignment.CenterVertically)
                         .clip(CircleShape),
                     searchTravel,
-                    onSearchTravelChange = { searchTravel = it }
+                    onSearchTravelChange = { searchTravel = it },
                 )
 
                 Spacer(modifier = Modifier.size(30.dp))
@@ -159,8 +166,7 @@ fun ListItemView(
                             ArrudeiaLoadingWheel(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .height(50.dp),
-                                contentDesc = stringResource(id = R.string.loading),
+                                    .height(50.dp)
                             )
                         }
 
@@ -187,12 +193,6 @@ fun ListItemView(
                         }
 
                         else -> {
-                            Toast.makeText(
-                                LocalContext.current,
-                                arrTvUiState.toString(),
-                                Toast.LENGTH_SHORT
-                            )
-                                .show()
                         }
                     }
 
@@ -218,8 +218,7 @@ fun ListItemView(
                                 .height(50.dp)
                                 .align(
                                     CenterHorizontally
-                                ),
-                            contentDesc = stringResource(id = R.string.loading),
+                                )
                         )
                     }
 
@@ -246,8 +245,6 @@ fun ListItemView(
                     }
 
                     else -> {
-                        Toast.makeText(LocalContext.current, uiState.toString(), Toast.LENGTH_SHORT)
-                            .show()
                     }
                 }
 
@@ -291,7 +288,22 @@ fun search(modifier: Modifier, searchTravel: String, onSearchTravelChange: (Stri
 }
 
 @Composable
-fun header(modifier: Modifier) {
+fun header(
+    modifier: Modifier,
+    onShowSnackbar: suspend (String, String?) -> Boolean,
+    onRouteClick: (String) -> Unit,
+    viewModel: HomeViewModel,
+) {
+    val uiState by viewModel.userSharedFlow.collectAsStateWithLifecycle()
+    var image by rememberSaveable { mutableStateOf("") }
+    when (uiState) {
+        is ProfileUiState.Success -> {
+            image =
+                (uiState as ProfileUiState.Success).data.image.orEmpty()
+        }
+
+        else -> {}
+    }
     Box(
         modifier = modifier
     ) {
@@ -299,21 +311,22 @@ fun header(modifier: Modifier) {
             modifier = Modifier
                 .size(37.dp)
                 .align(Alignment.CenterStart)
+                .clickable { onRouteClick(profileRoute) }, image
         )
 
-        cityDrop(modifier = Modifier.align(Alignment.Center))
-
-        notification(
-            modifier = Modifier
-                .size(37.dp)
-                .align(Alignment.CenterEnd)
-        )
+        cityDrop(modifier = Modifier.align(Alignment.Center), onShowSnackbar)
     }
 }
 
 @Composable
-fun cityDrop(modifier: Modifier) {
-    Row(modifier = modifier) {
+fun cityDrop(modifier: Modifier, onShowSnackbar: suspend (String, String?) -> Boolean) {
+    val message = stringResource(id = travels_only_this_city)
+    Row(modifier = modifier.clickable {
+        CoroutineScope(Dispatchers.IO).launch {
+            onShowSnackbar(message, "")
+        }
+    }
+    ) {
         Icon(
             painter = painterResource(id = ic_pin),
             contentDescription = null,
@@ -336,8 +349,10 @@ fun cityDrop(modifier: Modifier) {
     }
 }
 
+@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun avatar(modifier: Modifier) {
+fun avatar(modifier: Modifier, image: String) {
+
     Card(
         modifier = modifier,
         shape = RoundedCornerShape(37.dp),
@@ -351,14 +366,15 @@ fun avatar(modifier: Modifier) {
                 .background(color = Color.White)
                 .fillMaxSize()
         ) {
-            Image(
-                painter = painterResource(ic_preview_profile_image),
+            GlideImage(
+                loading = placeholder(painterResource(id = ic_profile_edit)),
+                model = image,
                 contentDescription = null,
-                contentScale = ContentScale.Crop,            // crop the image if it's not a square
+                contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .size(37.dp)
-                    .clip(CircleShape)                       // clip to the circle shape
-                    .border(2.dp, Color.White, CircleShape)   // add a border (optional)
+                    .size(180.dp)
+                    .clip(CircleShape),
+                 failure = placeholder(painterResource(id = ic_profile_edit))
             )
         }
     }

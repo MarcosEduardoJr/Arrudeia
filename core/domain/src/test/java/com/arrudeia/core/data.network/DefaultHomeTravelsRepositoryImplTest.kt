@@ -2,8 +2,8 @@ package com.arrudeia.core.data.network
 
 import com.arrudeia.core.data.network.DefaultHomeTravelsRepositoryImpl.Companion.HOME_ARRUDEIA_TV
 import com.arrudeia.core.data.network.DefaultHomeTravelsRepositoryImpl.Companion.HOME_TRAVELS
-import com.arrudeia.core.data.repository.ArrudeiaTvRepositoryEntity
-import com.arrudeia.core.data.repository.TravelRepositoryEntity
+import com.arrudeia.core.data.entity.ArrudeiaTvRepositoryEntity
+import com.arrudeia.core.data.entity.TravelRepositoryEntity
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.CollectionReference

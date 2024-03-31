@@ -7,6 +7,10 @@ import androidx.navigation.compose.NavHost
 import com.arrudeia.feature.home.navigation.homeGraph
 import com.arrudeia.feature.home.navigation.homeScreen
 import com.arrudeia.feature.onboarding.navigation.onboardingScreen
+import com.arrudeia.feature.profile.navigation.profileAddressScreen
+import com.arrudeia.feature.profile.navigation.profileGraph
+import com.arrudeia.feature.profile.navigation.profilePersonalInformationScreen
+import com.arrudeia.feature.profile.navigation.profileScreen
 import com.arrudeia.feature.sign.navigation.signScreen
 import com.arrudeia.feature.stories.navigation.navigateToStories
 import com.arrudeia.feature.stories.navigation.storiesScreen
@@ -14,6 +18,7 @@ import com.arrudeia.feature.trip.navigation.navigateToTripDetail
 import com.arrudeia.feature.trip.navigation.tripDetailScreen
 import com.arrudeia.navigation.homeRoute
 import com.arrudeia.navigation.onboardingRoute
+import com.arrudeia.navigation.profileRoute
 import com.droidmaster.arrudeia.ui.ArrudeiaAppState
 import java.net.URLEncoder
 
@@ -47,11 +52,23 @@ fun ArrudeiaNavHost(
         homeScreen(
             onRouteClick = navController::navigateToRoute,
             onStoriesClick = navController::navigateToStories,
-            onTripDetailClick = navController::navigateToTripDetail
+            onTripDetailClick = navController::navigateToTripDetail,
+            onShowSnackbar = onShowSnackbar
         )
+        profileScreen(
+            onBackClick = navController::popBackStack,
+            onRouteClick = navController::navigateToRoute,
+            onShowSnackbar = onShowSnackbar
+        )
+
         homeGraph(
             onStoriesClick = navController::navigateToStories,
             nestedGraphs = {
+                profileScreen(
+                    onBackClick = navController::popBackStack,
+                    onRouteClick = navController::navigateToRoute,
+                    onShowSnackbar = onShowSnackbar
+                )
                 storiesScreen(
                     onStoriesClick = navController::navigateToStories,
                     onBackClick = navController::popBackStack
@@ -59,7 +76,23 @@ fun ArrudeiaNavHost(
                 tripDetailScreen(
                 )
             },
-            onBackClick = navController::popBackStack
+            onBackClick = navController::popBackStack,
+            onRouteClick = navController::navigateToRoute,
+            onShowSnackbar = onShowSnackbar
+        )
+        profileGraph(
+            onBackClick = navController::popBackStack,
+            nestedGraphs = {
+                profilePersonalInformationScreen(
+                    onBackClick = navController::popBackStack,
+                    onShowSnackbar = onShowSnackbar
+                )
+                profileAddressScreen(
+                    onBackClick = navController::popBackStack,
+                    onShowSnackbar = onShowSnackbar
+                )
+            },
+            onShowSnackbar = onShowSnackbar
         )
     }
 }

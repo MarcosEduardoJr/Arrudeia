@@ -1,6 +1,6 @@
 package com.arrudeia.core.data.repository
-import com.arrudeia.core.data.interactions.Result
-import com.arrudeia.core.network.model.NetworkArrudeiaTvListImages
+import com.arrudeia.core.data.entity.StoriesRepositoryEntity
+import com.arrudeia.core.data.entity.StoryRepositoryEntity
 
 /**
  * Interface representing network calls to the Arrudeia backend

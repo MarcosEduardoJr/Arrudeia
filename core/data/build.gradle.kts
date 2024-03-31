@@ -3,6 +3,14 @@ plugins {
     id("arrudeia.android.library.jacoco")
     id("arrudeia.android.hilt")
     id("kotlinx-serialization")
+
+    id("com.apollographql.apollo3").version("3.8.3")
+}
+
+apollo {
+    service("service") {
+        packageName.set("com.arrudeia.core.data")
+    }
 }
 
 android {
@@ -27,4 +35,7 @@ dependencies {
     implementation(libs.kotlinx.datetime)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.firebase.auth)
+
+    implementation(libs.apollo.runtime)
+    implementation(libs.okhttp.logging)
 }

@@ -1,8 +1,7 @@
 package com.arrudeia.core.data.network
 
 import com.arrudeia.core.data.network.StoriesRepositoryImpl.Companion.ARRUDEIA_TV
-import com.arrudeia.core.data.repository.StoriesRepositoryEntity
-import com.arrudeia.core.data.repository.TravelRepositoryEntity
+import com.arrudeia.core.data.entity.StoriesRepositoryEntity
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.CollectionReference

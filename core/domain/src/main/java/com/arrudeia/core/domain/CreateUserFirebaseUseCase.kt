@@ -1,7 +1,7 @@
 package com.arrudeia.core.domain
 
 import com.arrudeia.core.data.network.FirebaseUserRepositoryImpl
-import com.arrudeia.core.data.repository.FirebaseUserRepositoryEntity
+import com.arrudeia.core.data.entity.FirebaseUserRepositoryEntity
 import com.arrudeia.core.entity.FirebaseUserUseCaseEntity
 import javax.inject.Inject
 

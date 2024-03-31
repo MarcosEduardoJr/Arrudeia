@@ -1,7 +1,7 @@
 package com.arrudeia.core.domain
 
 import com.arrudeia.core.data.network.StoriesRepositoryImpl
-import com.arrudeia.core.data.repository.StoryRepositoryEntity
+import com.arrudeia.core.data.entity.StoryRepositoryEntity
 import com.arrudeia.core.entity.StoryUseCaseEntity
 import javax.inject.Inject
 

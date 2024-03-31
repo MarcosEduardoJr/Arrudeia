@@ -1,13 +1,12 @@
 package com.arrudeia.core.data.network
 
-import com.arrudeia.core.data.repository.ArrudeiaTvRepositoryEntity
+import com.arrudeia.core.data.entity.ArrudeiaTvRepositoryEntity
 import com.arrudeia.core.data.repository.DefaultHomeTravelsRepository
-import com.arrudeia.core.data.repository.TravelRepositoryEntity
+import com.arrudeia.core.data.entity.TravelRepositoryEntity
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.suspendCancellableCoroutine
 import javax.inject.Inject
 import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
 
 
 class DefaultHomeTravelsRepositoryImpl @Inject constructor(

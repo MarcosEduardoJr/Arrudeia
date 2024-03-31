@@ -1,6 +1,6 @@
 package com.arrudeia.feature.home
 
-import com.arrudeia.core.data.repository.TravelRepositoryEntity
+import com.arrudeia.core.data.entity.TravelRepositoryEntity
 
 sealed interface ResultUiState {
     data object Loading : ResultUiState
