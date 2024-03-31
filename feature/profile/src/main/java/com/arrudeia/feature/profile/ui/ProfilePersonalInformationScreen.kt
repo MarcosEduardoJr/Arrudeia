@@ -3,12 +3,16 @@ package com.arrudeia.feature.profile.ui
 import android.Manifest
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Matrix
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
+import android.provider.MediaStore
 import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
@@ -24,6 +28,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Cameraswitch
+import androidx.compose.material.icons.filled.Photo
 import androidx.compose.material.icons.filled.PhotoCamera
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.Card
@@ -66,6 +71,7 @@ import com.arrudeia.core.designsystem.R.drawable.ic_person
 import com.arrudeia.core.designsystem.R.drawable.ic_smartphone
 import com.arrudeia.core.designsystem.component.ArrudeiaButtonColor
 import com.arrudeia.core.designsystem.component.ArrudeiaLoadingWheel
+import com.arrudeia.core.designsystem.component.CircularIconButton
 import com.arrudeia.core.designsystem.component.TextFieldInput
 import com.arrudeia.feature.profile.CameraPreview
 import com.arrudeia.feature.profile.viewmodel.ProfilePersonalInformationViewModel
@@ -503,8 +509,16 @@ private fun title(modifier: Modifier) {
 @Composable
 fun ImageSelectionScreen(
     viewModel: ProfilePersonalInformationViewModel,
-    showDialogChangePhotoChange: (Boolean) -> Unit
+    showDialogChangePhotoChange: (Boolean) -> Unit,
 ) {
+
+    val galleryLauncher =
+        rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            uri?.let {
+                viewModel.onTakePhoto(it)
+                showDialogChangePhotoChange(false)
+            }
+        }
     val context = LocalContext.current
     if (!hasRequiredPermissions(context)) {
         ActivityCompat.requestPermissions(
@@ -520,7 +534,6 @@ fun ImageSelectionScreen(
         }
         val scaffoldState = rememberBottomSheetScaffoldState()
         var showLoading by rememberSaveable { mutableStateOf(false) }
-
 
         BottomSheetScaffold(
             scaffoldState = scaffoldState,
@@ -574,7 +587,14 @@ fun ImageSelectionScreen(
                         horizontalArrangement = Arrangement.SpaceAround
                     ) {
 
-                        IconButton(
+                        CircularIconButton(
+                            onClick = {
+                                galleryLauncher.launch("image/*")
+                            },
+                            icon = Icons.Default.Photo
+                        )
+
+                        CircularIconButton(
                             onClick = {
                                 showLoading = true
                                 takePhoto(
@@ -583,26 +603,20 @@ fun ImageSelectionScreen(
                                     context = context,
                                     showDialogChangePhotoChange
                                 )
-                            }
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.PhotoCamera,
-                                contentDescription = "Take photo",
-                                tint = colorResource(id = colorPrimary)
-                            )
-                        }
+                            },
+                            icon = Icons.Default.PhotoCamera
+                        )
                     }
                 }
             }
         }
-
     }
 }
 
 
 private fun takePhoto(
     controller: LifecycleCameraController,
-    onPhotoTaken: (Uri, Bitmap) -> Unit,
+    onPhotoTaken: (Uri) -> Unit,
     context: Context,
     showDialogChangePhotoChange: (Boolean) -> Unit
 ) {
@@ -628,7 +642,7 @@ private fun takePhoto(
                 Log.e("Camera", "Sucesso rotate")
                 val uri = bitmapToUri(context, rotatedBitmap)
                 uri?.let {
-                    onPhotoTaken(it, rotatedBitmap)
+                    onPhotoTaken(it)
                 }
                 Log.e("Camera", "Sucesso onphotontaken")
                 showDialogChangePhotoChange(false)
@@ -645,14 +659,12 @@ private fun takePhoto(
 fun bitmapToUri(context: Context, bitmap: Bitmap): Uri? {
     var bitmapUri: Uri? = null
     try {
-        // Crie um arquivo temporário para armazenar o bitmap
         val file = File(context.externalCacheDir, UUID.randomUUID().toString() + ".png")
         val outputStream: OutputStream = FileOutputStream(file)
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
         outputStream.flush()
         outputStream.close()
 
-        // Obtenha a URI do arquivo temporário
         bitmapUri = Uri.fromFile(file)
     } catch (e: IOException) {
         e.printStackTrace()
@@ -682,5 +694,11 @@ class CAMERAX_UTIL {
             Manifest.permission.CAMERA
         )
     }
+}
 
+private const val PICK_IMAGE_REQUEST = 1
+
+fun openGallery(activity: Activity) {
+    val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+    activity.startActivityForResult(galleryIntent, PICK_IMAGE_REQUEST)
 }

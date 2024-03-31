@@ -106,15 +106,11 @@ private fun UserPersonalInformationUseCaseEntity.toUiModel(): ProfilePersonalInf
     return result
 }
 
-private val _bitmaps = MutableStateFlow<List<Bitmap>>(emptyList())
-val bitmaps = _bitmaps.asStateFlow()
-
 private val _uri = MutableLiveData<Uri?>()
 val uri: LiveData<Uri?> = _uri
 
-fun onTakePhoto(uri: Uri, bitmap: Bitmap) {
+fun onTakePhoto(uri: Uri) {
     _uri.value = uri
-    _bitmaps.value += bitmap
 }
 
 sealed interface PersonalInformationUiState {
