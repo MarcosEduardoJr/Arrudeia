@@ -5,7 +5,7 @@ androidGradlePlugin = "8.1.0"
 androidxActivity = "1.8.0-alpha06"
 androidxAppCompat = "1.5.1"
 androidxBrowser = "1.4.0"
-androidxComposeBom = "2023.06.01"
+androidxComposeBom = "2024.03.00"
 androidxComposeCompiler = "1.5.0"
 androidxComposeRuntimeTracing = "1.0.0-alpha03"
 androidxCore = "1.9.0"
@@ -63,8 +63,13 @@ mockkVer = "1.13.5"
 mockitoVer = "5.10.0"
 apolloVer = "3.8.3"
 cameraVer = "1.3.2"
+googleMapsVer = "0.15.0"
+placesVer = "3.0.0"
 [libraries]
 
+
+places = { group = "com.google.android.libraries.places", name = "places", version.ref = "placesVer" }
+google-maps-services = { group = "com.google.maps", name = "google-maps-services", version.ref = "googleMapsVer" }
 camera-camera2 = { group = "androidx.camera", name = "camera-camera2", version.ref = "cameraVer" }
 camera-lifecycle = { group = "androidx.camera", name = "camera-lifecycle", version.ref = "cameraVer" }
 camera-view = { group = "androidx.camera", name = "camera-view", version.ref = "cameraVer" }

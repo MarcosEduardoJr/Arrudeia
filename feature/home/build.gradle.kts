@@ -15,6 +15,7 @@ dependencies {
     implementation(project(":feature:stories"))
     implementation(project(":feature:trip"))
     implementation(project(":feature:profile"))
+    implementation(project(":feature:arrudeia"))
     implementation(libs.androidx.compose.material3)
     implementation(libs.glide.compose)
 

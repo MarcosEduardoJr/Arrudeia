@@ -1,4 +1,4 @@
-package com.arrudeia.feature.profile
+package com.arrudeia.feature.profile.ui
 
 import android.graphics.Bitmap
 import androidx.compose.foundation.Image

@@ -70,6 +70,7 @@ dependencies {
     implementation(project(":feature:trip"))
     implementation(project(":feature:stories"))
     implementation(project(":feature:profile"))
+    implementation(project(":feature:arrudeia"))
 
     implementation(libs.androidx.material3)
 

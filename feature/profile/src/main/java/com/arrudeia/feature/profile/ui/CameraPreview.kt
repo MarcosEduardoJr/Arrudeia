@@ -1,4 +1,4 @@
-package com.arrudeia.feature.profile
+package com.arrudeia.feature.profile.ui
 
 import androidx.camera.view.LifecycleCameraController
 import androidx.camera.view.PreviewView

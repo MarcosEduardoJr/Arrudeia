@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string name="loading">Carregando</string>
+    <string name="profile">Perfil</string>
+    <string name="personal_information">Informações Pessoais</string>
+    <string name="address">Endereço</string>
+    <string name="change_image">Alterar foto</string>
+    <string name="name">Nome</string>
+    <string name="full_name">Nome completo</string>
+    <string name="document_id">Cpf</string>
+    <string name="email">Email</string>
+    <string name="phone">Celular</string>
+    <string name="birth_date">Data de aniversário</string>
+    <string name="save">Salvar</string>
+    <string name="error_get_user">Não foi possível retornar os dados do usuário tente novamente mais tarde</string>
+    <string name="error_update_user">Não foi possível atualizar os dados do usuário tente novamente mais tarde</string>
+    <string name="success_saved_user">Atualizado</string>
+
+    <string name="zip_code">CEP</string>
+    <string name="street">Rua</string>
+    <string name="number">Número</string>
+    <string name="district">Bairro</string>
+    <string name="city">Cidade</string>
+    <string name="state">Estado</string>
+    <string name="country">País</string>
+    <string name="permission_location_rationale">permission_location_rationale</string>
+</resources>

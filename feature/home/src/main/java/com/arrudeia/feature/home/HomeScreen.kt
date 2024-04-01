@@ -1,8 +1,6 @@
 package com.arrudeia.feature.home
 
 
-import android.R
-import android.R.id
 import android.graphics.drawable.ColorDrawable
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -46,6 +44,7 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
@@ -58,9 +57,11 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.arrudeia.core.designsystem.R.color.background_grey_F7F7F9
+import com.arrudeia.core.designsystem.R.color.colorBlack
 import com.arrudeia.core.designsystem.R.color.colorPrimary
 import com.arrudeia.core.designsystem.R.drawable.ic_arrow_down
 import com.arrudeia.core.designsystem.R.drawable.ic_calendar
+import com.arrudeia.core.designsystem.R.drawable.ic_map_search
 import com.arrudeia.core.designsystem.R.drawable.ic_notification_on
 import com.arrudeia.core.designsystem.R.drawable.ic_pin
 import com.arrudeia.core.designsystem.R.drawable.ic_profile_edit
@@ -72,10 +73,12 @@ import com.arrudeia.feature.home.R.string.near_to_you
 import com.arrudeia.feature.home.R.string.travels_only_this_city
 import com.arrudeia.feature.home.model.ArrudeiaTvUIModel
 import com.arrudeia.feature.home.model.TravelUIModel
+import com.arrudeia.navigation.arrudeiaRoute
 import com.arrudeia.navigation.profileRoute
 import com.arrudeia.util.toCurrencyReal
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
+import com.bumptech.glide.integration.compose.Placeholder
 import com.bumptech.glide.integration.compose.placeholder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -287,6 +290,7 @@ fun search(modifier: Modifier, searchTravel: String, onSearchTravelChange: (Stri
     )
 }
 
+@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun header(
     modifier: Modifier,
@@ -307,14 +311,27 @@ fun header(
     Box(
         modifier = modifier
     ) {
-        avatar(
+        imageHeader(
             modifier = Modifier
                 .size(37.dp)
                 .align(Alignment.CenterStart)
-                .clickable { onRouteClick(profileRoute) }, image
+                .clickable { onRouteClick(profileRoute) },
+            image,
+            placeholder(painterResource(id = ic_profile_edit)),
+            null
         )
 
         cityDrop(modifier = Modifier.align(Alignment.Center), onShowSnackbar)
+
+        imageHeader(
+            modifier = Modifier
+                .size(37.dp)
+                .align(Alignment.CenterEnd)
+                .clickable { onRouteClick(arrudeiaRoute) },
+            String(),
+            placeholder(painterResource(id = ic_map_search)),
+            ColorFilter.tint(colorResource(id = colorPrimary))
+        )
     }
 }
 
@@ -333,7 +350,7 @@ fun cityDrop(modifier: Modifier, onShowSnackbar: suspend (String, String?) -> Bo
             modifier = Modifier.align(
                 Alignment.CenterVertically
             ),
-            tint = colorResource(id = colorPrimary)
+            tint = colorResource(id = colorBlack)
         )
         Text(text = "Recife, PE", modifier = Modifier.padding(4.dp))
         Icon(
@@ -344,14 +361,19 @@ fun cityDrop(modifier: Modifier, onShowSnackbar: suspend (String, String?) -> Bo
                     Alignment.CenterVertically
                 )
                 .size(12.dp),
-            tint = colorResource(id = colorPrimary)
+            tint = colorResource(id = colorBlack)
         )
     }
 }
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun avatar(modifier: Modifier, image: String) {
+fun imageHeader(
+    modifier: Modifier,
+    image: String,
+    placeholder: Placeholder,
+    colorIcon: ColorFilter?
+) {
 
     Card(
         modifier = modifier,
@@ -367,14 +389,15 @@ fun avatar(modifier: Modifier, image: String) {
                 .fillMaxSize()
         ) {
             GlideImage(
-                loading = placeholder(painterResource(id = ic_profile_edit)),
+                loading = placeholder,
                 model = image,
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .size(180.dp)
                     .clip(CircleShape),
-                 failure = placeholder(painterResource(id = ic_profile_edit))
+                failure = placeholder,
+                colorFilter = colorIcon
             )
         }
     }
@@ -483,7 +506,7 @@ fun travelItem(onRouteClick: (String) -> Unit, item: TravelUIModel, modifier: Mo
                         .height(18.dp)
                         .align(Alignment.Top),
                     colors = suggestionChipColors(containerColor = colorResource(id = colorPrimary)),
-                    border = suggestionChipBorder(borderColor = Color.Transparent),
+                    border = suggestionChipBorder(borderColor = Color.Transparent, enabled = true),
                     onClick = { },
                     label = {
                         Text(item.price.toCurrencyReal(), fontSize = 11.sp, color = Color.White)

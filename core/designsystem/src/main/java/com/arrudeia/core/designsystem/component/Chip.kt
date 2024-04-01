@@ -63,6 +63,8 @@ fun ArrudeiaFilterChip(
                 alpha = ArrudeiaChipDefaults.DisabledChipContentAlpha,
             ),
             selectedBorderWidth = ArrudeiaChipDefaults.ChipBorderWidth,
+            enabled = false,
+            selected = false
         ),
         colors = FilterChipDefaults.filterChipColors(
             labelColor = MaterialTheme.colorScheme.onBackground,

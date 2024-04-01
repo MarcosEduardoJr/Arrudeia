@@ -73,7 +73,7 @@ import com.arrudeia.core.designsystem.component.ArrudeiaButtonColor
 import com.arrudeia.core.designsystem.component.ArrudeiaLoadingWheel
 import com.arrudeia.core.designsystem.component.CircularIconButton
 import com.arrudeia.core.designsystem.component.TextFieldInput
-import com.arrudeia.feature.profile.CameraPreview
+import com.arrudeia.feature.profile.ui.CameraPreview
 import com.arrudeia.feature.profile.viewmodel.ProfilePersonalInformationViewModel
 import com.arrudeia.feature.profile.ui.CAMERAX_UTIL.Companion.CAMERAX_PERMISSIONS
 import com.arrudeia.feature.profile.viewmodel.ProfilePersonalInformationViewModel.PersonalInformationUiState
@@ -696,9 +696,4 @@ class CAMERAX_UTIL {
     }
 }
 
-private const val PICK_IMAGE_REQUEST = 1
 
-fun openGallery(activity: Activity) {
-    val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-    activity.startActivityForResult(galleryIntent, PICK_IMAGE_REQUEST)
-}
