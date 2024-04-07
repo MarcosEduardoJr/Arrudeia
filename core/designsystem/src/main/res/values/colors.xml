@@ -11,6 +11,7 @@
     <color name="colorBlack">#000</color>
     <color name="background_grey_F7F7F9">#F7F7F9</color>
 
+    <color name="text_grey">#949494</color>
     <color name="background_green_008000">#008000</color>
     <color name="background_red_FF0000">#FF0000</color>
 </resources>

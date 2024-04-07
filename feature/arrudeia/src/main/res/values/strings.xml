@@ -25,4 +25,12 @@
     <string name="state">Estado</string>
     <string name="country">País</string>
     <string name="permission_location_rationale">permission_location_rationale</string>
+    <string name="cancel">Cancelar</string>
+    <string name="add_new_place">Adcione um novo lugar</string>
+    <string name="type">Tipo do lugar</string>
+    <string name="type_of_place">Tipo do lugar</string>
+    <string name="category_of_place">Categoria de lugar</string>
+    <string name="tell_us_more_about_the_place">Fale-nos mais sobre o lugar</string>
+    <string name="social_network">Rede social</string>
+    <string name="description">Descrição</string>
 </resources>

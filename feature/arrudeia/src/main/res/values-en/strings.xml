@@ -22,4 +22,6 @@
     <string name="city">City</string>
     <string name="state">State</string>
     <string name="country">Country</string>
+    <string name="permission_location_rationale">permission_location_rationale</string>
+    <string name="search_local">Search location (example: address, building name)</string>
 </resources>

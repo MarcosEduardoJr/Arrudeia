@@ -9,6 +9,9 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.arrudeia.feature.arrudeia.mock.categoriesPlace
+import com.arrudeia.feature.arrudeia.model.ArrudeiaCategoryPlace
+import com.arrudeia.feature.arrudeia.model.ArrudeiaPlaceDetails
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.Priority
 import com.google.android.libraries.places.api.model.Place
@@ -20,6 +23,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 
 
 sealed class LocationState {
@@ -47,6 +51,8 @@ class ArrudeiaViewModel @Inject constructor(
     val locationAutofill = mutableStateListOf<AutocompleteResult>()
 
     var currentLatLong by mutableStateOf(LatLng(0.0, 0.0))
+
+    var categoryPlaces : List<ArrudeiaCategoryPlace> = categoriesPlace()
 
     private var job: Job? = null
 
@@ -81,6 +87,18 @@ class ArrudeiaViewModel @Inject constructor(
         }
     }
 
+    fun getCoordinatesSaveMarker(result: AutocompleteResult, place: ArrudeiaPlaceDetails) {
+        val placeFields = listOf(Place.Field.LAT_LNG)
+        val request = FetchPlaceRequest.newInstance(result.placeId, placeFields)
+        placesClient.fetchPlace(request).addOnSuccessListener {
+            if (it != null) {
+                places.add(place)
+            }
+        }.addOnFailureListener {
+            it.printStackTrace()
+        }
+    }
+
     @SuppressLint("MissingPermission")
     fun getCurrentLocation() {
         locationState = LocationState.LocationLoading
@@ -109,7 +127,14 @@ class ArrudeiaViewModel @Inject constructor(
             text = address?.get(0)?.getAddressLine(0).toString()
         }
     }
+
+    val places = mutableStateListOf<ArrudeiaPlaceDetails>()
+
+    fun addPlace(place: ArrudeiaPlaceDetails) {
+            places.add(place)
+    }
 }
+
 
 data class MapViewState(
     val currentLocation: LatLng?,
