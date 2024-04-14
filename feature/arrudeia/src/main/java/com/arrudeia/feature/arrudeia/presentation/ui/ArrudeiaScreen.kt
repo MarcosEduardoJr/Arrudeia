@@ -38,11 +38,14 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AddLocationAlt
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.LocationOn
+import androidx.compose.material.icons.rounded.Route
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -65,6 +68,7 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -78,6 +82,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.location.LocationManagerCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.arrudeia.core.designsystem.component.ArrudeiaButtonColor
 import com.arrudeia.core.designsystem.component.ArrudeiaLoadingWheel
 import com.arrudeia.core.designsystem.component.TextFieldInput
 import com.arrudeia.core.designsystem.component.camera.ImageSelectionScreen
@@ -308,7 +313,8 @@ private fun searchAddress(
     var phone by rememberSaveable { mutableStateOf("") }
     var socialNetwork by rememberSaveable { mutableStateOf("") }
     var name by rememberSaveable { mutableStateOf("") }
-
+    var arrudeia by rememberSaveable { mutableStateOf(false) }
+    var searchPlace by rememberSaveable { mutableStateOf(false) }
 
     if (showCamera)
         ImageSelectionScreen(
@@ -320,7 +326,7 @@ private fun searchAddress(
             modifier = modifier,
         ) {
 
-            if (addMarker){
+            if (addMarker) {
                 AddMarkerBottomSheet(
                     {
                         addMarker = false
@@ -344,28 +350,29 @@ private fun searchAddress(
                     cameraPositionState,
                     onShowSnackbar
                 )
-        }
+            }
 
-            FloatingActionButton(
+            val titleAddNewPlace = stringResource(id = R.string.add_new_place)
+            ExtendedFloatingActionButton(
+                text = { Text(text = titleAddNewPlace) },
+                icon = { Icon(Icons.Rounded.AddLocationAlt, null) },
                 modifier = Modifier
                     .align(Alignment.End)
-                    .padding(16.dp),
+                    .padding(end = 16.dp, bottom = 16.dp),
                 shape = CircleShape,
                 onClick = {
                     addMarker = true
                 },
                 containerColor = colorResource(id = com.arrudeia.core.designsystem.R.color.colorPrimary),
                 contentColor = Color.White
-            ) {
-                Icon(Icons.Rounded.AddLocationAlt, null)
-            }
+            )
+
 
             Box(
                 modifier = Modifier
                     .background(
                         color,
-                        // rounded corner to match with the OutlinedTextField
-                        shape = RoundedCornerShape(4.dp)
+                        shape = RoundedCornerShape(16.dp)
                     )
             ) {
 
@@ -375,7 +382,24 @@ private fun searchAddress(
                         .heightIn(100.dp, 400.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
+
+                    val keyboardController = LocalSoftwareKeyboardController.current
                     var focusInSearchAddress by remember { mutableStateOf(false) }
+
+                    if (focusInSearchAddress) {
+                        Text(
+                            modifier = Modifier
+                                .padding(16.dp)
+                                .align(Alignment.End)
+                                .clickable { focusInSearchAddress = false },
+                            text = stringResource(R.string.down),
+                            color = colorResource(id = com.arrudeia.core.designsystem.R.color.text_grey)
+                        )
+                    } else {
+                        keyboardController?.hide()
+                    }
+
+
                     searchAddressInput(
                         Modifier
                             .fillMaxWidth()
@@ -383,12 +407,39 @@ private fun searchAddress(
                             .clip(CircleShape)
                             .onFocusChanged {
                                 focusInSearchAddress = it.isFocused
-                            }, viewModel
+                            }, viewModel, arrudeiaChange = { arrudeia = it }
                     )
 
-                    resultSearchAddress(focusInSearchAddress, viewModel)
+                    resultSearchAddress(
+                        focusInSearchAddress,
+                        viewModel,
+                        arrudeiaChange = { arrudeia = it },
+                        focusInSearchAddressChange = { focusInSearchAddress = it })
+
+                    if (arrudeia) {
+                        ArrudeiaButtonColor(
+                            onClick = {
+
+                            },
+                            modifier = Modifier
+                                .padding(16.dp)
+                                .fillMaxWidth(),
+                            colorButton = colorResource(com.arrudeia.core.designsystem.R.color.colorPrimary),
+                        ) {
+                            Icon(
+                                painterResource(id = com.arrudeia.core.designsystem.R.drawable.ic_navigation_up),
+                                contentDescription = null,
+                            )
+                            Text(
+                                text = stringResource(id = R.string.arrudeia),
+                                style = MaterialTheme.typography.titleMedium,
+                                color = Color.White
+                            )
+                        }
+                    }
                 }
             }
+
         }
 }
 
@@ -797,6 +848,7 @@ private fun formCategoriesDetail(
 private fun searchAddressInput(
     modifier: Modifier,
     viewModel: ArrudeiaViewModel,
+    arrudeiaChange: (Boolean) -> Unit
 ) {
     TextField(
         modifier = modifier,
@@ -804,6 +856,7 @@ private fun searchAddressInput(
         onValueChange = {
             viewModel.text = it
             viewModel.searchPlaces(it)
+            arrudeiaChange(false)
         },
         label = { Text(text = stringResource(R.string.address)) },
         minLines = 2,
@@ -827,7 +880,9 @@ private fun searchAddressInput(
 @Composable
 private fun ColumnScope.resultSearchAddress(
     focusInSearchAddress: Boolean,
-    viewModel: ArrudeiaViewModel
+    viewModel: ArrudeiaViewModel,
+    arrudeiaChange: (Boolean) -> Unit,
+    focusInSearchAddressChange: (Boolean) -> Unit,
 ) {
     AnimatedVisibility(
         focusInSearchAddress,
@@ -838,6 +893,7 @@ private fun ColumnScope.resultSearchAddress(
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
+
             items(viewModel.locationAutofill) {
                 Row(modifier = Modifier
                     .fillMaxWidth()
@@ -846,6 +902,8 @@ private fun ColumnScope.resultSearchAddress(
                         viewModel.text = it.address
                         viewModel.locationAutofill.clear()
                         viewModel.getCoordinates(it)
+                        arrudeiaChange(true)
+                        focusInSearchAddressChange(false)
                     }) {
                     Text(it.address, color = Color.Black)
                 }

@@ -17,6 +17,7 @@
     <string name="error_update_user">Não foi possível atualizar os dados do usuário tente novamente mais tarde</string>
     <string name="success_saved_user">Atualizado</string>
 
+
     <string name="zip_code">CEP</string>
     <string name="street">Rua</string>
     <string name="number">Número</string>
@@ -172,4 +173,7 @@
     <string name="CATEGORY_PUBLIC_SERVICE">Serviço Público</string>
     <string name="CATEGORY_TRANSPORT">Transporte</string>
     <string name="CATEGORY_CAR_SERVICES">Serviços para Carro</string>
+    <string name="search_place">Pesquisar endereço</string>
+    <string name="arrudeia">Arrudeia</string>
+    <string name="down">Descer</string>
 </resources>
