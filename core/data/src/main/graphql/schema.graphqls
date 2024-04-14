@@ -15,12 +15,38 @@ type UserGraph {
     country: String
 }
 
+type ArrudeiaPlace {
+    available: [ArrudeiaAvailablePlaceGraph]
+    description: String
+    categoryName: String
+    image: String
+    latitude: Float
+    longitude: Float
+    name: String
+    phone: String
+    priceLevel: Int
+    rating: Float
+    socialNetwork: String
+    subCategoryName: String
+    uuid: String
+}
+
+type ArrudeiaAvailablePlaceGraph {
+    id: ID
+    name: String
+    placeId: String
+}
+
 type Query {
     _entities(representations: [_Any!]!): [_Entity]!
 
     _service: _Service!
 
-     user(uuid: String!): UserGraph
+    user(uuid: String!): UserGraph
+
+    arrudeiaPlaces: [ArrudeiaPlace]
+    arrudeiaPlace(uuid: String!): ArrudeiaPlace
+    arrudeiaAvailablePlace(placeId: String!): ArrudeiaAvailablePlaceGraph
 }
 
 type Mutation {
@@ -51,6 +77,27 @@ type Mutation {
         state: String
         country: String
     ) : String
+
+    createArrudeiaPlace(
+        categoryName: String,
+        description: String,
+        image: String,
+        latitude: Float,
+        longitude: Float,
+        name: String,
+        phone: String,
+        priceLevel: Int,
+        rating: Float,
+        socialNetwork: String,
+        subCategoryName: String,
+        uuid: String
+    ) : String
+
+    createArrudeiaAvailablePlace(
+        name: String,
+        placeId: String
+    ) : String
+
 }
 
 

@@ -10,7 +10,7 @@
     <string name="email">Email</string>
     <string name="phone">Cell phone</string>
     <string name="birth_date">Birthday</string>
-    <string name="save">save</string>
+    <string name="save">Save</string>
     <string name="error_get_user">Unable to return user data, try again later</string>
     <string name="error_update_user">Unable to update user data, try again later</string>
     <string name="success_saved_user">Updated</string>

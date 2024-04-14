@@ -44,4 +44,7 @@ dependencies {
     testImplementation(libs.mockito.core)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.mockk)
+
+    implementation(libs.firebase.auth)
+    implementation(libs.apollo.runtime)
 }

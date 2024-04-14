@@ -1,24 +1,6 @@
 package com.arrudeia.feature.profile.ui
 
-import android.Manifest
-import android.app.Activity
-import android.content.Context
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.Matrix
 import android.graphics.drawable.ColorDrawable
-import android.net.Uri
-import android.provider.MediaStore
-import android.util.Log
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.ImageCapture
-import androidx.camera.core.ImageCaptureException
-import androidx.camera.core.ImageProxy
-import androidx.camera.view.CameraController
-import androidx.camera.view.LifecycleCameraController
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -26,19 +8,10 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Cameraswitch
-import androidx.compose.material.icons.filled.Photo
-import androidx.compose.material.icons.filled.PhotoCamera
-import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -47,7 +20,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -58,8 +30,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.arrudeia.core.designsystem.R.color.background_grey_F7F7F9
@@ -71,26 +41,18 @@ import com.arrudeia.core.designsystem.R.drawable.ic_person
 import com.arrudeia.core.designsystem.R.drawable.ic_smartphone
 import com.arrudeia.core.designsystem.component.ArrudeiaButtonColor
 import com.arrudeia.core.designsystem.component.ArrudeiaLoadingWheel
-import com.arrudeia.core.designsystem.component.CircularIconButton
 import com.arrudeia.core.designsystem.component.TextFieldInput
-import com.arrudeia.feature.profile.ui.CameraPreview
-import com.arrudeia.feature.profile.viewmodel.ProfilePersonalInformationViewModel
-import com.arrudeia.feature.profile.ui.CAMERAX_UTIL.Companion.CAMERAX_PERMISSIONS
-import com.arrudeia.feature.profile.viewmodel.ProfilePersonalInformationViewModel.PersonalInformationUiState
-
-import com.arrudeia.feature.profile.viewmodel.ProfilePersonalInformationViewModel.PersonalInformationUpdateUserUiState
+import com.arrudeia.core.designsystem.component.camera.ImageSelectionScreen
 import com.arrudeia.feature.profile.R
-
+import com.arrudeia.feature.profile.viewmodel.ProfilePersonalInformationViewModel
+import com.arrudeia.feature.profile.viewmodel.ProfilePersonalInformationViewModel.PersonalInformationUiState
+import com.arrudeia.feature.profile.viewmodel.ProfilePersonalInformationViewModel.PersonalInformationUpdateUserUiState
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
-import java.io.OutputStream
 import java.util.*
 
 @Composable
@@ -112,7 +74,7 @@ fun ProfilePersonalInformationRoute(
 
     if (showDialogChangePhoto)
         ImageSelectionScreen(
-            viewModel = viewModel,
+            { viewModel.onTakePhoto(it) },
             { showDialogChangePhoto = it }
         )
     else
@@ -505,172 +467,7 @@ private fun title(modifier: Modifier) {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun ImageSelectionScreen(
-    viewModel: ProfilePersonalInformationViewModel,
-    showDialogChangePhotoChange: (Boolean) -> Unit,
-) {
 
-    val galleryLauncher =
-        rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-            uri?.let {
-                viewModel.onTakePhoto(it)
-                showDialogChangePhotoChange(false)
-            }
-        }
-    val context = LocalContext.current
-    if (!hasRequiredPermissions(context)) {
-        ActivityCompat.requestPermissions(
-            context as Activity, CAMERAX_PERMISSIONS, 0
-        )
-    } else {
-        val controller = remember {
-            LifecycleCameraController(context).apply {
-                setEnabledUseCases(
-                    CameraController.IMAGE_CAPTURE
-                )
-            }
-        }
-        val scaffoldState = rememberBottomSheetScaffoldState()
-        var showLoading by rememberSaveable { mutableStateOf(false) }
-
-        BottomSheetScaffold(
-            scaffoldState = scaffoldState,
-            sheetPeekHeight = 0.dp,
-            sheetContent = {
-
-            }
-        ) { padding ->
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding)
-                    .background(Color.White)
-            ) {
-
-                CameraPreview(
-                    controller = controller,
-                    modifier = Modifier
-                        .fillMaxSize()
-                )
-
-                if (showLoading)
-                    ArrudeiaLoadingWheel(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(50.dp),
-                    ) else {
-
-                    IconButton(
-                        onClick = {
-                            controller.cameraSelector =
-                                if (controller.cameraSelector == CameraSelector.DEFAULT_BACK_CAMERA) {
-                                    CameraSelector.DEFAULT_FRONT_CAMERA
-                                } else CameraSelector.DEFAULT_BACK_CAMERA
-                        },
-                        modifier = Modifier
-                            .offset(16.dp, 16.dp)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Cameraswitch,
-                            contentDescription = "Switch camera",
-                            tint = colorResource(id = colorPrimary)
-                        )
-                    }
-
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .align(Alignment.BottomCenter)
-                            .padding(16.dp),
-                        horizontalArrangement = Arrangement.SpaceAround
-                    ) {
-
-                        CircularIconButton(
-                            onClick = {
-                                galleryLauncher.launch("image/*")
-                            },
-                            icon = Icons.Default.Photo
-                        )
-
-                        CircularIconButton(
-                            onClick = {
-                                showLoading = true
-                                takePhoto(
-                                    controller = controller,
-                                    onPhotoTaken = viewModel::onTakePhoto,
-                                    context = context,
-                                    showDialogChangePhotoChange
-                                )
-                            },
-                            icon = Icons.Default.PhotoCamera
-                        )
-                    }
-                }
-            }
-        }
-    }
-}
-
-
-private fun takePhoto(
-    controller: LifecycleCameraController,
-    onPhotoTaken: (Uri) -> Unit,
-    context: Context,
-    showDialogChangePhotoChange: (Boolean) -> Unit
-) {
-    controller.takePicture(
-        ContextCompat.getMainExecutor(context),
-        object : ImageCapture.OnImageCapturedCallback() {
-            override fun onCaptureSuccess(image: ImageProxy) {
-                super.onCaptureSuccess(image)
-                Log.e("Camera", "Sucesso")
-                val matrix = Matrix().apply {
-                    postRotate(image.imageInfo.rotationDegrees.toFloat())
-                }
-                Log.e("Camera", "Sucesso matrix")
-                val rotatedBitmap = Bitmap.createBitmap(
-                    image.toBitmap(),
-                    0,
-                    0,
-                    image.width,
-                    image.height,
-                    matrix,
-                    true
-                )
-                Log.e("Camera", "Sucesso rotate")
-                val uri = bitmapToUri(context, rotatedBitmap)
-                uri?.let {
-                    onPhotoTaken(it)
-                }
-                Log.e("Camera", "Sucesso onphotontaken")
-                showDialogChangePhotoChange(false)
-            }
-
-            override fun onError(exception: ImageCaptureException) {
-                super.onError(exception)
-                Log.e("Camera", "Couldn't take photo: ", exception)
-            }
-        }
-    )
-}
-
-fun bitmapToUri(context: Context, bitmap: Bitmap): Uri? {
-    var bitmapUri: Uri? = null
-    try {
-        val file = File(context.externalCacheDir, UUID.randomUUID().toString() + ".png")
-        val outputStream: OutputStream = FileOutputStream(file)
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
-        outputStream.flush()
-        outputStream.close()
-
-        bitmapUri = Uri.fromFile(file)
-    } catch (e: IOException) {
-        e.printStackTrace()
-    }
-    return bitmapUri
-}
 
 
 @Preview(showBackground = true)
@@ -679,21 +476,6 @@ fun DefaultPreview() {
     ImageSelectionScreen(hiltViewModel(), {})
 }
 
-private fun hasRequiredPermissions(context: Context): Boolean {
-    return CAMERAX_PERMISSIONS.all {
-        ContextCompat.checkSelfPermission(
-            context,
-            it
-        ) == PackageManager.PERMISSION_GRANTED
-    }
-}
 
-class CAMERAX_UTIL {
-    companion object {
-        val CAMERAX_PERMISSIONS = arrayOf(
-            Manifest.permission.CAMERA
-        )
-    }
-}
 
 

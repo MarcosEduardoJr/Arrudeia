@@ -169,7 +169,7 @@ fun ListItemView(
                             ArrudeiaLoadingWheel(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .height(50.dp)
+                                    .height (50.dp)
                             )
                         }
 

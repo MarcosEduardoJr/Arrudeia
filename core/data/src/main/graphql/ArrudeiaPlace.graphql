@@ -1,0 +1,77 @@
+query GetArrudeiaPlaces {
+    arrudeiaPlaces {
+        available {
+            id
+            name
+            placeId
+        }
+        categoryName
+        description
+        image
+        latitude
+        longitude
+        name
+        phone
+        priceLevel
+        rating
+        socialNetwork
+        subCategoryName
+        uuid
+    }
+}
+
+query GetArrudeiaPlace($uuid: String!) {
+    arrudeiaPlace(uuid: $uuid) {
+        available {
+            id
+            name
+            placeId
+        }
+        description
+        categoryName
+        image
+        latitude
+        longitude
+        name
+        phone
+        priceLevel
+        rating
+        socialNetwork
+        subCategoryName
+        uuid
+    }
+}
+
+query GetArrudeiaAvailablePlace($placeId: String!) {
+    arrudeiaAvailablePlace(placeId: $placeId) {
+        placeId
+        name
+        id
+    }
+}
+
+
+mutation CreateArrudeiaPlace($categoryName: String!, $description: String!, $image: String!, $latitude: Float!, $longitude: Float!, $name: String!, $phone: String!, $priceLevel: Int!, $rating: Float!, $socialNetwork: String!, $subCategoryName: String!, $uuid: String!) {
+    createArrudeiaPlace(
+        categoryName: $categoryName
+        description: $description
+        image: $image
+        latitude: $latitude
+        longitude: $longitude
+        name: $name
+        phone: $phone
+        priceLevel: $priceLevel
+        rating: $rating
+        socialNetwork: $socialNetwork
+        subCategoryName: $subCategoryName
+        uuid: $uuid
+    )
+}
+
+mutation CreateArrudeiaAvailablePlace($name: String!, $placeId: String!) {
+    createArrudeiaAvailablePlace(
+        name: $name
+        placeId: $placeId
+    )
+}
+

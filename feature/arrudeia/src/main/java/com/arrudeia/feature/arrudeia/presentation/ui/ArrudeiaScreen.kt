@@ -1,4 +1,4 @@
-package com.arrudeia.feature.arrudeia.ui
+package com.arrudeia.feature.arrudeia.presentation.ui
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -63,6 +63,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -76,17 +77,22 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.location.LocationManagerCompat
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.arrudeia.core.designsystem.component.ArrudeiaLoadingWheel
 import com.arrudeia.core.designsystem.component.TextFieldInput
+import com.arrudeia.core.designsystem.component.camera.ImageSelectionScreen
 import com.arrudeia.core.network.BuildConfig
 import com.arrudeia.feature.arrudeia.R
-import com.arrudeia.feature.arrudeia.model.ArrudeiaAvailablePlace
-import com.arrudeia.feature.arrudeia.model.ArrudeiaCategoryPlace
-import com.arrudeia.feature.arrudeia.model.ArrudeiaPlaceDetails
-import com.arrudeia.feature.arrudeia.model.ArrudeiaSubCategoryPlace
-import com.arrudeia.feature.arrudeia.ui.MAPS_UTIL.Companion.MAPS_PERMISSIONS
-import com.arrudeia.feature.arrudeia.ui.MAPS_UTIL.Companion.PERMISSION_REQUEST_CODE
-import com.arrudeia.feature.arrudeia.viewmodel.ArrudeiaViewModel
-import com.arrudeia.feature.arrudeia.viewmodel.LocationState
+import com.arrudeia.feature.arrudeia.presentation.model.ArrudeiaCategoryPlaceUiModel
+import com.arrudeia.feature.arrudeia.presentation.model.ArrudeiaPlaceDetailsUiModel
+import com.arrudeia.feature.arrudeia.presentation.model.ArrudeiaSubCategoryPlaceUiModel
+import com.arrudeia.feature.arrudeia.presentation.ui.MAPS_UTIL.Companion.MAPS_PERMISSIONS
+import com.arrudeia.feature.arrudeia.presentation.ui.MAPS_UTIL.Companion.PERMISSION_REQUEST_CODE
+import com.arrudeia.feature.arrudeia.presentation.viewmodel.ArrudeiaViewModel
+import com.arrudeia.feature.arrudeia.presentation.viewmodel.LocationState
+import com.arrudeia.feature.arrudeia.presentation.viewmodel.SaveMarkerUiState
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.android.gms.common.api.ResolvableApiException
@@ -105,7 +111,6 @@ import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.maps.android.compose.rememberMarkerState
 import kotlinx.coroutines.launch
-import okhttp3.internal.filterList
 
 
 @Composable
@@ -123,13 +128,13 @@ fun ArrudeiaRoute(
             context as Activity, MAPS_PERMISSIONS, PERMISSION_REQUEST_CODE
         )
     } else {
-
+        viewModel.getPlacesMarker()
         viewModel.fusedLocationClient =
             LocationServices.getFusedLocationProviderClient(context as Activity)
         Places.initialize(context.applicationContext, BuildConfig.MAPS_API_KEY)
         viewModel.placesClient = Places.createClient(context)
         viewModel.geoCoder = Geocoder(context)
-        LocationScreen(viewModel = viewModel)
+        LocationScreen(viewModel = viewModel, onShowSnackbar = onShowSnackbar)
     }
 }
 
@@ -138,7 +143,11 @@ fun ArrudeiaRoute(
     ExperimentalMaterial3Api::class
 )
 @Composable
-fun LocationScreen(modifier: Modifier = Modifier, viewModel: ArrudeiaViewModel) {
+fun LocationScreen(
+    modifier: Modifier = Modifier,
+    viewModel: ArrudeiaViewModel,
+    onShowSnackbar: suspend (String, String?) -> Boolean,
+) {
     val activity = LocalContext.current as Activity
     val locationPermissionState = rememberMultiplePermissionsState(
         listOf(
@@ -210,7 +219,11 @@ fun LocationScreen(modifier: Modifier = Modifier, viewModel: ArrudeiaViewModel) 
                     }
                 }
 
-                var isPlaceClicked by rememberSaveable { mutableStateOf<ArrudeiaPlaceDetails?>(null) }
+                var isPlaceClicked by rememberSaveable {
+                    mutableStateOf<ArrudeiaPlaceDetailsUiModel?>(
+                        null
+                    )
+                }
 
 
 
@@ -231,21 +244,22 @@ fun LocationScreen(modifier: Modifier = Modifier, viewModel: ArrudeiaViewModel) 
                         },
                     ) {
                         viewModel.places.forEach { place ->
-                            Marker(
-                                state = rememberMarkerState(
-                                    position = LatLng(
-                                        place.location.latitude,
-                                        place.location.longitude
-                                    )
-                                ),
-                                draggable = false,
-                                title = place.name,
-                                onClick = {
-                                    isPlaceClicked = place
-                                    false
-                                }
-                            )
-
+                            place.location?.let {
+                                Marker(
+                                    state = rememberMarkerState(
+                                        position = LatLng(
+                                            it.latitude,
+                                            it.longitude
+                                        )
+                                    ),
+                                    draggable = false,
+                                    title = place.name,
+                                    onClick = {
+                                        isPlaceClicked = place
+                                        false
+                                    }
+                                )
+                            }
 
                         }
                     }
@@ -268,7 +282,7 @@ fun LocationScreen(modifier: Modifier = Modifier, viewModel: ArrudeiaViewModel) 
                         searchAddress(
                             modifier = Modifier
                                 .align(Alignment.BottomCenter)
-                                .fillMaxWidth(), viewModel, cameraPositionState
+                                .fillMaxWidth(), viewModel, cameraPositionState, onShowSnackbar
                         )
                     }
                 }
@@ -281,98 +295,235 @@ fun LocationScreen(modifier: Modifier = Modifier, viewModel: ArrudeiaViewModel) 
 private fun searchAddress(
     modifier: Modifier,
     viewModel: ArrudeiaViewModel,
-    cameraPositionState: CameraPositionState
+    cameraPositionState: CameraPositionState,
+    onShowSnackbar: suspend (String, String?) -> Boolean,
 ) {
     val color = colorResource(id = com.arrudeia.core.designsystem.R.color.background_grey_F7F7F9)
     var addMarker by rememberSaveable { mutableStateOf(false) }
     var saveMarker by rememberSaveable { mutableStateOf(false) }
+    var showCamera by rememberSaveable { mutableStateOf(false) }
+    var categoryChose by rememberSaveable { mutableStateOf<ArrudeiaCategoryPlaceUiModel?>(null) }
+    var subCategoryChose by rememberSaveable { mutableStateOf<ArrudeiaSubCategoryPlaceUiModel?>(null) }
+    var description by rememberSaveable { mutableStateOf("") }
+    var phone by rememberSaveable { mutableStateOf("") }
+    var socialNetwork by rememberSaveable { mutableStateOf("") }
+    var name by rememberSaveable { mutableStateOf("") }
 
-    Column(
-        modifier = modifier,
-    ) {
-        if (saveMarker) {
-            viewModel.addPlace(
-                ArrudeiaPlaceDetails(
-                    "teste",
-                    "teste",
-                    cameraPositionState.position.target,
-                    4.0f,
-                    1,
-                    listOf()
-                )
-            )
-            addMarker = false
-        }
-        if (addMarker)
-            DialogWithImage(
-                { addMarker = false },
-                { saveMarker = true },
-                viewModel
-            )
-        FloatingActionButton(
-            modifier = Modifier
-                .align(Alignment.End)
-                .padding(16.dp),
-            shape = CircleShape,
-            onClick = {
-                addMarker = true
-            },
-            containerColor = colorResource(id = com.arrudeia.core.designsystem.R.color.colorPrimary),
-            contentColor = Color.White
-        ) {
-            Icon(Icons.Rounded.AddLocationAlt, null)
-        }
-        Box(
-            modifier = Modifier
-                .background(
-                    color,
-                    // rounded corner to match with the OutlinedTextField
-                    shape = RoundedCornerShape(4.dp)
-                )
+
+    if (showCamera)
+        ImageSelectionScreen(
+            { viewModel.onTakePhoto(it) },
+            { showCamera = it }
+        )
+    else
+        Column(
+            modifier = modifier,
         ) {
 
-            Column(
+            if (addMarker){
+                AddMarkerBottomSheet(
+                    {
+                        addMarker = false
+                        viewModel.onTakePhoto(null)
+                    },
+                    { saveMarker = true },
+                    viewModel,
+                    showCameraChange = { showCamera = it },
+                    categoryPlaceChange = { categoryChose = it },
+                    subCategoryPlaceChange = { subCategoryChose = it },
+                    categoryChose,
+                    subCategoryChose,
+                    name,
+                    { name = it },
+                    phone,
+                    { phone = it },
+                    socialNetwork,
+                    { socialNetwork = it },
+                    description,
+                    { description = it },
+                    cameraPositionState,
+                    onShowSnackbar
+                )
+        }
+
+            FloatingActionButton(
                 modifier = Modifier
-                    .padding(16.dp)
-                    .heightIn(100.dp, 400.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+                    .align(Alignment.End)
+                    .padding(16.dp),
+                shape = CircleShape,
+                onClick = {
+                    addMarker = true
+                },
+                containerColor = colorResource(id = com.arrudeia.core.designsystem.R.color.colorPrimary),
+                contentColor = Color.White
             ) {
-                var focusInSearchAddress by remember { mutableStateOf(false) }
-                searchAddressInput(
-                    Modifier
-                        .fillMaxWidth()
-                        .wrapContentHeight(Alignment.CenterVertically)
-                        .clip(CircleShape)
-                        .onFocusChanged {
-                            focusInSearchAddress = it.isFocused
-                        }, viewModel
-                )
+                Icon(Icons.Rounded.AddLocationAlt, null)
+            }
 
-                resultSearchAddress(focusInSearchAddress, viewModel)
+            Box(
+                modifier = Modifier
+                    .background(
+                        color,
+                        // rounded corner to match with the OutlinedTextField
+                        shape = RoundedCornerShape(4.dp)
+                    )
+            ) {
+
+                Column(
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .heightIn(100.dp, 400.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    var focusInSearchAddress by remember { mutableStateOf(false) }
+                    searchAddressInput(
+                        Modifier
+                            .fillMaxWidth()
+                            .wrapContentHeight(Alignment.CenterVertically)
+                            .clip(CircleShape)
+                            .onFocusChanged {
+                                focusInSearchAddress = it.isFocused
+                            }, viewModel
+                    )
+
+                    resultSearchAddress(focusInSearchAddress, viewModel)
+                }
             }
         }
-    }
 }
+
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DialogWithImage(
+fun AddMarkerBottomSheet(
     onDismissRequest: () -> Unit,
     onConfirmation: () -> Unit,
     viewModel: ArrudeiaViewModel,
+    showCameraChange: (Boolean) -> Unit,
+    categoryPlaceChange: (ArrudeiaCategoryPlaceUiModel?) -> Unit,
+    subCategoryPlaceChange: (ArrudeiaSubCategoryPlaceUiModel?) -> Unit,
+    categoryPlace: ArrudeiaCategoryPlaceUiModel?,
+    subCategoryPlace: ArrudeiaSubCategoryPlaceUiModel?,
+    name: String?,
+    onNameChange: (String) -> Unit,
+    phone: String?,
+    onPhoneChange: (String) -> Unit,
+    socialNetwork: String?,
+    onSocialNetworkChange: (String) -> Unit,
+    description: String?,
+    onDescriptionChange: (String) -> Unit,
+    cameraPositionState: CameraPositionState,
+    onShowSnackbar: suspend (String, String?) -> Boolean,
 ) {
-    var categoryChose by rememberSaveable { mutableStateOf<ArrudeiaCategoryPlace?>(null) }
-    var subCategoryChose by rememberSaveable { mutableStateOf<ArrudeiaSubCategoryPlace?>(null) }
-
-
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
     val sheetState = rememberModalBottomSheetState()
+    val saveMarkerSharedFlow by viewModel.saveMarkerSharedFlow.collectAsStateWithLifecycle()
+    var saving by rememberSaveable { mutableStateOf(false) }
     ModalBottomSheet(
         containerColor = colorResource(id = com.arrudeia.core.designsystem.R.color.background_grey_F7F7F9),
         onDismissRequest = onDismissRequest,
         sheetState = sheetState
     ) {
 
+        if (saving)
+            when (saveMarkerSharedFlow) {
+                is SaveMarkerUiState.Success -> {
+                    saving = false
+                    onDismissRequest()
+                }
+
+                is SaveMarkerUiState.Error -> {
+                    saving = false
+                    val message =
+                        stringResource((saveMarkerSharedFlow as SaveMarkerUiState.Error).message)
+                    LaunchedEffect(Unit) {
+                        scope.launch {
+                            onShowSnackbar(
+                                message,
+                                ""
+                            )
+                        }
+                    }
+                    onDismissRequest()
+                }
+
+                is SaveMarkerUiState.Loading -> {
+                    ArrudeiaLoadingWheel(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(50.dp),
+                    )
+                }
+
+            }
+        var title =
+            if (subCategoryPlace != null) subCategoryPlace?.category?.getString(context)
+                .orEmpty() else if (categoryPlace == null) stringResource(
+                id = R.string.category_of_place
+            ) else stringResource(id = R.string.type_of_place)
+
+        Box(modifier = Modifier.fillMaxWidth()) {
+            if (categoryPlace != null && subCategoryPlace != null) {
+                sheetState
+                TextButton(
+                    modifier = Modifier
+                        .padding(end = 16.dp)
+                        .align(Alignment.CenterStart),
+                    onClick = {
+                        if (!saving)
+                            viewModel.savePlace(
+                                name.orEmpty(),
+                                phone.orEmpty(),
+                                socialNetwork.orEmpty(),
+                                description.orEmpty(),
+                                categoryPlace.category.name,
+                                subCategoryPlace.category.name,
+                                cameraPositionState.position.target
+                            )
+                        saving = true
+                    },
+                ) {
+                    Text(
+                        stringResource(R.string.save),
+                        color = colorResource(id = com.arrudeia.core.designsystem.R.color.colorPrimary)
+                    )
+                }
+                scope.launch {
+                    sheetState.expand()
+                }
+            }
+
+            Text(
+                text = title,
+                modifier = Modifier
+                    .padding(end = 16.dp)
+                    .align(Alignment.Center),
+                color = Color.Black, fontWeight = FontWeight.Bold
+            )
+
+            TextButton(
+                modifier = Modifier
+                    .padding(end = 16.dp)
+                    .align(Alignment.CenterEnd),
+                onClick = {
+                    if (!saving) {
+                        if (categoryPlace == null) onDismissRequest()
+                        else {
+                            categoryPlaceChange(null)
+                            subCategoryPlaceChange(null)
+                        }
+                    }
+                },
+            ) {
+                Text(
+                    stringResource(R.string.cancel),
+                    color = colorResource(id = com.arrudeia.core.designsystem.R.color.text_grey)
+                )
+            }
+
+        }
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -381,41 +532,32 @@ fun DialogWithImage(
             horizontalAlignment = Alignment.Start,
         ) {
 
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.End,
-            ) {
 
-                TextButton(
-                    onClick = {
-                        if (categoryChose == null) onDismissRequest() else categoryChose = null
-                    },
-                    modifier = Modifier.padding(end = 16.dp),
-                ) {
-                    Text(
-                        stringResource(R.string.cancel),
-                        color = colorResource(id = com.arrudeia.core.designsystem.R.color.text_grey)
-                    )
-                }
-            }
-
-            if (subCategoryChose != null && categoryChose != null)
-                categoryChose?.let {
-                    subCategoryChose?.let { it1 ->
+            if (subCategoryPlace != null && categoryPlace != null)
+                categoryPlace?.let { cat ->
+                    subCategoryPlace?.let { sub ->
                         formCategoriesDetail(
-                            viewModel, it,
-                            it1
+                            viewModel, cat,
+                            sub,
+                            showCamera = { showCameraChange(it) },
+                            onNameChange = onNameChange,
+                            name.orEmpty(),
+                            onPhoneChange = onPhoneChange,
+                            phone.orEmpty(),
+                            onSocialNetworkChange = onSocialNetworkChange,
+                            socialNetwork.orEmpty(),
+                            onDescriptionChange = onDescriptionChange,
+                            description.orEmpty(),
                         )
                     }
                 }
-            else if (categoryChose == null)
-                categories(viewModel, onCategoryChose = { categoryChose = it })
+            else if (categoryPlace == null)
+                categories(viewModel, onCategoryChose = { categoryPlaceChange(it) })
             else
-                categoryChose?.let { category ->
+                categoryPlace?.let { category ->
                     subCategories(
                         category,
-                        onSubCategoryChoose = { subCategoryChose = it })
+                        onSubCategoryChoose = { subCategoryPlaceChange(it) })
                 }
 
         }
@@ -427,20 +569,10 @@ fun DialogWithImage(
 @Composable
 private fun categories(
     viewModel: ArrudeiaViewModel,
-    onCategoryChose: (ArrudeiaCategoryPlace?) -> Unit,
+    onCategoryChose: (ArrudeiaCategoryPlaceUiModel?) -> Unit,
 ) {
 
-    Row(
-        modifier = Modifier
-            .fillMaxWidth(),
-        horizontalArrangement = Arrangement.Center,
-    ) {
-        Text(
-            text = stringResource(R.string.category_of_place),
-            modifier = Modifier.padding(bottom = 24.dp),
-            color = Color.Black, fontWeight = FontWeight.Bold
-        )
-    }
+    val context = LocalContext.current
 
     LazyVerticalGrid(
         modifier = Modifier
@@ -470,7 +602,7 @@ private fun categories(
                     )
                     Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
                     Text(
-                        it.name,
+                        it.category.getString(context),
                         color = Color.Black,
                         fontSize = 12.sp
                     )
@@ -483,23 +615,11 @@ private fun categories(
 
 @Composable
 private fun subCategories(
-    category: ArrudeiaCategoryPlace,
-    onSubCategoryChoose: (ArrudeiaSubCategoryPlace) -> Unit,
+    category: ArrudeiaCategoryPlaceUiModel,
+    onSubCategoryChoose: (ArrudeiaSubCategoryPlaceUiModel) -> Unit,
 ) {
 
-
-    Row(
-        modifier = Modifier
-            .fillMaxWidth(),
-        horizontalArrangement = Arrangement.Center,
-    ) {
-        Text(
-            text = stringResource(R.string.type_of_place),
-            modifier = Modifier.padding(bottom = 24.dp),
-            color = Color.Black, fontWeight = FontWeight.Bold
-        )
-    }
-
+    val context = LocalContext.current
     LazyVerticalGrid(
         modifier = Modifier
             .fillMaxWidth(),
@@ -519,7 +639,7 @@ private fun subCategories(
                 Column(
                 ) {
                     Text(
-                        it.name,
+                        it.category.getString(context),
                         color = Color.Black,
                         fontSize = 12.sp
                     )
@@ -530,66 +650,40 @@ private fun subCategories(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalGlideComposeApi::class)
 @Composable
 private fun formCategoriesDetail(
     viewModel: ArrudeiaViewModel,
-    category: ArrudeiaCategoryPlace,
-    subCategoryChoose: ArrudeiaSubCategoryPlace,
+    category: ArrudeiaCategoryPlaceUiModel,
+    subCategoryChoose: ArrudeiaSubCategoryPlaceUiModel,
+    showCamera: (Boolean) -> Unit,
+    onNameChange: (String) -> Unit,
+    name: String,
+    onPhoneChange: (String) -> Unit,
+    phone: String,
+    onSocialNetworkChange: (String) -> Unit,
+    socialNetwork: String,
+    onDescriptionChange: (String) -> Unit,
+    description: String,
 ) {
-    var avaliableChoose by rememberSaveable { mutableStateOf<ArrudeiaAvailablePlace?>(null) }
-    var description by rememberSaveable { mutableStateOf("") }
-    var phone  by rememberSaveable { mutableStateOf("") }
-    var socialNetwork  by rememberSaveable { mutableStateOf("") }
-    Row(
-        modifier = Modifier
-            .fillMaxWidth(),
-        horizontalArrangement = Arrangement.Center,
-    ) {
-        Text(
-            text = stringResource(R.string.tell_us_more_about_the_place),
-            modifier = Modifier.padding(bottom = 24.dp),
-            color = Color.Black, fontWeight = FontWeight.Bold
-        )
-    }
+    val availableChoose = viewModel.availables
+    val context = LocalContext.current
+
     Column(modifier = Modifier.padding(16.dp)) {
 
 
-        Text(
-            category.name,
-            color = Color.Black,
-            fontSize = 18.sp
-        )
-
         Spacer(modifier = Modifier.size(10.dp))
 
-        Text(
-            subCategoryChoose.name,
-            color = Color.Black,
-            fontSize = 18.sp
+
+        TextFieldInput(
+            hint = stringResource(id = R.string.name),
+            name,
+            icon = painterResource(id = com.arrudeia.core.designsystem.R.drawable.ic_pin),
+            onValueChange = onNameChange,
+            KeyboardType.Text,
+            ImeAction.Next
         )
 
-        Spacer(modifier = Modifier.size(10.dp))
-
-        TextField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight(Alignment.CenterVertically)
-                .clip(CircleShape),
-            value = description,
-            onValueChange = {
-                description = it
-            },
-            label = { Text(text = stringResource(R.string.description)) },
-            minLines = 2,
-            maxLines = 6,
-            colors = TextFieldDefaults.textFieldColors(
-                containerColor = Color.White,
-                focusedIndicatorColor = Color.White,
-                unfocusedIndicatorColor = Color.White
-            ),
-            shape = RoundedCornerShape(25.dp),
-        )
 
         Spacer(modifier = Modifier.size(10.dp))
 
@@ -598,7 +692,7 @@ private fun formCategoriesDetail(
             hint = stringResource(id = R.string.phone),
             phone,
             icon = painterResource(id = com.arrudeia.core.designsystem.R.drawable.ic_smartphone),
-            onValueChange = { phone =it },
+            onValueChange = onPhoneChange,
             KeyboardType.Phone,
             ImeAction.Next
         )
@@ -609,9 +703,54 @@ private fun formCategoriesDetail(
             hint = stringResource(id = R.string.social_network),
             socialNetwork,
             icon = painterResource(id = com.arrudeia.core.designsystem.R.drawable.ic_email),
-            onValueChange = { socialNetwork = it },
+            onValueChange = onSocialNetworkChange,
             KeyboardType.Email,
             ImeAction.Done
+        )
+
+        Spacer(modifier = Modifier.size(20.dp))
+
+        TextButton(
+            modifier = Modifier
+                .fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(colorResource(id = com.arrudeia.core.designsystem.R.color.colorPrimary)),
+            onClick = {
+                showCamera(true)
+            },
+        ) {
+            Text(
+                stringResource(R.string.shoot_image),
+                color = Color.White
+            )
+        }
+
+        if (viewModel.uri.value != null)
+            GlideImage(
+                model = viewModel.uri.value,
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .size(180.dp)
+                    .padding(top = 20.dp)
+            )
+
+        Spacer(modifier = Modifier.size(20.dp))
+
+        TextField(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight(Alignment.CenterVertically),
+            value = description,
+            onValueChange = onDescriptionChange,
+            label = { Text(text = stringResource(R.string.description)) },
+            minLines = 2,
+            maxLines = 6,
+            colors = TextFieldDefaults.textFieldColors(
+                containerColor = Color.White,
+                focusedIndicatorColor = Color.White,
+                unfocusedIndicatorColor = Color.White
+            ),
+            shape = RoundedCornerShape(16.dp),
         )
     }
     LazyVerticalGrid(
@@ -621,20 +760,28 @@ private fun formCategoriesDetail(
         contentPadding = PaddingValues(horizontal = 8.dp),
     ) {
         items(category.available) {
-
+            val buttonColor =
+                if (availableChoose.isEmpty() || !availableChoose.contains(it))
+                    ButtonDefaults.buttonColors(containerColor = Color.White)
+                else
+                    ButtonDefaults.buttonColors(containerColor = colorResource(id = com.arrudeia.core.designsystem.R.color.colorPrimary))
 
             Button(modifier = Modifier
                 .padding(2.dp)
                 .height(90.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color.White),
+                colors = buttonColor,
                 shape = RoundedCornerShape(6.dp),
-                onClick = { avaliableChoose = it }
+                onClick = {
+                    if (!availableChoose.contains(it)) viewModel.addAvailables(it) else viewModel.removeAvailables(
+                        it
+                    )
+                }
             ) {
                 Column(
                 ) {
                     Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
                     Text(
-                        it.name,
+                        it.available.getString(context),
                         color = Color.Black,
                         fontSize = 12.sp
                     )
@@ -757,8 +904,10 @@ class MAPS_UTIL {
     }
 }
 
+@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun PlaceDetailScreen(modifier: Modifier, place: ArrudeiaPlaceDetails) {
+fun PlaceDetailScreen(modifier: Modifier, place: ArrudeiaPlaceDetailsUiModel) {
+    val context = LocalContext.current
     Surface(
         modifier = modifier,
         color = colorResource(id = com.arrudeia.core.designsystem.R.color.background_grey_F7F7F9),
@@ -772,39 +921,77 @@ fun PlaceDetailScreen(modifier: Modifier, place: ArrudeiaPlaceDetails) {
                     .align(Alignment.End),
                 tint = colorResource(id = com.arrudeia.core.designsystem.R.color.colorPrimary)
             )
+
             Text(
                 text = place.name,
-
                 fontWeight = FontWeight.Bold,
                 color = Color.Black,
-                modifier = Modifier.padding(bottom = 8.dp)
+                modifier = Modifier
+                    .padding(bottom = 8.dp)
+                    .align(Alignment.CenterHorizontally),
             )
             Text(
-                text = "Tipo: ${place.type}",
-
+                text = place.subCategoryName.getString(context),
                 color = Color.Black,
-                modifier = Modifier.padding(bottom = 8.dp)
+                modifier = Modifier
+                    .padding(bottom = 8.dp)
+                    .align(Alignment.CenterHorizontally),
             )
-            Text(
-                text = "Avaliação: ${place.rating}",
 
-                color = Color.Black,
-                modifier = Modifier.padding(bottom = 8.dp)
-            )
-            Text(
-                text = "Preço: ${place.priceLevel}",
+            if (place.image.isNotEmpty())
+                GlideImage(
+                    model = place.image,
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .size(180.dp)
+                        .padding(10.dp)
+                        .align(Alignment.CenterHorizontally)
+                )
 
-                color = Color.Black,
-                modifier = Modifier.padding(bottom = 8.dp)
-            )
-            if (place.comments?.isNotEmpty() == true) {
+
+            var contact = ""
+            if (place.phone.isNotEmpty())
+                contact = place.phone
+
+            if (place.socialNetwork.isNotEmpty())
+                contact += " | " + "@${place.socialNetwork}"
+
+            if (contact.isNotEmpty())
                 Text(
-                    text = "Comentários:",
+                    text = contact,
+                    color = Color.Black,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
 
+
+            if (place.description.isNotEmpty())
+                Text(
+                    text = place.description,
+                    color = Color.Black,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+
+            if (place.available?.isNotEmpty() == true) {
+                Text(
+                    text = stringResource(id = R.string.services),
                     fontWeight = FontWeight.Bold,
                     color = Color.Black,
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
+                LazyColumn(content = {
+                    items(place.available) { itemAvailable ->
+                        Text(
+                            text = AvailableOptions.getStringFromEnum(
+                                context,
+                                itemAvailable.available
+                            )
+                                .orEmpty(),
+                            color = Color.Black,
+                            modifier = Modifier.padding(bottom = 8.dp)
+                        )
+                    }
+                })
 
             }
         }
