@@ -45,7 +45,7 @@ class HomeViewModel @Inject constructor(
 
     fun fetchDataArrTv() {
         viewModelScope.launch {
-            val result = arrTvUseCase.invoke()
+            val result = arrTvUseCase()
             if (!result.isNullOrEmpty())
                 arrTvUiState.value = ArrudeiaTvUiState.Success(
                     list = result.mapArrTvToUiModel()

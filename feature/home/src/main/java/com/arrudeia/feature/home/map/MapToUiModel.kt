@@ -32,6 +32,7 @@ fun List<ArrudeiaUseCaseEntity>?.mapArrTvToUiModel(): List<ArrudeiaTvUIModel> {
     this?.forEach {
         listResult.add(
             ArrudeiaTvUIModel(
+                id = it.id,
                 imageUrl = it.imageUrl
             )
         )

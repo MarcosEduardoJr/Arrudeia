@@ -189,7 +189,9 @@ fun ListItemView(
                                     arrudeiaTvItem(
                                         Modifier
                                             .align(Alignment.Center)
-                                            .clickable { onStoriesClick(it.id.toString()) }, it
+                                            .clickable {
+                                                onStoriesClick(it.id.toString())
+                                                       }, it
                                     )
                                 })
                             }

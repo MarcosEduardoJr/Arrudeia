@@ -16,6 +16,7 @@ class GetAllArrudeiaTvUseCase @Inject constructor(
         this?.forEach {
             listResult.add(
                 ArrudeiaUseCaseEntity(
+                    id = it.id,
                     imageUrl = it.image_url
                 )
             )
