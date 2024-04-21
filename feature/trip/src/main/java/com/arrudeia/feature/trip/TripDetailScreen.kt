@@ -17,6 +17,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.ArrowForward
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -45,6 +48,7 @@ import com.arrudeia.core.designsystem.R.color.background_grey_F7F7F9
 import com.arrudeia.core.designsystem.R.color.colorPrimary
 import com.arrudeia.core.designsystem.component.ArrudeiaButtonColor
 import com.arrudeia.core.designsystem.component.ArrudeiaLoadingWheel
+import com.arrudeia.core.designsystem.component.CircularIconButton
 import com.arrudeia.core.designsystem.theme.ArrudeiaTheme
 import com.arrudeia.feature.trip.R.drawable.ic_bg_onboarding
 import com.arrudeia.feature.trip.R.string.description
@@ -71,6 +75,7 @@ private const val SPACING_FIX = 3f
 @Composable
 internal fun TripDetailRoute(
     viewModel: TripDetailViewModel = hiltViewModel(),
+    onBackClick: () -> Unit,
 ) {
     val arrTvUiState by viewModel.travelSharedFlow.collectAsStateWithLifecycle()
     viewModel.fetchData()
@@ -94,7 +99,8 @@ internal fun TripDetailRoute(
         is Success -> {
             val item = (arrTvUiState as Success).item
             TripDetail(
-                item
+                item,
+                onBackClick
             )
         }
     }
@@ -103,7 +109,7 @@ internal fun TripDetailRoute(
 @OptIn(ExperimentalGlideComposeApi::class)
 @SuppressLint("DesignSystem")
 @Composable
-internal fun TripDetail(item: TripUIModel?) {
+internal fun TripDetail(item: TripUIModel?, onBackClick: () -> Unit) {
     val context = LocalContext.current as Context
     val packageManager = LocalContext.current.packageManager
     val url =
@@ -241,6 +247,23 @@ internal fun TripDetail(item: TripUIModel?) {
                         }
                     }
                 }
+            }
+            Box(
+                modifier = Modifier
+                    .align(Alignment.TopStart)
+                    .padding(16.dp)
+            ) {
+
+                CircularIconButton(
+                    onClick = {
+                        onBackClick()
+                    },
+                    icon = Icons.Rounded.ArrowBack,
+                    backgroundColor = colorResource(id = background_grey_F7F7F9),
+                    iconSize = 50.dp
+                )
+
+
             }
         }
     }

@@ -8,6 +8,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -41,6 +43,7 @@ import com.arrudeia.core.designsystem.R.drawable.ic_person
 import com.arrudeia.core.designsystem.R.drawable.ic_smartphone
 import com.arrudeia.core.designsystem.component.ArrudeiaButtonColor
 import com.arrudeia.core.designsystem.component.ArrudeiaLoadingWheel
+import com.arrudeia.core.designsystem.component.CircularIconButton
 import com.arrudeia.core.designsystem.component.TextFieldInput
 import com.arrudeia.core.designsystem.component.camera.ImageSelectionScreen
 import com.arrudeia.feature.profile.R
@@ -96,7 +99,8 @@ fun ProfilePersonalInformationRoute(
             { showForm = it },
             viewModel.uri.value ?: profileImageValue,
             { profileImageValue = it },
-            onShowSnackbar
+            onShowSnackbar,
+            onBackClick
         )
 
 }
@@ -180,6 +184,7 @@ fun ScreenView(
     profileImage: Any,
     onProfileImageChange: (String) -> Unit,
     onShowSnackbar: suspend (String, String?) -> Boolean,
+    onBackClick: () -> Unit,
 ) {
     var updatingUser by rememberSaveable { mutableStateOf(false) }
     Box(
@@ -278,6 +283,23 @@ fun ScreenView(
                 style = MaterialTheme.typography.titleMedium,
                 color = Color.White,
             )
+        }
+        Box(
+            modifier = Modifier
+                .align(Alignment.TopStart)
+                .padding(16.dp)
+        ) {
+
+            CircularIconButton(
+                onClick = {
+                    onBackClick()
+                },
+                icon = Icons.Rounded.ArrowBack,
+                backgroundColor = colorResource(id = background_grey_F7F7F9),
+                iconSize = 50.dp
+            )
+
+
         }
     }
 }

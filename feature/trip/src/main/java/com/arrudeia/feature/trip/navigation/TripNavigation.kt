@@ -36,6 +36,7 @@ fun NavController.navigateToTripDetail(id: String) {
 }
 
 fun NavGraphBuilder.tripDetailScreen(
+    onBackClick: () -> Unit,
 ) {
     composable(
         route = "$tripDetailRoute/{$tripIdArg}",
@@ -43,6 +44,6 @@ fun NavGraphBuilder.tripDetailScreen(
             navArgument(tripIdArg) { type = NavType.StringType },
         ),
     ) {
-        TripDetailRoute()
+        TripDetailRoute(onBackClick = onBackClick)
     }
 }

@@ -17,18 +17,7 @@ fun StoryImage(
     onTap: (Boolean) -> Unit,
     content: @Composable (Int) -> Unit
 ) {
-    HorizontalPager(state = pagerState, modifier = Modifier.pointerInteropFilter {
-        when (it.action) {
-            MotionEvent.ACTION_DOWN -> {
-                onTap(true)
-            }
-
-            MotionEvent.ACTION_UP -> {
-                onTap(false)
-            }
-        }
-        true
-    }) {
+    HorizontalPager(state = pagerState, modifier = Modifier ) {
         content(it)
     }
 }

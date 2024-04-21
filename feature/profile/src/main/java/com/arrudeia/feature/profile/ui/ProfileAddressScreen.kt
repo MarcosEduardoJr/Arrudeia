@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -43,6 +45,7 @@ import com.arrudeia.core.designsystem.R.drawable.ic_pin_drop
 import com.arrudeia.core.designsystem.R.drawable.ic_street
 import com.arrudeia.core.designsystem.component.ArrudeiaButtonColor
 import com.arrudeia.core.designsystem.component.ArrudeiaLoadingWheel
+import com.arrudeia.core.designsystem.component.CircularIconButton
 import com.arrudeia.core.designsystem.component.TextFieldInput
 import com.arrudeia.feature.profile.R
 import com.arrudeia.feature.profile.viewmodel.ProfileAddressViewModel
@@ -87,7 +90,9 @@ fun ProfileAddressRoute(
         { country = it },
         showForm,
         { showForm = it },
-        onShowSnackbar
+        onShowSnackbar,
+        onBackClick
+
     )
 
 }
@@ -199,6 +204,7 @@ fun ScreenView(
     showForm: Boolean,
     onShowFormChange: (Boolean) -> Unit,
     onShowSnackbar: suspend (String, String?) -> Boolean,
+    onBackClick: () -> Unit,
 ) {
     var updatingUser by rememberSaveable { mutableStateOf(false) }
     Box(
@@ -297,6 +303,24 @@ fun ScreenView(
                 color = Color.White,
             )
         }
+
+        Box(
+            modifier = Modifier
+                .align(Alignment.TopStart)
+                .padding(16.dp)
+        ) {
+
+            CircularIconButton(
+                onClick = {
+                    onBackClick()
+                },
+                icon = Icons.Rounded.ArrowBack,
+                backgroundColor = colorResource(id = background_grey_F7F7F9),
+                iconSize = 50.dp
+            )
+
+
+        }
     }
 }
 
@@ -392,7 +416,7 @@ private fun fetchUser(
             val user = (uiState as AddressUiState.Success).data
             zipCodeChange(user.zipCode.orEmpty())
             streetChange(user.street.orEmpty())
-            numberChange(if(user.number!=-1 &&  user.number!=null) user.number.toString() else "")
+            numberChange(if (user.number != -1 && user.number != null) user.number.toString() else "")
             districtChange(user.district.orEmpty())
             cityChange(user.city.orEmpty())
             stateChange(user.state.orEmpty())

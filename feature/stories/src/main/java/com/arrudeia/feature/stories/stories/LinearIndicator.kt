@@ -23,7 +23,6 @@ fun LinearIndicator(
     slideDurationInSeconds: Long,
     onPauseTimer: Boolean = false,
     hideIndicators: Boolean = false,
-    onAnimationEnd: () -> Unit
 ) {
 
     val delayInMillis = rememberSaveable {
@@ -49,7 +48,6 @@ fun LinearIndicator(
 
             if (onPauseTimer.not()) {
                 delay(200)
-                onAnimationEnd()
             }
         }
     }

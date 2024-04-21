@@ -39,6 +39,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AddLocationAlt
+import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.LocationOn
 import androidx.compose.material3.Button
@@ -93,6 +94,7 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 import com.arrudeia.core.designsystem.R.drawable.*
 import com.arrudeia.core.designsystem.component.ArrudeiaButtonColor
 import com.arrudeia.core.designsystem.component.ArrudeiaLoadingWheel
+import com.arrudeia.core.designsystem.component.CircularIconButton
 import com.arrudeia.core.designsystem.component.TextFieldInput
 import com.arrudeia.core.designsystem.component.camera.ImageSelectionScreen
 import com.arrudeia.core.network.BuildConfig
@@ -147,7 +149,7 @@ fun ArrudeiaRoute(
     viewModel.placesClient = Places.createClient(context)
     viewModel.geoCoder = Geocoder(context)
     viewModel.getCurrentLocation()
-    LocationScreen(viewModel = viewModel, onShowSnackbar = onShowSnackbar)
+    LocationScreen(viewModel = viewModel, onShowSnackbar = onShowSnackbar, onBackClick = onBackClick)
 
 }
 
@@ -160,6 +162,7 @@ fun LocationScreen(
     modifier: Modifier = Modifier,
     viewModel: ArrudeiaViewModel,
     onShowSnackbar: suspend (String, String?) -> Boolean,
+    onBackClick: () -> Unit,
 ) {
     val activity = LocalContext.current as Activity
 
@@ -198,6 +201,7 @@ fun LocationScreen(
                             )
                         }
                     }
+
                 }
 
             }
@@ -408,6 +412,23 @@ fun LocationScreen(
                             openGoogleMap,
                             { openGoogleMap = it }
                         )
+                    }
+                    Box(
+                        modifier = Modifier
+                            .align(Alignment.TopStart)
+                            .padding(16.dp)
+                    ) {
+
+                        CircularIconButton(
+                            onClick = {
+                                onBackClick()
+                            },
+                            icon = Icons.Rounded.ArrowBack,
+                            backgroundColor = colorResource(id = com.arrudeia.core.designsystem.R.color.background_grey_F7F7F9),
+                            iconSize = 50.dp
+                        )
+
+
                     }
                 }
             }

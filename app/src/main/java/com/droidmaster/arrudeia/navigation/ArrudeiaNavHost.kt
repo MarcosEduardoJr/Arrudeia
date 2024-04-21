@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
+import androidx.navigation.navigation
 import com.arrudeia.feature.arrudeia.presentation.navigation.arrudeiaScreen
 import com.arrudeia.feature.home.navigation.homeGraph
 import com.arrudeia.feature.home.navigation.homeScreen
@@ -29,7 +30,7 @@ fun ArrudeiaNavHost(
     appState: ArrudeiaAppState,
     onShowSnackbar: suspend (String, String?) -> Boolean,
     modifier: Modifier = Modifier,
-    startDestination: String = arrudeiaRoute,
+    startDestination: String = onboardingRoute,
 ) {
     val navController = appState.navController
     NavHost(
@@ -51,12 +52,12 @@ fun ArrudeiaNavHost(
             onShowSnackbar = onShowSnackbar
         )
         profileScreen(
-            onBackClick = navController::popBackStack,
+            onBackClick = { navController.popBackStack() },
             onRouteClick = navController::navigateToRoute,
             onShowSnackbar = onShowSnackbar
         )
         arrudeiaScreen(
-            onBackClick = navController::popBackStack,
+            onBackClick = { navController.popBackStack() },
             onRouteClick = navController::navigateToRoute,
             onShowSnackbar = onShowSnackbar
         )
@@ -65,30 +66,31 @@ fun ArrudeiaNavHost(
             onStoriesClick = navController::navigateToStories,
             nestedGraphs = {
                 profileScreen(
-                    onBackClick = navController::popBackStack,
+                    onBackClick = { navController.popBackStack() },
                     onRouteClick = navController::navigateToRoute,
                     onShowSnackbar = onShowSnackbar
                 )
                 storiesScreen(
                     onStoriesClick = navController::navigateToStories,
-                    onBackClick = navController::popBackStack
+                    onBackClick = { navController.popBackStack() }
                 )
                 tripDetailScreen(
+                    onBackClick = { navController.popBackStack() }
                 )
             },
-            onBackClick = navController::popBackStack,
+            onBackClick = { navController.popBackStack() },
             onRouteClick = navController::navigateToRoute,
             onShowSnackbar = onShowSnackbar
         )
         profileGraph(
-            onBackClick = navController::popBackStack,
+            onBackClick = { navController.popBackStack() },
             nestedGraphs = {
                 profilePersonalInformationScreen(
-                    onBackClick = navController::popBackStack,
+                    onBackClick = { navController.popBackStack() },
                     onShowSnackbar = onShowSnackbar
                 )
                 profileAddressScreen(
-                    onBackClick = navController::popBackStack,
+                    onBackClick = { navController.popBackStack() },
                     onShowSnackbar = onShowSnackbar
                 )
             },

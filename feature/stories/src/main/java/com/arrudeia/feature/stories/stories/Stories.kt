@@ -17,7 +17,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @OptIn(
-     ExperimentalComposeUiApi::class,
+    ExperimentalComposeUiApi::class,
     ExperimentalFoundationApi::class
 )
 @Composable
@@ -28,27 +28,24 @@ fun Stories(
     indicatorBackgroundColor: Color = Color.LightGray,
     indicatorProgressColor: Color = Color.White,
     indicatorBackgroundGradientColors: List<Color> = emptyList(),
-    slideDurationInSeconds: Long = 5,
+    slideDurationInSeconds: Long = 0,
     touchToPause: Boolean = true,
     hideIndicators: Boolean = false,
     onEveryStoryChange: ((Int) -> Unit)? = null,
     onComplete: () -> Unit,
-    content: @Composable (Int) -> Unit
+    currentPage : Int,
+    content: @Composable (Int) -> Unit,
 ) {
-    val pagerState = rememberPagerState{numberOfPages}
+    val pagerState = rememberPagerState { numberOfPages }
 
     val coroutineScope = rememberCoroutineScope()
-
-    var pauseTimer by remember {
-        mutableStateOf(false)
+    coroutineScope.launch {
+    onEveryStoryChange?.invoke(currentPage)
+    pagerState.animateScrollToPage(currentPage)
     }
-
     Box(modifier = Modifier.fillMaxSize()) {
         //Full screen content behind the indicator
-        StoryImage(pagerState = pagerState, onTap = {
-            if (touchToPause)
-                pauseTimer = it
-        }, content)
+        StoryImage(pagerState = pagerState, onTap = {}, content)
 
         //Indicator based on the number of items
         val modifier =
@@ -79,12 +76,12 @@ fun Stories(
                 indicatorBackgroundColor,
                 indicatorProgressColor,
                 slideDurationInSeconds,
-                pauseTimer,
+                false,
                 hideIndicators,
                 coroutineScope,
                 pagerState,
                 spaceBetweenIndicator,
-                onEveryStoryChange = onEveryStoryChange,
+                currentPage = currentPage,
                 onComplete = onComplete,
             )
         }
@@ -105,12 +102,9 @@ private fun RowScope.ListOfIndicators(
     coroutineScope: CoroutineScope,
     pagerState: PagerState,
     spaceBetweenIndicator: Dp,
-    onEveryStoryChange: ((Int) -> Unit)? = null,
+    currentPage: Int,
     onComplete: () -> Unit,
 ) {
-    var currentPage by remember {
-        mutableIntStateOf(0)
-    }
 
     for (index in 0 until numberOfPages) {
         LinearIndicator(
@@ -120,23 +114,7 @@ private fun RowScope.ListOfIndicators(
             indicatorProgressColor,
             slideDurationInSeconds,
             pauseTimer,
-            hideIndicators
-        ) {
-            coroutineScope.launch {
-
-                currentPage++
-
-                if (currentPage < numberOfPages) {
-                    onEveryStoryChange?.invoke(currentPage)
-                    pagerState.animateScrollToPage(currentPage)
-                }
-
-                if (currentPage == numberOfPages) {
-                    onComplete()
-                }
-            }
-        }
-
+        )
         Spacer(modifier = Modifier.padding(spaceBetweenIndicator))
     }
 }
