@@ -176,4 +176,9 @@
     <string name="search_place">Pesquisar endereço</string>
     <string name="arrudeia">Arrudeia</string>
     <string name="down">Descer</string>
+    <string name="start">Início</string>
+    <string name="destiny">Destino</string>
+    <string name="finish">Finalizar</string>
+    <string name="back">Voltar</string>
+    <string name="navigate">Navegar</string>
 </resources>

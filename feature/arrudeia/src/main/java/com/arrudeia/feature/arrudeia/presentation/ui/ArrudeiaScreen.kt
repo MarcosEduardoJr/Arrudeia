@@ -4,10 +4,13 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.IntentSender
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.location.Geocoder
 import android.location.LocationManager
+import android.net.Uri
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -38,12 +41,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AddLocationAlt
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.LocationOn
-import androidx.compose.material.icons.rounded.Route
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
@@ -79,9 +80,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import androidx.core.location.LocationManagerCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.arrudeia.core.designsystem.R.drawable.*
 import com.arrudeia.core.designsystem.component.ArrudeiaButtonColor
 import com.arrudeia.core.designsystem.component.ArrudeiaLoadingWheel
 import com.arrudeia.core.designsystem.component.TextFieldInput
@@ -101,10 +104,12 @@ import com.bumptech.glide.integration.compose.GlideImage
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.android.gms.common.api.ResolvableApiException
+import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.LocationSettingsRequest
 import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.libraries.places.api.Places
@@ -113,6 +118,7 @@ import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.Marker
+import com.google.maps.android.compose.Polyline
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.maps.android.compose.rememberMarkerState
 import kotlinx.coroutines.launch
@@ -209,7 +215,13 @@ fun LocationScreen(
                 val cameraPositionState = rememberCameraPositionState {
                     position = CameraPosition.fromLatLngZoom(state.cameraLatLang, 15f)
                 }
-
+                var isNavigationStarted by remember { mutableStateOf(false) }
+                val context = LocalContext.current
+                val fusedLocationClient = LocationServices.getFusedLocationProviderClient(
+                    context
+                )
+                var openGoogleMap by remember { mutableStateOf(false) }
+                var arrudeia by rememberSaveable { mutableStateOf(false) }
                 val mapUiSettings by remember { mutableStateOf(MapUiSettings(zoomControlsEnabled = false)) }
                 val mapProperties by remember { mutableStateOf(MapProperties(isMyLocationEnabled = true)) }
                 val scope = rememberCoroutineScope()
@@ -221,6 +233,10 @@ fun LocationScreen(
                 LaunchedEffect(cameraPositionState.isMoving) {
                     if (!cameraPositionState.isMoving) {
                         viewModel.getAddress(cameraPositionState.position.target)
+                        if (viewModel.currentLatLong != cameraPositionState.position.target) {
+                            arrudeia = true
+                            isNavigationStarted = false
+                        }
                     }
                 }
 
@@ -246,10 +262,15 @@ fun LocationScreen(
                             scope.launch {
                                 cameraPositionState.animate(CameraUpdateFactory.newLatLng(it))
                             }
-                        },
+                        }
                     ) {
                         viewModel.places.forEach { place ->
                             place.location?.let {
+                                val bitmap = getBitmap(
+                                    getMarkerIcon(place.categoryName.name),
+                                    LocalContext.current
+                                )
+
                                 Marker(
                                     state = rememberMarkerState(
                                         position = LatLng(
@@ -262,9 +283,40 @@ fun LocationScreen(
                                     onClick = {
                                         isPlaceClicked = place
                                         false
-                                    }
+                                    },
+                                    icon = BitmapDescriptorFactory.fromBitmap(bitmap!!)
                                 )
                             }
+
+                        }
+                        if (isNavigationStarted) {
+                            viewModel.currentLocation.value?.let {
+                                Marker(
+                                    state = rememberMarkerState(
+                                        position = LatLng(
+                                            it.latitude,
+                                            it.longitude
+                                        )
+                                    ),
+                                    draggable = false,
+                                    title = stringResource(id = R.string.start),
+                                )
+                            }
+                            viewModel.destinyLocation.value?.let {
+                                Marker(
+                                    state = rememberMarkerState(
+                                        position = LatLng(
+                                            it.latitude,
+                                            it.longitude
+                                        )
+                                    ),
+                                    draggable = false,
+                                    title = stringResource(id = R.string.destiny),
+                                )
+                            }
+                            Polyline(
+                                points = viewModel.arrudeiaPolyline
+                            )
 
                         }
                     }
@@ -275,23 +327,59 @@ fun LocationScreen(
                         tint = colorResource(id = com.arrudeia.core.designsystem.R.color.colorPrimary)
                     )
 
-                    if (isPlaceClicked != null)
+                    if (openGoogleMap) {
+                        openMap(viewModel)
+                        openGoogleMap = false
+                    }
+
+                    if (isPlaceClicked != null) {
                         PlaceDetailScreen(
                             modifier = Modifier
                                 .align(Alignment.BottomCenter)
-                                .fillMaxWidth()
-                                .clickable { isPlaceClicked = null },
-                            place = isPlaceClicked!!
+                                .fillMaxWidth(),
+                            place = isPlaceClicked!!,
+                            isNavigationStarted,
+                            fusedLocationClient,
+                            viewModel,
+                            cameraPositionState,
+                            { openGoogleMap = it },
+                            { isNavigationStarted = it },
+                            { isPlaceClicked = it },
                         )
-                    else {
+                    } else {
                         searchAddress(
                             modifier = Modifier
                                 .align(Alignment.BottomCenter)
-                                .fillMaxWidth(), viewModel, cameraPositionState, onShowSnackbar
+                                .fillMaxWidth(),
+                            viewModel,
+                            cameraPositionState,
+                            onShowSnackbar,
+                            isNavigationStartedChange = { isNavigationStarted = it },
+                            isNavigationStarted,
+                            arrudeiaChange = { arrudeia = it },
+                            arrudeia,
+                            openGoogleMap,
+                            { openGoogleMap = it }
                         )
                     }
                 }
             }
+        }
+    }
+}
+
+fun getMarkerIcon(categoryName: String): Int {
+    return when (categoryName) {
+        "CATEGORY_FOOD" -> ic_restaurant_circle
+        "CATEGORY_ACCOMMODATION" -> ic_hotel_circle
+        "CATEGORY_OUTDOORS" -> ic_outdoors_circle
+        "CATEGORY_ENTERTAINMENT" -> ic_surf_person_circle
+        "CATEGORY_PURCHASES_OR_SERVICES" -> ic_shop_circle
+        "CATEGORY_PUBLIC_SERVICE" -> ic_building_circle
+        "CATEGORY_TRANSPORT" -> ic_train_circle
+        "CATEGORY_CAR_SERVICES" -> ic_car_circle
+        else -> {
+            ic_pin
         }
     }
 }
@@ -302,6 +390,12 @@ private fun searchAddress(
     viewModel: ArrudeiaViewModel,
     cameraPositionState: CameraPositionState,
     onShowSnackbar: suspend (String, String?) -> Boolean,
+    isNavigationStartedChange: (Boolean) -> Unit,
+    isNavigationStarted: Boolean,
+    arrudeiaChange: (Boolean) -> Unit,
+    arrudeia: Boolean,
+    openGoogleMap: Boolean,
+    openGoogleMapChange: (Boolean) -> Unit
 ) {
     val color = colorResource(id = com.arrudeia.core.designsystem.R.color.background_grey_F7F7F9)
     var addMarker by rememberSaveable { mutableStateOf(false) }
@@ -313,7 +407,6 @@ private fun searchAddress(
     var phone by rememberSaveable { mutableStateOf("") }
     var socialNetwork by rememberSaveable { mutableStateOf("") }
     var name by rememberSaveable { mutableStateOf("") }
-    var arrudeia by rememberSaveable { mutableStateOf(false) }
     var searchPlace by rememberSaveable { mutableStateOf(false) }
 
     if (showCamera)
@@ -361,6 +454,12 @@ private fun searchAddress(
                     .padding(end = 16.dp, bottom = 16.dp),
                 shape = CircleShape,
                 onClick = {
+                    categoryChose = null
+                    subCategoryChose = null
+                    description = ""
+                    phone = ""
+                    socialNetwork = ""
+                    name = ""
                     addMarker = true
                 },
                 containerColor = colorResource(id = com.arrudeia.core.designsystem.R.color.colorPrimary),
@@ -382,9 +481,12 @@ private fun searchAddress(
                         .heightIn(100.dp, 400.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-
+                    val context = LocalContext.current
                     val keyboardController = LocalSoftwareKeyboardController.current
                     var focusInSearchAddress by remember { mutableStateOf(false) }
+                    val fusedLocationClient = LocationServices.getFusedLocationProviderClient(
+                        context
+                    )
 
                     if (focusInSearchAddress) {
                         Text(
@@ -407,18 +509,51 @@ private fun searchAddress(
                             .clip(CircleShape)
                             .onFocusChanged {
                                 focusInSearchAddress = it.isFocused
-                            }, viewModel, arrudeiaChange = { arrudeia = it }
+                            },
+                        viewModel, arrudeiaChange = { arrudeiaChange(it) },
                     )
+                    if (!arrudeia)
+                        resultSearchAddress(
+                            focusInSearchAddress,
+                            viewModel,
+                            arrudeiaChange = { arrudeiaChange(it) },
+                            focusInSearchAddressChange = { focusInSearchAddress = it })
 
-                    resultSearchAddress(
-                        focusInSearchAddress,
-                        viewModel,
-                        arrudeiaChange = { arrudeia = it },
-                        focusInSearchAddressChange = { focusInSearchAddress = it })
+
+                    if (isNavigationStarted) {
+
+                        ArrudeiaButtonColor(
+                            onClick = {
+                                isNavigationStartedChange(false)
+                            },
+                            modifier = Modifier
+                                .padding(start = 16.dp, end = 16.dp, top = 10.dp)
+                                .fillMaxWidth(),
+                            colorButton = colorResource(com.arrudeia.core.designsystem.R.color.text_grey),
+                        ) {
+
+                            Text(
+                                text = stringResource(R.string.back),
+                                style = MaterialTheme.typography.titleMedium,
+                                color = Color.White
+                            )
+                        }
+                    }
+
 
                     if (arrudeia) {
                         ArrudeiaButtonColor(
                             onClick = {
+                                if (!isNavigationStarted)
+                                    arrudeia(
+                                        context,
+                                        fusedLocationClient,
+                                        viewModel,
+                                        cameraPositionState,
+                                        isNavigationStartedChange
+                                    )
+                                else
+                                    openGoogleMapChange(true)
 
                             },
                             modifier = Modifier
@@ -429,9 +564,14 @@ private fun searchAddress(
                             Icon(
                                 painterResource(id = com.arrudeia.core.designsystem.R.drawable.ic_navigation_up),
                                 contentDescription = null,
+                                tint = Color.White
                             )
+                            val textButton =
+                                if (isNavigationStarted) stringResource(id = R.string.navigate) else stringResource(
+                                    id = R.string.arrudeia
+                                )
                             Text(
-                                text = stringResource(id = R.string.arrudeia),
+                                text = textButton,
                                 style = MaterialTheme.typography.titleMedium,
                                 color = Color.White
                             )
@@ -441,6 +581,46 @@ private fun searchAddress(
             }
 
         }
+}
+
+@Composable
+fun openMap(viewModel: ArrudeiaViewModel) {
+    val navigationUri =
+        "google.navigation:q=${viewModel.destinyLocation.value!!.latitude},${viewModel.destinyLocation.value!!.longitude}"
+    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(navigationUri))
+    intent.setPackage("com.google.android.apps.maps")
+    if (intent.resolveActivity(LocalContext.current.packageManager) != null) {
+        LocalContext.current.startActivity(intent)
+    }
+}
+
+private fun arrudeia(
+    context: Context,
+    fusedLocationClient: FusedLocationProviderClient,
+    viewModel: ArrudeiaViewModel,
+    cameraPositionState: CameraPositionState,
+    isNavigationStartedChange: (Boolean) -> Unit
+) {
+    if (ActivityCompat.checkSelfPermission(
+            context,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+            context,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        ) != PackageManager.PERMISSION_GRANTED
+    ) {
+        return
+    }
+    fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+        location.also {
+            viewModel.arrudeia(
+                LatLng(it.latitude, it.longitude),
+                cameraPositionState.position.target
+            )
+            isNavigationStartedChange(true)
+        }
+
+    }
 }
 
 
@@ -964,7 +1144,17 @@ class MAPS_UTIL {
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun PlaceDetailScreen(modifier: Modifier, place: ArrudeiaPlaceDetailsUiModel) {
+fun PlaceDetailScreen(
+    modifier: Modifier,
+    place: ArrudeiaPlaceDetailsUiModel,
+    isNavigationStarted: Boolean,
+    fusedLocationClient: FusedLocationProviderClient,
+    viewModel: ArrudeiaViewModel,
+    cameraPositionState: CameraPositionState,
+    openGoogleMap: (Boolean) -> Unit,
+    isNavigationStartedChange: (Boolean) -> Unit,
+    isPlaceClickedChange: (ArrudeiaPlaceDetailsUiModel?) -> Unit
+) {
     val context = LocalContext.current
     Surface(
         modifier = modifier,
@@ -976,7 +1166,13 @@ fun PlaceDetailScreen(modifier: Modifier, place: ArrudeiaPlaceDetailsUiModel) {
             Icon(
                 Icons.Rounded.Close, null, modifier = Modifier
                     .size(36.dp)
-                    .align(Alignment.End),
+                    .align(Alignment.End)
+                    .clickable {
+
+                        isPlaceClickedChange(null)
+                        isNavigationStartedChange(false)
+                        openGoogleMap(false)
+                    },
                 tint = colorResource(id = com.arrudeia.core.designsystem.R.color.colorPrimary)
             )
 
@@ -1052,33 +1248,49 @@ fun PlaceDetailScreen(modifier: Modifier, place: ArrudeiaPlaceDetailsUiModel) {
                 })
 
             }
+
+            ArrudeiaButtonColor(
+                onClick = {
+                    if (!isNavigationStarted)
+                        arrudeia(
+                            context,
+                            fusedLocationClient,
+                            viewModel,
+                            cameraPositionState,
+                            isNavigationStartedChange
+                        )
+                    else
+                        openGoogleMap(true)
+
+                },
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth(),
+                colorButton = colorResource(com.arrudeia.core.designsystem.R.color.colorPrimary),
+            ) {
+                Icon(
+                    painterResource(id = com.arrudeia.core.designsystem.R.drawable.ic_navigation_up),
+                    contentDescription = null,
+                    tint = Color.White
+                )
+                val textButton =
+                    if (isNavigationStarted) stringResource(id = R.string.navigate) else stringResource(
+                        id = R.string.arrudeia
+                    )
+                Text(
+                    text = textButton,
+                    style = MaterialTheme.typography.titleMedium,
+                    color = Color.White
+                )
+            }
         }
     }
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun search(modifier: Modifier, searchTravel: String, onSearchTravelChange: (String) -> Unit) {
-    TextField(
-        modifier = modifier,
-        value = searchTravel,
-        onValueChange = onSearchTravelChange,
-        label = { Text(text = stringResource(R.string.address)) },
-        singleLine = true,
-        leadingIcon = {
-            Icon(
-                painter = painterResource(com.arrudeia.core.designsystem.R.drawable.ic_search),
-                contentDescription = null,
-                tint = Color.Black
-            )
-        },
-        colors = TextFieldDefaults.textFieldColors(
-            containerColor = Color.White,
-            focusedIndicatorColor = Color.White,
-            unfocusedIndicatorColor = Color.White
-        ),
-        shape = RoundedCornerShape(25.dp),
-    )
-}
+private fun getBitmap(drawableRes: Int, context: Context): Bitmap? {
+    val bitmapdraw = ContextCompat.getDrawable(context, drawableRes)
 
+    return bitmapdraw?.toBitmap(100, 100)
+
+}

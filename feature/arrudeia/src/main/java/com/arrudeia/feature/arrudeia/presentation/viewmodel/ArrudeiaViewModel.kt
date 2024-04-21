@@ -12,7 +12,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.arrudeia.feature.arrudeia.R
+import com.arrudeia.core.network.BuildConfig.MAPS_API_KEY
 import com.arrudeia.feature.arrudeia.domain.GetAllArrudeiaPlacesUseCase
 import com.arrudeia.feature.arrudeia.domain.SaveArrudeiaPlaceUseCase
 import com.arrudeia.feature.arrudeia.domain.entity.ArrudeiaPlaceDetailsUseCaseEntity
@@ -26,16 +26,23 @@ import com.arrudeia.feature.arrudeia.presentation.ui.SubCategoryOptions
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.Priority
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.libraries.places.api.*
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.net.FetchPlaceRequest
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
 import com.google.android.libraries.places.api.net.PlacesClient
+import com.google.maps.DirectionsApi
+import com.google.maps.GeoApiContext
+import com.google.maps.android.PolyUtil
+import com.google.maps.model.TravelMode
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import java.time.Instant
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 
@@ -139,7 +146,7 @@ class ArrudeiaViewModel @Inject constructor(
     fun getAddress(latLng: LatLng) {
         viewModelScope.launch {
             val address = geoCoder.getFromLocation(latLng.latitude, latLng.longitude, 1)
-            text = address?.get(0)?.getAddressLine(0).toString()
+            text = address?.get(0)?.getAddressLine(0).orEmpty()
         }
     }
 
@@ -240,7 +247,7 @@ class ArrudeiaViewModel @Inject constructor(
             )
             if (result == null)
                 saveMarkerUiState.value = SaveMarkerUiState.Error(
-                    R.string.not_possible_save
+                    com.arrudeia.feature.arrudeia.R.string.not_possible_save
                 )
             else {
                 addPlace(
@@ -260,6 +267,37 @@ class ArrudeiaViewModel @Inject constructor(
                 )
             }
         }
+    }
+
+
+    val currentLocation = mutableStateOf<LatLng?>(null)
+    val destinyLocation = mutableStateOf<LatLng?>(null)
+    lateinit var arrudeiaPolyline: List<LatLng>
+    fun arrudeia(current: LatLng, destination: LatLng) {
+        currentLocation.value = current
+        destinyLocation.value = destination
+        val now = Instant.now()
+        val result = DirectionsApi
+            .newRequest(getGeoContext())
+            .mode(TravelMode.DRIVING)
+            .origin("${current.latitude},${current.longitude}")
+            .destination("${destination.latitude},${destination.longitude}")
+            .departureTime(now).await()
+        arrudeiaPolyline = PolyUtil.decode(result.routes[0].overviewPolyline.encodedPath)
+
+    }
+
+    fun arrudeia(current: String, destination: String) {
+
+    }
+
+    private fun getGeoContext(): GeoApiContext? {
+        return GeoApiContext.Builder()
+            .apiKey(MAPS_API_KEY)
+            .connectTimeout(1, TimeUnit.SECONDS)
+            .readTimeout(1, TimeUnit.SECONDS)
+            .writeTimeout(1, TimeUnit.SECONDS)
+            .build()
     }
 
     var saveMarkerUiState: MutableStateFlow<SaveMarkerUiState> =

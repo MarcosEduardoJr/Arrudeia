@@ -174,4 +174,9 @@
     <string name="search_place">Search address</string>
     <string name="arrudeia">Arrudeia</string>
     <string name="down">Descer</string>
+    <string name="start">Start</string>
+    <string name="destiny">Destiny</string>
+    <string name="finish">Finish</string>
+    <string name="back">Back</string>
+    <string name="navigate">Start</string>
 </resources>
