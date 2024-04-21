@@ -76,6 +76,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.app.ActivityCompat
@@ -84,6 +85,11 @@ import androidx.core.graphics.drawable.toBitmap
 import androidx.core.location.LocationManagerCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
+import com.airbnb.lottie.compose.animateLottieCompositionAsState
+import com.airbnb.lottie.compose.rememberLottieComposition
 import com.arrudeia.core.designsystem.R.drawable.*
 import com.arrudeia.core.designsystem.component.ArrudeiaButtonColor
 import com.arrudeia.core.designsystem.component.ArrudeiaLoadingWheel
@@ -122,7 +128,8 @@ import com.google.maps.android.compose.Polyline
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.maps.android.compose.rememberMarkerState
 import kotlinx.coroutines.launch
-
+import com.arrudeia.feature.arrudeia.R.raw.animation_arrudeia_loading
+import kotlinx.coroutines.delay
 
 @Composable
 fun ArrudeiaRoute(
@@ -132,21 +139,16 @@ fun ArrudeiaRoute(
     onShowSnackbar: suspend (String, String?) -> Boolean,
 ) {
     val context = LocalContext.current
-    val isPermissionsGranted by remember { mutableStateOf(hasRequiredPermissions(context)) }
 
-    if (!isPermissionsGranted) {
-        ActivityCompat.requestPermissions(
-            context as Activity, MAPS_PERMISSIONS, PERMISSION_REQUEST_CODE
-        )
-    } else {
-        viewModel.getPlacesMarker()
-        viewModel.fusedLocationClient =
-            LocationServices.getFusedLocationProviderClient(context as Activity)
-        Places.initialize(context.applicationContext, BuildConfig.MAPS_API_KEY)
-        viewModel.placesClient = Places.createClient(context)
-        viewModel.geoCoder = Geocoder(context)
-        LocationScreen(viewModel = viewModel, onShowSnackbar = onShowSnackbar)
-    }
+    viewModel.getPlacesMarker()
+    viewModel.fusedLocationClient =
+        LocationServices.getFusedLocationProviderClient(context as Activity)
+    Places.initialize(context.applicationContext, BuildConfig.MAPS_API_KEY)
+    viewModel.placesClient = Places.createClient(context)
+    viewModel.geoCoder = Geocoder(context)
+    viewModel.getCurrentLocation()
+    LocationScreen(viewModel = viewModel, onShowSnackbar = onShowSnackbar)
+
 }
 
 @OptIn(
@@ -160,53 +162,98 @@ fun LocationScreen(
     onShowSnackbar: suspend (String, String?) -> Boolean,
 ) {
     val activity = LocalContext.current as Activity
-    val locationPermissionState = rememberMultiplePermissionsState(
-        listOf(
-            Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION
-        )
-    )
-
-    LaunchedEffect(locationPermissionState.allPermissionsGranted) {
-        if (locationPermissionState.allPermissionsGranted) {
-            if (locationEnabled(activity)) {
-                viewModel.getCurrentLocation()
-            } else {
-                viewModel.locationState = LocationState.LocationDisabled
-            }
-        }
-    }
 
     AnimatedContent(
         viewModel.locationState, label = ""
     ) { state ->
         when (state) {
-            is LocationState.NoPermission -> {
-                Column {
-                    Text("We need location permission to continue")
-                    Button(onClick = { locationPermissionState.launchMultiplePermissionRequest() }) {
-                        Text("Request permission")
-                    }
-                }
-            }
 
             is LocationState.LocationDisabled -> {
-                Column {
-                    Text("We need location to continue")
-                    Button(onClick = { requestLocationEnable(activity, viewModel) }) {
-                        Text("Enable location")
+                Box(modifier = Modifier.fillMaxSize()) {
+                    Column(modifier = Modifier.align(Alignment.Center)) {
+                        Text(
+                            text = stringResource(id = R.string.need_location_continue),
+                            modifier = Modifier
+                                .padding(horizontal = 32.dp)
+                                .fillMaxWidth(),
+                            textAlign = TextAlign.Center,
+                            color = Color.Black,
+                            fontWeight = FontWeight.Bold,
+                            style = MaterialTheme.typography.headlineMedium
+                        )
+                        ArrudeiaButtonColor(
+                            onClick = {
+                                requestLocationEnable(activity, viewModel)
+                            },
+                            modifier = Modifier
+                                .padding(horizontal = 16.dp)
+                                .fillMaxWidth(),
+                            colorButton = colorResource(com.arrudeia.core.designsystem.R.color.colorPrimary),
+                        ) {
+
+                            Text(
+                                text = stringResource(R.string.enable_location),
+                                style = MaterialTheme.typography.titleMedium,
+                                color = Color.White
+                            )
+                        }
                     }
                 }
+
             }
 
             is LocationState.LocationLoading -> {
-                Text("Loading Map")
+
+                val preloaderLottieComposition by rememberLottieComposition(
+                    LottieCompositionSpec.RawRes(
+                        R.raw.animation_arrudeia_loading
+                    )
+                )
+
+                val preloaderProgress by animateLottieCompositionAsState(
+                    preloaderLottieComposition,
+                    iterations = LottieConstants.IterateForever,
+                    isPlaying = true
+                )
+
+
+                LottieAnimation(
+                    composition = preloaderLottieComposition,
+                    progress = preloaderProgress,
+                    modifier = modifier
+                )
+
             }
 
             is LocationState.Error -> {
-                Column {
-                    Text("Error fetching your location")
-                    Button(onClick = { viewModel.getCurrentLocation() }) {
-                        Text("Retry")
+                Box(modifier = Modifier.fillMaxSize()) {
+                    Column(modifier = Modifier.align(Alignment.Center)) {
+                        Text(
+                            text = stringResource(id = R.string.impossible_get_location),
+                            modifier = Modifier
+                                .padding(horizontal = 32.dp)
+                                .fillMaxWidth(),
+                            textAlign = TextAlign.Center,
+                            color = Color.Black,
+                            fontWeight = FontWeight.Bold,
+                            style = MaterialTheme.typography.headlineMedium
+                        )
+                        ArrudeiaButtonColor(
+                            onClick = {
+                                viewModel.getCurrentLocation()
+                            },
+                            modifier = Modifier
+                                .padding(horizontal = 16.dp)
+                                .fillMaxWidth(),
+                            colorButton = colorResource(com.arrudeia.core.designsystem.R.color.colorPrimary),
+                        ) {
+
+                            Text(
+                                text = stringResource(R.string.retry),
+                                style = MaterialTheme.typography.titleMedium,
+                                color = Color.White
+                            )
+                        }
                     }
                 }
             }
@@ -1100,26 +1147,11 @@ private fun locationEnabled(activity: Activity): Boolean {
     return LocationManagerCompat.isLocationEnabled(locationManager)
 }
 
-private fun requestLocationEnable(activity: Activity, viewModel: ArrudeiaViewModel) {
-    activity.let {
-        val locationRequest = LocationRequest.create()
-        val builder = LocationSettingsRequest.Builder().addLocationRequest(locationRequest)
-        LocationServices.getSettingsClient(it).checkLocationSettings(builder.build())
-            .addOnSuccessListener {
-                if (it.locationSettingsStates?.isLocationPresent == true) {
-                    viewModel.getCurrentLocation()
-                }
-            }.addOnFailureListener {
-                if (it is ResolvableApiException) {
-                    try {
-                        it.startResolutionForResult(activity, 999)
-                    } catch (e: IntentSender.SendIntentException) {
-                        e.printStackTrace()
-                    }
-                }
-            }
-
-    }
+private fun requestLocationEnable(context: Context, viewModel: ArrudeiaViewModel) {
+    ActivityCompat.requestPermissions(
+        context as Activity, MAPS_PERMISSIONS, PERMISSION_REQUEST_CODE
+    )
+    viewModel.getCurrentLocation()
 }
 
 private fun hasRequiredPermissions(context: Context): Boolean {

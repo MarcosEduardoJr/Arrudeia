@@ -47,4 +47,6 @@ dependencies {
 
     implementation(libs.firebase.auth)
     implementation(libs.apollo.runtime)
+
+    implementation("com.airbnb.android:lottie-compose:4.0.0")
 }

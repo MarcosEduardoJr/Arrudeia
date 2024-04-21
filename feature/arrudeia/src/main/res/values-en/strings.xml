@@ -179,4 +179,8 @@
     <string name="finish">Finish</string>
     <string name="back">Back</string>
     <string name="navigate">Start</string>
+    <string name="retry">Try again</string>
+    <string name="impossible_get_location">Unable to get your location</string>
+    <string name="need_location_continue">We need location to continue</string>
+    <string name="enable_location">Enable location</string>
 </resources>

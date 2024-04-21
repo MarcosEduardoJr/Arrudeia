@@ -37,6 +37,7 @@ import com.google.maps.android.PolyUtil
 import com.google.maps.model.TravelMode
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
@@ -47,7 +48,6 @@ import javax.inject.Inject
 
 
 sealed class LocationState {
-    object NoPermission : LocationState()
     object LocationDisabled : LocationState()
     object LocationLoading : LocationState()
     data class LocationAvailable(val cameraLatLang: LatLng) : LocationState()
@@ -69,7 +69,7 @@ class ArrudeiaViewModel @Inject constructor(
     lateinit var placesClient: PlacesClient
     lateinit var geoCoder: Geocoder
 
-    var locationState by mutableStateOf<LocationState>(LocationState.NoPermission)
+    var locationState by mutableStateOf<LocationState>(LocationState.LocationLoading)
     val locationAutofill = mutableStateListOf<AutocompleteResult>()
 
     var currentLatLong by mutableStateOf(LatLng(0.0, 0.0))
@@ -138,6 +138,8 @@ class ArrudeiaViewModel @Inject constructor(
                             )
                         )
                     }
+            }.addOnFailureListener {
+                locationState = LocationState.LocationDisabled
             }
     }
 

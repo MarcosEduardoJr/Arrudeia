@@ -181,4 +181,8 @@
     <string name="finish">Finalizar</string>
     <string name="back">Voltar</string>
     <string name="navigate">Navegar</string>
+    <string name="retry">Tente novamente</string>
+    <string name="impossible_get_location">Impossível obter sua localização</string>
+    <string name="need_location_continue">Precisamos de localização para continuar</string>
+    <string name="enable_location">Habilitar localização</string>
 </resources>
