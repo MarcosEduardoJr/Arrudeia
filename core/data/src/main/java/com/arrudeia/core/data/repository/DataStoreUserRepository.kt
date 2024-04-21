@@ -7,7 +7,10 @@ interface DataStoreUserRepository {
 
     suspend fun saveUser(
         user: DataStoreUserRepositoryEntity
-    ) : Boolean
+    ): Boolean
 
     suspend fun getUserData(): DataStoreUserRepositoryEntity?
+
+    suspend fun logoutUser(
+    )
 }

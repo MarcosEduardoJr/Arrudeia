@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.arrudeia.core.domain.GetUserPersonalInformationUseCase
+import com.arrudeia.core.domain.LogoutCurrentUserDataStoreUseCase
 import com.arrudeia.core.entity.UserPersonalInformationUseCaseEntity
 import com.arrudeia.feature.profile.R
 import com.arrudeia.feature.profile.model.ProfileUiModel
@@ -18,6 +19,7 @@ import javax.inject.Inject
 class ProfileViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val useCase: GetUserPersonalInformationUseCase,
+    private val logoutCurrentUserDataStoreUseCase: LogoutCurrentUserDataStoreUseCase
 ) : ViewModel() {
 
     var uiState: MutableStateFlow<ProfileUiState> =
@@ -53,6 +55,12 @@ class ProfileViewModel @Inject constructor(
             )
         }
         return result
+    }
+
+    fun logout() {
+        viewModelScope.launch {
+            logoutCurrentUserDataStoreUseCase()
+        }
     }
 
     sealed interface ProfileUiState {

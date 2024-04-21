@@ -33,6 +33,15 @@ class DataStoreUserRepositoryImpl @Inject constructor(
         }.firstOrNull()
     }
 
+    override suspend fun logoutUser() {
+        dataStore.edit { preferences ->
+            preferences.remove(UID_KEY)
+            preferences.remove(NAME_KEY)
+            preferences.remove(EMAIL_KEY)
+            preferences.remove(IMAGE_USER_KEY)
+        }
+    }
+
     override suspend fun saveUser(user: DataStoreUserRepositoryEntity): Boolean {
         dataStore.edit { preferences ->
             preferences[UID_KEY] = user.uid

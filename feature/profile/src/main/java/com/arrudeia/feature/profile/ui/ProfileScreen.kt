@@ -47,6 +47,7 @@ import com.arrudeia.core.designsystem.R.color.colorBlack
 import com.arrudeia.core.designsystem.R.color.colorPrimary
 import com.arrudeia.core.designsystem.R.drawable.ic_arrow_right
 import com.arrudeia.core.designsystem.R.drawable.ic_home
+import com.arrudeia.core.designsystem.R.drawable.ic_logout
 import com.arrudeia.core.designsystem.R.drawable.ic_profile_edit
 import com.arrudeia.core.designsystem.component.ArrudeiaLoadingWheel
 import com.arrudeia.core.designsystem.component.CircularIconButton
@@ -56,6 +57,7 @@ import com.arrudeia.feature.profile.viewmodel.ProfileViewModel
 import com.arrudeia.feature.profile.viewmodel.ProfileViewModel.ProfileUiState
 import com.arrudeia.navigation.profileAddressRoute
 import com.arrudeia.navigation.profilePersonalInformationRoute
+import com.arrudeia.navigation.signRoute
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
@@ -71,7 +73,7 @@ fun ProfileRoute(
     onShowSnackbar: suspend (String, String?) -> Boolean,
 ) {
     viewModel.getUserPersonalInformation()
-    ProfileView(onRouteClick = onRouteClick, viewModel, onShowSnackbar,onBackClick)
+    ProfileView(onRouteClick = onRouteClick, viewModel, onShowSnackbar, onBackClick)
 }
 
 
@@ -158,6 +160,17 @@ private fun ProfileView(
                             Modifier.clickable {
                                 onRouteClick(profileAddressRoute)
                             })
+
+                        Spacer(modifier = Modifier.size(4.dp))
+
+                        items(
+                            ic_logout,
+                            stringResource(id = R.string.logout),
+                            Modifier.clickable {
+                                logout(
+                                    onRouteClick, viewModel
+                                )
+                            })
                     }
 
 
@@ -182,6 +195,11 @@ private fun ProfileView(
             }
         }
     }
+}
+
+fun logout(onRouteClick: (String) -> Unit, viewModel: ProfileViewModel) {
+    viewModel.logout()
+    onRouteClick(signRoute)
 }
 
 @OptIn(ExperimentalGlideComposeApi::class)
