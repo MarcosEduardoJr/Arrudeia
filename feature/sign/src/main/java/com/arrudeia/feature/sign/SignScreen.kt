@@ -68,7 +68,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.arrudeia.core.designsystem.R.color.background_green_008000
 import com.arrudeia.core.designsystem.R.color.background_grey_F7F7F9
 import com.arrudeia.core.designsystem.R.color.background_red_FF0000
-import com.arrudeia.core.designsystem.R.color.colorBlack
 import com.arrudeia.core.designsystem.R.color.colorPrimary
 import com.arrudeia.core.designsystem.R.color.colorWhite
 import com.arrudeia.core.designsystem.component.ArrudeiaButtonColor
@@ -77,7 +76,6 @@ import com.arrudeia.core.designsystem.component.DefaultLinkMovementMethod
 import com.arrudeia.core.designsystem.icon.ArrudeiaIcons
 import com.arrudeia.core.designsystem.theme.ArrudeiaTheme
 import com.arrudeia.feature.sign.R.drawable.ic_bg_onboarding
-import com.arrudeia.feature.sign.R.string.please_sign_in_to_continue_our_app
 import com.arrudeia.feature.sign.R.string.sign
 import com.arrudeia.feature.sign.R.string.sign_description_tired_job
 import com.arrudeia.feature.sign.R.string.sign_email
@@ -88,8 +86,13 @@ import com.arrudeia.feature.sign.R.string.sign_password_not_equals_to_confirm_pa
 import com.arrudeia.feature.sign.R.string.sign_register
 import com.arrudeia.feature.sign.SignViewModel.SignUiState
 import com.arrudeia.navigation.homeRoute
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthException
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlin.math.max
+
 
 private const val LINK_1 = "link_1"
 private const val LINK_2 = "link_2"
@@ -120,6 +123,7 @@ internal fun Sign(
 
 
     var isRegisterState by remember { mutableStateOf(false) }
+    var isResetPasswordState by remember { mutableStateOf(false) }
 
     var emailValueState by rememberSaveable { mutableStateOf("") }
     var emailIconValueState by rememberSaveable { mutableStateOf(false) }
@@ -220,21 +224,21 @@ internal fun Sign(
                     if (emailValueState.isNotEmpty())
                         emailIconValueState = isValidEmail(emailValueState)
 
-
-                    signTextField(
-                        onSearchQueryChanged = {},
-                        textValueFieldParam = passwordValueState,
-                        onSearchTriggered = {},
-                        icon = ArrudeiaIcons.Password,
-                        imeAction = ImeAction.Done,
-                        requestFocus = false,
-                        placeHolderValue = stringResource(id = sign_password),
-                        useMaskDots = true,
-                        keyboardType = KeyboardType.Password,
-                        onTextChange = { passwordValueState = it },
-                        statusIconValid = { passwordIconValueState },
-                        showIconIsvalid = isRegisterState
-                    )
+                    if (!isResetPasswordState)
+                        signTextField(
+                            onSearchQueryChanged = {},
+                            textValueFieldParam = passwordValueState,
+                            onSearchTriggered = {},
+                            icon = ArrudeiaIcons.Password,
+                            imeAction = ImeAction.Done,
+                            requestFocus = false,
+                            placeHolderValue = stringResource(id = sign_password),
+                            useMaskDots = true,
+                            keyboardType = KeyboardType.Password,
+                            onTextChange = { passwordValueState = it },
+                            statusIconValid = { passwordIconValueState },
+                            showIconIsvalid = isRegisterState
+                        )
 
                     if (isRegisterState)
                         passwordIconValueState =
@@ -243,7 +247,7 @@ internal fun Sign(
                                 passwordIconValueState
                             )
 
-                    if (isRegisterState)
+                    if (isRegisterState && !isResetPasswordState)
                         signTextField(
                             onSearchQueryChanged = {},
                             textValueFieldParam = confirmPasswordValueState,
@@ -281,8 +285,10 @@ internal fun Sign(
                     var colorBtn = background_grey_F7F7F9
                     var enableBtn = false
 
-
-                    if (!isRegisterState && passwordBehaviour(
+                    if (isResetPasswordState && emailIconValueState) {
+                        enableBtn = true
+                        colorBtn = colorPrimary
+                    } else if (!isRegisterState && passwordBehaviour(
                             passwordValueState,
                             passwordIconValueState
                         ) && emailIconValueState
@@ -294,49 +300,66 @@ internal fun Sign(
                         enableBtn = true
                         colorBtn = colorPrimary
                     } else {
-                        colorBtn = colorBlack
+                        colorBtn = com.arrudeia.core.designsystem.R.color.text_grey
                         enableBtn = false
                     }
 
+                    val resetPasswordSuccessMsg =
+                        stringResource(id = R.string.open_email_reset_password)
+                    val resetPasswordFailureMsg =
+                        stringResource(id = R.string.erro_reset_password_try_later)
+
                     ArrudeiaButtonColor(
                         onClick = {
-                            scope.launch {
-                                signClient(
-                                    isRegisterState,
-                                    email = emailValueState,
-                                    password = passwordValueState,
-                                    viewmodel = viewModel
+                            if (isResetPasswordState)
+                                resetPassword(
+                                    emailValueState,
+                                    onShowSnackbar,
+                                    resetPasswordSuccessMsg,
+                                    resetPasswordFailureMsg
                                 )
-                            }
+                            else if (enableBtn)
+                                scope.launch {
+                                    signClient(
+                                        isRegisterState,
+                                        email = emailValueState,
+                                        password = passwordValueState,
+                                        viewmodel = viewModel
+                                    )
+                                }
                         },
                         modifier = Modifier
                             .padding(start = 16.dp, end = 16.dp)
                             .fillMaxWidth(),
                         colorButton = colorResource(colorBtn),
-                        enabled = enableBtn
                     ) {
                         Text(
-                            text = stringResource(id = if (isRegisterState) sign_register else sign),
+                            text = stringResource(id = if (isResetPasswordState) R.string.reset_password else if (isRegisterState) sign_register else sign),
                             style = MaterialTheme.typography.titleMedium,
                             color = Color.White,
                         )
                     }
 
+                    if (!isResetPasswordState)
 
+                        Text(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 30.dp)
+                                .clickable {
+
+                                    isRegisterState = !isRegisterState
+                                },
+                            text = stringResource(if (isRegisterState) sign else sign_register),
+                            color = Color.White,
+                            textAlign = TextAlign.Center
+                        )
                     Text(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(start = 16.dp, end = 16.dp, top = 16.dp)
-                            .clickable { isRegisterState = !isRegisterState },
-                        text = stringResource(if (isRegisterState) sign else sign_register),
-                        color = Color.White,
-                        textAlign = TextAlign.Center
-                    )
-                    Text(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 16.dp, end = 16.dp, bottom = 16.dp, top = 10.dp),
-                        text = stringResource(please_sign_in_to_continue_our_app),
+                            .padding(start = 16.dp, end = 16.dp, bottom = 16.dp, top = 10.dp)
+                            .clickable { isResetPasswordState = !isResetPasswordState },
+                        text = stringResource(if (!isResetPasswordState) R.string.forgot_password else sign),
                         color = Color.White.copy(alpha = 0.7f),
                         textAlign = TextAlign.Center
                     )
@@ -344,6 +367,19 @@ internal fun Sign(
 
             }
         }
+    }
+}
+
+fun resetPassword(
+    emailValue: String,
+    onShowSnackbar: suspend (String, String?) -> Boolean,
+    resetPasswordSuccessMsg: String,
+    resetPasswordFailureMsg: String
+) {
+    FirebaseAuth.getInstance().sendPasswordResetEmail(emailValue).addOnSuccessListener {
+        CoroutineScope(Dispatchers.IO).launch { onShowSnackbar(resetPasswordSuccessMsg, null) }
+    }.addOnFailureListener {
+        CoroutineScope(Dispatchers.IO).launch { onShowSnackbar(resetPasswordFailureMsg, null) }
     }
 }
 

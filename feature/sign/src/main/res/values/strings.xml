@@ -26,4 +26,8 @@
     <string name="sign_content_description_password_again">Digite novamente a mesma senha</string>
     <string name="erro_sign_user">Estamos em manutenção, tente novamente mais tarde.</string>
     <string name="loading">Carregando</string>
+    <string name="forgot_password">Esqueci a senha</string>
+    <string name="reset_password">Alterar a senha</string>
+    <string name="open_email_reset_password">Abra seu email para alterar a senha</string>
+    <string name="erro_reset_password_try_later">Não foi possivel alterar sua senha, tente novamente mais tarde</string>
 </resources>

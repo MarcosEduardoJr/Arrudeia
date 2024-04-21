@@ -5,8 +5,8 @@
     <string name="onboarding_empty_description">Updates you save will be stored here\nto read later</string>
     <string name="onboarding_removed">Bookmark removed</string>
     <string name="onboarding_undo">UNDO</string>
-    <string name="start">start</string>
-    <string name="sign">enter</string>
+    <string name="start">Start</string>
+    <string name="sign">Enter</string>
     <string name="sign_register">Register</string>
     <string name="sign_email">Email</string>
     <string name="sign_password">Password</string>
@@ -23,4 +23,9 @@
     <string name="sign_content_description_password">Type the password</string>
     <string name="sign_content_description_password_again">Enter the same password again</string>
     <string name="erro_sign_user">We are undergoing maintenance, please try again later.</string>
+    <string name="loading">Loading</string>
+    <string name="forgot_password">I forgot the password</string>
+    <string name="reset_password">Change password</string>
+    <string name="open_email_reset_password">Open your email to change password</string>
+    <string name="erro_reset_password_try_later">Unable to change your password, try again later</string>
 </resources>
