@@ -4,8 +4,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.arrudeia.feature.profile.domain.GetUserAddressUseCase
-import com.arrudeia.core.domain.UpdateUserAddressUseCase
-import com.arrudeia.core.entity.UserAddressUseCaseEntity
+import com.arrudeia.feature.profile.domain.UpdateUserAddressUseCase
+import com.arrudeia.feature.profile.domain.entity.UserAddressUseCaseEntity
 import com.arrudeia.feature.profile.R
 import com.arrudeia.feature.profile.presentation.model.ProfileAddressUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -63,7 +63,8 @@ class ProfileAddressViewModel @Inject constructor(
                     city = city,
                     state = state,
                     country = country
-            ))
+            )
+            )
 
             if (!result.contentEquals(uuidCurrentUser))
                 uiStateUpdateUser.value =

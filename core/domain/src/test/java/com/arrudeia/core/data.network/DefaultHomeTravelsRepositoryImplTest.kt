@@ -1,8 +1,8 @@
 package com.arrudeia.core.data.network
 
-import com.arrudeia.core.data.network.DefaultHomeTravelsRepositoryImpl.Companion.HOME_ARRUDEIA_TV
-import com.arrudeia.core.data.network.DefaultHomeTravelsRepositoryImpl.Companion.HOME_TRAVELS
-import com.arrudeia.core.data.entity.ArrudeiaTvRepositoryEntity
+import com.arrudeia.feature.home.data.DefaultHomeTravelsRepositoryImpl.Companion.HOME_ARRUDEIA_TV
+import com.arrudeia.feature.home.data.DefaultHomeTravelsRepositoryImpl.Companion.HOME_TRAVELS
+import com.arrudeia.feature.home.data.entity.ArrudeiaTvRepositoryEntity
 import com.arrudeia.core.data.entity.TravelRepositoryEntity
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.gms.tasks.Task
@@ -19,13 +19,13 @@ import org.mockito.Mockito.`when`
 import kotlin.test.assertTrue
 
 class DefaultHomeTravelsRepositoryImplTest {
-    private lateinit var repository: DefaultHomeTravelsRepositoryImpl
+    private lateinit var repository: com.arrudeia.feature.home.data.DefaultHomeTravelsRepositoryImpl
     private lateinit var firestore: FirebaseFirestore
 
     @Before
     fun setup() {
         firestore = mock()
-        repository = DefaultHomeTravelsRepositoryImpl(firestore)
+        repository = com.arrudeia.feature.home.data.DefaultHomeTravelsRepositoryImpl(firestore)
     }
 
     @Test
@@ -67,7 +67,7 @@ class DefaultHomeTravelsRepositoryImplTest {
     @Test
     fun `getAllArrudeiaTv should return list of arrudeia tv entities`() = runBlocking {
         // Given
-        val item = ArrudeiaTvRepositoryEntity()
+        val item = com.arrudeia.feature.home.data.entity.ArrudeiaTvRepositoryEntity()
         val querySnapshot = mock<QuerySnapshot>()
         val task = mock<Task<QuerySnapshot>>()
         val document = mock<DocumentSnapshot>()
@@ -91,7 +91,7 @@ class DefaultHomeTravelsRepositoryImplTest {
 
         //return object
         `when`(querySnapshot.documents).thenReturn(listDocumentSnapshot)
-        `when`(document.toObject(ArrudeiaTvRepositoryEntity::class.java)).thenReturn(item)
+        `when`(document.toObject(com.arrudeia.feature.home.data.entity.ArrudeiaTvRepositoryEntity::class.java)).thenReturn(item)
 
         // When
         val result = repository.getAllArrudeiaTv()

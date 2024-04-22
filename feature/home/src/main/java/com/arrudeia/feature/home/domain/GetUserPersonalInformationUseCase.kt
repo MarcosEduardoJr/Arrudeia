@@ -1,14 +1,14 @@
-package com.arrudeia.feature.profile.domain
+package com.arrudeia.feature.home.domain
 
-import com.arrudeia.feature.profile.data.entity.UserPersonalInformationRepositoryEntity
-import com.arrudeia.feature.profile.data.ProfileDataStoreUserRepositoryImpl
-import com.arrudeia.feature.profile.data.ProfileRepositoryImpl
-import com.arrudeia.feature.profile.domain.entity.UserPersonalInformationUseCaseEntity
+import com.arrudeia.feature.home.data.HomeProfileDataStoreUserRepositoryImpl
+import com.arrudeia.feature.home.data.HomeProfileRepositoryImpl
+import com.arrudeia.feature.home.data.entity.UserPersonalInformationRepositoryEntity
+import com.arrudeia.feature.home.domain.entity.UserPersonalInformationUseCaseEntity
 import javax.inject.Inject
 
 class GetUserPersonalInformationUseCase @Inject constructor(
-    private val repository: ProfileRepositoryImpl,
-    private val repositoryDataStore: ProfileDataStoreUserRepositoryImpl,
+    private val repository: HomeProfileRepositoryImpl,
+    private val repositoryDataStore: HomeProfileDataStoreUserRepositoryImpl,
 ) {
     suspend operator fun invoke(): UserPersonalInformationUseCaseEntity? =
         repository.getUserPersonalInformationDetails(repositoryDataStore.getUserData()?.uid.orEmpty())

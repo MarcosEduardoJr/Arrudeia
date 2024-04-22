@@ -1,6 +1,6 @@
 package com.arrudeia.core.domain
 
-import com.arrudeia.core.data.network.DefaultHomeTravelsRepositoryImpl
+import com.arrudeia.feature.home.data.DefaultHomeTravelsRepositoryImpl
 import com.arrudeia.core.data.entity.TravelRepositoryEntity
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
@@ -10,13 +10,13 @@ import org.mockito.Mockito.`when`
 import kotlin.test.assertTrue
 
 class GetAllTravelHomeUseCaseTest {
-    private lateinit var repository: DefaultHomeTravelsRepositoryImpl
-    private lateinit var useCase: GetAllTravelHomeUseCase
+    private lateinit var repository: com.arrudeia.feature.home.data.DefaultHomeTravelsRepositoryImpl
+    private lateinit var useCase: com.arrudeia.feature.home.domain.GetAllTravelHomeUseCase
 
     @Before
     fun setup() {
         repository = Mockito.mock()
-        useCase = GetAllTravelHomeUseCase(repository)
+        useCase = com.arrudeia.feature.home.domain.GetAllTravelHomeUseCase(repository)
     }
 
     @Test

@@ -2,12 +2,11 @@ package com.arrudeia.feature.sign.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.arrudeia.feature.sign.R.string.erro_sign_user
+import com.arrudeia.feature.sign.R.string.sign_error_sign
 import com.arrudeia.feature.sign.domain.CreateUserDataStoreUseCase
 import com.arrudeia.feature.sign.domain.CreateUserFirebaseUseCase
 import com.arrudeia.feature.sign.domain.SignInUserFirebaseUseCase
-import com.arrudeia.core.entity.FirebaseUserUseCaseEntity
-import com.arrudeia.feature.sign.R.string.erro_sign_user
-import com.arrudeia.feature.sign.R.string.sign_error_sign
 import com.arrudeia.feature.sign.domain.entity.SignFirebaseUserUseCaseEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

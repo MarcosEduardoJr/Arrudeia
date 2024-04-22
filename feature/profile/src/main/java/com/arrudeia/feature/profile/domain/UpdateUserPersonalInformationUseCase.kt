@@ -1,12 +1,12 @@
 package com.arrudeia.feature.profile.domain
 
 import android.net.Uri
-import com.arrudeia.core.data.entity.UserPersonalInformationRepositoryEntity
-import com.arrudeia.core.data.network.FirebaseUserRepositoryImpl
-import com.arrudeia.core.data.network.ProfileRepositoryImpl
-import com.arrudeia.core.entity.UserPersonalInformationUseCaseEntity
+import com.arrudeia.feature.profile.data.FirebaseUserRepositoryImpl
 import com.arrudeia.feature.profile.data.ProfileDataStoreUserRepositoryImpl
+import com.arrudeia.feature.profile.data.ProfileRepositoryImpl
 import com.arrudeia.feature.profile.data.entity.ProfileDataStoreUserRepositoryEntity
+import com.arrudeia.feature.profile.data.entity.UserPersonalInformationRepositoryEntity
+import com.arrudeia.feature.profile.domain.entity.UserPersonalInformationUseCaseEntity
 import javax.inject.Inject
 
 class UpdateUserPersonalInformationUseCase @Inject constructor(

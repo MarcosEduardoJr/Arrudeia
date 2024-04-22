@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.arrudeia.feature.profile.domain.GetUserPersonalInformationUseCase
 import com.arrudeia.feature.profile.domain.LogoutCurrentUserDataStoreUseCase
-import com.arrudeia.core.entity.UserPersonalInformationUseCaseEntity
+import com.arrudeia.feature.profile.domain.entity.UserPersonalInformationUseCaseEntity
 import com.arrudeia.feature.profile.R
 import com.arrudeia.feature.profile.presentation.model.ProfileUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel

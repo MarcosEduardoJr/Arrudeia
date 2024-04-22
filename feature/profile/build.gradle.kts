@@ -29,8 +29,14 @@ dependencies {
     testImplementation(libs.mockk)
 
 
+    implementation(libs.apollo.runtime)
+
 
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.dataStore.core)
     implementation(libs.androidx.dataStore.preferences)
+
+
+    implementation(libs.firebase.bom)
+    implementation(libs.firebase.auth)
 }

@@ -1,12 +1,15 @@
 package com.arrudeia.feature.home
 
-import com.arrudeia.core.domain.GetAllArrudeiaTvUseCase
-import com.arrudeia.core.domain.GetAllTravelHomeUseCase
-import com.arrudeia.core.entity.ArrudeiaUseCaseEntity
+import com.arrudeia.feature.home.domain.GetAllArrudeiaTvUseCase
+import com.arrudeia.feature.home.domain.GetAllTravelHomeUseCase
+import com.arrudeia.feature.home.domain.entity.ArrudeiaUseCaseEntity
 import com.arrudeia.core.entity.TravelUseCaseEntity
 import com.arrudeia.feature.home.R.string.erro_message_list_travels
-import com.arrudeia.feature.home.map.mapArrTvToUiModel
-import com.arrudeia.feature.home.map.mapTravelsToUiModel
+import com.arrudeia.feature.home.presentation.map.mapArrTvToUiModel
+import com.arrudeia.feature.home.presentation.map.mapTravelsToUiModel
+import com.arrudeia.feature.home.presentation.ArrudeiaTvUiState
+import com.arrudeia.feature.home.presentation.HomeViewModel
+import com.arrudeia.feature.home.presentation.TravelUiState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking

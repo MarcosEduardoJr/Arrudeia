@@ -8,6 +8,6 @@
     <string name="onboarding_empty_description">Updates you save will be stored here\nto read later</string>
     <string name="onboarding_removed">Bookmark removed</string>
     <string name="onboarding_undo">UNDO</string>
-    <string name="start">start</string>
+    <string name="start">Start</string>
     <string name="onboarding_description_tired_job">Do you have a tiring week at work\? <font color="#FF6421">Arrudeia</font> with day trips and have fun because you deserve it!</string>
 </resources>

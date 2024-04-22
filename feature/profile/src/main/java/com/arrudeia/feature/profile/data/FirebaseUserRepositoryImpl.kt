@@ -1,21 +1,24 @@
-package com.arrudeia.feature.sign.data
+package com.arrudeia.feature.profile.data
 
-import com.arrudeia.feature.sign.data.entity.SignFirebaseUserRepositoryEntity
+import android.net.Uri
+import com.arrudeia.feature.profile.data.entity.FirebaseUserRepositoryEntity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.suspendCancellableCoroutine
 import javax.inject.Inject
 import kotlin.coroutines.resume
 
 
-class SignFirebaseUserRepositoryImpl @Inject constructor(
+class FirebaseUserRepositoryImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
-) : SignFirebaseUserRepository {
+) : FirebaseUserRepository {
 
     override suspend fun createUserWithEmailAndPassword(
         email: String,
         password: String
-    ): SignFirebaseUserRepositoryEntity? {
+    ): FirebaseUserRepositoryEntity? {
         return suspendCancellableCoroutine { continuation ->
             firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
@@ -35,7 +38,7 @@ class SignFirebaseUserRepositoryImpl @Inject constructor(
     override suspend fun signUserWithEmailAndPassword(
         email: String,
         password: String
-    ): SignFirebaseUserRepositoryEntity? {
+    ): FirebaseUserRepositoryEntity? {
         return suspendCancellableCoroutine { continuation ->
             firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
@@ -52,16 +55,36 @@ class SignFirebaseUserRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun saveUserImage(uri: Uri): String? {
+        val storageRef = Firebase.storage.reference
+        val uuid = firebaseAuth.currentUser?.uid.orEmpty()
+        val imagesRef =
+            storageRef.child(FOLDER_IMAGE_USER)
+        val imageName = "$uuid.jpg"
 
+        val uploadTask = uri.let { imagesRef.child(imageName).putFile(it) }
+        return suspendCancellableCoroutine { continuation ->
+            uploadTask.addOnSuccessListener { taskSnapshot ->
+                taskSnapshot.storage.downloadUrl.addOnSuccessListener { uri ->
+                    continuation.resume(uri.toString())
+                }
+            }.addOnFailureListener { exception ->
+                continuation.resume(null)
+            }
+        }
+    }
 
-    private fun FirebaseUser.mapToRepository(): SignFirebaseUserRepositoryEntity {
-        return SignFirebaseUserRepositoryEntity(
+    private fun FirebaseUser.mapToRepository(): FirebaseUserRepositoryEntity {
+        return FirebaseUserRepositoryEntity(
             this.uid,
             this.displayName.orEmpty(),
             this.email.orEmpty()
         )
     }
 
+    companion object {
+        const val FOLDER_IMAGE_USER = "profile_image_user"
+    }
 }
 
 

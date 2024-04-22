@@ -1,9 +1,9 @@
 package com.arrudeia.feature.profile.domain
 
-import com.arrudeia.core.data.entity.UserAddressRepositoryEntity
-import com.arrudeia.core.data.network.ProfileRepositoryImpl
-import com.arrudeia.core.entity.UserAddressUseCaseEntity
 import com.arrudeia.feature.profile.data.ProfileDataStoreUserRepositoryImpl
+import com.arrudeia.feature.profile.data.ProfileRepositoryImpl
+import com.arrudeia.feature.profile.data.entity.UserAddressRepositoryEntity
+import com.arrudeia.feature.profile.domain.entity.UserAddressUseCaseEntity
 import javax.inject.Inject
 
 class GetUserAddressUseCase @Inject constructor(
