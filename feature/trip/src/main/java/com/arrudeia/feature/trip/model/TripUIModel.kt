@@ -16,7 +16,9 @@ data class TripUIModel(
     val cover_image_url: String = "",
     val whatsapp: String = "",
     val description: String = "",
-    ){
+    val include: List<String> = listOf(),
+    val optional: List<String> = listOf(),
+) {
 
     fun shortLocation() = city.plus(", ").plus(state)
     fun date() = day.toString().plus("/").plus(month.toString())

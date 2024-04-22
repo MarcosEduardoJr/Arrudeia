@@ -144,7 +144,7 @@ internal fun StoriesScreen(images: List<StoriesUIModel>, onBackClick: () -> Unit
                             GlideImage(
                                 model = images[it].image,
                                 contentDescription = null,
-                                contentScale = ContentScale.Crop,
+                                contentScale = ContentScale.Fit,
                                 modifier = Modifier.fillMaxSize()
                             )
                         }

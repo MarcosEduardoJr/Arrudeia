@@ -114,55 +114,58 @@ fun form(
     phone: String, onPhoneChange: (String) -> Unit,
     birthDate: String, onBirthDateChange: (String) -> Unit,
 ) {
+    Column(Modifier.padding(horizontal = 16.dp)) {
 
-    TextFieldInput(
-        hint = stringResource(id = R.string.full_name),
-        name,
-        icon = painterResource(id = ic_person),
-        onValueChange = onNameChange,
-        KeyboardType.Text,
-        ImeAction.Next
-    )
-    Spacer(modifier = Modifier.size(4.dp))
+        TextFieldInput(
+            hint = stringResource(id = R.string.full_name),
+            name,
+            icon = painterResource(id = ic_person),
+            onValueChange = onNameChange,
+            KeyboardType.Text,
+            ImeAction.Next
+        )
+        Spacer(modifier = Modifier.size(4.dp))
 
-    TextFieldInput(
-        hint = stringResource(id = R.string.document_id),
-        docId,
-        icon = painterResource(id = ic_document),
-        onValueChange = onDocIdChange,
-        KeyboardType.Phone,
-        ImeAction.Next
-    )
-    Spacer(modifier = Modifier.size(4.dp))
+        TextFieldInput(
+            hint = stringResource(id = R.string.document_id),
+            docId,
+            icon = painterResource(id = ic_document),
+            onValueChange = onDocIdChange,
+            KeyboardType.Phone,
+            ImeAction.Next
+        )
+        Spacer(modifier = Modifier.size(4.dp))
 
-    TextFieldInput(
-        hint = stringResource(id = R.string.email),
-        email,
-        icon = painterResource(id = ic_email),
-        onValueChange = onEmailChange,
-        KeyboardType.Email,
-        ImeAction.Next
-    )
-    Spacer(modifier = Modifier.size(4.dp))
+        TextFieldInput(
+            hint = stringResource(id = R.string.email),
+            email,
+            icon = painterResource(id = ic_email),
+            onValueChange = onEmailChange,
+            KeyboardType.Email,
+            ImeAction.Next
+        )
+        Spacer(modifier = Modifier.size(4.dp))
 
-    TextFieldInput(
-        hint = stringResource(id = R.string.phone),
-        phone,
-        icon = painterResource(id = ic_smartphone),
-        onValueChange = onPhoneChange,
-        KeyboardType.Phone,
-        ImeAction.Next
-    )
-    Spacer(modifier = Modifier.size(4.dp))
+        TextFieldInput(
+            hint = stringResource(id = R.string.phone),
+            phone,
+            icon = painterResource(id = ic_smartphone),
+            onValueChange = onPhoneChange,
+            KeyboardType.Phone,
+            ImeAction.Next
+        )
+        Spacer(modifier = Modifier.size(4.dp))
 
-    TextFieldInput(
-        hint = stringResource(id = R.string.birth_date),
-        birthDate,
-        icon = painterResource(id = ic_calendar_event),
-        onValueChange = onBirthDateChange,
-        KeyboardType.Number,
-        ImeAction.Done
-    )
+        TextFieldInput(
+            hint = stringResource(id = R.string.birth_date),
+            birthDate,
+            icon = painterResource(id = ic_calendar_event),
+            onValueChange = onBirthDateChange,
+            KeyboardType.Number,
+            ImeAction.Done
+        )
+
+    }
 }
 
 @Composable
@@ -191,7 +194,6 @@ fun ScreenView(
         modifier = Modifier
             .fillMaxSize()
             .background(color = colorResource(id = background_grey_F7F7F9))
-            .padding(start = 16.dp, top = 16.dp, end = 16.dp)
     ) {
 
         Column(
@@ -202,7 +204,11 @@ fun ScreenView(
 
             Spacer(modifier = Modifier.size(30.dp))
 
-            header(modifier = Modifier.fillMaxWidth())
+            header(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp)
+            )
 
             Spacer(modifier = Modifier.size(30.dp))
 
@@ -487,9 +493,6 @@ private fun title(modifier: Modifier) {
         )
     }
 }
-
-
-
 
 
 @Preview(showBackground = true)

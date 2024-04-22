@@ -5,8 +5,10 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.text.Html
 import android.widget.Toast
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,10 +18,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.ArrowForward
+import androidx.compose.material.icons.rounded.Check
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -31,6 +37,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
@@ -42,6 +49,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat.startActivity
+import androidx.core.text.HtmlCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.arrudeia.core.designsystem.R.color.background_grey_F7F7F9
@@ -167,65 +175,72 @@ internal fun TripDetail(item: TripUIModel?, onBackClick: () -> Unit) {
                                     fillMaxSize()
                                 })
                             {
-                                Column(
+                                LazyColumn(
                                     modifier = Modifier
                                         .padding(16.dp)
                                         .fillMaxSize()
                                         .clipToBounds(),
                                 ) {
-                                    Text(
-                                        text = item?.name.orEmpty(),
-                                        color = Color.Black,
-                                        fontSize = 18.sp,
-                                        fontWeight = FontWeight.Bold,
-                                        textAlign = TextAlign.Start
-                                    )
+                                    items(1) {
 
-                                    Box(
-                                        modifier = Modifier.fillMaxWidth()
-                                    ) {
                                         Text(
-                                            modifier = Modifier
-                                                .align(Alignment.CenterStart),
-                                            text = item?.shortLocation().orEmpty(),
-                                            color = Color.Gray,
-                                            fontSize = 14.sp,
+                                            text = item?.name.orEmpty(),
+                                            color = Color.Black,
+                                            fontSize = 18.sp,
+                                            fontWeight = FontWeight.Bold,
                                             textAlign = TextAlign.Start
                                         )
-                                        Row(
-                                            modifier = Modifier
-                                                .align(Alignment.CenterEnd)
+
+                                        Box(
+                                            modifier = Modifier.fillMaxWidth()
                                         ) {
                                             Text(
-                                                text = stringResource(from),
+                                                modifier = Modifier
+                                                    .align(Alignment.CenterStart),
+                                                text = item?.shortLocation().orEmpty(),
                                                 color = Color.Gray,
                                                 fontSize = 14.sp,
                                                 textAlign = TextAlign.Start
                                             )
-                                            Spacer(modifier = Modifier.size(2.dp))
-                                            Text(
-                                                text = item?.price?.toCurrencyReal().orEmpty(),
-                                                color = colorResource(id = colorPrimary),
-                                                fontSize = 14.sp,
-                                                textAlign = TextAlign.Start
-                                            )
+                                            Row(
+                                                modifier = Modifier
+                                                    .align(Alignment.CenterEnd)
+                                            ) {
+                                                Text(
+                                                    text = stringResource(from),
+                                                    color = Color.Gray,
+                                                    fontSize = 14.sp,
+                                                    textAlign = TextAlign.Start
+                                                )
+                                                Spacer(modifier = Modifier.size(2.dp))
+                                                Text(
+                                                    text = item?.price?.toCurrencyReal().orEmpty(),
+                                                    color = colorResource(id = colorPrimary),
+                                                    fontSize = 14.sp,
+                                                    textAlign = TextAlign.Start
+                                                )
+                                            }
                                         }
+                                        Spacer(modifier = Modifier.size(20.dp))
+                                        Text(
+                                            text = stringResource(description),
+                                            color = Color.Black,
+                                            fontSize = 18.sp,
+                                            fontWeight = FontWeight.Bold,
+                                            textAlign = TextAlign.Start
+                                        )
+                                        Spacer(modifier = Modifier.size(10.dp))
+                                        Text(
+                                            text = item?.description.orEmpty(),
+                                            color = Color.Gray,
+                                            fontSize = 14.sp,
+                                            textAlign = TextAlign.Start,
+                                        )
+                                        Spacer(modifier = Modifier.size(10.dp))
+                                        include(item)
+                                        optional(item)
+                                        Spacer(modifier = Modifier.size(50.dp))
                                     }
-                                    Spacer(modifier = Modifier.size(20.dp))
-                                    Text(
-                                        text = stringResource(description),
-                                        color = Color.Black,
-                                        fontSize = 18.sp,
-                                        fontWeight = FontWeight.Bold,
-                                        textAlign = TextAlign.Start
-                                    )
-                                    Spacer(modifier = Modifier.size(10.dp))
-                                    Text(
-                                        text = item?.description.orEmpty(),
-                                        color = Color.Gray,
-                                        fontSize = 14.sp,
-                                        textAlign = TextAlign.Start
-                                    )
                                 }
                                 ArrudeiaButtonColor(
                                     onClick = {
@@ -264,6 +279,82 @@ internal fun TripDetail(item: TripUIModel?, onBackClick: () -> Unit) {
                 )
 
 
+            }
+        }
+    }
+}
+
+@Composable
+private fun optional(item: TripUIModel?) {
+    if (item?.optional.orEmpty().isNotEmpty()) {
+        Text(
+            text = stringResource(R.string.optional),
+            color = Color.Black,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Start
+        )
+        Column(
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+                .fillMaxWidth()
+                .clipToBounds(),
+        ) {
+            item?.optional.orEmpty().forEach {
+                Row {
+                    Image(
+                        Icons.Rounded.Add,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(24.dp),
+                        colorFilter = ColorFilter.tint(color = colorResource(id = colorPrimary))
+                    )
+                    Spacer(modifier = Modifier.size(2.dp))
+                    Text(
+                        text = it,
+                        color = Color.Gray,
+                        fontSize = 14.sp,
+                        textAlign = TextAlign.Start,
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun include(item: TripUIModel?) {
+    if (item?.include.orEmpty().isNotEmpty()) {
+        Text(
+            text = stringResource(R.string.include),
+            color = Color.Black,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Start
+        )
+        Column(
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+                .fillMaxWidth()
+                .fillMaxWidth(),
+        ) {
+            item?.include?.forEach {
+                Row {
+                    Image(
+                        Icons.Rounded.Check,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(24.dp),
+                        colorFilter = ColorFilter.tint(color = colorResource(id = colorPrimary))
+                    )
+                    Spacer(modifier = Modifier.size(2.dp))
+                    Text(
+                        text = it,
+                        color = Color.Gray,
+                        fontSize = 14.sp,
+                        textAlign = TextAlign.Start,
+                    )
+                }
             }
         }
     }

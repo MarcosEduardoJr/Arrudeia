@@ -21,4 +21,6 @@
     <string name="erro_message_list_travels">Estamos em manutenção, tente novamente mais tarde.</string>
     <string name="loading">Carregando</string>
     <string name="whatsapp_contact_message">Olá, tudo bem?\nDesejo saber mais informações sobre a viagem para %1$s no dia %2$s.</string>
+    <string name="include">Incluso</string>
+    <string name="optional">Opcional</string>
 </resources>

@@ -26,7 +26,9 @@ class GetTravelByIdUseCase @Inject constructor(
                 discount = it.discount,
                 cover_image_url = it.cover_image_url,
                 whatsapp = it.whatsapp,
-                description = it.description
+                description = it.description,
+                include = it.include,
+                optional = it.optional
             )
         }
         return result

@@ -18,7 +18,9 @@ import com.arrudeia.feature.trip.model.TripUIModel
             discount = it.discount,
             cover_image_url = it.cover_image_url,
             whatsapp = it.whatsapp,
-            description = it.description
+            description = it.description,
+            include = it.include,
+            optional = it.optional
         )
 
     }

@@ -115,73 +115,76 @@ fun form(
     country: String,
     countryChange: (String) -> Unit,
 ) {
+    Column(Modifier.padding(horizontal = 16.dp)) {
 
-    TextFieldInput(
-        hint = stringResource(id = R.string.zip_code),
-        zipCode,
-        icon = painterResource(id = ic_home),
-        onValueChange = zipCodeChange,
-        KeyboardType.Number,
-        ImeAction.Next
-    )
-    Spacer(modifier = Modifier.size(4.dp))
+        TextFieldInput(
+            hint = stringResource(id = R.string.zip_code),
+            zipCode,
+            icon = painterResource(id = ic_home),
+            onValueChange = zipCodeChange,
+            KeyboardType.Number,
+            ImeAction.Next
+        )
+        Spacer(modifier = Modifier.size(4.dp))
 
-    TextFieldInput(
-        hint = stringResource(id = R.string.street),
-        street,
-        icon = painterResource(id = ic_street),
-        onValueChange = streetChange,
-        KeyboardType.Text,
-        ImeAction.Next
-    )
-    Spacer(modifier = Modifier.size(4.dp))
+        TextFieldInput(
+            hint = stringResource(id = R.string.street),
+            street,
+            icon = painterResource(id = ic_street),
+            onValueChange = streetChange,
+            KeyboardType.Text,
+            ImeAction.Next
+        )
+        Spacer(modifier = Modifier.size(4.dp))
 
-    TextFieldInput(
-        hint = stringResource(id = R.string.number),
-        value = number,
-        icon = painterResource(id = ic_number_123),
-        onValueChange = numberChange,
-        KeyboardType.Number,
-        ImeAction.Next
-    )
-    Spacer(modifier = Modifier.size(4.dp))
+        TextFieldInput(
+            hint = stringResource(id = R.string.number),
+            value = number,
+            icon = painterResource(id = ic_number_123),
+            onValueChange = numberChange,
+            KeyboardType.Number,
+            ImeAction.Next
+        )
+        Spacer(modifier = Modifier.size(4.dp))
 
-    TextFieldInput(
-        hint = stringResource(id = R.string.district),
-        district,
-        icon = painterResource(id = ic_pin_drop),
-        onValueChange = districtChange,
-        KeyboardType.Text,
-        ImeAction.Next
-    )
-    Spacer(modifier = Modifier.size(4.dp))
+        TextFieldInput(
+            hint = stringResource(id = R.string.district),
+            district,
+            icon = painterResource(id = ic_pin_drop),
+            onValueChange = districtChange,
+            KeyboardType.Text,
+            ImeAction.Next
+        )
+        Spacer(modifier = Modifier.size(4.dp))
 
-    TextFieldInput(
-        hint = stringResource(id = R.string.city),
-        city,
-        icon = painterResource(id = ic_pin_drop),
-        onValueChange = cityChange,
-        KeyboardType.Text,
-        ImeAction.Next
-    )
-    Spacer(modifier = Modifier.size(4.dp))
-    TextFieldInput(
-        hint = stringResource(id = R.string.state),
-        state,
-        icon = painterResource(id = ic_pin_drop),
-        onValueChange = stateChange,
-        KeyboardType.Text,
-        ImeAction.Next
-    )
-    Spacer(modifier = Modifier.size(4.dp))
-    TextFieldInput(
-        hint = stringResource(id = R.string.country),
-        country,
-        icon = painterResource(id = ic_pin_drop),
-        onValueChange = countryChange,
-        KeyboardType.Text,
-        ImeAction.Done
-    )
+        TextFieldInput(
+            hint = stringResource(id = R.string.city),
+            city,
+            icon = painterResource(id = ic_pin_drop),
+            onValueChange = cityChange,
+            KeyboardType.Text,
+            ImeAction.Next
+        )
+        Spacer(modifier = Modifier.size(4.dp))
+        TextFieldInput(
+            hint = stringResource(id = R.string.state),
+            state,
+            icon = painterResource(id = ic_pin_drop),
+            onValueChange = stateChange,
+            KeyboardType.Text,
+            ImeAction.Next
+        )
+        Spacer(modifier = Modifier.size(4.dp))
+        TextFieldInput(
+            hint = stringResource(id = R.string.country),
+            country,
+            icon = painterResource(id = ic_pin_drop),
+            onValueChange = countryChange,
+            KeyboardType.Text,
+            ImeAction.Done
+        )
+
+    }
 }
 
 @Composable
@@ -211,7 +214,6 @@ fun ScreenView(
         modifier = Modifier
             .fillMaxSize()
             .background(color = colorResource(id = background_grey_F7F7F9))
-            .padding(start = 16.dp, top = 16.dp, end = 16.dp)
     ) {
 
         Column(
@@ -222,7 +224,11 @@ fun ScreenView(
 
             Spacer(modifier = Modifier.size(30.dp))
 
-            header(modifier = Modifier.fillMaxWidth())
+            header(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp)
+            )
 
             Spacer(modifier = Modifier.size(30.dp))
 

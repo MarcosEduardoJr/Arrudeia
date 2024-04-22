@@ -16,4 +16,6 @@ data class TravelRepositoryEntity(
     val cover_image_url: String = "",
     val whatsapp: String = "",
     val description: String = "",
+    val include: List<String> = listOf(),
+    val optional: List<String> = listOf(),
     )
