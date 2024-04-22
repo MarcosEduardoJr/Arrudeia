@@ -3,11 +3,12 @@ package com.arrudeia.feature.sign.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.arrudeia.feature.sign.domain.CreateUserDataStoreUseCase
-import com.arrudeia.core.domain.CreateUserFirebaseUseCase
-import com.arrudeia.core.domain.SignInUserFirebaseUseCase
+import com.arrudeia.feature.sign.domain.CreateUserFirebaseUseCase
+import com.arrudeia.feature.sign.domain.SignInUserFirebaseUseCase
 import com.arrudeia.core.entity.FirebaseUserUseCaseEntity
 import com.arrudeia.feature.sign.R.string.erro_sign_user
 import com.arrudeia.feature.sign.R.string.sign_error_sign
+import com.arrudeia.feature.sign.domain.entity.SignFirebaseUserUseCaseEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -18,7 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SignViewModel @Inject constructor(
     private val createUserUseCase: CreateUserFirebaseUseCase,
-    private val dataStoreUseCase: CreateUserDataStoreUseCase,
+    private val createUserDataStoreUseCase: CreateUserDataStoreUseCase,
     private val signUseCase : SignInUserFirebaseUseCase
 ) : ViewModel() {
 
@@ -58,8 +59,8 @@ class SignViewModel @Inject constructor(
         }
     }
 
-    private suspend fun saveLocally(result: FirebaseUserUseCaseEntity) {
-        if (dataStoreUseCase.invoke(result.uid, result.name, result.email)) {
+    private suspend fun saveLocally(result: SignFirebaseUserUseCaseEntity) {
+        if (createUserDataStoreUseCase.invoke(result.uid, result.name, result.email)) {
             uiState.value = SignUiState.Success()
         } else {
             uiState.value = SignUiState.Error(
