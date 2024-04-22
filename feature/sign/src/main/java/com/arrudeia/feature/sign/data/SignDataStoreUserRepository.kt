@@ -10,8 +10,5 @@ interface SignDataStoreUserRepository {
         user: SignDataStoreUserRepositoryEntity
     ): Boolean
 
-    suspend fun getUserData():  SignDataStoreUserRepositoryEntity?
 
-    suspend fun logoutUser(
-    )
 }

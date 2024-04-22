@@ -22,29 +22,6 @@ class SignDataStoreUserRepositoryImpl @Inject constructor(
         private val IMAGE_USER_KEY = stringPreferencesKey("image_user")
     }
 
-    override suspend fun getUserData():  SignDataStoreUserRepositoryEntity? {
-        return dataStore.data.map { preferences ->
-            val uid = preferences[UID_KEY] ?: return@map null
-            val name = preferences[NAME_KEY] ?: return@map null
-            val email = preferences[EMAIL_KEY] ?: return@map null
-            val image = preferences[IMAGE_USER_KEY] ?: return@map null
-            SignDataStoreUserRepositoryEntity(
-                uid,
-                name,
-                email,
-                image
-            )
-        }.firstOrNull()
-    }
-
-    override suspend fun logoutUser() {
-        dataStore.edit { preferences ->
-            preferences.remove(UID_KEY)
-            preferences.remove(NAME_KEY)
-            preferences.remove(EMAIL_KEY)
-            preferences.remove(IMAGE_USER_KEY)
-        }
-    }
 
     override suspend fun saveUser(user:  SignDataStoreUserRepositoryEntity): Boolean {
         dataStore.edit { preferences ->
