@@ -86,7 +86,6 @@ dependencies {
     implementation(project(":core:data"))
     implementation(project(":core:model"))
 
-    implementation(project(":sync:work"))
 
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.appcompat)
