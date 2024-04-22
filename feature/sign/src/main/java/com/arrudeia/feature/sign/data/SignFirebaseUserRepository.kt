@@ -1,7 +1,5 @@
 package com.arrudeia.feature.sign.data
 
-import android.net.Uri
-import com.arrudeia.core.data.entity.FirebaseUserRepositoryEntity
 import com.arrudeia.feature.sign.data.entity.SignFirebaseUserRepositoryEntity
 
 interface SignFirebaseUserRepository {

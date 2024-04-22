@@ -1,8 +1,8 @@
-package com.arrudeia.core.domain
+package com.arrudeia.feature.stories.domain
 
-import com.arrudeia.core.data.network.StoriesRepositoryImpl
-import com.arrudeia.core.data.entity.StoryRepositoryEntity
-import com.arrudeia.core.entity.StoryUseCaseEntity
+import com.arrudeia.feature.stories.data.StoriesRepositoryImpl
+import com.arrudeia.feature.stories.data.entity.StoryRepositoryEntity
+import com.arrudeia.feature.stories.domain.entity.StoryUseCaseEntity
 import javax.inject.Inject
 
 class GetAllStoriesByIdUseCase @Inject constructor(

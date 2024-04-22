@@ -1,6 +1,7 @@
-package com.arrudeia.core.data.repository
-import com.arrudeia.core.data.entity.StoriesRepositoryEntity
-import com.arrudeia.core.data.entity.StoryRepositoryEntity
+package com.arrudeia.feature.stories.data
+
+import com.arrudeia.feature.stories.data.entity.StoriesRepositoryEntity
+import com.arrudeia.feature.stories.data.entity.StoryRepositoryEntity
 
 /**
  * Interface representing network calls to the Arrudeia backend

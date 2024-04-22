@@ -1,8 +1,7 @@
-package com.arrudeia.core.data.network
+package com.arrudeia.feature.stories.data
 
-import com.arrudeia.core.data.repository.StoriesRepository
-import com.arrudeia.core.data.entity.StoriesRepositoryEntity
-import com.arrudeia.core.data.entity.StoryRepositoryEntity
+import com.arrudeia.feature.stories.data.entity.StoriesRepositoryEntity
+import com.arrudeia.feature.stories.data.entity.StoryRepositoryEntity
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.suspendCancellableCoroutine
 import javax.inject.Inject

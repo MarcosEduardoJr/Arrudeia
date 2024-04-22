@@ -1,4 +1,4 @@
-package com.arrudeia.feature.stories.stories
+package com.arrudeia.feature.stories.presentation.stories
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Shapes

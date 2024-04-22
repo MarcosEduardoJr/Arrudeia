@@ -1,7 +1,7 @@
 package com.arrudeia.core.data.network
 
-import com.arrudeia.core.data.network.StoriesRepositoryImpl.Companion.ARRUDEIA_TV
-import com.arrudeia.core.data.entity.StoriesRepositoryEntity
+import com.arrudeia.feature.stories.data.StoriesRepositoryImpl.Companion.ARRUDEIA_TV
+import com.arrudeia.feature.stories.data.entity.StoriesRepositoryEntity
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.CollectionReference
@@ -16,19 +16,19 @@ import org.mockito.Mockito
 import kotlin.test.assertTrue
 
 class StoriesRepositoryImplTest {
-    private lateinit var repository: StoriesRepositoryImpl
+    private lateinit var repository: com.arrudeia.feature.stories.data.StoriesRepositoryImpl
     private lateinit var firestore: FirebaseFirestore
 
     @Before
     fun setup() {
         firestore = Mockito.mock()
-        repository = StoriesRepositoryImpl(firestore)
+        repository = com.arrudeia.feature.stories.data.StoriesRepositoryImpl(firestore)
     }
 
     @Test
     fun `getStories should return list entities`() = runBlocking {
         // Given
-        val item = StoriesRepositoryEntity()
+        val item = com.arrudeia.feature.stories.data.entity.StoriesRepositoryEntity()
         val querySnapshot = Mockito.mock<QuerySnapshot>()
         val task = Mockito.mock<Task<QuerySnapshot>>()
         val document = Mockito.mock<DocumentSnapshot>()
@@ -52,7 +52,7 @@ class StoriesRepositoryImplTest {
 
         //return object
         Mockito.`when`(querySnapshot.documents).thenReturn(listDocumentSnapshot)
-        Mockito.`when`(document.toObject(StoriesRepositoryEntity::class.java)).thenReturn(item)
+        Mockito.`when`(document.toObject(com.arrudeia.feature.stories.data.entity.StoriesRepositoryEntity::class.java)).thenReturn(item)
 
         // When
         val result = repository.getStories()
@@ -64,7 +64,7 @@ class StoriesRepositoryImplTest {
     @Test
     fun `getStoriesById should return a item `() = runBlocking {
         // Given
-        val item = StoriesRepositoryEntity()
+        val item = com.arrudeia.feature.stories.data.entity.StoriesRepositoryEntity()
         val querySnapshot = Mockito.mock<QuerySnapshot>()
         val task = Mockito.mock<Task<QuerySnapshot>>()
         val document = Mockito.mock<DocumentSnapshot>()
@@ -88,7 +88,7 @@ class StoriesRepositoryImplTest {
 
         //return object
         Mockito.`when`(querySnapshot.documents).thenReturn(listDocumentSnapshot)
-        Mockito.`when`(document.toObject(StoriesRepositoryEntity::class.java)).thenReturn(item)
+        Mockito.`when`(document.toObject(com.arrudeia.feature.stories.data.entity.StoriesRepositoryEntity::class.java)).thenReturn(item)
 
         // When
         val result = repository.getStoriesById(0)

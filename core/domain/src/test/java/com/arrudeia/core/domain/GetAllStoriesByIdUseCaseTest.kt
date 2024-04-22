@@ -1,7 +1,7 @@
 package com.arrudeia.core.domain
 
-import com.arrudeia.core.data.network.StoriesRepositoryImpl
-import com.arrudeia.core.data.entity.StoryRepositoryEntity
+import com.arrudeia.feature.stories.data.StoriesRepositoryImpl
+import com.arrudeia.feature.stories.data.entity.StoryRepositoryEntity
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
@@ -11,18 +11,18 @@ import kotlin.test.assertTrue
 
 class GetAllStoriesByIdUseCaseTest {
 
-    private lateinit var repository: StoriesRepositoryImpl
-    private lateinit var useCase: GetAllStoriesByIdUseCase
+    private lateinit var repository: com.arrudeia.feature.stories.data.StoriesRepositoryImpl
+    private lateinit var useCase: com.arrudeia.feature.stories.domain.GetAllStoriesByIdUseCase
 
     @Before
     fun setup() {
         repository = Mockito.mock()
-        useCase = GetAllStoriesByIdUseCase(repository)
+        useCase = com.arrudeia.feature.stories.domain.GetAllStoriesByIdUseCase(repository)
     }
 
     @Test
     fun `invoke use case is not empty`() = runBlocking {
-        val listResult = listOf(StoryRepositoryEntity())
+        val listResult = listOf(com.arrudeia.feature.stories.data.entity.StoryRepositoryEntity())
         Mockito.`when`(repository.getStoriesById(0)).thenReturn(listResult)
         assertTrue(useCase.invoke(0).isNotEmpty())
     }

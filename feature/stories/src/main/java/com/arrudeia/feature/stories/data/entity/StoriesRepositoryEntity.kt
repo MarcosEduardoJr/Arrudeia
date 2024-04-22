@@ -1,4 +1,4 @@
-package com.arrudeia.core.data.entity
+package com.arrudeia.feature.stories.data.entity
 
 import kotlinx.serialization.Serializable
 

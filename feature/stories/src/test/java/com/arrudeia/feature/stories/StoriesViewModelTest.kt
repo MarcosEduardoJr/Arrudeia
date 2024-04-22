@@ -1,8 +1,8 @@
 package com.arrudeia.feature.stories
 
 import androidx.lifecycle.SavedStateHandle
-import com.arrudeia.core.domain.GetAllStoriesByIdUseCase
-import com.arrudeia.core.entity.StoryUseCaseEntity
+import com.arrudeia.feature.stories.domain.GetAllStoriesByIdUseCase
+import com.arrudeia.feature.stories.domain.entity.StoryUseCaseEntity
 import com.arrudeia.feature.stories.navigation.storiesIdArg
 import io.mockk.coEvery
 import junit.framework.Assert.assertEquals
@@ -15,6 +15,7 @@ import org.junit.Test
 import io.mockk.mockk
 import com.arrudeia.feature.stories.R.string.erro_message_list_travels
 import com.arrudeia.feature.stories.navigation.map.mapStoriesToUiModel
+import com.arrudeia.feature.stories.presentation.viewmodel.StoriesViewModel
 
 @ExperimentalCoroutinesApi
 class StoriesViewModelTest{

@@ -1,4 +1,4 @@
-package com.arrudeia.feature.stories.model
+package com.arrudeia.feature.stories.presentation.model
 
 import kotlinx.serialization.Serializable
 

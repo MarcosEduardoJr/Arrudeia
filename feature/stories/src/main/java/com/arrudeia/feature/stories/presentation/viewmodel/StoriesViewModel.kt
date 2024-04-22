@@ -1,11 +1,9 @@
-package com.arrudeia.feature.stories
+package com.arrudeia.feature.stories.presentation.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.arrudeia.core.domain.GetAllStoriesByIdUseCase
-import com.arrudeia.core.entity.StoryUseCaseEntity
-import com.arrudeia.feature.stories.model.StoriesUIModel
+import com.arrudeia.feature.stories.presentation.model.StoriesUIModel
 import com.arrudeia.feature.stories.navigation.StoriesArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,6 +12,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import com.arrudeia.feature.stories.R.string.erro_message_list_travels
+import com.arrudeia.feature.stories.domain.GetAllStoriesByIdUseCase
 import com.arrudeia.feature.stories.navigation.map.mapStoriesToUiModel
 
 @HiltViewModel
