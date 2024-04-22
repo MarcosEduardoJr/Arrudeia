@@ -18,4 +18,6 @@ dependencies {
     testImplementation(libs.mockito.core)
 
     testImplementation(libs.kotlinx.coroutines.test)
+
+    implementation(libs.androidx.compose.material3)
 }

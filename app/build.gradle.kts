@@ -82,7 +82,6 @@ dependencies {
     //debugImplementation(project(":ui-test-hilt-manifest"))
 
     implementation(project(":core:common"))
-    implementation(project(":core:ui"))
     implementation(project(":core:designsystem"))
     implementation(project(":core:data"))
     implementation(project(":core:model"))
@@ -112,5 +111,16 @@ dependencies {
     testImplementation(kotlin("test"))
     implementation(libs.work.testing)
     kaptTest(libs.hilt.compiler)
+
+    api(libs.androidx.compose.foundation)
+    api(libs.androidx.compose.foundation.layout)
+    api(libs.androidx.compose.material.iconsExtended)
+    api(libs.androidx.compose.material3)
+    api(libs.androidx.compose.runtime)
+    api(libs.androidx.compose.runtime.livedata)
+    api(libs.androidx.compose.ui.tooling.preview)
+    api(libs.androidx.compose.ui.util)
+    api(libs.androidx.metrics)
+    api(libs.androidx.tracing.ktx)
 
 }
