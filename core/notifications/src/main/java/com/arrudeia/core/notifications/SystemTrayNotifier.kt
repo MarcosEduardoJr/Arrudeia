@@ -16,7 +16,6 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.InboxStyle
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.net.toUri
-import com.arrudeia.core.model.data.NewsResource
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -39,73 +38,12 @@ class SystemTrayNotifier @Inject constructor(
 ) : Notifier {
 
     override fun postNewsNotifications(
-        newsResources: List<NewsResource>,
+        newsResources: List<Unit>,
     ) = with(context) {
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                permission.POST_NOTIFICATIONS,
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            return
-        }
 
-        val truncatedNewsResources = newsResources
-            .take(MAX_NUM_NOTIFICATIONS)
-
-        val newsNotifications = truncatedNewsResources
-            .map { newsResource ->
-                createNewsNotification {
-                    setSmallIcon(
-                        com.arrudeia.core.common.R.drawable.ic_arrudeia_notification,
-                    )
-                        .setContentTitle(newsResource.title)
-                        .setContentText(newsResource.content)
-                        .setContentIntent(newsPendingIntent(newsResource))
-                        .setGroup(NEWS_NOTIFICATION_GROUP)
-                        .setAutoCancel(true)
-                }
-            }
-        val summaryNotification = createNewsNotification {
-            val title = getString(
-                R.string.news_notification_group_summary,
-                truncatedNewsResources.size,
-            )
-            setContentTitle(title)
-                .setContentText(title)
-                .setSmallIcon(
-                    com.arrudeia.core.common.R.drawable.ic_arrudeia_notification,
-                )
-                // Build summary info into InboxStyle template.
-                .setStyle(newsNotificationStyle(truncatedNewsResources, title))
-                .setGroup(NEWS_NOTIFICATION_GROUP)
-                .setGroupSummary(true)
-                .setAutoCancel(true)
-                .build()
-        }
-
-        // Send the notifications
-        val notificationManager = NotificationManagerCompat.from(this)
-        newsNotifications.forEachIndexed { index, notification ->
-            notificationManager.notify(
-                truncatedNewsResources[index].id.hashCode(),
-                notification,
-            )
-        }
-        notificationManager.notify(NEWS_NOTIFICATION_SUMMARY_ID, summaryNotification)
     }
 
-    /**
-     * Creates an inbox style summary notification for news updates
-     */
-    private fun newsNotificationStyle(
-        newsResources: List<NewsResource>,
-        title: String,
-    ): InboxStyle = newsResources
-        .fold(InboxStyle()) { inboxStyle, newsResource ->
-            inboxStyle.addLine(newsResource.title)
-        }
-        .setBigContentTitle(title)
-        .setSummaryText(title)
+
 }
 
 /**
@@ -141,20 +79,3 @@ private fun Context.ensureNotificationChannelExists() {
     NotificationManagerCompat.from(this).createNotificationChannel(channel)
 }
 
-private fun Context.newsPendingIntent(
-    newsResource: NewsResource,
-): PendingIntent? = PendingIntent.getActivity(
-    this,
-    NEWS_NOTIFICATION_REQUEST_CODE,
-    Intent().apply {
-        action = Intent.ACTION_VIEW
-        data = newsResource.newsDeepLinkUri()
-        component = ComponentName(
-            packageName,
-            TARGET_ACTIVITY_NAME,
-        )
-    },
-    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
-)
-
-private fun NewsResource.newsDeepLinkUri() = "$DEEP_LINK_SCHEME_AND_HOST/$FOR_YOU_PATH/$id".toUri()
