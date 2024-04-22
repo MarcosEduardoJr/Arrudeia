@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.arrudeia.core.domain.GetAllArrudeiaTvUseCase
 import com.arrudeia.core.domain.GetAllTravelHomeUseCase
-import com.arrudeia.core.domain.GetUserPersonalInformationUseCase
+import com.arrudeia.feature.profile.domain.GetUserPersonalInformationUseCase
 import com.arrudeia.core.entity.UserPersonalInformationUseCaseEntity
 import com.arrudeia.feature.home.R.string.erro_message_list_travels
 import com.arrudeia.feature.home.map.mapArrTvToUiModel

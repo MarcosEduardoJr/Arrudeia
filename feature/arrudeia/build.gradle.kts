@@ -48,4 +48,10 @@ dependencies {
     implementation(libs.apollo.runtime)
 
     implementation("com.airbnb.android:lottie-compose:4.0.0")
+
+
+
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.androidx.dataStore.core)
+    implementation(libs.androidx.dataStore.preferences)
 }

@@ -35,4 +35,9 @@ dependencies {
 
     implementation(libs.apollo.runtime)
     implementation(libs.okhttp.logging)
+
+
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.androidx.dataStore.core)
+    implementation(libs.androidx.dataStore.preferences)
 }
