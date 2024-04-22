@@ -1,13 +1,13 @@
-package com.arrudeia.feature.trip
+package com.arrudeia.feature.trip.presentation.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.arrudeia.core.domain.GetTravelByIdUseCase
 import com.arrudeia.feature.trip.R.string.erro_message_list_travels
-import com.arrudeia.feature.trip.map.mapTravelToUiModel
-import com.arrudeia.feature.trip.model.TripUIModel
-import com.arrudeia.feature.trip.navigation.TripArgs
+import com.arrudeia.feature.trip.domain.GetTravelByIdUseCase
+import com.arrudeia.feature.trip.presentation.map.mapTravelToUiModel
+import com.arrudeia.feature.trip.presentation.model.TripUIModel
+import com.arrudeia.feature.trip.presentation.navigation.TripArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted

@@ -1,10 +1,10 @@
-package com.arrudeia.feature.trip.model
+package com.arrudeia.feature.trip.domain.entity
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class TripUIModel(
-    val id: Long,
+data class TravelUseCaseEntity(
+    val id: Long = 0,
     val name: String = "",
     val city: String = "",
     val state: String = "",
@@ -18,8 +18,4 @@ data class TripUIModel(
     val description: String = "",
     val include: List<String> = listOf(),
     val optional: List<String> = listOf(),
-) {
-
-    fun shortLocation() = city.plus(", ").plus(state)
-    fun date() = day.toString().plus("/").plus(month.toString())
-}
+    )

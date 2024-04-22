@@ -20,4 +20,6 @@ dependencies {
     testImplementation(libs.kotlinx.coroutines.test)
 
     implementation(libs.androidx.compose.material3)
+
+    implementation(libs.firebase.firestore)
 }

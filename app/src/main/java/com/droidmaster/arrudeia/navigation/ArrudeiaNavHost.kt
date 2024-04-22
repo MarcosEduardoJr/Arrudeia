@@ -16,8 +16,8 @@ import com.arrudeia.feature.profile.presentation.navigation.profileScreen
 import com.arrudeia.feature.sign.presentation.navigation.signScreen
 import com.arrudeia.feature.stories.navigation.navigateToStories
 import com.arrudeia.feature.stories.navigation.storiesScreen
-import com.arrudeia.feature.trip.navigation.navigateToTripDetail
-import com.arrudeia.feature.trip.navigation.tripDetailScreen
+import com.arrudeia.feature.trip.presentation.navigation.navigateToTripDetail
+import com.arrudeia.feature.trip.presentation.navigation.tripDetailScreen
 import com.arrudeia.navigation.arrudeiaRoute
 import com.arrudeia.navigation.homeRoute
 import com.arrudeia.navigation.onboardingRoute

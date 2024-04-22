@@ -1,12 +1,12 @@
-package com.arrudeia.core.domain
+package com.arrudeia.feature.trip.domain
 
-import com.arrudeia.core.data.network.DefaultHomeTravelsRepositoryImpl
-import com.arrudeia.core.data.entity.TravelRepositoryEntity
-import com.arrudeia.core.entity.TravelUseCaseEntity
+import com.arrudeia.feature.trip.data.TripTravelRepositoryImpl
+import com.arrudeia.feature.trip.data.entity.TravelRepositoryEntity
+import com.arrudeia.feature.trip.domain.entity.TravelUseCaseEntity
 import javax.inject.Inject
 
 class GetTravelByIdUseCase @Inject constructor(
-    private val repository: DefaultHomeTravelsRepositoryImpl,
+    private val repository: TripTravelRepositoryImpl,
 ) {
     suspend operator fun invoke(id: Long): TravelUseCaseEntity? =
         repository.getTravelById(id).mapToTravelUseCaseEntity()

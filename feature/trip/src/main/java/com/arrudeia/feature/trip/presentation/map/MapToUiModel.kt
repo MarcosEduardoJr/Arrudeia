@@ -1,7 +1,7 @@
-package com.arrudeia.feature.trip.map
+package com.arrudeia.feature.trip.presentation.map
 
-import com.arrudeia.core.entity.TravelUseCaseEntity
-import com.arrudeia.feature.trip.model.TripUIModel
+import com.arrudeia.feature.trip.domain.entity.TravelUseCaseEntity
+import com.arrudeia.feature.trip.presentation.model.TripUIModel
 
  fun TravelUseCaseEntity?.mapTravelToUiModel(): TripUIModel? {
     var listResult: TripUIModel? = null

@@ -1,4 +1,4 @@
-package com.arrudeia.feature.trip.navigation
+package com.arrudeia.feature.trip.presentation.navigation
 
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.SavedStateHandle
@@ -7,7 +7,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.arrudeia.feature.trip.TripDetailRoute
+import com.arrudeia.feature.trip.presentation.ui.TripDetailRoute
 import com.arrudeia.navigation.tripDetailRoute
 import java.net.URLDecoder
 import java.net.URLEncoder

@@ -11,12 +11,12 @@ import kotlin.test.assertTrue
 class GetTravelByIdUseCaseTest {
 
     private lateinit var repository: DefaultHomeTravelsRepositoryImpl
-    private lateinit var useCase: GetTravelByIdUseCase
+    private lateinit var useCase: com.arrudeia.feature.trip.domain.GetTravelByIdUseCase
 
     @Before
     fun setup() {
         repository = Mockito.mock()
-        useCase = GetTravelByIdUseCase(repository)
+        useCase = com.arrudeia.feature.trip.domain.GetTravelByIdUseCase(repository)
     }
 
     @Test

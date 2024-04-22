@@ -1,11 +1,12 @@
 package com.arrudeia.feature.trip
 
 import androidx.lifecycle.SavedStateHandle
-import com.arrudeia.core.domain.GetTravelByIdUseCase
+import com.arrudeia.feature.trip.domain.GetTravelByIdUseCase
 import com.arrudeia.core.entity.TravelUseCaseEntity
 import com.arrudeia.feature.trip.R.string.erro_message_list_travels
-import com.arrudeia.feature.trip.map.mapTravelToUiModel
+import com.arrudeia.feature.trip.presentation.map.mapTravelToUiModel
 import com.arrudeia.feature.trip.navigation.tripIdArg
+import com.arrudeia.feature.trip.presentation.viewmodel.TripDetailViewModel
 import io.mockk.coEvery
 import io.mockk.mockk
 import junit.framework.Assert.assertEquals
