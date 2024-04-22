@@ -16,8 +16,6 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import androidx.metrics.performance.JankStats
 import androidx.profileinstaller.ProfileVerifier
-import com.arrudeia.core.analytics.AnalyticsHelper
-import com.arrudeia.core.analytics.LocalAnalyticsHelper
 import com.arrudeia.core.data.util.NetworkMonitor
 import com.arrudeia.core.designsystem.R
 import com.arrudeia.core.designsystem.theme.ArrudeiaTheme
@@ -48,8 +46,6 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var networkMonitor: NetworkMonitor
 
-    @Inject
-    lateinit var analyticsHelper: AnalyticsHelper
 
     val viewModel: MainActivityViewModel by viewModels()
 
@@ -88,8 +84,7 @@ class MainActivity : ComponentActivity() {
                 onDispose {}
             }
 
-            CompositionLocalProvider(LocalAnalyticsHelper provides analyticsHelper) {
-                ArrudeiaTheme(
+             ArrudeiaTheme(
                     darkTheme = false,
                     androidTheme = false,
                     disableDynamicTheming = false,
@@ -99,7 +94,7 @@ class MainActivity : ComponentActivity() {
                         windowSizeClass = calculateWindowSizeClass(this),
                     )
                 }
-            }
+
         }
     }
 

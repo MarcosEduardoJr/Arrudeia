@@ -25,7 +25,6 @@ include(":core:domain")
 include(":core:model")
 include(":core:network")
 include(":core:ui")
-include(":core:analytics")
 include(":core:notifications")
 
 include(":sync:work")

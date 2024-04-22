@@ -8,18 +8,15 @@ import androidx.work.ForegroundInfo
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.OutOfQuotaPolicy
 import androidx.work.WorkerParameters
-import com.arrudeia.core.analytics.AnalyticsHelper
 import com.arrudeia.core.data.Synchronizer
-import com.arrudeia.core.network.Dispatcher
 import com.arrudeia.core.network.ArrudeiaDispatchers.IO
+import com.arrudeia.core.network.Dispatcher
 import com.arrudeia.sync.initializers.SyncConstraints
 import com.arrudeia.sync.initializers.syncForegroundInfo
 import com.arrudeia.sync.status.SyncSubscriber
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.withContext
 
 /**
@@ -31,7 +28,6 @@ class SyncWorker @AssistedInject constructor(
     @Assisted private val appContext: Context,
     @Assisted workerParams: WorkerParameters,
     @Dispatcher(IO) private val ioDispatcher: CoroutineDispatcher,
-    private val analyticsHelper: AnalyticsHelper,
     private val syncSubscriber: SyncSubscriber,
 ) : CoroutineWorker(appContext, workerParams), Synchronizer {
 
@@ -40,7 +36,6 @@ class SyncWorker @AssistedInject constructor(
 
     override suspend fun doWork(): Result = withContext(ioDispatcher) {
         traceAsync("Sync", 0) {
-            analyticsHelper.logSyncStarted()
 
             syncSubscriber.subscribe()
 
