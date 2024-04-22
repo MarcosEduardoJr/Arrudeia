@@ -27,11 +27,11 @@ dependencies {
     implementation(project(":core:common"))
 
     implementation(project(":core:model"))
-    implementation(project(":core:notifications"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.datetime)
     implementation(libs.kotlinx.serialization.json)
+    implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.auth)
 
     implementation(libs.apollo.runtime)
