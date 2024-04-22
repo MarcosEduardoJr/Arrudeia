@@ -1,4 +1,4 @@
-package com.arrudeia.core.model.data
+package com.arrudeia.feature.home.model
 
 /**
  * External data layer representation of a Arrudeia Topic

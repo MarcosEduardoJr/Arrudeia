@@ -1,8 +1,6 @@
 
 
-package com.arrudeia.core.domain
-
-import com.arrudeia.core.model.data.HomeTravel
+package com.arrudeia.feature.home
 
 sealed interface TravelHomeResultUiState {
     data object Loading : TravelHomeResultUiState
@@ -12,7 +10,7 @@ sealed interface TravelHomeResultUiState {
     data object LoadFailed : TravelHomeResultUiState
 
     data class Success(
-        val travels: List<HomeTravel> = emptyList(),
+        val travels: List<com.arrudeia.feature.home.model.HomeTravel> = emptyList(),
     ) : TravelHomeResultUiState {
         fun isEmpty(): Boolean = travels.isEmpty()
     }
