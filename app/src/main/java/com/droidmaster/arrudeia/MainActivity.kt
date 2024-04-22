@@ -16,7 +16,6 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import androidx.metrics.performance.JankStats
 import androidx.profileinstaller.ProfileVerifier
-import com.arrudeia.core.data.util.NetworkMonitor
 import com.arrudeia.core.designsystem.R
 import com.arrudeia.core.designsystem.theme.ArrudeiaTheme
 import com.droidmaster.arrudeia.ui.ArrudeiaApp
@@ -43,8 +42,6 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var lazyStats: dagger.Lazy<JankStats>
 
-    @Inject
-    lateinit var networkMonitor: NetworkMonitor
 
 
     val viewModel: MainActivityViewModel by viewModels()
@@ -90,7 +87,7 @@ class MainActivity : ComponentActivity() {
                     disableDynamicTheming = false,
                 ) {
                     ArrudeiaApp(
-                        networkMonitor = networkMonitor,
+
                         windowSizeClass = calculateWindowSizeClass(this),
                     )
                 }

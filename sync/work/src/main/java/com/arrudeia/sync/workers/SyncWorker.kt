@@ -8,7 +8,6 @@ import androidx.work.ForegroundInfo
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.OutOfQuotaPolicy
 import androidx.work.WorkerParameters
-import com.arrudeia.core.data.Synchronizer
 import com.arrudeia.core.network.ArrudeiaDispatchers.IO
 import com.arrudeia.core.network.Dispatcher
 import com.arrudeia.sync.initializers.SyncConstraints
@@ -29,7 +28,7 @@ class SyncWorker @AssistedInject constructor(
     @Assisted workerParams: WorkerParameters,
     @Dispatcher(IO) private val ioDispatcher: CoroutineDispatcher,
     private val syncSubscriber: SyncSubscriber,
-) : CoroutineWorker(appContext, workerParams), Synchronizer {
+) : CoroutineWorker(appContext, workerParams) {
 
     override suspend fun getForegroundInfo(): ForegroundInfo =
         appContext.syncForegroundInfo()

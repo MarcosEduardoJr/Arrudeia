@@ -10,6 +10,7 @@ plugins {
 }
 
 android {
+
     defaultConfig {
         applicationId = "com.droidmaster.arrudeia"
         versionCode = 21

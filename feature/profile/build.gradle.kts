@@ -17,7 +17,6 @@ dependencies {
     implementation(libs.glide.compose)
 
     implementation(libs.kotlinx.serialization.json)
-    implementation(project(mapOf("path" to ":core:network")))
     implementation(libs.firebase.bom)
     implementation(libs.firebase.storage)
 

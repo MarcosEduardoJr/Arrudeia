@@ -34,7 +34,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.arrudeia.core.data.util.NetworkMonitor
 import com.arrudeia.core.designsystem.component.ArrudeiaBackground
 import com.arrudeia.core.designsystem.component.ArrudeiaGradientBackground
 import com.arrudeia.core.designsystem.theme.GradientColors
@@ -50,9 +49,7 @@ import com.arrudeia.core.designsystem.R.color.background_grey_F7F7F9
 @Composable
 fun ArrudeiaApp(
     windowSizeClass: WindowSizeClass,
-    networkMonitor: NetworkMonitor,
     appState: ArrudeiaAppState = rememberArrudeiaAppState(
-        networkMonitor = networkMonitor,
         windowSizeClass = windowSizeClass,
     ),
 ) {
@@ -61,19 +58,6 @@ fun ArrudeiaApp(
             gradientColors = GradientColors()
         ) {
             val snackbarHostState = remember { SnackbarHostState() }
-
-            val isOffline by appState.isOffline.collectAsStateWithLifecycle()
-
-            // If user is not connected to the internet show a snack bar to inform them.
-            val notConnectedMessage = stringResource(R.string.app_name)
-            LaunchedEffect(isOffline) {
-                if (isOffline) {
-                    snackbarHostState.showSnackbar(
-                        message = notConnectedMessage,
-                        duration = Indefinite,
-                    )
-                }
-            }
 
 
             Scaffold(

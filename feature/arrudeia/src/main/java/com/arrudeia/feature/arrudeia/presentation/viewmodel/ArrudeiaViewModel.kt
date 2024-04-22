@@ -12,7 +12,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.arrudeia.core.network.BuildConfig.MAPS_API_KEY
+import com.arrudeia.core.common.BuildConfig
 import com.arrudeia.feature.arrudeia.domain.GetAllArrudeiaPlacesUseCase
 import com.arrudeia.feature.arrudeia.domain.SaveArrudeiaPlaceUseCase
 import com.arrudeia.feature.arrudeia.domain.entity.ArrudeiaPlaceDetailsUseCaseEntity
@@ -295,7 +295,7 @@ class ArrudeiaViewModel @Inject constructor(
 
     private fun getGeoContext(): GeoApiContext? {
         return GeoApiContext.Builder()
-            .apiKey(MAPS_API_KEY)
+            .apiKey(BuildConfig.MAPS_API_KEY)
             .connectTimeout(1, TimeUnit.SECONDS)
             .readTimeout(1, TimeUnit.SECONDS)
             .writeTimeout(1, TimeUnit.SECONDS)

@@ -5,7 +5,6 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.location.Geocoder
@@ -91,13 +90,13 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
+import com.arrudeia.core.common.BuildConfig
 import com.arrudeia.core.designsystem.R.drawable.*
 import com.arrudeia.core.designsystem.component.ArrudeiaButtonColor
 import com.arrudeia.core.designsystem.component.ArrudeiaLoadingWheel
 import com.arrudeia.core.designsystem.component.CircularIconButton
 import com.arrudeia.core.designsystem.component.TextFieldInput
 import com.arrudeia.core.designsystem.component.camera.ImageSelectionScreen
-import com.arrudeia.core.network.BuildConfig
 import com.arrudeia.feature.arrudeia.R
 import com.arrudeia.feature.arrudeia.presentation.model.ArrudeiaCategoryPlaceUiModel
 import com.arrudeia.feature.arrudeia.presentation.model.ArrudeiaPlaceDetailsUiModel
@@ -110,12 +109,8 @@ import com.arrudeia.feature.arrudeia.presentation.viewmodel.SaveMarkerUiState
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.rememberMultiplePermissionsState
-import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.location.LocationSettingsRequest
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
@@ -130,8 +125,6 @@ import com.google.maps.android.compose.Polyline
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.maps.android.compose.rememberMarkerState
 import kotlinx.coroutines.launch
-import com.arrudeia.feature.arrudeia.R.raw.animation_arrudeia_loading
-import kotlinx.coroutines.delay
 
 @Composable
 fun ArrudeiaRoute(
@@ -141,7 +134,6 @@ fun ArrudeiaRoute(
     onShowSnackbar: suspend (String, String?) -> Boolean,
 ) {
     val context = LocalContext.current
-
     viewModel.getPlacesMarker()
     viewModel.fusedLocationClient =
         LocationServices.getFusedLocationProviderClient(context as Activity)
