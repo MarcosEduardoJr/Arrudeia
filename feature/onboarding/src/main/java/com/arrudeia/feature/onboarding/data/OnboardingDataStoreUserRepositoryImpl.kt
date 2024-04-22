@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 class OnboardingDataStoreUserRepositoryImpl @Inject constructor(
     private val dataStore: DataStore<Preferences>
-) : com.arrudeia.feature.onboarding.data.OnboardingDataStoreUserRepository {
+) :  OnboardingDataStoreUserRepository {
 
     companion object {
         private val UID_KEY = stringPreferencesKey("uid")
@@ -35,25 +35,6 @@ class OnboardingDataStoreUserRepositoryImpl @Inject constructor(
                 image
             )
         }.firstOrNull()
-    }
-
-    override suspend fun logoutUser() {
-        dataStore.edit { preferences ->
-            preferences.remove(UID_KEY)
-            preferences.remove(NAME_KEY)
-            preferences.remove(EMAIL_KEY)
-            preferences.remove(IMAGE_USER_KEY)
-        }
-    }
-
-    override suspend fun saveUser(user:  OnboardingDataStoreUserRepositoryEntity): Boolean {
-        dataStore.edit { preferences ->
-            preferences[UID_KEY] = user.uid
-            preferences[NAME_KEY] = user.name
-            preferences[EMAIL_KEY] = user.email
-            preferences[IMAGE_USER_KEY] = user.image
-        }
-        return dataStore.data.first().contains(UID_KEY)
     }
 }
 
