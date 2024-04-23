@@ -6,7 +6,7 @@ plugins {
     id("arrudeia.android.hilt")
     id("jacoco")
     id("arrudeia.android.application.firebase")
-    //id("com.google.android.gms.oss-licenses-plugin")
+    id("io.gitlab.arturbosch.detekt")
 }
 
 android {
