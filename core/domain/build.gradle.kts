@@ -30,7 +30,6 @@ dependencies {
     implementation(libs.coil.kt.svg)
     implementation(libs.converter.moshi)
     implementation(libs.converter.gson)
-    implementation(libs.firebase.firestore)
     implementation(libs.mockito.core)
     implementation(libs.firebase.auth)
     implementation(libs.androidx.dataStore.core)
@@ -38,5 +37,5 @@ dependencies {
     implementation(libs.apollo.runtime)
 
     implementation(libs.firebase.bom)
-    implementation(libs.firebase.storage)
+    implementation(libs.firebase.firestore)
 }

@@ -1,4 +1,4 @@
-package com.arrudeia.core.data.di
+package com.arrudeia.core.network.di
 
 import android.content.Context
 import androidx.datastore.core.DataStore
