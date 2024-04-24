@@ -33,8 +33,8 @@ import com.arrudeia.feature.onboarding.R.drawable.ic_bg_onboarding
 import com.arrudeia.feature.onboarding.R.string.onboarding_description_tired_job
 import com.arrudeia.feature.onboarding.R.string.start
 import com.arrudeia.feature.onboarding.presentation.viewmodel.OnboardingViewModel
-import com.arrudeia.navigation.homeRoute
-import com.arrudeia.navigation.signRoute
+import com.arrudeia.core.data.navigation.homeRoute
+import com.arrudeia.core.data.navigation.signRoute
 import com.arrudeia.feature.onboarding.presentation.viewmodel.OnboardingViewModel.CurrentUserUiState
 
 @Composable

@@ -55,9 +55,9 @@ import com.arrudeia.feature.profile.R
 import com.arrudeia.feature.profile.presentation.model.ProfileUiModel
 import com.arrudeia.feature.profile.presentation.viewmodel.ProfileViewModel
 import com.arrudeia.feature.profile.presentation.viewmodel.ProfileViewModel.ProfileUiState
-import com.arrudeia.navigation.profileAddressRoute
-import com.arrudeia.navigation.profilePersonalInformationRoute
-import com.arrudeia.navigation.signRoute
+import com.arrudeia.core.data.navigation.profileAddressRoute
+import com.arrudeia.core.data.navigation.profilePersonalInformationRoute
+import com.arrudeia.core.data.navigation.signRoute
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder

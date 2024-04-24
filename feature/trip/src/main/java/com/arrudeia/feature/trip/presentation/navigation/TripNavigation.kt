@@ -8,7 +8,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.arrudeia.feature.trip.presentation.ui.TripDetailRoute
-import com.arrudeia.navigation.tripDetailRoute
+import com.arrudeia.core.data.navigation.tripDetailRoute
 import java.net.URLDecoder
 import java.net.URLEncoder
 

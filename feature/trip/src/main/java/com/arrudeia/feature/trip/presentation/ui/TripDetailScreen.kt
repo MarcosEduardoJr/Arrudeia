@@ -48,6 +48,7 @@ import com.arrudeia.core.designsystem.component.ArrudeiaButtonColor
 import com.arrudeia.core.designsystem.component.ArrudeiaLoadingWheel
 import com.arrudeia.core.designsystem.component.CircularIconButton
 import com.arrudeia.core.designsystem.theme.ArrudeiaTheme
+import com.arrudeia.core.domain.util.toCurrencyReal
 import com.arrudeia.feature.trip.R
 import com.arrudeia.feature.trip.R.string.description
 import com.arrudeia.feature.trip.R.string.from
@@ -58,7 +59,6 @@ import com.arrudeia.feature.trip.presentation.viewmodel.TripDetailViewModel
 import com.arrudeia.feature.trip.presentation.viewmodel.TripDetailViewModel.TripDetailUiState.Error
 import com.arrudeia.feature.trip.presentation.viewmodel.TripDetailViewModel.TripDetailUiState.Loading
 import com.arrudeia.feature.trip.presentation.viewmodel.TripDetailViewModel.TripDetailUiState.Success
-import com.arrudeia.util.toCurrencyReal
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 

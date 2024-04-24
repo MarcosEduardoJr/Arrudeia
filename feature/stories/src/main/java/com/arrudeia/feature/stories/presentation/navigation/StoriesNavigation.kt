@@ -10,7 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.arrudeia.feature.stories.StoriesRoute
-import com.arrudeia.navigation.storiesRoute
+import com.arrudeia.core.data.navigation.storiesRoute
 import java.net.URLDecoder
 import java.net.URLEncoder
 

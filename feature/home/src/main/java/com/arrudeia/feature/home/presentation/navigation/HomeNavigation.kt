@@ -8,10 +8,10 @@ import androidx.navigation.navigation
 import com.arrudeia.feature.home.HomeRoute
 import com.arrudeia.feature.profile.ui.ProfileRoute
 import com.arrudeia.feature.stories.StoriesRoute
-import com.arrudeia.navigation.HOME_GRAPH_ROUTE_PATTERN
-import com.arrudeia.navigation.homeRoute
-import com.arrudeia.navigation.profileRoute
-import com.arrudeia.navigation.storiesRoute
+import com.arrudeia.core.data.navigation.HOME_GRAPH_ROUTE_PATTERN
+import com.arrudeia.core.data.navigation.homeRoute
+import com.arrudeia.core.data.navigation.profileRoute
+import com.arrudeia.core.data.navigation.storiesRoute
 
 
 fun NavController.navigateToHome(navOptions: NavOptions? = null) {

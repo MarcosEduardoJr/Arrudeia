@@ -6,10 +6,10 @@ import androidx.navigation.navigation
 import com.arrudeia.feature.profile.ui.ProfileAddressRoute
 import com.arrudeia.feature.profile.ui.ProfilePersonalInformationRoute
 import com.arrudeia.feature.profile.ui.ProfileRoute
-import com.arrudeia.navigation.PROFILE_GRAPH_ROUTE_PATTERN
-import com.arrudeia.navigation.profileAddressRoute
-import com.arrudeia.navigation.profilePersonalInformationRoute
-import com.arrudeia.navigation.profileRoute
+import com.arrudeia.core.data.navigation.PROFILE_GRAPH_ROUTE_PATTERN
+import com.arrudeia.core.data.navigation.profileAddressRoute
+import com.arrudeia.core.data.navigation.profilePersonalInformationRoute
+import com.arrudeia.core.data.navigation.profileRoute
 
 fun NavGraphBuilder.profileScreen(
     onRouteClick: (String) -> Unit,

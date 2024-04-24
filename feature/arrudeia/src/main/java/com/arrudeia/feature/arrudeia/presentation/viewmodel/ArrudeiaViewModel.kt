@@ -12,7 +12,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.arrudeia.core.common.BuildConfig
+import com.arrudeia.core.domain.BuildConfig
 import com.arrudeia.feature.arrudeia.domain.GetAllArrudeiaPlacesUseCase
 import com.arrudeia.feature.arrudeia.domain.SaveArrudeiaPlaceUseCase
 import com.arrudeia.feature.arrudeia.domain.entity.ArrudeiaPlaceDetailsUseCaseEntity

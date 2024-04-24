@@ -1,4 +1,4 @@
-package com.arrudeia.navigation
+package com.arrudeia.core.data.navigation
 
 const val signRoute = "sign_route"
 const val onboardingRoute = "onboarding_route"

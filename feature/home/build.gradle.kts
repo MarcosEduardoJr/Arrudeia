@@ -10,7 +10,7 @@ android {
 dependencies {
     implementation(libs.androidx.compose.material3.windowSizeClass)
     implementation(project(":core:designsystem"))
-    implementation(project(":core:common"))
+
     implementation(project(":feature:stories"))
     implementation(project(":feature:trip"))
     implementation(project(":feature:profile"))

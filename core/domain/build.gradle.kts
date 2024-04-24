@@ -1,5 +1,7 @@
 plugins {
     id("arrudeia.android.library")
+    id("arrudeia.android.hilt")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
     kotlin("kapt")
 }
 
@@ -8,11 +10,17 @@ plugins {
 
 android {
     namespace = "com.arrudeia.core.domain"
+    buildFeatures {
+        buildConfig = true
+    }
+}
+
+secrets {
+    defaultPropertiesFileName = "secrets.defaults.properties"
 }
 
 dependencies {
     implementation(project(":core:graphql"))
-    implementation(project(":core:common"))
     implementation(libs.hilt.android)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.datetime)
@@ -37,4 +45,5 @@ dependencies {
 
     implementation(libs.firebase.bom)
     implementation(libs.firebase.firestore)
+
 }

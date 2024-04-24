@@ -77,9 +77,9 @@ import com.arrudeia.feature.home.presentation.ArrudeiaTvUiState
 import com.arrudeia.feature.home.presentation.HomeViewModel
 import com.arrudeia.feature.home.presentation.ProfileUiState
 import com.arrudeia.feature.home.presentation.TravelUiState
-import com.arrudeia.navigation.arrudeiaRoute
-import com.arrudeia.navigation.profileRoute
-import com.arrudeia.util.toCurrencyReal
+import com.arrudeia.core.data.navigation.arrudeiaRoute
+import com.arrudeia.core.data.navigation.profileRoute
+import com.arrudeia.core.domain.util.toCurrencyReal
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.Placeholder

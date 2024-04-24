@@ -17,7 +17,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "arrudeia"
 include(":app")
-include(":core:common")
 include(":core:graphql")
 include(":core:designsystem")
 include(":core:domain")

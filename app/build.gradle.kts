@@ -78,10 +78,9 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.testManifest)
     //debugImplementation(project(":ui-test-hilt-manifest"))
 
-    implementation(project(":core:common"))
     implementation(project(":core:designsystem"))
     implementation(project(":core:graphql"))
-
+    implementation(project(":core:domain"))
 
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.appcompat)

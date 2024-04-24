@@ -87,7 +87,7 @@ import com.arrudeia.feature.sign.R.string.sign_password_not_equals_to_confirm_pa
 import com.arrudeia.feature.sign.R.string.sign_register
 import com.arrudeia.feature.sign.presentation.viewmodel.SignViewModel
 import com.arrudeia.feature.sign.presentation.viewmodel.SignViewModel.SignUiState
-import com.arrudeia.navigation.homeRoute
+import com.arrudeia.core.data.navigation.homeRoute
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
