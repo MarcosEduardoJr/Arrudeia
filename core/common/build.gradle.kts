@@ -9,7 +9,7 @@ plugins {
 
 
 android {
-    namespace = "com.arrudeia.core.domain"
+    namespace = "com.arrudeia.core.common"
     buildFeatures {
         buildConfig = true
     }

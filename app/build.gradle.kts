@@ -80,7 +80,7 @@ dependencies {
 
     implementation(project(":core:designsystem"))
     implementation(project(":core:graphql"))
-    implementation(project(":core:domain"))
+    implementation(project(":core:common"))
 
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.appcompat)

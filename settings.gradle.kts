@@ -19,7 +19,7 @@ rootProject.name = "arrudeia"
 include(":app")
 include(":core:graphql")
 include(":core:designsystem")
-include(":core:domain")
+include(":core:common")
 include(":core:graphql")
 
 
