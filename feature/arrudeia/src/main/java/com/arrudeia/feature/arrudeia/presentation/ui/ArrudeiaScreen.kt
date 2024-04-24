@@ -90,8 +90,16 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
-import com.arrudeia.core.domain.BuildConfig
-import com.arrudeia.core.designsystem.R.drawable.*
+import com.arrudeia.core.common.BuildConfig
+import com.arrudeia.core.designsystem.R.drawable.ic_building_circle
+import com.arrudeia.core.designsystem.R.drawable.ic_car_circle
+import com.arrudeia.core.designsystem.R.drawable.ic_hotel_circle
+import com.arrudeia.core.designsystem.R.drawable.ic_outdoors_circle
+import com.arrudeia.core.designsystem.R.drawable.ic_pin
+import com.arrudeia.core.designsystem.R.drawable.ic_restaurant_circle
+import com.arrudeia.core.designsystem.R.drawable.ic_shop_circle
+import com.arrudeia.core.designsystem.R.drawable.ic_surf_person_circle
+import com.arrudeia.core.designsystem.R.drawable.ic_train_circle
 import com.arrudeia.core.designsystem.component.ArrudeiaButtonColor
 import com.arrudeia.core.designsystem.component.ArrudeiaLoadingWheel
 import com.arrudeia.core.designsystem.component.CircularIconButton
@@ -141,7 +149,11 @@ fun ArrudeiaRoute(
     viewModel.placesClient = Places.createClient(context)
     viewModel.geoCoder = Geocoder(context)
     viewModel.getCurrentLocation()
-    LocationScreen(viewModel = viewModel, onShowSnackbar = onShowSnackbar, onBackClick = onBackClick)
+    LocationScreen(
+        viewModel = viewModel,
+        onShowSnackbar = onShowSnackbar,
+        onBackClick = onBackClick
+    )
 
 }
 
@@ -781,8 +793,10 @@ fun AddMarkerBottomSheet(
                         color = colorResource(id = com.arrudeia.core.designsystem.R.color.colorPrimary)
                     )
                 }
-                scope.launch {
-                    sheetState.expand()
+                LaunchedEffect(Unit) {
+                    scope.launch {
+                        sheetState.expand()
+                    }
                 }
             }
 
