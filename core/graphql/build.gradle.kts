@@ -8,12 +8,12 @@ plugins {
 
 apollo {
     service("service") {
-        packageName.set("com.arrudeia.core.data")
+        packageName.set("com.arrudeia.core.graphql")
     }
 }
 
 android {
-    namespace = "com.arrudeia.core.data"
+    namespace = "com.arrudeia.core.graphql"
     testOptions {
         unitTests {
             isIncludeAndroidResources = true

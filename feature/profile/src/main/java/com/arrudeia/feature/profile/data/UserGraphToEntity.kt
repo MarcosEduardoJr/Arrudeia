@@ -1,7 +1,7 @@
 package com.arrudeia.feature.profile.data
 
-import com.arrudeia.core.data.GetUserAddressGraphQuery
-import com.arrudeia.core.data.GetUserGraphQuery
+import com.arrudeia.core.graphql.GetUserAddressGraphQuery
+import com.arrudeia.core.graphql.GetUserGraphQuery
 import com.arrudeia.feature.profile.data.entity.UserAddressRepositoryEntity
 import com.arrudeia.feature.profile.data.entity.UserPersonalInformationRepositoryEntity
 

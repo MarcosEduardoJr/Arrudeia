@@ -2,10 +2,10 @@ package com.arrudeia.feature.profile.data
 
 import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.exception.ApolloException
-import com.arrudeia.core.data.GetUserAddressGraphQuery
-import com.arrudeia.core.data.GetUserGraphQuery
-import com.arrudeia.core.data.UpdateUserAddressGraphMutation
-import com.arrudeia.core.data.UpdateUserPersonalInfoGraphMutation
+import com.arrudeia.core.graphql.GetUserAddressGraphQuery
+import com.arrudeia.core.graphql.GetUserGraphQuery
+import com.arrudeia.core.graphql.UpdateUserAddressGraphMutation
+import com.arrudeia.core.graphql.UpdateUserPersonalInfoGraphMutation
 import com.arrudeia.feature.profile.data.entity.UserAddressRepositoryEntity
 import com.arrudeia.feature.profile.data.entity.UserPersonalInformationRepositoryEntity
 import javax.inject.Inject

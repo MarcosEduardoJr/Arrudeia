@@ -11,7 +11,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:data"))
+    implementation(project(":core:graphql"))
     implementation(project(":core:common"))
     implementation(libs.hilt.android)
     implementation(libs.kotlinx.coroutines.android)

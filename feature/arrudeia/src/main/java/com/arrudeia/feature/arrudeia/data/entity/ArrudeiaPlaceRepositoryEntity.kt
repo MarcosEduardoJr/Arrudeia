@@ -1,6 +1,6 @@
 package com.arrudeia.feature.arrudeia.data.entity
 
-import com.arrudeia.core.data.GetArrudeiaPlacesQuery
+import com.arrudeia.core.graphql.GetArrudeiaPlacesQuery
 
 class ArrudeiaPlaceRepositoryEntity(
     val available: List<AvailableRepositoryEntity>? = listOf(),

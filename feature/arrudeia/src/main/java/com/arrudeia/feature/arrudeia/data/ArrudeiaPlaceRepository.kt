@@ -3,7 +3,7 @@ package com.arrudeia.feature.arrudeia.data
 import android.net.Uri
 import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.exception.ApolloException
-import com.arrudeia.core.data.GetArrudeiaPlacesQuery
+import com.arrudeia.core.graphql.GetArrudeiaPlacesQuery
 import com.arrudeia.feature.arrudeia.data.entity.ArrudeiaPlaceRepositoryEntity
 import com.arrudeia.feature.arrudeia.data.entity.toEntity
 import javax.inject.Inject

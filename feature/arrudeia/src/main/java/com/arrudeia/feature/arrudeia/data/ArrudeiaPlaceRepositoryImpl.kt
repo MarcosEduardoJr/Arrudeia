@@ -3,10 +3,10 @@ package com.arrudeia.feature.arrudeia.data
 import android.util.Log
 import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.exception.ApolloException
-import com.arrudeia.core.data.CreateArrudeiaAvailablePlaceMutation
-import com.arrudeia.core.data.CreateArrudeiaPlaceMutation
-import com.arrudeia.core.data.GetArrudeiaPlaceQuery
-import com.arrudeia.core.data.GetArrudeiaPlacesQuery
+import com.arrudeia.core.graphql.CreateArrudeiaAvailablePlaceMutation
+import com.arrudeia.core.graphql.CreateArrudeiaPlaceMutation
+import com.arrudeia.core.graphql.GetArrudeiaPlaceQuery
+import com.arrudeia.core.graphql.GetArrudeiaPlacesQuery
 import com.arrudeia.feature.arrudeia.data.entity.ArrudeiaPlaceRepositoryEntity
 import com.arrudeia.feature.arrudeia.data.entity.toEntity
 import javax.inject.Inject

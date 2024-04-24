@@ -1,7 +1,7 @@
 package com.arrudeia.feature.arrudeia.data.entity
 
-import com.arrudeia.core.data.GetArrudeiaPlaceQuery
-import com.arrudeia.core.data.GetArrudeiaPlacesQuery
+import com.arrudeia.core.graphql.GetArrudeiaPlaceQuery
+import com.arrudeia.core.graphql.GetArrudeiaPlacesQuery
 
 fun List<GetArrudeiaPlacesQuery.ArrudeiaPlace?>?.toEntity(): List<ArrudeiaPlaceRepositoryEntity>? {
     return if (this == null) null
