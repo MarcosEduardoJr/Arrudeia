@@ -2,15 +2,12 @@ plugins {
     id("arrudeia.android.application")
     id("arrudeia.android.application.compose")
     id("arrudeia.android.application.flavors")
-    id("arrudeia.android.application.jacoco")
     id("arrudeia.android.hilt")
-    id("jacoco")
     id("arrudeia.android.application.firebase")
     id("io.gitlab.arturbosch.detekt")
 }
 
 android {
-
     defaultConfig {
         applicationId = "com.droidmaster.arrudeia"
         versionCode = 21

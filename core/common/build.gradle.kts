@@ -1,7 +1,6 @@
 
 plugins {
     id("arrudeia.android.library")
-    id("arrudeia.android.library.jacoco")
     id("arrudeia.android.hilt")
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 

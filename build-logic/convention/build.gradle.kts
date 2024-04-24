@@ -35,10 +35,7 @@ gradlePlugin {
             id = "arrudeia.android.application"
             implementationClass = "AndroidApplicationConventionPlugin"
         }
-        register("androidApplicationJacoco") {
-            id = "arrudeia.android.application.jacoco"
-            implementationClass = "AndroidApplicationJacocoConventionPlugin"
-        }
+
         register("androidLibraryCompose") {
             id = "arrudeia.android.library.compose"
             implementationClass = "AndroidLibraryComposeConventionPlugin"
@@ -51,10 +48,7 @@ gradlePlugin {
             id = "arrudeia.android.feature"
             implementationClass = "AndroidFeatureConventionPlugin"
         }
-        register("androidLibraryJacoco") {
-            id = "arrudeia.android.library.jacoco"
-            implementationClass = "AndroidLibraryJacocoConventionPlugin"
-        }
+
         register("androidTest") {
             id = "arrudeia.android.test"
             implementationClass = "AndroidTestConventionPlugin"

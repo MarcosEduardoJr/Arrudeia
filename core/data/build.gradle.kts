@@ -1,6 +1,5 @@
 plugins {
     id("arrudeia.android.library")
-    id("arrudeia.android.library.jacoco")
     id("arrudeia.android.hilt")
     id("kotlinx-serialization")
 

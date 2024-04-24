@@ -1,7 +1,6 @@
 plugins {
     id("arrudeia.android.feature")
     id("arrudeia.android.library.compose")
-    id("arrudeia.android.library.jacoco")
 }
 
 android {
