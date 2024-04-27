@@ -1,4 +1,4 @@
-package com.arrudeia.feature.home.model
+package com.arrudeia.feature.home.presentation.model
 
 import kotlinx.serialization.Serializable
 
@@ -13,7 +13,7 @@ data class TravelUIModel(
     val year: Int = 0,
     val price: Int = 0,
     val discount: Int = 0,
-    val cover_image_url: String = "",
+    val coverImageUrl: String = "",
     val whatsapp: String = "",
     ){
 

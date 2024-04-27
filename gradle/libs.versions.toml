@@ -65,6 +65,7 @@ apolloVer = "3.8.3"
 cameraVer = "1.3.2"
 googleMapsVer = "0.15.0"
 placesVer = "3.0.0"
+detektVer = "1.23.6"
 [libraries]
 
 
@@ -190,3 +191,5 @@ ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 protobuf = { id = "com.google.protobuf", version.ref = "protobufPlugin" }
 roborazzi = { id = "io.github.takahirom.roborazzi", version.ref = "roborazzi" }
 secrets = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "secrets" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detektVer" }
+

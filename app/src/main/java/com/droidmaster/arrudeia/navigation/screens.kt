@@ -3,7 +3,7 @@ package com.droidmaster.arrudeia.navigation
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.arrudeia.feature.arrudeia.presentation.navigation.arrudeiaScreen
-import com.arrudeia.feature.home.navigation.homeScreen
+import com.arrudeia.feature.home.presentation.navigation.homeScreen
 import com.arrudeia.feature.onboarding.presentation.navigation.onboardingScreen
 import com.arrudeia.feature.profile.presentation.navigation.profileScreen
 import com.arrudeia.feature.sign.presentation.navigation.signScreen

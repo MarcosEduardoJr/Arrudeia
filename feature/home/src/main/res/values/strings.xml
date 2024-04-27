@@ -22,4 +22,7 @@
     <string name="erro_message_list_travels">Estamos em manutenção, tente novamente mais tarde.</string>
     <string name="loading">Carregando</string>
     <string name="travels_only_this_city">Estamos com viagem apenas em Recife.</string>
+
+
+    <string name="error_get_user">Não foi possível retornar os dados do usuário tente novamente mais tarde</string>
 </resources>

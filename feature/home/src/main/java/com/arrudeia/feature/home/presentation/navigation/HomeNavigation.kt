@@ -1,11 +1,11 @@
-package com.arrudeia.feature.home.navigation
+package com.arrudeia.feature.home.presentation.navigation
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.arrudeia.feature.home.HomeRoute
+import com.arrudeia.feature.home.presentation.ui.homeRoute
 import com.arrudeia.feature.profile.ui.ProfileRoute
 import com.arrudeia.feature.stories.StoriesRoute
 import com.arrudeia.core.data.navigation.HOME_GRAPH_ROUTE_PATTERN
@@ -26,7 +26,12 @@ fun NavGraphBuilder.homeScreen(
 ) {
 
     composable(route = homeRoute) {
-        HomeRoute(onRouteClick, onStoriesClick =onStoriesClick, onTripDetailClick = onTripDetailClick,onShowSnackbar = onShowSnackbar)
+        homeRoute(
+            onRouteClick,
+            onStoriesClick = onStoriesClick,
+            onTripDetailClick = onTripDetailClick,
+            onShowSnackbar = onShowSnackbar
+        )
     }
 }
 
@@ -50,7 +55,7 @@ fun NavGraphBuilder.homeGraph(
             StoriesRoute(onStoriesClick, onBackClick)
         }
         composable(route = profileRoute) {
-            ProfileRoute(onBackClick, onRouteClick,onShowSnackbar = onShowSnackbar)
+            ProfileRoute(onBackClick, onRouteClick, onShowSnackbar = onShowSnackbar)
         }
         nestedGraphs()
     }

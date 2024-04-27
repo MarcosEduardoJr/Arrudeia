@@ -1,4 +1,4 @@
-package com.arrudeia.feature.home.presentation
+package com.arrudeia.feature.home.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,16 +9,16 @@ import com.arrudeia.feature.home.domain.GetUserPersonalInformationUseCase
 import com.arrudeia.feature.home.domain.entity.UserPersonalInformationUseCaseEntity
 import com.arrudeia.feature.home.presentation.map.mapArrTvToUiModel
 import com.arrudeia.feature.home.presentation.map.mapTravelsToUiModel
-import com.arrudeia.feature.home.model.ArrudeiaTvUIModel
-import com.arrudeia.feature.home.model.TravelUIModel
-import com.arrudeia.feature.profile.R
-import com.arrudeia.feature.home.model.ProfileUiModel
+import com.arrudeia.feature.home.presentation.model.ArrudeiaTvUIModel
+import com.arrudeia.feature.home.presentation.model.TravelUIModel
+import com.arrudeia.feature.home.presentation.model.ProfileUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import com.arrudeia.core.result.Result
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
@@ -80,15 +80,25 @@ class HomeViewModel @Inject constructor(
 
     fun getUserPersonalInformation() {
         viewModelScope.launch {
-            val result = userUseCase()
-            if (result == null)
-                userUiState.value = ProfileUiState.Error(
-                    R.string.error_get_user
-                )
-            else {
-                userUiState.value = ProfileUiState.Success(
-                    result.toUiModel()
-                )
+            when (val result = userUseCase()) {
+                is Result.Success -> {
+                    result.data?.let { data ->
+                        userUiState.value = ProfileUiState.Success(
+                            data.toUiModel()
+                        )
+                    }
+                }
+
+                is Result.Error -> {
+                    userUiState.value = ProfileUiState.Error(
+                        result.message
+                    )
+                }
+
+                Result.Loading -> {
+                    userUiState.value = ProfileUiState.Loading
+
+                }
             }
         }
     }

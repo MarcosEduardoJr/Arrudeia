@@ -47,12 +47,6 @@ class DefaultHomeTravelsRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getTravelById(id: Long): TravelRepositoryEntity? {
-        var result: TravelRepositoryEntity? = null
-        getAllTravels().forEach { if (it.id == id) result = it }
-        return result
-    }
-
     companion object {
         const val HOME_TRAVELS = "home_travels"
         const val HOME_ARRUDEIA_TV = "home_arrudeia_tv"

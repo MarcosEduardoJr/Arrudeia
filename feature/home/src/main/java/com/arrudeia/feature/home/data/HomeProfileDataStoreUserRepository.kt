@@ -2,16 +2,9 @@ package com.arrudeia.feature.home.data
 
 import com.arrudeia.feature.home.data.entity.ProfileDataStoreUserRepositoryEntity
 
+import com.arrudeia.core.result.Result
 
 interface HomeProfileDataStoreUserRepository {
+    suspend fun getUserData(): Result<ProfileDataStoreUserRepositoryEntity?>
 
-
-    suspend fun saveUser(
-        user: ProfileDataStoreUserRepositoryEntity
-    ): Boolean
-
-    suspend fun getUserData():  ProfileDataStoreUserRepositoryEntity?
-
-    suspend fun logoutUser(
-    )
 }

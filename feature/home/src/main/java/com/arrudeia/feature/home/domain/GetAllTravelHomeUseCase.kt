@@ -25,7 +25,7 @@ class GetAllTravelHomeUseCase @Inject constructor(
                     year = it.year,
                     price = it.price,
                     discount = it.discount,
-                    cover_image_url = it.cover_image_url,
+                    coverImageUrl = it.cover_image_url,
                     whatsapp = it.whatsapp,
                     description = it.description
                 )

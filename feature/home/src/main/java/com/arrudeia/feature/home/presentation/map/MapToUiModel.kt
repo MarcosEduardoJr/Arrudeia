@@ -2,8 +2,8 @@ package com.arrudeia.feature.home.presentation.map
 
 import com.arrudeia.feature.home.domain.entity.ArrudeiaUseCaseEntity
 import com.arrudeia.feature.home.domain.entity.TravelUseCaseEntity
-import com.arrudeia.feature.home.model.ArrudeiaTvUIModel
-import com.arrudeia.feature.home.model.TravelUIModel
+import com.arrudeia.feature.home.presentation.model.ArrudeiaTvUIModel
+import com.arrudeia.feature.home.presentation.model.TravelUIModel
 
 fun List<TravelUseCaseEntity>?.mapTravelsToUiModel(): List<TravelUIModel> {
     val listResult = mutableListOf<TravelUIModel>()
@@ -19,7 +19,7 @@ fun List<TravelUseCaseEntity>?.mapTravelsToUiModel(): List<TravelUIModel> {
                 year = it.year,
                 price = it.price,
                 discount = it.discount,
-                cover_image_url = it.cover_image_url,
+                coverImageUrl = it.coverImageUrl,
                 whatsapp = it.whatsapp
             )
         )

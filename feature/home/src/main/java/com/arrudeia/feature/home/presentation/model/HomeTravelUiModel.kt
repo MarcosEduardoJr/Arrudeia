@@ -1,4 +1,4 @@
-package com.arrudeia.feature.home.model
+package com.arrudeia.feature.home.presentation.model
 
 /**
  * External data layer representation of a Arrudeia Topic
@@ -13,7 +13,7 @@ data class HomeTravelUiModel(
     val year: Int = 0,
     val price: Float = 0.0f,
     val discount: Int = 0,
-    val cover_image_url: String = "",
+    val coverImageUrl: String = "",
     val whatsapp: Int = 0,
 
     )

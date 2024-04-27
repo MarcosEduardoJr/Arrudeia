@@ -1,4 +1,4 @@
-package com.arrudeia.feature.home.presentation
+package com.arrudeia.feature.home.presentation.viewmodel
 
 import com.arrudeia.feature.home.data.entity.TravelRepositoryEntity
 

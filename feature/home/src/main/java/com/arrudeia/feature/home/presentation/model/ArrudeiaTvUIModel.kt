@@ -1,4 +1,4 @@
-package com.arrudeia.feature.home.model
+package com.arrudeia.feature.home.presentation.model
 
 import kotlinx.serialization.Serializable
 
