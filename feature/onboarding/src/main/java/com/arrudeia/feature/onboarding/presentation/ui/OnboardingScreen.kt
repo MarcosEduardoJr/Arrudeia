@@ -38,7 +38,7 @@ import com.arrudeia.core.data.navigation.signRoute
 import com.arrudeia.feature.onboarding.presentation.viewmodel.OnboardingViewModel.CurrentUserUiState
 
 @Composable
-internal fun OnboardingRoute(
+internal fun onboardingRoute(
     onRouteClick: (String) -> Unit,
     viewModel: OnboardingViewModel = hiltViewModel(),
 ) {
@@ -51,7 +51,7 @@ internal fun OnboardingRoute(
         }
 
         is CurrentUserUiState.Error -> {
-            Onboarding(onRouteClick)
+            onboarding(onRouteClick)
         }
 
         else -> {}
@@ -61,7 +61,7 @@ internal fun OnboardingRoute(
 
 
 @Composable
-internal fun Onboarding(onRouteClick: (String) -> Unit) {
+internal fun onboarding(onRouteClick: (String) -> Unit) {
     ArrudeiaTheme {
         Scaffold(
             modifier = Modifier.fillMaxSize(),
