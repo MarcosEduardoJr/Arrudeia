@@ -1,5 +1,7 @@
 package com.arrudeia.feature.stories.data
 
+import com.arrudeia.core.result.Result
+import com.arrudeia.feature.stories.R
 import com.arrudeia.feature.stories.data.entity.StoriesRepositoryEntity
 import com.arrudeia.feature.stories.data.entity.StoryRepositoryEntity
 import com.google.firebase.firestore.FirebaseFirestore
@@ -11,7 +13,7 @@ class StoriesRepositoryImpl @Inject constructor(
     private val db: FirebaseFirestore
 ) : StoriesRepository {
 
-    override suspend fun getStories(): List<StoriesRepositoryEntity> {
+    override suspend fun getStories(): Result<List<StoriesRepositoryEntity>?> {
         val list = mutableListOf<StoriesRepositoryEntity>()
         return suspendCancellableCoroutine { continuation ->
             db.collection(ARRUDEIA_TV).get()
@@ -20,18 +22,27 @@ class StoriesRepositoryImpl @Inject constructor(
                         val result = item.toObject(StoriesRepositoryEntity::class.java)
                         result?.let { list.add(result) }
                     }
-                    continuation.resume(list)
+                    continuation.resume(Result.Success(list))
                 }
-                .addOnFailureListener { exception ->
-                    continuation.resume(listOf())
+                .addOnFailureListener {
+                    continuation.resume(Result.Error(R.string.erro_message_stories))
                 }
         }
     }
 
-    override suspend fun getStoriesById(id: Long): List<StoryRepositoryEntity> {
+    override suspend fun getStoriesById(id: Long): Result<List<StoryRepositoryEntity>?> {
         var result = mutableListOf<StoryRepositoryEntity>()
-        getStories().forEach { if (it.id == id && !it.images.isNullOrEmpty()) result = it.images!!.toMutableList() }
-        return result
+        when (val list = getStories()) {
+            is Result.Success -> {
+                list.data?.forEach {
+                    if (it.id == id && !it.images.isNullOrEmpty())
+                        result = it.images.toMutableList()
+                }
+            }
+
+            is Result.Error, is Result.Loading -> return Result.Error(R.string.erro_message_stories)
+        }
+        return Result.Success(result)
     }
 
 

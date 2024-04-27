@@ -3,7 +3,7 @@ package com.arrudeia.feature.stories
 import androidx.lifecycle.SavedStateHandle
 import com.arrudeia.feature.stories.domain.GetAllStoriesByIdUseCase
 import com.arrudeia.feature.stories.domain.entity.StoryUseCaseEntity
-import com.arrudeia.feature.stories.navigation.storiesIdArg
+import com.arrudeia.feature.stories.presentation.navigation.STORIES_ID_ARG
 import io.mockk.coEvery
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.Dispatchers
@@ -14,7 +14,7 @@ import org.junit.Before
 import org.junit.Test
 import io.mockk.mockk
 import com.arrudeia.feature.stories.R.string.erro_message_list_travels
-import com.arrudeia.feature.stories.navigation.map.mapStoriesToUiModel
+import com.arrudeia.feature.stories.presentation.navigation.map.mapStoriesToUiModel
 import com.arrudeia.feature.stories.presentation.viewmodel.StoriesViewModel
 
 @ExperimentalCoroutinesApi
@@ -27,7 +27,7 @@ class StoriesViewModelTest{
     @Before
     fun setup() {
         useCase = mockk()
-        savedStateHandle = SavedStateHandle(mapOf( storiesIdArg to "0" ))
+        savedStateHandle = SavedStateHandle(mapOf( STORIES_ID_ARG to "0" ))
         Dispatchers.setMain(Dispatchers.Unconfined)
         viewModel = StoriesViewModel(savedStateHandle, useCase)
     }

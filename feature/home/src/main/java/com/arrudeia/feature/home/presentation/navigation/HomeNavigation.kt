@@ -7,7 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.arrudeia.feature.home.presentation.ui.homeRoute
 import com.arrudeia.feature.profile.ui.ProfileRoute
-import com.arrudeia.feature.stories.StoriesRoute
+import com.arrudeia.feature.stories.presentation.ui.storiesRoute
 import com.arrudeia.core.data.navigation.HOME_GRAPH_ROUTE_PATTERN
 import com.arrudeia.core.data.navigation.homeRoute
 import com.arrudeia.core.data.navigation.profileRoute
@@ -41,7 +41,6 @@ fun NavController.navigateToHomeGraph(navOptions: NavOptions? = null) {
 }
 
 fun NavGraphBuilder.homeGraph(
-    onStoriesClick: (String) -> Unit,
     nestedGraphs: NavGraphBuilder.() -> Unit,
     onBackClick: () -> Unit,
     onRouteClick: (String) -> Unit,
@@ -52,7 +51,7 @@ fun NavGraphBuilder.homeGraph(
         startDestination = storiesRoute,
     ) {
         composable(route = storiesRoute) {
-            StoriesRoute(onStoriesClick, onBackClick)
+            storiesRoute(onBackClick)
         }
         composable(route = profileRoute) {
             ProfileRoute(onBackClick, onRouteClick, onShowSnackbar = onShowSnackbar)

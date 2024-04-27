@@ -4,8 +4,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.arrudeia.feature.home.presentation.navigation.homeGraph
 import com.arrudeia.feature.profile.presentation.navigation.profileScreen
-import com.arrudeia.feature.stories.navigation.navigateToStories
-import com.arrudeia.feature.stories.navigation.storiesScreen
+import com.arrudeia.feature.stories.presentation.navigation.storiesScreen
 import com.arrudeia.feature.trip.presentation.navigation.tripDetailScreen
 
 fun NavGraphBuilder.homeGraph(
@@ -13,7 +12,6 @@ fun NavGraphBuilder.homeGraph(
     onShowSnackbar: suspend (String, String?) -> Boolean
 ) {
     homeGraph(
-        onStoriesClick = navController::navigateToStories,
         nestedGraphs = {
             profileScreen(
                 onBackClick = { navController.popBackStack() },
@@ -21,7 +19,6 @@ fun NavGraphBuilder.homeGraph(
                 onShowSnackbar = onShowSnackbar
             )
             storiesScreen(
-                onStoriesClick = navController::navigateToStories,
                 onBackClick = { navController.popBackStack() }
             )
             tripDetailScreen(

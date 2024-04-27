@@ -9,6 +9,7 @@ data class StoriesRepositoryEntity(
 )
 
 @Serializable
+@Suppress("ConstructorParameterNaming")
 data class StoryRepositoryEntity(
     val image_url: String = "",
 )

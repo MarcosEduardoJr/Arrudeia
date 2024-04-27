@@ -5,8 +5,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.ProgressIndicatorDefaults
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -14,23 +19,23 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 
+@Suppress("LongParameterList")
 @Composable
-fun LinearIndicator(
+fun linearIndicator(
     modifier: Modifier,
     startProgress: Boolean = false,
     indicatorBackgroundColor: Color,
     indicatorProgressColor: Color,
     slideDurationInSeconds: Long,
     onPauseTimer: Boolean = false,
-    hideIndicators: Boolean = false,
 ) {
-
+    val hideIndicators: Boolean = false
     val delayInMillis = rememberSaveable {
-        (slideDurationInSeconds * 1000) / 100
+        (slideDurationInSeconds * SLIDE_TIME_DURATION_SECOND) / SLIDE_TIME_DURATION_SECOND_CONVERTER
     }
 
     var progress by remember {
-        mutableStateOf(0.00f)
+        mutableStateOf(PROGRESS_START)
     }
 
     val animatedProgress by animateFloatAsState(
@@ -42,12 +47,12 @@ fun LinearIndicator(
     if (startProgress) {
         LaunchedEffect(key1 = onPauseTimer) {
             while (progress < 1f && isActive && onPauseTimer.not()) {
-                progress += 0.01f
+                progress += PROGRESS_SLICE
                 delay(delayInMillis)
             }
 
             if (onPauseTimer.not()) {
-                delay(200)
+                delay(SHORT_DELAY_PROGRESS)
             }
         }
     }
@@ -63,3 +68,10 @@ fun LinearIndicator(
         )
     }
 }
+
+
+const val PROGRESS_START = 0.00f
+const val PROGRESS_SLICE = 0.01f
+const val SLIDE_TIME_DURATION_SECOND = 1000
+const val SLIDE_TIME_DURATION_SECOND_CONVERTER = 100
+const val SHORT_DELAY_PROGRESS: Long = 200

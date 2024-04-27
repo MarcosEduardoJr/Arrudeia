@@ -3,17 +3,24 @@ package com.arrudeia.feature.stories.presentation.stories
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.pager.PagerState
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @OptIn(
@@ -21,31 +28,25 @@ import kotlinx.coroutines.launch
     ExperimentalFoundationApi::class
 )
 @Composable
-fun Stories(
+fun stories(
     numberOfPages: Int,
-    indicatorModifier: Modifier = Modifier,
-    spaceBetweenIndicator: Dp = 4.dp,
-    indicatorBackgroundColor: Color = Color.LightGray,
-    indicatorProgressColor: Color = Color.White,
-    indicatorBackgroundGradientColors: List<Color> = emptyList(),
-    slideDurationInSeconds: Long = 0,
-    touchToPause: Boolean = true,
-    hideIndicators: Boolean = false,
     onEveryStoryChange: ((Int) -> Unit)? = null,
-    onComplete: () -> Unit,
-    currentPage : Int,
+    currentPage: Int,
     content: @Composable (Int) -> Unit,
 ) {
     val pagerState = rememberPagerState { numberOfPages }
-
+    val spaceBetweenIndicator: Dp = 4.dp
+    val slideDurationInSeconds: Long = 0
+    val hideIndicators: Boolean = false
     val coroutineScope = rememberCoroutineScope()
     coroutineScope.launch {
-    onEveryStoryChange?.invoke(currentPage)
-    pagerState.animateScrollToPage(currentPage)
-    }
+            onEveryStoryChange?.invoke(currentPage)
+            pagerState.animateScrollToPage(currentPage)
+        }
+
     Box(modifier = Modifier.fillMaxSize()) {
         //Full screen content behind the indicator
-        StoryImage(pagerState = pagerState, onTap = {}, content)
+        storyImage(pagerState = pagerState, content)
 
         //Indicator based on the number of items
         val modifier =
@@ -56,10 +57,11 @@ fun Stories(
                     .fillMaxWidth()
                     .background(
                         brush = Brush.verticalGradient(
-                            if (indicatorBackgroundGradientColors.isEmpty()) listOf(
+                            listOf(
                                 Color.Black,
                                 Color.Transparent
-                            ) else indicatorBackgroundGradientColors
+
+                            )
                         )
                     )
             }
@@ -70,45 +72,33 @@ fun Stories(
         ) {
             Spacer(modifier = Modifier.padding(spaceBetweenIndicator))
 
-            ListOfIndicators(
-                numberOfPages,
-                indicatorModifier,
-                indicatorBackgroundColor,
-                indicatorProgressColor,
-                slideDurationInSeconds,
-                false,
-                hideIndicators,
-                coroutineScope,
-                pagerState,
-                spaceBetweenIndicator,
+            listOfIndicators(
+                numberOfPages = numberOfPages,
+                slideDurationInSeconds = slideDurationInSeconds,
+                pauseTimer = false,
+                spaceBetweenIndicator = spaceBetweenIndicator,
                 currentPage = currentPage,
-                onComplete = onComplete,
             )
         }
     }
 
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun RowScope.ListOfIndicators(
+private fun RowScope.listOfIndicators(
     numberOfPages: Int,
-    modifier: Modifier,
-    indicatorBackgroundColor: Color,
-    indicatorProgressColor: Color,
     slideDurationInSeconds: Long,
     pauseTimer: Boolean,
-    hideIndicators: Boolean,
-    coroutineScope: CoroutineScope,
-    pagerState: PagerState,
     spaceBetweenIndicator: Dp,
     currentPage: Int,
-    onComplete: () -> Unit,
 ) {
 
+
+    val indicatorBackgroundColor: Color = Color.LightGray
+    val indicatorProgressColor: Color = Color.White
     for (index in 0 until numberOfPages) {
-        LinearIndicator(
-            modifier = modifier.weight(1f),
+        linearIndicator(
+            modifier = Modifier.weight(1f),
             index == currentPage,
             indicatorBackgroundColor,
             indicatorProgressColor,

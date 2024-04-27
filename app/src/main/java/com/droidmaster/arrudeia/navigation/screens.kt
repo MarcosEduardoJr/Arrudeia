@@ -7,7 +7,7 @@ import com.arrudeia.feature.home.presentation.navigation.homeScreen
 import com.arrudeia.feature.onboarding.presentation.navigation.onboardingScreen
 import com.arrudeia.feature.profile.presentation.navigation.profileScreen
 import com.arrudeia.feature.sign.presentation.navigation.signScreen
-import com.arrudeia.feature.stories.navigation.navigateToStories
+import com.arrudeia.feature.stories.presentation.navigation.navigateToStories
 import com.arrudeia.feature.trip.presentation.navigation.navigateToTripDetail
 
 

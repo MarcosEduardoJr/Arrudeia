@@ -20,5 +20,6 @@
 <string name="talk_with_agency">Falar com a agência</string>
     <string name="erro_message_list_travels">Estamos em manutenção, tente novamente mais tarde.</string>
     <string name="loading">Carregando</string>
+    <string name="erro_message_stories">Estamos em manutenção, tente novamente mais tarde.</string>
 
 </resources>
