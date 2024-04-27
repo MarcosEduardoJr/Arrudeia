@@ -47,7 +47,7 @@ fun storiesRoute(
 
         is StoriesUiState.Error -> {
             Text(
-                text = stringResource((uiState as StoriesUiState.Error).message),
+                text = (uiState as StoriesUiState.Error).message?.let { stringResource(it) }.orEmpty(),
                 modifier = Modifier.padding(4.dp)
             )
         }

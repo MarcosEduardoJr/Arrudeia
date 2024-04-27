@@ -1,8 +1,8 @@
 package com.arrudeia.feature.onboarding.data
 
-import com.arrudeia.feature.onboarding.data.entity.OnboardingDataStoreUserRepositoryEntity
+import com.arrudeia.core.result.Result
 
 interface OnboardingDataStoreUserRepository {
-    suspend fun getUserData():  OnboardingDataStoreUserRepositoryEntity?
+    suspend fun isUserSaved():  Result<Boolean?>
 
 }

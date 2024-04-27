@@ -57,7 +57,7 @@ class StoriesViewModel @Inject constructor(
 
     sealed interface StoriesUiState {
         data class Success(val list: List<StoriesUIModel>) : StoriesUiState
-        data class Error(val message: Int) : StoriesUiState
+        data class Error(val message: Int?) : StoriesUiState
         data object Loading : StoriesUiState
     }
 

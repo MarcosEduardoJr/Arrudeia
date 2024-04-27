@@ -121,7 +121,7 @@ class HomeViewModel @Inject constructor(
 
 sealed interface ProfileUiState {
     data class Success(val data: ProfileUiModel) : ProfileUiState
-    data class Error(val message: Int) : ProfileUiState
+    data class Error(val message: Int?) : ProfileUiState
     data object Loading : ProfileUiState
 }
 

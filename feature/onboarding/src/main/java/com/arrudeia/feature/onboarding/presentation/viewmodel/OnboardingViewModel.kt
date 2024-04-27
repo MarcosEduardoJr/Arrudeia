@@ -10,6 +10,8 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+import com.arrudeia.core.result.Result
+
 @HiltViewModel
 class OnboardingViewModel @Inject constructor(
     private val getCurrentUserDataStoreUseCase: GetCurrentUserDataStoreUseCase
@@ -25,11 +27,14 @@ class OnboardingViewModel @Inject constructor(
 
     fun getCurrentUser() {
         viewModelScope.launch {
-            val result = getCurrentUserDataStoreUseCase.invoke()
-            if (result != null)
-                currentUserUiState.value = CurrentUserUiState.Success()
-            else
-                currentUserUiState.value = CurrentUserUiState.Error()
+            when (getCurrentUserDataStoreUseCase()) {
+                is Result.Success -> {
+                    currentUserUiState.value = CurrentUserUiState.Success()
+                }
+                else -> {
+                    currentUserUiState.value = CurrentUserUiState.Error()
+                }
+            }
         }
     }
 
