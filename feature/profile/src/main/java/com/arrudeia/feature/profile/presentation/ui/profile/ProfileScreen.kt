@@ -49,7 +49,7 @@ private fun profileView(
 
         is ProfileUiState.Error -> {
             val message =
-                stringResource((uiState as ProfileUiState.Error).message)
+                (uiState as ProfileUiState.Error).message?.let { stringResource(it) }.orEmpty()
             LaunchedEffect(Unit) {
                 CoroutineScope(Dispatchers.IO).launch {
                     onShowSnackbar(message, "")

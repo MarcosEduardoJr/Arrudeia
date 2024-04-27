@@ -3,6 +3,7 @@ package com.arrudeia.feature.profile.presentation.viewmodel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.arrudeia.core.result.Result
 import com.arrudeia.feature.profile.domain.GetUserPersonalInformationUseCase
 import com.arrudeia.feature.profile.domain.LogoutCurrentUserDataStoreUseCase
 import com.arrudeia.feature.profile.domain.entity.UserPersonalInformationUseCaseEntity
@@ -31,15 +32,23 @@ class ProfileViewModel @Inject constructor(
 
     fun getUserPersonalInformation() {
         viewModelScope.launch {
-            val result = useCase()
-            if (result == null)
-                uiState.value =
-                    ProfileUiState.Error(R.string.error_get_user)
-            else {
-                uiState.value =
-                    ProfileUiState.Success(
-                        result.toUiModel()
-                    )
+            when (val result = useCase()) {
+                is Result.Success -> {
+                    uiState.value =
+                        ProfileUiState.Success(
+                            result.data.toUiModel()
+                        )
+                }
+
+                is Result.Error -> {
+                    uiState.value =
+                        ProfileUiState.Error(result.message)
+                }
+
+                else -> {
+                    uiState.value =
+                        ProfileUiState.Error(R.string.error_get_user)
+                }
             }
         }
     }
@@ -64,7 +73,7 @@ class ProfileViewModel @Inject constructor(
 
     sealed interface ProfileUiState {
         data class Success(val data: ProfileUiModel) : ProfileUiState
-        data class Error(val message: Int) : ProfileUiState
+        data class Error(val message: Int?) : ProfileUiState
         data object Loading : ProfileUiState
     }
 }
