@@ -17,7 +17,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileAddressViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
     private val useCase: GetUserAddressUseCase,
     private val updateUseCase: UpdateUserAddressUseCase
 ) : ViewModel() {

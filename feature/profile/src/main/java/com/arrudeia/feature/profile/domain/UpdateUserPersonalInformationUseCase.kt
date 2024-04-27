@@ -37,8 +37,9 @@ class UpdateUserPersonalInformationUseCase @Inject constructor(
         )
     }
 
-    private fun UserPersonalInformationUseCaseEntity.toDataStoreRepositoryEntity(): ProfileDataStoreUserRepositoryEntity {
-        return  ProfileDataStoreUserRepositoryEntity(
+    private fun UserPersonalInformationUseCaseEntity.toDataStoreRepositoryEntity():
+            ProfileDataStoreUserRepositoryEntity {
+        return ProfileDataStoreUserRepositoryEntity(
             uid = this.uuid.orEmpty(),
             name = this.name.orEmpty(),
             email = this.email.orEmpty(),

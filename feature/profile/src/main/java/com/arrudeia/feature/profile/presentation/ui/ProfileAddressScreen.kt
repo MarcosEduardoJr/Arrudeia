@@ -1,4 +1,4 @@
-package com.arrudeia.feature.profile.ui
+package com.arrudeia.feature.profile.presentation.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -19,7 +19,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -56,7 +55,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @Composable
-fun ProfileAddressRoute(
+fun profileAddressRoute(
     onBackClick: () -> Unit,
     viewModel: ProfileAddressViewModel = hiltViewModel(),
     onShowSnackbar: suspend (String, String?) -> Boolean,
@@ -72,7 +71,7 @@ fun ProfileAddressRoute(
     var country by rememberSaveable { mutableStateOf("") }
     var showForm by rememberSaveable { mutableStateOf(false) }
 
-    ScreenView(
+    screenView(
         viewModel,
         zipCode,
         { zipCode = it },
@@ -188,7 +187,7 @@ fun form(
 }
 
 @Composable
-fun ScreenView(
+fun screenView(
     viewModel: ProfileAddressViewModel,
     zipCode: String,
     zipCodeChange: (String) -> Unit,
@@ -291,7 +290,6 @@ fun ScreenView(
         } else {
             colorButton = colorResource(colorPrimary)
             clickButton = {
-                if (isFormValid())
                     updatingUser = true
             }
         }
@@ -434,9 +432,7 @@ private fun fetchUser(
 }
 
 
-private fun isFormValid(): Boolean {
-    return true
-}
+
 
 @Composable
 private fun header(

@@ -17,7 +17,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
     private val useCase: GetUserPersonalInformationUseCase,
     private val logoutCurrentUserDataStoreUseCase: LogoutCurrentUserDataStoreUseCase
 ) : ViewModel() {

@@ -20,7 +20,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfilePersonalInformationViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
     private val useCase: GetUserPersonalInformationUseCase,
     private val updateUseCase: UpdateUserPersonalInformationUseCase
 ) : ViewModel() {

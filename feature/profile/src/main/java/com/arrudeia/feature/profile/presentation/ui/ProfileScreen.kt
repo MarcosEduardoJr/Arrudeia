@@ -1,4 +1,4 @@
-package com.arrudeia.feature.profile.ui
+package com.arrudeia.feature.profile.presentation.ui
 
 import android.graphics.drawable.ColorDrawable
 import androidx.compose.foundation.Image
@@ -66,19 +66,19 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @Composable
-fun ProfileRoute(
+fun profileRoute(
     onBackClick: () -> Unit,
     onRouteClick: (String) -> Unit,
     viewModel: ProfileViewModel = hiltViewModel(),
     onShowSnackbar: suspend (String, String?) -> Boolean,
 ) {
     viewModel.getUserPersonalInformation()
-    ProfileView(onRouteClick = onRouteClick, viewModel, onShowSnackbar, onBackClick)
+    profileView(onRouteClick = onRouteClick, viewModel, onShowSnackbar, onBackClick)
 }
 
 
 @Composable
-private fun ProfileView(
+private fun profileView(
     onRouteClick: (String) -> Unit,
     viewModel: ProfileViewModel,
     onShowSnackbar: suspend (String, String?) -> Boolean,

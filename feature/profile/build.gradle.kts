@@ -1,6 +1,7 @@
 plugins {
     id("arrudeia.android.feature")
     id("arrudeia.android.library.compose")
+    id("io.gitlab.arturbosch.detekt")
 }
 
 android {
