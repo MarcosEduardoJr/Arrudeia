@@ -13,7 +13,7 @@ data class TravelUseCaseEntity(
     val year: Int = 0,
     val price: Int = 0,
     val discount: Int = 0,
-    val cover_image_url: String = "",
+    val coverImageUrl: String = "",
     val whatsapp: String = "",
     val description: String = "",
     val include: List<String> = listOf(),

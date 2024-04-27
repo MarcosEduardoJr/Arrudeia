@@ -16,7 +16,7 @@ import com.arrudeia.feature.trip.presentation.model.TripUIModel
             year = it.year,
             price = it.price,
             discount = it.discount,
-            cover_image_url = it.cover_image_url,
+            coverImageUrl = it.coverImageUrl,
             whatsapp = it.whatsapp,
             description = it.description,
             include = it.include,

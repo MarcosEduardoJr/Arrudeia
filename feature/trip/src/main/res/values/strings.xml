@@ -23,4 +23,6 @@
     <string name="whatsapp_contact_message">Olá, tudo bem?\nDesejo saber mais informações sobre a viagem para %1$s no dia %2$s.</string>
     <string name="include">Incluso</string>
     <string name="optional">Opcional</string>
+    <string name="whatsapp_message">https://api.whatsapp.com/send?phone=%1$s&amp;text=%2$s</string>
+
 </resources>

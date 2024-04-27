@@ -3,6 +3,7 @@ package com.arrudeia.feature.trip.data.entity
 import kotlinx.serialization.Serializable
 
 @Serializable
+@Suppress("ConstructorParameterNaming")
 data class TravelRepositoryEntity(
     val id: Long = 0,
     val name: String = "",

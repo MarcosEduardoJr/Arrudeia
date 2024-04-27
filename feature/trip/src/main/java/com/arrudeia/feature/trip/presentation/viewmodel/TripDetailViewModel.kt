@@ -3,6 +3,8 @@ package com.arrudeia.feature.trip.presentation.viewmodel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.arrudeia.core.result.Result
+import com.arrudeia.feature.trip.R
 import com.arrudeia.feature.trip.R.string.erro_message_list_travels
 import com.arrudeia.feature.trip.domain.GetTravelByIdUseCase
 import com.arrudeia.feature.trip.presentation.map.mapTravelToUiModel
@@ -35,21 +37,29 @@ class TripDetailViewModel @Inject constructor(
 
     fun fetchData() {
         viewModelScope.launch {
-            val result = travelUseCase.invoke(id.toLong())
-            if (result != null)
-                travelUiState.value = TripDetailUiState.Success(
-                    item = result.mapTravelToUiModel()
-                )
-            else {
-                travelUiState.value = TripDetailUiState.Error(erro_message_list_travels)
+            when (val result = travelUseCase.invoke(id.toLong())) {
+                is Result.Success -> {
+                    travelUiState.value = TripDetailUiState.Success(
+                        item = result.data.mapTravelToUiModel()
+                    )
+                }
+
+                is Result.Error -> {
+                    travelUiState.value = TripDetailUiState.Error(erro_message_list_travels)
+                }
+
+                is Result.Loading -> {
+                    travelUiState.value = TripDetailUiState.Loading
+                }
             }
         }
     }
 
 
-    sealed interface TripDetailUiState {
-        data class Success(val item: TripUIModel?) : TripDetailUiState
-        data class Error(val message: Int) : TripDetailUiState
-        data object Loading : TripDetailUiState
-    }
+sealed interface TripDetailUiState {
+    data class Success(val item: TripUIModel?) : TripDetailUiState
+    data class Error(val message: Int) : TripDetailUiState
+    data object Loading : TripDetailUiState
+}
+
 }

@@ -7,7 +7,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.arrudeia.feature.trip.presentation.ui.TripDetailRoute
+import com.arrudeia.feature.trip.presentation.ui.tripDetailRoute
 import com.arrudeia.core.data.navigation.tripDetailRoute
 import java.net.URLDecoder
 import java.net.URLEncoder
@@ -16,13 +16,13 @@ import java.net.URLEncoder
 private val URL_CHARACTER_ENCODING = Charsets.UTF_8.name()
 
 @VisibleForTesting
-const val tripIdArg = "tripIdArg"
+const val TRIP_ID_ARG = "tripIdArg"
 
 internal class TripArgs(val id: String) {
     constructor(savedStateHandle: SavedStateHandle) :
             this(
                 URLDecoder.decode(
-                    checkNotNull(savedStateHandle[tripIdArg]),
+                    checkNotNull(savedStateHandle[TRIP_ID_ARG]),
                     URL_CHARACTER_ENCODING
                 )
             )
@@ -39,11 +39,11 @@ fun NavGraphBuilder.tripDetailScreen(
     onBackClick: () -> Unit,
 ) {
     composable(
-        route = "$tripDetailRoute/{$tripIdArg}",
+        route = "$tripDetailRoute/{$TRIP_ID_ARG}",
         arguments = listOf(
-            navArgument(tripIdArg) { type = NavType.StringType },
+            navArgument(TRIP_ID_ARG) { type = NavType.StringType },
         ),
     ) {
-        TripDetailRoute(onBackClick = onBackClick)
+        tripDetailRoute(onBackClick = onBackClick)
     }
 }

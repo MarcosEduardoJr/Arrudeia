@@ -1,7 +1,6 @@
 package com.arrudeia.feature.home.data
 
 import com.apollographql.apollo3.ApolloClient
-import com.apollographql.apollo3.exception.ApolloException
 import com.arrudeia.core.graphql.GetUserGraphQuery
 import com.arrudeia.core.result.Result
 import com.arrudeia.feature.home.R
