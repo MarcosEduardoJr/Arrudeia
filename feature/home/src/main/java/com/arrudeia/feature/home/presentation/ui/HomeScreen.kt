@@ -41,11 +41,11 @@ internal fun homeRoute(
 ) {
     val viewModel: HomeViewModel = hiltViewModel()
     viewModel.getUserPersonalInformation()
-    listItemView(onRouteClick, viewModel, onStoriesClick, onTripDetailClick, onShowSnackbar)
+    homeView(onRouteClick, viewModel, onStoriesClick, onTripDetailClick, onShowSnackbar)
 }
 
 @Composable
-fun listItemView(
+fun homeView(
     onRouteClick: (String) -> Unit,
     viewModel: HomeViewModel = hiltViewModel(),
     onStoriesClick: (String) -> Unit,
