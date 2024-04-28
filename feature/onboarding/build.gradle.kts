@@ -17,6 +17,7 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.dataStore.core)
     implementation(libs.androidx.dataStore.preferences)
+
     implementation(libs.kotlinx.coroutines.test)
     implementation(libs.junit4)
     implementation(libs.mockito.core)

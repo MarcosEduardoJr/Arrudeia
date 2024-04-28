@@ -22,4 +22,9 @@ dependencies {
 
     implementation(libs.firebase.bom)
     implementation(libs.firebase.storage)
+
+    implementation(libs.junit4)
+    implementation(libs.mockk)
+    implementation(libs.coreTesting)
+    implementation(libs.kotlinx.coroutines.test)
 }
