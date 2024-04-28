@@ -15,6 +15,7 @@ import com.arrudeia.feature.arrudeia.presentation.ui.AvailableOptions
 import com.arrudeia.feature.arrudeia.presentation.ui.CategoryOptions
 import com.arrudeia.feature.arrudeia.presentation.ui.SubCategoryOptions
 
+@Suppress("LongMethod")
 fun categoriesPlace() = listOf(
     ArrudeiaCategoryPlaceUiModel(
         category = CategoryOptions.CATEGORY_FOOD,

@@ -10,7 +10,6 @@ import com.arrudeia.feature.sign.presentation.navigation.signScreen
 import com.arrudeia.feature.stories.presentation.navigation.navigateToStories
 import com.arrudeia.feature.trip.presentation.navigation.navigateToTripDetail
 
-
 fun NavGraphBuilder.screens(
     navController: NavHostController,
     onShowSnackbar: suspend (String, String?) -> Boolean
@@ -35,7 +34,6 @@ fun NavGraphBuilder.screens(
     )
     arrudeiaScreen(
         onBackClick = { navController.popBackStack() },
-        onRouteClick = navController::navigateToRoute,
         onShowSnackbar = onShowSnackbar
     )
 }

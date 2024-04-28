@@ -7,6 +7,7 @@ import com.arrudeia.feature.arrudeia.presentation.model.ArrudeiaAvailablePlaceUi
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.auth.FirebaseAuth
 import javax.inject.Inject
+import com.arrudeia.core.result.Result
 
 class SaveArrudeiaPlaceUseCase @Inject constructor(
     private val repository: ArrudeiaPlaceRepositoryImpl,
@@ -26,12 +27,12 @@ class SaveArrudeiaPlaceUseCase @Inject constructor(
         location: LatLng,
         priceLevel: Int = 0,
         rating: Double = 0.0,
-    ): String? {
+    ): Result<String?> {
         var image = ""
         uri?.let {
             image = firebaseArrudeiaMapRepositoryImpl.savePlaceImage(name.orEmpty(), it).orEmpty()
         }
-        val id = repository.saveArrudeiaPlace(
+        val result = repository.saveArrudeiaPlace(
             categoryName,
             description,
             image,
@@ -45,9 +46,22 @@ class SaveArrudeiaPlaceUseCase @Inject constructor(
             subCategoryName,
             firebaseAuth.uid.orEmpty(),
         )
-        id?.let {  availables?.forEach { repository.saveArrudeiaAvaliablePlace(it.available.name, id) } }
-        return id
+        return when (result) {
+            is Result.Success -> {
+                result.data?.let {
+                    availables?.forEach {
+                        repository.saveArrudeiaAvaliablePlace(
+                            it.available.name,
+                            result.data.orEmpty()
+                        )
+                    }
+                }
+                Result.Success(result.data)
+            }
+
+            else -> {
+                Result.Error(null)
+            }
+        }
     }
-
-
 }

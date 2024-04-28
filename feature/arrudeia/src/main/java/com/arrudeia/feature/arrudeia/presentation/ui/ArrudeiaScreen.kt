@@ -8,7 +8,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.location.Geocoder
-import android.location.LocationManager
 import android.net.Uri
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
@@ -82,7 +81,6 @@ import androidx.compose.ui.unit.sp
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
-import androidx.core.location.LocationManagerCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.airbnb.lottie.compose.LottieAnimation
@@ -109,8 +107,6 @@ import com.arrudeia.feature.arrudeia.R
 import com.arrudeia.feature.arrudeia.presentation.model.ArrudeiaCategoryPlaceUiModel
 import com.arrudeia.feature.arrudeia.presentation.model.ArrudeiaPlaceDetailsUiModel
 import com.arrudeia.feature.arrudeia.presentation.model.ArrudeiaSubCategoryPlaceUiModel
-import com.arrudeia.feature.arrudeia.presentation.ui.MAPS_UTIL.Companion.MAPS_PERMISSIONS
-import com.arrudeia.feature.arrudeia.presentation.ui.MAPS_UTIL.Companion.PERMISSION_REQUEST_CODE
 import com.arrudeia.feature.arrudeia.presentation.viewmodel.ArrudeiaViewModel
 import com.arrudeia.feature.arrudeia.presentation.viewmodel.LocationState
 import com.arrudeia.feature.arrudeia.presentation.viewmodel.SaveMarkerUiState
@@ -135,9 +131,8 @@ import com.google.maps.android.compose.rememberMarkerState
 import kotlinx.coroutines.launch
 
 @Composable
-fun ArrudeiaRoute(
+fun arrudeiaRoute(
     onBackClick: () -> Unit,
-    onRouteClick: (String) -> Unit,
     viewModel: ArrudeiaViewModel = hiltViewModel(),
     onShowSnackbar: suspend (String, String?) -> Boolean,
 ) {
@@ -149,7 +144,7 @@ fun ArrudeiaRoute(
     viewModel.placesClient = Places.createClient(context)
     viewModel.geoCoder = Geocoder(context)
     viewModel.getCurrentLocation()
-    LocationScreen(
+    locationScreen(
         viewModel = viewModel,
         onShowSnackbar = onShowSnackbar,
         onBackClick = onBackClick
@@ -157,12 +152,8 @@ fun ArrudeiaRoute(
 
 }
 
-@OptIn(
-    ExperimentalPermissionsApi::class, ExperimentalAnimationApi::class,
-    ExperimentalMaterial3Api::class
-)
 @Composable
-fun LocationScreen(
+fun locationScreen(
     modifier: Modifier = Modifier,
     viewModel: ArrudeiaViewModel,
     onShowSnackbar: suspend (String, String?) -> Boolean,
@@ -268,7 +259,7 @@ fun LocationScreen(
 
             is LocationState.LocationAvailable -> {
                 val cameraPositionState = rememberCameraPositionState {
-                    position = CameraPosition.fromLatLngZoom(state.cameraLatLang, 15f)
+                    position = CameraPosition.fromLatLngZoom(state.cameraLatLang, CAM_ZOOM)
                 }
                 var isNavigationStarted by remember { mutableStateOf(false) }
                 val context = LocalContext.current
@@ -388,7 +379,7 @@ fun LocationScreen(
                     }
 
                     if (isPlaceClicked != null) {
-                        PlaceDetailScreen(
+                        placeDetailScreen(
                             modifier = Modifier
                                 .align(Alignment.BottomCenter)
                                 .fillMaxWidth(),
@@ -413,7 +404,6 @@ fun LocationScreen(
                             isNavigationStarted,
                             arrudeiaChange = { arrudeia = it },
                             arrudeia,
-                            openGoogleMap,
                             { openGoogleMap = it }
                         )
                     }
@@ -428,7 +418,9 @@ fun LocationScreen(
                                 onBackClick()
                             },
                             icon = Icons.Rounded.ArrowBack,
-                            backgroundColor = colorResource(id = com.arrudeia.core.designsystem.R.color.background_grey_F7F7F9),
+                            backgroundColor = colorResource(
+                                id = com.arrudeia.core.designsystem.R.color.background_grey_F7F7F9
+                            ),
                             iconSize = 50.dp
                         )
 
@@ -466,12 +458,10 @@ private fun searchAddress(
     isNavigationStarted: Boolean,
     arrudeiaChange: (Boolean) -> Unit,
     arrudeia: Boolean,
-    openGoogleMap: Boolean,
     openGoogleMapChange: (Boolean) -> Unit
 ) {
     val color = colorResource(id = com.arrudeia.core.designsystem.R.color.background_grey_F7F7F9)
     var addMarker by rememberSaveable { mutableStateOf(false) }
-    var saveMarker by rememberSaveable { mutableStateOf(false) }
     var showCamera by rememberSaveable { mutableStateOf(false) }
     var categoryChose by rememberSaveable { mutableStateOf<ArrudeiaCategoryPlaceUiModel?>(null) }
     var subCategoryChose by rememberSaveable { mutableStateOf<ArrudeiaSubCategoryPlaceUiModel?>(null) }
@@ -479,7 +469,6 @@ private fun searchAddress(
     var phone by rememberSaveable { mutableStateOf("") }
     var socialNetwork by rememberSaveable { mutableStateOf("") }
     var name by rememberSaveable { mutableStateOf("") }
-    var searchPlace by rememberSaveable { mutableStateOf(false) }
 
     if (showCamera)
         ImageSelectionScreen(
@@ -492,12 +481,11 @@ private fun searchAddress(
         ) {
 
             if (addMarker) {
-                AddMarkerBottomSheet(
+                addMarkerBottomSheet(
                     {
                         addMarker = false
                         viewModel.onTakePhoto(null)
                     },
-                    { saveMarker = true },
                     viewModel,
                     showCameraChange = { showCamera = it },
                     categoryPlaceChange = { categoryChose = it },
@@ -658,7 +646,9 @@ private fun searchAddress(
 @Composable
 fun openMap(viewModel: ArrudeiaViewModel) {
     val navigationUri =
-        "google.navigation:q=${viewModel.destinyLocation.value!!.latitude},${viewModel.destinyLocation.value!!.longitude}"
+        "google.navigation:q=" +
+                "${viewModel.destinyLocation.value!!.latitude}," +
+                "${viewModel.destinyLocation.value!!.longitude}"
     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(navigationUri))
     intent.setPackage("com.google.android.apps.maps")
     if (intent.resolveActivity(LocalContext.current.packageManager) != null) {
@@ -699,9 +689,8 @@ private fun arrudeia(
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddMarkerBottomSheet(
+fun addMarkerBottomSheet(
     onDismissRequest: () -> Unit,
-    onConfirmation: () -> Unit,
     viewModel: ArrudeiaViewModel,
     showCameraChange: (Boolean) -> Unit,
     categoryPlaceChange: (ArrudeiaCategoryPlaceUiModel?) -> Unit,
@@ -843,7 +832,6 @@ fun AddMarkerBottomSheet(
                     subCategoryPlace?.let { sub ->
                         formCategoriesDetail(
                             viewModel, cat,
-                            sub,
                             showCamera = { showCameraChange(it) },
                             onNameChange = onNameChange,
                             name.orEmpty(),
@@ -882,7 +870,7 @@ private fun categories(
     LazyVerticalGrid(
         modifier = Modifier
             .fillMaxWidth(),
-        columns = GridCells.Fixed(3),
+        columns = GridCells.Fixed(GRID_CELLS_COUNT),
         contentPadding = PaddingValues(horizontal = 8.dp),
     ) {
         items(viewModel.categoryPlaces) {
@@ -928,7 +916,7 @@ private fun subCategories(
     LazyVerticalGrid(
         modifier = Modifier
             .fillMaxWidth(),
-        columns = GridCells.Fixed(3),
+        columns = GridCells.Fixed(GRID_CELLS_COUNT),
         contentPadding = PaddingValues(horizontal = 8.dp),
     ) {
 
@@ -960,7 +948,6 @@ private fun subCategories(
 private fun formCategoriesDetail(
     viewModel: ArrudeiaViewModel,
     category: ArrudeiaCategoryPlaceUiModel,
-    subCategoryChoose: ArrudeiaSubCategoryPlaceUiModel,
     showCamera: (Boolean) -> Unit,
     onNameChange: (String) -> Unit,
     name: String,
@@ -1018,7 +1005,9 @@ private fun formCategoriesDetail(
         TextButton(
             modifier = Modifier
                 .fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(colorResource(id = com.arrudeia.core.designsystem.R.color.colorPrimary)),
+            colors = ButtonDefaults.buttonColors(
+                colorResource(id = com.arrudeia.core.designsystem.R.color.colorPrimary)
+            ),
             onClick = {
                 showCamera(true)
             },
@@ -1061,7 +1050,7 @@ private fun formCategoriesDetail(
     LazyVerticalGrid(
         modifier = Modifier
             .fillMaxWidth(),
-        columns = GridCells.Fixed(3),
+        columns = GridCells.Fixed(GRID_CELLS_COUNT),
         contentPadding = PaddingValues(horizontal = 8.dp),
     ) {
         items(category.available) {
@@ -1069,7 +1058,9 @@ private fun formCategoriesDetail(
                 if (availableChoose.isEmpty() || !availableChoose.contains(it))
                     ButtonDefaults.buttonColors(containerColor = Color.White)
                 else
-                    ButtonDefaults.buttonColors(containerColor = colorResource(id = com.arrudeia.core.designsystem.R.color.colorPrimary))
+                    ButtonDefaults.buttonColors(
+                        containerColor = colorResource(id = com.arrudeia.core.designsystem.R.color.colorPrimary)
+                    )
 
             Button(modifier = Modifier
                 .padding(2.dp)
@@ -1168,12 +1159,6 @@ private fun ColumnScope.resultSearchAddress(
 }
 
 
-private fun locationEnabled(activity: Activity): Boolean {
-    val locationManager =
-        activity.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-    return LocationManagerCompat.isLocationEnabled(locationManager)
-}
-
 private fun requestLocationEnable(context: Context, viewModel: ArrudeiaViewModel) {
     ActivityCompat.requestPermissions(
         context as Activity, MAPS_PERMISSIONS, PERMISSION_REQUEST_CODE
@@ -1181,29 +1166,18 @@ private fun requestLocationEnable(context: Context, viewModel: ArrudeiaViewModel
     viewModel.getCurrentLocation()
 }
 
-private fun hasRequiredPermissions(context: Context): Boolean {
-    return MAPS_PERMISSIONS.all {
-        ContextCompat.checkSelfPermission(
-            context,
-            it
-        ) == PackageManager.PERMISSION_GRANTED
-    }
-}
 
-class MAPS_UTIL {
-    companion object {
-        val MAPS_PERMISSIONS = arrayOf(
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION
-        )
+val MAPS_PERMISSIONS = arrayOf(
+    Manifest.permission.ACCESS_FINE_LOCATION,
+    Manifest.permission.ACCESS_COARSE_LOCATION
+)
 
-        const val PERMISSION_REQUEST_CODE = 101
-    }
-}
+const val PERMISSION_REQUEST_CODE = 101
+
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun PlaceDetailScreen(
+fun placeDetailScreen(
     modifier: Modifier,
     place: ArrudeiaPlaceDetailsUiModel,
     isNavigationStarted: Boolean,
@@ -1346,10 +1320,11 @@ fun PlaceDetailScreen(
     }
 }
 
-
+const val CAM_ZOOM = 15f
+const val GRID_CELLS_COUNT = 3
+const val BITMAP_WIDTH = 100
+const val BITMAP_HEIGHT = 100
 private fun getBitmap(drawableRes: Int, context: Context): Bitmap? {
     val bitmapdraw = ContextCompat.getDrawable(context, drawableRes)
-
-    return bitmapdraw?.toBitmap(100, 100)
-
+    return bitmapdraw?.toBitmap(BITMAP_WIDTH, BITMAP_HEIGHT)
 }

@@ -9,9 +9,9 @@ import com.arrudeia.feature.arrudeia.data.entity.toEntity
 import javax.inject.Inject
 
 
+import com.arrudeia.core.result.Result
 interface ArrudeiaPlaceRepository {
-    suspend fun getArrudeiaPlaces(): List<ArrudeiaPlaceRepositoryEntity>?
-    suspend fun getArrudeiaPlace(uuid: String): ArrudeiaPlaceRepositoryEntity?
+    suspend fun getArrudeiaPlaces(): Result<List<ArrudeiaPlaceRepositoryEntity>?>
     suspend fun saveArrudeiaPlace(
         categoryName: String,
         description: String,
@@ -25,12 +25,12 @@ interface ArrudeiaPlaceRepository {
         socialNetwork: String,
         subCategoryName: String,
         uuid: String,
-    ): String?
+    ): Result<String?>
 
     suspend fun saveArrudeiaAvaliablePlace(
         name: String,
         placeId: String,
-    ): String?
+    ): Result<String?>
 }
 
 

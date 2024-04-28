@@ -43,7 +43,7 @@ import kotlinx.coroutines.launch
 import java.time.Instant
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
-
+import com.arrudeia.core.result.Result
 
 sealed class LocationState {
     object LocationDisabled : LocationState()
@@ -59,7 +59,6 @@ data class AutocompleteResult(
 
 @HiltViewModel
 class ArrudeiaViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
     private val saveArrudeiaPlaceUseCase: SaveArrudeiaPlaceUseCase,
     private val getAllArrudeiaPlacesUseCase: GetAllArrudeiaPlacesUseCase
 ) : ViewModel() {
@@ -154,19 +153,25 @@ class ArrudeiaViewModel @Inject constructor(
 
     fun getPlacesMarker() {
         viewModelScope.launch {
-            getAllArrudeiaPlacesUseCase().toEntity()?.map {
-                places.add(it)
-            }
+           when(val result =   getAllArrudeiaPlacesUseCase())
+           {
+               is Result.Success -> {
+                   result.data.toEntity()?.map {
+                       places.add(it)
+                   }
+               }
+               else ->{}
+           }
         }
     }
 
-    fun List<ArrudeiaPlaceDetailsUseCaseEntity>?.toEntity(): MutableList<ArrudeiaPlaceDetailsUiModel>? {
-        return if (this == null) null
+    private fun List<ArrudeiaPlaceDetailsUseCaseEntity>?.toEntity():
+            MutableList<ArrudeiaPlaceDetailsUiModel>? = if (this == null) null
         else {
             val list = mutableListOf<ArrudeiaPlaceDetailsUiModel>()
             this.let { place ->
                 place.forEach { item ->
-                    item?.let {
+                    item.let {
                         val listAvaliable = mutableListOf<ArrudeiaAvailablePlaceUiModel>()
                         item.available?.forEach { itemAvaliable ->
                             listAvaliable.add(
@@ -197,7 +202,7 @@ class ArrudeiaViewModel @Inject constructor(
             }
             list
         }
-    }
+
 
 
     fun addPlace(place: ArrudeiaPlaceDetailsUiModel) {
@@ -287,18 +292,12 @@ class ArrudeiaViewModel @Inject constructor(
 
     }
 
-    fun arrudeia(current: String, destination: String) {
-
-    }
-
-    private fun getGeoContext(): GeoApiContext? {
-        return GeoApiContext.Builder()
-            .apiKey(BuildConfig.MAPS_API_KEY)
-            .connectTimeout(1, TimeUnit.SECONDS)
-            .readTimeout(1, TimeUnit.SECONDS)
-            .writeTimeout(1, TimeUnit.SECONDS)
-            .build()
-    }
+    private fun getGeoContext() = GeoApiContext.Builder()
+        .apiKey(BuildConfig.MAPS_API_KEY)
+        .connectTimeout(1, TimeUnit.SECONDS)
+        .readTimeout(1, TimeUnit.SECONDS)
+        .writeTimeout(1, TimeUnit.SECONDS)
+        .build()
 
     var saveMarkerUiState: MutableStateFlow<SaveMarkerUiState> =
         MutableStateFlow(SaveMarkerUiState.Loading)
