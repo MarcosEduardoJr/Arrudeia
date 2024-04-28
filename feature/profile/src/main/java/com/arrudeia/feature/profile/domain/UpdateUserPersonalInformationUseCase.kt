@@ -9,12 +9,13 @@ import com.arrudeia.feature.profile.data.entity.UserPersonalInformationRepositor
 import com.arrudeia.feature.profile.domain.entity.UserPersonalInformationUseCaseEntity
 import javax.inject.Inject
 
+import com.arrudeia.core.result.Result
 class UpdateUserPersonalInformationUseCase @Inject constructor(
     private val repository: ProfileRepositoryImpl,
     private val repositoryDataStore: ProfileDataStoreUserRepositoryImpl,
     private val firebaseUserRepositoryImpl: FirebaseUserRepositoryImpl
 ) {
-    suspend operator fun invoke(user: UserPersonalInformationUseCaseEntity, image: Uri?): String? {
+    suspend operator fun invoke(user: UserPersonalInformationUseCaseEntity, image: Uri?): Result<String?> {
         image?.let { img ->
             firebaseUserRepositoryImpl.saveUserImage(img)?.let {
                 user.profileImage = it

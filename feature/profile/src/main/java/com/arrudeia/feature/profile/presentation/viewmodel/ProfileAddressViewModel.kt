@@ -1,12 +1,12 @@
 package com.arrudeia.feature.profile.presentation.viewmodel
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.arrudeia.core.result.Result
+import com.arrudeia.feature.profile.R
 import com.arrudeia.feature.profile.domain.GetUserAddressUseCase
 import com.arrudeia.feature.profile.domain.UpdateUserAddressUseCase
 import com.arrudeia.feature.profile.domain.entity.UserAddressUseCaseEntity
-import com.arrudeia.feature.profile.R
 import com.arrudeia.feature.profile.presentation.model.ProfileAddressUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -42,17 +42,17 @@ class ProfileAddressViewModel @Inject constructor(
 
 
     fun saveAddress(
-         zipCode: String?,
-         street: String?,
-         number: Int?,
-         district: String?,
-         city: String?,
-         state: String?,
-         country: String?,
+        zipCode: String?,
+        street: String?,
+        number: Int?,
+        district: String?,
+        city: String?,
+        state: String?,
+        country: String?,
     ) {
         viewModelScope.launch {
 
-            val result = updateUseCase(
+            when (val result = updateUseCase(
                 UserAddressUseCaseEntity(
                     uuid = uuidCurrentUser,
                     zipCode = zipCode,
@@ -62,28 +62,41 @@ class ProfileAddressViewModel @Inject constructor(
                     city = city,
                     state = state,
                     country = country
-            )
-            )
+                )
+            )) {
+                is Result.Success -> {
+                    uiStateUpdateUser.value =
+                        PersonalInformationUpdateUserUiState.Success(R.string.success_saved_user)
+                }
 
-            if (!result.contentEquals(uuidCurrentUser))
-                uiStateUpdateUser.value =
+                is Result.Error -> {
+                    uiStateUpdateUser.value =
+                        PersonalInformationUpdateUserUiState.Error(R.string.error_update_user)
+                }
+
+                else -> {
                     PersonalInformationUpdateUserUiState.Error(R.string.error_update_user)
-            else
-                uiStateUpdateUser.value =
-                    PersonalInformationUpdateUserUiState.Success(R.string.success_saved_user)
+                }
+            }
         }
     }
 
     fun getUserPersonalInformation() {
         viewModelScope.launch {
-            val result = useCase()
-            if (result == null)
-                uiState.value = AddressUiState.Error(R.string.error_get_user)
-            else {
-                uiState.value = AddressUiState.Success(
-                    result.toUiModel()
-                )
-                uuidCurrentUser = result.uuid.orEmpty()
+            when (val result = useCase()) {
+                is Result.Success -> {
+                    uiState.value = AddressUiState.Success(
+                        result.data.toUiModel()
+                    )
+                }
+
+                is Result.Error -> {
+                    Result.Error(result.message)
+                }
+
+                else -> {
+                    Result.Error(null)
+                }
             }
         }
     }
@@ -104,7 +117,6 @@ class ProfileAddressViewModel @Inject constructor(
         }
         return result
     }
-
 
 
     sealed interface AddressUiState {

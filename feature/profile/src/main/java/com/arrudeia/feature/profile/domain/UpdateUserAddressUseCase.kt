@@ -5,6 +5,7 @@ import com.arrudeia.feature.profile.data.entity.UserAddressRepositoryEntity
 import com.arrudeia.feature.profile.domain.entity.UserAddressUseCaseEntity
 import javax.inject.Inject
 
+import com.arrudeia.core.result.Result
 class UpdateUserAddressUseCase @Inject constructor(
     private val repository: ProfileRepositoryImpl
 ) {

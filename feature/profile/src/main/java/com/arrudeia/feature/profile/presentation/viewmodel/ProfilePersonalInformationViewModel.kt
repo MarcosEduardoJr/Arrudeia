@@ -18,6 +18,8 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+import com.arrudeia.core.result.Result
+
 @HiltViewModel
 class ProfilePersonalInformationViewModel @Inject constructor(
     private val useCase: GetUserPersonalInformationUseCase,
@@ -53,7 +55,7 @@ class ProfilePersonalInformationViewModel @Inject constructor(
     ) {
         viewModelScope.launch {
 
-            val result = updateUseCase(
+            when (val result = updateUseCase(
                 UserPersonalInformationUseCaseEntity(
                     uuid = uuidCurrentUser,
                     name = nameValue,
@@ -62,64 +64,80 @@ class ProfilePersonalInformationViewModel @Inject constructor(
                     phone = phoneValue,
                     birthDate = birthDateValue
                 ), uri.value
-            )
+            )) {
+                is Result.Success -> {
+                    uiStateUpdateUser.value =
+                        PersonalInformationUpdateUserUiState.Success(R.string.success_saved_user)
+                }
 
-            if (!result.contentEquals(uuidCurrentUser))
-                uiStateUpdateUser.value =
-                    PersonalInformationUpdateUserUiState.Error(R.string.error_update_user)
-            else
-                uiStateUpdateUser.value =
-                    PersonalInformationUpdateUserUiState.Success(R.string.success_saved_user)
-        }
-}
+                is Result.Error -> {
+                    uiStateUpdateUser.value =
+                        PersonalInformationUpdateUserUiState.Error(R.string.error_update_user)
+                }
 
-fun getUserPersonalInformation() {
-    viewModelScope.launch {
-        val result = useCase()
-        if (result == null)
-            uiState.value = PersonalInformationUiState.Error(R.string.error_get_user)
-        else {
-            uiState.value = PersonalInformationUiState.Success(
-                result.toUiModel()
-            )
-            uuidCurrentUser = result.uuid.orEmpty()
+                else -> {
+                    uiStateUpdateUser.value =
+                        PersonalInformationUpdateUserUiState.Error(R.string.error_update_user)
+                }
+            }
         }
     }
-}
 
-private fun UserPersonalInformationUseCaseEntity.toUiModel(): ProfilePersonalInformationUiModel {
-    var result: ProfilePersonalInformationUiModel
-    this.let {
-        result = ProfilePersonalInformationUiModel(
-            uuid = it.uuid,
-            name = it.name,
-            email = it.email,
-            phone = it.phone,
-            idDocument = it.idDocument,
-            birthDate = it.birthDate,
-            profileImage = it.profileImage
-        )
+    fun getUserPersonalInformation() {
+        viewModelScope.launch {
+            when (val result = useCase()) {
+                is Result.Success -> {
+                    uiState.value = PersonalInformationUiState.Success(
+                        result.data.toUiModel()
+                    )
+                    uuidCurrentUser = result.data.uuid.orEmpty()
+                }
+
+                is Result.Error -> {
+                    uiState.value = PersonalInformationUiState.Error(R.string.error_get_user)
+                }
+
+                else -> {
+                    uiState.value = PersonalInformationUiState.Error(R.string.error_get_user)
+                }
+            }
+
+        }
     }
-    return result
-}
 
-private val _uri = MutableLiveData<Uri?>()
-val uri: LiveData<Uri?> = _uri
+    private fun UserPersonalInformationUseCaseEntity.toUiModel(): ProfilePersonalInformationUiModel {
+        var result: ProfilePersonalInformationUiModel
+        this.let {
+            result = ProfilePersonalInformationUiModel(
+                uuid = it.uuid,
+                name = it.name,
+                email = it.email,
+                phone = it.phone,
+                idDocument = it.idDocument,
+                birthDate = it.birthDate,
+                profileImage = it.profileImage
+            )
+        }
+        return result
+    }
 
-fun onTakePhoto(uri: Uri) {
-    _uri.value = uri
-}
+    private val _uri = MutableLiveData<Uri?>()
+    val uri: LiveData<Uri?> = _uri
 
-sealed interface PersonalInformationUiState {
-    data class Success(val data: ProfilePersonalInformationUiModel) : PersonalInformationUiState
-    data class Error(val message: Int) : PersonalInformationUiState
-    data object Loading : PersonalInformationUiState
-}
+    fun onTakePhoto(uri: Uri) {
+        _uri.value = uri
+    }
 
-sealed interface PersonalInformationUpdateUserUiState {
-    data class Success(val message: Int) : PersonalInformationUpdateUserUiState
-    data class Error(val message: Int) : PersonalInformationUpdateUserUiState
-    data object Loading : PersonalInformationUpdateUserUiState
-}
+    sealed interface PersonalInformationUiState {
+        data class Success(val data: ProfilePersonalInformationUiModel) : PersonalInformationUiState
+        data class Error(val message: Int) : PersonalInformationUiState
+        data object Loading : PersonalInformationUiState
+    }
+
+    sealed interface PersonalInformationUpdateUserUiState {
+        data class Success(val message: Int) : PersonalInformationUpdateUserUiState
+        data class Error(val message: Int) : PersonalInformationUpdateUserUiState
+        data object Loading : PersonalInformationUpdateUserUiState
+    }
 
 }
