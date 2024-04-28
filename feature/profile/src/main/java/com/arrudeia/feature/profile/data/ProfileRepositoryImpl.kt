@@ -15,7 +15,8 @@ import javax.inject.Inject
 class ProfileRepositoryImpl @Inject constructor(
     private val apolloClient: ApolloClient
 ) : ProfileRepository {
-    override suspend fun getUserPersonalInformationDetails(uuid: String): Result<UserPersonalInformationRepositoryEntity> {
+    override suspend fun getUserPersonalInformationDetails(uuid: String):
+            Result<UserPersonalInformationRepositoryEntity> {
         val response = apolloClient.query(GetUserGraphQuery(uuid)).execute()
         if (response.hasErrors() || response.data?.user == null)
             return Result.Error(R.string.error_get_user)

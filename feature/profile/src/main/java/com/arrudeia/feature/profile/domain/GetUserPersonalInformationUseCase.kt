@@ -15,7 +15,8 @@ class GetUserPersonalInformationUseCase @Inject constructor(
         repository.getUserPersonalInformationDetails(repositoryDataStore.getUserData()?.uid.orEmpty())
             .toUseCaseEntity()
 
-    private fun Result<UserPersonalInformationRepositoryEntity>.toUseCaseEntity(): Result<UserPersonalInformationUseCaseEntity> {
+    private fun Result<UserPersonalInformationRepositoryEntity>.toUseCaseEntity():
+            Result<UserPersonalInformationUseCaseEntity> {
         val result: Result<UserPersonalInformationUseCaseEntity>
         when (this) {
             is Result.Success -> {
