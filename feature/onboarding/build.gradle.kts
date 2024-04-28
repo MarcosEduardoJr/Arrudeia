@@ -21,4 +21,5 @@ dependencies {
     implementation(libs.junit4)
     implementation(libs.mockito.core)
     implementation(libs.mockk)
+    implementation(libs.coreTesting)
 }
