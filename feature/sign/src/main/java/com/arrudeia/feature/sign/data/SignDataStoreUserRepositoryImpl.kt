@@ -1,5 +1,6 @@
 package com.arrudeia.feature.sign.data
 
+import androidx.annotation.VisibleForTesting
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
@@ -13,17 +14,25 @@ import javax.inject.Inject
 
 class SignDataStoreUserRepositoryImpl @Inject constructor(
     private val dataStore: DataStore<Preferences>
-) :  SignDataStoreUserRepository {
+) : SignDataStoreUserRepository {
 
     companion object {
-        private val UID_KEY = stringPreferencesKey("uid")
-        private val NAME_KEY = stringPreferencesKey("name")
-        private val EMAIL_KEY = stringPreferencesKey("email")
-        private val IMAGE_USER_KEY = stringPreferencesKey("image_user")
+        @VisibleForTesting
+        val UID_KEY = stringPreferencesKey("uid")
+
+        @VisibleForTesting
+        val NAME_KEY = stringPreferencesKey("name")
+
+        @VisibleForTesting
+        val EMAIL_KEY = stringPreferencesKey("email")
+
+        @VisibleForTesting
+        val IMAGE_USER_KEY = stringPreferencesKey("image_user")
     }
 
 
-    override suspend fun saveUser(user:  SignDataStoreUserRepositoryEntity): Boolean {
+    override suspend fun saveUser(user: SignDataStoreUserRepositoryEntity): Boolean {
+
         dataStore.edit { preferences ->
             preferences[UID_KEY] = user.uid
             preferences[NAME_KEY] = user.name
