@@ -10,6 +10,7 @@ import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert
 import org.junit.Before
@@ -29,7 +30,7 @@ class SignDataStoreUserRepositoryImplTest {
     private val transformMutablePreferences: suspend (MutablePreferences) -> Unit = { mutable -> }
 
     @Test
-    fun `saveUser saves user to data store`() = runBlockingTest {
+    fun `saveUser saves user to data store`() = runBlocking {
         val user = SignDataStoreUserRepositoryEntity(
             uid = "testUid",
             name = "testName",
