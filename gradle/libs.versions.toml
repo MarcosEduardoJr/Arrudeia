@@ -69,8 +69,9 @@ detektVer = "1.23.6"
 junit5 = "5.8.2"
 truth = "1.1.3"
 coreTesting = "2.1.0"
+mockitoKotlin = "3.2.0"
 [libraries]
-
+mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockitoKotlin" }
 coreTesting = { group = "androidx.arch.core", name = "core-testing", version.ref = "coreTesting" }
 truth = { group = "com.google.truth", name = "truth", version.ref = "truth" }
 places = { group = "com.google.android.libraries.places", name = "places", version.ref = "placesVer" }

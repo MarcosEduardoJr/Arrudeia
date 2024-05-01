@@ -18,6 +18,9 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+        testOptions {
+            unitTests.isReturnDefaultValues = true
+        }
     }
 
     buildTypes {

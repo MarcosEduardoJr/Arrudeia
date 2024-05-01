@@ -38,4 +38,5 @@ dependencies {
 
     implementation(libs.firebase.bom)
     implementation(libs.firebase.auth)
+     implementation(libs.mockito.kotlin)
 }
