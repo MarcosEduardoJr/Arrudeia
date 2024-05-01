@@ -10,6 +10,7 @@ android {
 dependencies {
     implementation(libs.androidx.compose.material3.windowSizeClass)
     implementation(project(":core:designsystem"))
+    implementation(project(":core:common"))
     implementation(libs.firebase.bom)
     implementation(libs.firebase.auth)
     implementation(libs.firebase.crashlytics)
