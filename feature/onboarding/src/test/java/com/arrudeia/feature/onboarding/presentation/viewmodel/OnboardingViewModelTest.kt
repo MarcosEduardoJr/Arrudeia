@@ -2,6 +2,7 @@ package com.arrudeia.feature.onboarding.presentation.viewmodel
 
 import androidx.lifecycle.viewModelScope
 import com.arrudeia.core.result.Result
+import com.arrudeia.core.test.ViewModelTest
 import com.arrudeia.feature.onboarding.domain.GetCurrentUserDataStoreUseCase
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -11,7 +12,7 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 
-class OnboardingViewModelTest : ViewModelTest() {
+class OnboardingViewModelTest :  ViewModelTest() {
     private lateinit var useCase: GetCurrentUserDataStoreUseCase
     private lateinit var viewModel: OnboardingViewModel
 

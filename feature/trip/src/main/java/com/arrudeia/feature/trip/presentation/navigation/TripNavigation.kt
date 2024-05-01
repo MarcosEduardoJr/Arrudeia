@@ -18,7 +18,7 @@ private val URL_CHARACTER_ENCODING = Charsets.UTF_8.name()
 @VisibleForTesting
 const val TRIP_ID_ARG = "tripIdArg"
 
-internal class TripArgs(val id: String) {
+internal class TripArgs(var id: String) {
     constructor(savedStateHandle: SavedStateHandle) :
             this(
                 URLDecoder.decode(

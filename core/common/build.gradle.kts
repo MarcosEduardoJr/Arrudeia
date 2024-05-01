@@ -46,4 +46,10 @@ dependencies {
     implementation(libs.firebase.bom)
     implementation(libs.firebase.firestore)
 
+    implementation(libs.kotlinx.coroutines.test)
+    implementation(libs.junit4)
+    implementation(libs.mockito.core)
+    implementation(libs.mockk)
+    implementation(libs.coreTesting)
+
 }

@@ -1,4 +1,4 @@
-package com.arrudeia.feature.onboarding.presentation.viewmodel
+package com.arrudeia.core.test
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import kotlinx.coroutines.Dispatchers

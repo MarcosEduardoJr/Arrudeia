@@ -1,5 +1,6 @@
 package com.arrudeia.feature.trip.presentation.viewmodel
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
