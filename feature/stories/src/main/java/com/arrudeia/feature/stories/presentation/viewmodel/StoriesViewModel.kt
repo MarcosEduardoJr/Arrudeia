@@ -39,7 +39,7 @@ class StoriesViewModel @Inject constructor(
             when (val result = useCase.invoke(storiesId.toLong())) {
                 is Result.Success -> {
                     uiState.value = StoriesUiState.Success(
-                        result.mapStoriesToUiModel()
+                        result.data.mapStoriesToUiModel()
                     )
                 }
 
