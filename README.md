@@ -1,7 +1,8 @@
 #### Arrudeia
-### O Arrudeia is a travel app made by tourists for tourists. It offers discounts on trips, a map with locations reviewed by other travelers,
-### quick and cheap recipes, as well as first aid tips to ensure a more convenient, economical, and safe travel experience.
-https://play.google.com/apps/internaltest/4701533423351218713 -->
+https://play.google.com/apps/internaltest/4701533423351218713
+======
+### O Arrudeia is a travel app made by tourists for tourists. It offers discounts on trips, a map with locations reviewed by other travelers, quick and cheap recipes, as well as first aid tips to ensure a more convenient, economical, and safe travel experience.
+
 
 <img src="./showcase/bigpicture.png" width="400"></img>
 
