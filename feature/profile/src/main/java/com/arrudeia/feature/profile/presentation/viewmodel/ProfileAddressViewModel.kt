@@ -75,7 +75,7 @@ class ProfileAddressViewModel @Inject constructor(
                 }
 
                 else -> {
-                    PersonalInformationUpdateUserUiState.Error(R.string.error_update_user)
+                    uiStateUpdateUser.value =  PersonalInformationUpdateUserUiState.Error(R.string.error_update_user)
                 }
             }
         }
@@ -91,11 +91,11 @@ class ProfileAddressViewModel @Inject constructor(
                 }
 
                 is Result.Error -> {
-                    Result.Error(result.message)
+                    uiState.value =  AddressUiState.Error(result.message)
                 }
 
                 else -> {
-                    Result.Error(null)
+                    uiState.value =   AddressUiState.Error(null)
                 }
             }
         }
@@ -121,7 +121,7 @@ class ProfileAddressViewModel @Inject constructor(
 
     sealed interface AddressUiState {
         data class Success(val data: ProfileAddressUiModel) : AddressUiState
-        data class Error(val message: Int) : AddressUiState
+        data class Error(val message: Int?) : AddressUiState
         data object Loading : AddressUiState
     }
 
