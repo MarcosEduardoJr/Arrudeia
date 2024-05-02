@@ -1,13 +1,12 @@
 package com.arrudeia.feature.profile.presentation.viewmodel
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.arrudeia.core.result.Result
+import com.arrudeia.feature.profile.R
 import com.arrudeia.feature.profile.domain.GetUserPersonalInformationUseCase
 import com.arrudeia.feature.profile.domain.LogoutCurrentUserDataStoreUseCase
 import com.arrudeia.feature.profile.domain.entity.UserPersonalInformationUseCaseEntity
-import com.arrudeia.feature.profile.R
 import com.arrudeia.feature.profile.presentation.model.ProfileUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
