@@ -58,7 +58,9 @@ class SaveArrudeiaPlaceUseCase @Inject constructor(
                 }
                 Result.Success(result.data)
             }
-
+            is Result.Error -> {
+                Result.Error(null)
+            }
             else -> {
                 Result.Error(null)
             }

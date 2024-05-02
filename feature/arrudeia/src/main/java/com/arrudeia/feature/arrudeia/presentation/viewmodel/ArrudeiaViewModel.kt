@@ -250,26 +250,28 @@ class ArrudeiaViewModel @Inject constructor(
                 subCategoryName,
                 location = target
             )
-            if (result == null)
-                saveMarkerUiState.value = SaveMarkerUiState.Error(
-                    com.arrudeia.feature.arrudeia.R.string.not_possible_save
-                )
-            else {
-                addPlace(
-                    ArrudeiaPlaceDetailsUiModel(
-                        name = name,
-                        phone = phone,
-                        socialNetwork = socialNetwork,
-                        description = description,
-                        categoryName = CategoryOptions.valueOf(categoryName),
-                        subCategoryName = SubCategoryOptions.valueOf(subCategoryName),
-                        location = target,
-                        available = availables
+            when(result){
+                is Result.Success -> {
+                    addPlace(
+                        ArrudeiaPlaceDetailsUiModel(
+                            name = name,
+                            phone = phone,
+                            socialNetwork = socialNetwork,
+                            description = description,
+                            categoryName = CategoryOptions.valueOf(categoryName),
+                            subCategoryName = SubCategoryOptions.valueOf(subCategoryName),
+                            location = target,
+                            available = availables
+                        )
                     )
-                )
-                saveMarkerUiState.value = SaveMarkerUiState.Success(
-                    true
-                )
+                    saveMarkerUiState.value = SaveMarkerUiState.Success(
+                        true
+                    )
+                }
+                else ->{
+                    saveMarkerUiState.value = SaveMarkerUiState.Error(
+                    com.arrudeia.feature.arrudeia.R.string.not_possible_save)
+                }
             }
         }
     }
