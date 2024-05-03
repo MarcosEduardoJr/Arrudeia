@@ -3,7 +3,7 @@
 
 https://play.google.com/apps/internaltest/4701533423351218713
 
-<img src="./showcase/bigpicture.png" width="400"></img>
+<img src="./showcase/bigpicture.png" width="300"></img>
 
 
  <img src="./showcase/onboarding" width="150"></img>
