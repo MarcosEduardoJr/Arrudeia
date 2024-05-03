@@ -9,10 +9,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.arrudeia.core.common.BuildConfig
+import com.arrudeia.core.result.Result
 import com.arrudeia.feature.arrudeia.domain.GetAllArrudeiaPlacesUseCase
 import com.arrudeia.feature.arrudeia.domain.SaveArrudeiaPlaceUseCase
 import com.arrudeia.feature.arrudeia.domain.entity.ArrudeiaPlaceDetailsUseCaseEntity
@@ -43,7 +43,6 @@ import kotlinx.coroutines.launch
 import java.time.Instant
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
-import com.arrudeia.core.result.Result
 
 sealed class LocationState {
     object LocationDisabled : LocationState()
@@ -250,6 +249,7 @@ class ArrudeiaViewModel @Inject constructor(
                 subCategoryName,
                 location = target
             )
+
             when(result){
                 is Result.Success -> {
                     addPlace(

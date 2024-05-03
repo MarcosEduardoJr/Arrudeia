@@ -1,6 +1,6 @@
 import android.net.Uri
-import com.arrudeia.core.result.Result
 import com.arrudeia.core.test.ViewModelTest
+import com.arrudeia.feature.arrudeia.R
 import com.arrudeia.feature.arrudeia.domain.GetAllArrudeiaPlacesUseCase
 import com.arrudeia.feature.arrudeia.domain.SaveArrudeiaPlaceUseCase
 import com.arrudeia.feature.arrudeia.domain.entity.ArrudeiaPlaceDetailsUseCaseEntity
@@ -20,7 +20,9 @@ import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
-import com.arrudeia.feature.arrudeia.R
+import kotlinx.coroutines.test.advanceUntilIdle
+import com.arrudeia.core.result.Result
+
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
 class ArrudeiaViewModelTest : ViewModelTest() {
@@ -81,14 +83,14 @@ class ArrudeiaViewModelTest : ViewModelTest() {
     @Test
     fun `test savePlace with valid data`() = coTest {
         val place = "Place1"
-
+         viewModel.addAvailables( ArrudeiaAvailablePlaceUiModel(AvailableOptions.AVAILABLE_WI_FI))
         `when`(
             saveArrudeiaPlaceUseCase(
                 "name",
                 "phone",
                 "socialNetwork",
                 "description",
-                viewModel.uri.value,
+                null,
                 viewModel.availables,
                 categoryName = CategoryOptions.CATEGORY_FOOD.name,
                 subCategoryName = SubCategoryOptions.SUBCATEGORY_AIRPORT.name,
@@ -97,8 +99,7 @@ class ArrudeiaViewModelTest : ViewModelTest() {
                0.0
             )
         ).thenReturn(Result.Success(place))
-        viewModel.onTakePhoto(Mockito.any<Uri>())
-        viewModel.addAvailables( ArrudeiaAvailablePlaceUiModel(AvailableOptions.AVAILABLE_WI_FI))
+
         viewModel.savePlace(
             "name",
             "phone",
@@ -120,17 +121,14 @@ class ArrudeiaViewModelTest : ViewModelTest() {
                 "phone",
                 "socialNetwork",
                 "description",
-                viewModel.uri.value,
-                viewModel.availables,
-                categoryName = CategoryOptions.CATEGORY_FOOD.name,
-                subCategoryName = SubCategoryOptions.SUBCATEGORY_AIRPORT.name,
-                LatLng(0.0, 0.0),
-                0,
-                0.0
+                null,
+                listOf(),
+                CategoryOptions.CATEGORY_FOOD.name,
+                SubCategoryOptions.SUBCATEGORY_AIRPORT.name,
+                location = LatLng(0.0, 0.0)
             )
         ).thenReturn(Result.Error(R.string.not_possible_save))
-        viewModel.onTakePhoto(Mockito.any<Uri>())
-        viewModel.addAvailables( ArrudeiaAvailablePlaceUiModel(AvailableOptions.AVAILABLE_WI_FI))
+
         viewModel.savePlace(
             "name",
             "phone",
