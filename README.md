@@ -4,7 +4,7 @@
 | :-------------|:-------------:|
 
 | Schema                                                 | Project       | Kanban | Documentation | 
-| ------------------------------------------------------ |:-------------:|:-------------:|:-------------:|
+| ------------------------------------------------------ |:-------------|:-------------:|:-------------:|
 | <img src="./showcase/bigpicture.png" width="300"/>     |<br />Kotlin<br />Jetpack<br />GraphQl<br />Compose<br />Continuous Integration (CI/CD)<br />Jacoco<br />Detekt<br />Unit Test| [Kanban](https://github.com/users/MarcosEduardoJr/projects/1) | [Documentation](https://github.com/MarcosEduardoJr/Arrudeia/wiki) | 
 
  
