@@ -140,7 +140,7 @@ fun arrudeiaRoute(
     viewModel.getPlacesMarker()
     viewModel.fusedLocationClient =
         LocationServices.getFusedLocationProviderClient(context as Activity)
-    Places.initialize(context.applicationContext,"")//, BuildConfig.MAPS_API_KEY)
+    Places.initialize(context.applicationContext,BuildConfig.MAPS_API_KEY)
     viewModel.placesClient = Places.createClient(context)
     viewModel.geoCoder = Geocoder(context)
     viewModel.getCurrentLocation()
