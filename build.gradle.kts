@@ -2,20 +2,20 @@ buildscript {
     repositories {
         google()
         mavenCentral()
-
-        // Android Build Server
         maven("jitpack.io")
     }
     dependencies {
         classpath(libs.google.oss.licenses.plugin) {
             exclude(group = "com.google.protobuf")
         }
+        classpath(libs.apollo.gradle.plugin)
     }
 }
 
 
 // Lists all plugins used throughout the project without applying them.
 plugins {
+    alias(libs.plugins.jetbrains.kotlin.android) apply false
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.kotlin.jvm) apply false
     alias(libs.plugins.kotlin.serialization) apply false
@@ -27,6 +27,7 @@ plugins {
     alias(libs.plugins.roborazzi) apply false
     alias(libs.plugins.secrets) apply false
     alias(libs.plugins.detekt) apply true
+    //alias(libs.plugins.apollo.gradle.plugin) apply true
 }
 
 

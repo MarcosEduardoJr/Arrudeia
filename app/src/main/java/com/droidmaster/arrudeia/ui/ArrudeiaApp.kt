@@ -28,11 +28,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
-import com.arrudeia.core.designsystem.component.ArrudeiaBackground
-import com.arrudeia.core.designsystem.component.ArrudeiaGradientBackground
 import com.arrudeia.core.designsystem.theme.GradientColors
 import com.droidmaster.arrudeia.navigation.arrudeiaNavHost
 import com.arrudeia.core.designsystem.R.color.background_grey_F7F7F9
+import com.arrudeia.core.designsystem.component.ArrudeiaBackground
+import com.droidmaster.arrudeia.navigation.arrudeiaNavHost
+import com.arrudeia.core.designsystem.component.ArrudeiaGradientBackground
 
 @OptIn(
     ExperimentalMaterial3Api::class,

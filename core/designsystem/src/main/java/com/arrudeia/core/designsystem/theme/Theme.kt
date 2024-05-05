@@ -4,7 +4,6 @@ import android.app.Activity
 import android.os.Build
 import androidx.annotation.ChecksSdkIntAtLeast
 import androidx.annotation.VisibleForTesting
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
@@ -12,6 +11,14 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
+import com.arrudeia.core.designsystem.theme.ArrudeiaTypography
+import com.arrudeia.core.designsystem.theme.BackgroundTheme
+import com.arrudeia.core.designsystem.theme.GradientColors
+import com.arrudeia.core.designsystem.theme.LocalBackgroundTheme
+import com.arrudeia.core.designsystem.theme.LocalGradientColors
+import com.arrudeia.core.designsystem.theme.LocalTintTheme
+import com.arrudeia.core.designsystem.theme.PrimaryColor
+import com.arrudeia.core.designsystem.theme.TintTheme
 
 /**
  * Light default theme color scheme
@@ -56,20 +63,10 @@ val LightAndroidGradientColors = GradientColors(container = PrimaryColor)
 val LightAndroidBackgroundTheme = BackgroundTheme(color = PrimaryColor)
 
 
-/**
- *  theme.
- *
- * @param darkTheme Whether the theme should use a dark color scheme (follows system by default).
- * @param androidTheme Whether the theme should use the Android theme color scheme instead of the
- *        default theme.
- * @param disableDynamicTheming If `true`, disables the use of dynamic theming, even when it is
- *        supported. This parameter has no effect if [androidTheme] is `true`.
- */
+
 @Composable
-fun ArrudeiaTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    androidTheme: Boolean = false,
-    disableDynamicTheming: Boolean = true,
+public fun ArrudeiaTheme(
+
     content: @Composable () -> Unit,
 ) {
     // Color scheme

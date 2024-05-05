@@ -3,7 +3,6 @@ package com.arrudeia.core.designsystem.component
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.LocalAbsoluteTonalElevation
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -21,7 +20,6 @@ import androidx.compose.ui.unit.dp
 import com.arrudeia.core.designsystem.theme.GradientColors
 import com.arrudeia.core.designsystem.theme.LocalBackgroundTheme
 import com.arrudeia.core.designsystem.theme.LocalGradientColors
-import com.arrudeia.core.designsystem.theme.ArrudeiaTheme
 import kotlin.math.tan
 
 /**
@@ -130,50 +128,3 @@ fun ArrudeiaGradientBackground(
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_NO, name = "Light theme")
 annotation class ThemePreviews
 
-@ThemePreviews
-@Composable
-fun BackgroundDefault() {
-    ArrudeiaTheme(disableDynamicTheming = true) {
-        ArrudeiaBackground(Modifier.size(100.dp), content = {})
-    }
-}
-
-@ThemePreviews
-@Composable
-fun BackgroundDynamic() {
-    ArrudeiaTheme(disableDynamicTheming = false) {
-        ArrudeiaBackground(Modifier.size(100.dp), content = {})
-    }
-}
-
-@ThemePreviews
-@Composable
-fun BackgroundAndroid() {
-    ArrudeiaTheme(androidTheme = true) {
-        ArrudeiaBackground(Modifier.size(100.dp), content = {})
-    }
-}
-
-@ThemePreviews
-@Composable
-fun GradientBackgroundDefault() {
-    ArrudeiaTheme(disableDynamicTheming = true) {
-        ArrudeiaGradientBackground(Modifier.size(100.dp), content = {})
-    }
-}
-
-@ThemePreviews
-@Composable
-fun GradientBackgroundDynamic() {
-    ArrudeiaTheme(disableDynamicTheming = false) {
-        ArrudeiaGradientBackground(Modifier.size(100.dp), content = {})
-    }
-}
-
-@ThemePreviews
-@Composable
-fun GradientBackgroundAndroid() {
-    ArrudeiaTheme(androidTheme = true) {
-        ArrudeiaGradientBackground(Modifier.size(100.dp), content = {})
-    }
-}

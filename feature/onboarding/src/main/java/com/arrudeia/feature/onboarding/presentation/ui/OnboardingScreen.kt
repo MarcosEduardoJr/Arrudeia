@@ -27,14 +27,13 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.arrudeia.core.designsystem.R.color.colorPrimary
-import com.arrudeia.core.designsystem.component.ArrudeiaButtonColor
-import com.arrudeia.core.designsystem.theme.ArrudeiaTheme
 import com.arrudeia.feature.onboarding.R.drawable.ic_bg_onboarding
 import com.arrudeia.feature.onboarding.R.string.onboarding_description_tired_job
 import com.arrudeia.feature.onboarding.R.string.start
 import com.arrudeia.feature.onboarding.presentation.viewmodel.OnboardingViewModel
 import com.arrudeia.core.data.navigation.homeRoute
 import com.arrudeia.core.data.navigation.signRoute
+import com.arrudeia.core.designsystem.component.ArrudeiaButtonColor
 import com.arrudeia.feature.onboarding.presentation.viewmodel.OnboardingViewModel.CurrentUserUiState
 
 @Composable
@@ -62,8 +61,7 @@ internal fun onboardingRoute(
 
 @Composable
 internal fun onboarding(onRouteClick: (String) -> Unit) {
-    ArrudeiaTheme {
-        Scaffold(
+     Scaffold(
             modifier = Modifier.fillMaxSize(),
             containerColor = Color.Transparent,
             contentColor = MaterialTheme.colorScheme.onBackground,
@@ -75,31 +73,13 @@ internal fun onboarding(onRouteClick: (String) -> Unit) {
                 color = Color.Black.copy(alpha = 0.6f),
                 modifier = Modifier.fillMaxSize(),
             ) {
-                Image(
-                    painter = painterResource(id = ic_bg_onboarding),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .clipToBounds(),
-                    contentScale = ContentScale.Crop,
-                )
+
             }
             Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(Color.Black.copy(alpha = 0.6f)),
             ) {
-                Text(
-                    text = stringResource(id = onboarding_description_tired_job),
-                    modifier = Modifier
-                        .padding(horizontal = 32.dp)
-                        .fillMaxWidth()
-                        .align(Alignment.Center),
-                    textAlign = TextAlign.Center,
-                    color = Color.White,
-                    fontWeight = FontWeight.Bold,
-                    style = MaterialTheme.typography.headlineMedium
-                )
 
                 ArrudeiaButtonColor(
                     onClick = { onRouteClick(signRoute) },
@@ -118,4 +98,4 @@ internal fun onboarding(onRouteClick: (String) -> Unit) {
             }
         }
     }
-}
+
