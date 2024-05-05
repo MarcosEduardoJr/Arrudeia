@@ -295,7 +295,7 @@ class ArrudeiaViewModel @Inject constructor(
     }
 
     private fun getGeoContext() = GeoApiContext.Builder()
-        .apiKey(BuildConfig.MAPS_API_KEY)
+        .apiKey("")//BuildConfig.MAPS_API_KEY)
         .connectTimeout(1, TimeUnit.SECONDS)
         .readTimeout(1, TimeUnit.SECONDS)
         .writeTimeout(1, TimeUnit.SECONDS)

@@ -9,6 +9,11 @@ plugins {
 android {
     compileSdk = 34
     namespace = "com.arrudeia.feature.onboarding"
+    defaultConfig {
+        minSdk = 21
+        targetSdk = 34
+        multiDexEnabled = true
+    }
     packaging {
         resources {
             excludes.add("META-INF/LICENSE.md")
@@ -75,4 +80,13 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     kapt(libs.hilt.compiler)
 
+    implementation(libs.kotlinx.coroutines.test)
+    implementation(libs.mockito.core)
+    implementation(libs.mockk)
+    implementation(libs.coreTesting)
+
+    implementation(libs.junit4)
+    testImplementation(libs.junit4)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.ui.test.junit4)
 }

@@ -1,7 +1,7 @@
 plugins {
     id("com.android.library")
     id("io.gitlab.arturbosch.detekt")
-    id("kotlin-kapt")
+    kotlin("kapt")
     id("com.google.dagger.hilt.android")
     id("kotlin-android")
 }
@@ -9,6 +9,11 @@ plugins {
 android {
     compileSdk = 34
     namespace = "com.arrudeia.feature.profile"
+    defaultConfig {
+        minSdk = 21
+        targetSdk = 34
+        multiDexEnabled = true
+    }
     packaging {
         resources {
             excludes.add("META-INF/LICENSE.md")  
@@ -83,4 +88,14 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtimeCompose)
     implementation(libs.androidx.compose.runtime.tracing)
     implementation(libs.androidx.compose.material3.windowSizeClass)
+
+    implementation(libs.kotlinx.coroutines.test)
+    implementation(libs.mockito.core)
+    implementation(libs.mockk)
+    implementation(libs.coreTesting)
+
+    implementation(libs.junit4)
+    testImplementation(libs.junit4)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.ui.test.junit4)
 }

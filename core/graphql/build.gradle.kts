@@ -19,6 +19,7 @@ android {
     namespace = "com.arrudeia.core.graphql"
     defaultConfig {
         minSdk = 21
+        targetSdk = 34
         multiDexEnabled = true
     }
 

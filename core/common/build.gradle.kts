@@ -11,6 +11,7 @@ android {
     namespace = "com.arrudeia.core.common"
     defaultConfig {
         minSdk = 21
+        targetSdk = 34
         multiDexEnabled = true
     }
     buildFeatures {
@@ -61,7 +62,7 @@ dependencies {
     implementation(libs.firebase.firestore)
 
     implementation(libs.kotlinx.coroutines.test)
-    implementation(libs.junit4)
+
     implementation(libs.mockito.core)
     implementation(libs.mockk)
     implementation(libs.coreTesting)
@@ -80,6 +81,11 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.compose.material3.windowSizeClass)
     implementation(libs.androidx.core.ktx)
+
+    implementation(libs.junit4)
+    testImplementation(libs.junit4)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.ui.test.junit4)
 }
 
 kapt {
