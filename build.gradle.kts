@@ -4,6 +4,7 @@ buildscript {
         mavenCentral()
         maven("jitpack.io")
     }
+
     dependencies {
         classpath(libs.google.oss.licenses.plugin) {
             exclude(group = "com.google.protobuf")
