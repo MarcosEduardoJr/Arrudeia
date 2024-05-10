@@ -9,7 +9,6 @@ plugins {
     id("com.google.gms.google-services")
 }
 
-
 android {
     namespace = "com.droidmaster.arrudeia"
 
