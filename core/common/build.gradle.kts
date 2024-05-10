@@ -24,11 +24,11 @@ excludes.add("META-INF/LICENSE-notice.md")
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = "21"
     }
 }
 
@@ -37,7 +37,6 @@ secrets {
 }
 
 dependencies {
-    implementation(project(":core:graphql"))
     implementation(libs.hilt.android)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.datetime)
@@ -46,20 +45,17 @@ dependencies {
 
     implementation(libs.kotlinx.serialization.json)
 
-    implementation(libs.okhttp.logging)
-    implementation(libs.retrofit.core)
-    implementation(libs.retrofit.kotlin.serialization)
+    implementation(libs.okhttp.logging) 
 
     implementation(libs.converter.moshi)
     implementation(libs.converter.gson)
     implementation(libs.mockito.core)
-    implementation(libs.firebase.auth)
     implementation(libs.androidx.dataStore.core)
     implementation(libs.androidx.dataStore.preferences)
-    implementation(libs.apollo.runtime)
 
-    implementation(libs.firebase.bom)
+    implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.firestore)
+    implementation(libs.firebase.auth)
 
     implementation(libs.kotlinx.coroutines.test)
 

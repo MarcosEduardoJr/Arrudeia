@@ -4,11 +4,13 @@ buildscript {
         mavenCentral()
         maven("jitpack.io")
     }
+
     dependencies {
         classpath(libs.google.oss.licenses.plugin) {
             exclude(group = "com.google.protobuf")
         }
         classpath(libs.apollo.gradle.plugin)
+        classpath(libs.firebase.appdistribution.gradle)
     }
 }
 

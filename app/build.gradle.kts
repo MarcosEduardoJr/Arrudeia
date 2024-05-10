@@ -5,8 +5,10 @@ plugins {
     id("io.gitlab.arturbosch.detekt")
     id("com.google.firebase.crashlytics")
     id("kotlin-kapt")
-    id("com.google.dagger.hilt.android")
+    id("com.google.firebase.appdistribution")
+    id("com.google.gms.google-services")
 }
+
 
 android {
     namespace = "com.droidmaster.arrudeia"
@@ -27,8 +29,16 @@ android {
         }
     }
     buildTypes {
+        named("debug") {
+            applicationIdSuffix = ".debug"
+            isDebuggable = true
+        }
+        create("staging") {
+            applicationIdSuffix = ".staging"
+            isDebuggable = true
+        }
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             isDebuggable = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -37,11 +47,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = "21"
     }
     buildFeatures {
         compose = true
@@ -54,9 +64,11 @@ android {
         resources {
             excludes.add("META-INF/LICENSE.md")
             excludes.add("META-INF/LICENSE-notice.md")
+
         }
     }
     testOptions {
+
         unitTests {
             isIncludeAndroidResources = true
             isReturnDefaultValues = true
@@ -81,7 +93,6 @@ dependencies {
     androidTestImplementation(kotlin("test"))
     debugImplementation(libs.androidx.compose.ui.testManifest)
     //debugImplementation(project(":ui-test-hilt-manifest"))
-
 
 
     implementation(platform(libs.androidx.compose.bom))
@@ -135,9 +146,9 @@ dependencies {
     implementation(project(":feature:sign"))
     implementation(project(":feature:home"))
     implementation(project(":feature:trip"))
-      implementation(project(":feature:stories"))
-        implementation(project(":feature:profile"))
-     implementation(project(":feature:arrudeia"))
+    implementation(project(":feature:stories"))
+    implementation(project(":feature:profile"))
+    implementation(project(":feature:arrudeia"))
 }
 
-apply(plugin="com.google.gms.google-services")
+apply(plugin = "com.google.gms.google-services")
