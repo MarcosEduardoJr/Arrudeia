@@ -27,7 +27,6 @@ include(":core:designsystem")
 include(":core:common")
 include(":core:graphql")
 
-
 include(":feature:onboarding")
 include(":feature:sign")
 include(":feature:home")
