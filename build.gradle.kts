@@ -10,6 +10,7 @@ buildscript {
             exclude(group = "com.google.protobuf")
         }
         classpath(libs.apollo.gradle.plugin)
+        classpath(libs.firebase.appdistribution.gradle)
     }
 }
 

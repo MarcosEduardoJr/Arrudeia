@@ -5,7 +5,8 @@ plugins {
     id("io.gitlab.arturbosch.detekt")
     id("com.google.firebase.crashlytics")
     id("kotlin-kapt")
-    id("com.google.dagger.hilt.android")
+    id("com.google.firebase.appdistribution")
+    id("com.google.gms.google-services")
 }
 
 
@@ -28,11 +29,16 @@ android {
         }
     }
     buildTypes {
-        debug{
-            isTestCoverageEnabled = true
+        named("debug") {
+            applicationIdSuffix = ".debug"
+            isDebuggable = true
+        }
+        create("staging") {
+            applicationIdSuffix = ".staging"
+            isDebuggable = true
         }
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             isDebuggable = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -89,7 +95,6 @@ dependencies {
     //debugImplementation(project(":ui-test-hilt-manifest"))
 
 
-
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.appcompat)
@@ -141,9 +146,9 @@ dependencies {
     implementation(project(":feature:sign"))
     implementation(project(":feature:home"))
     implementation(project(":feature:trip"))
-      implementation(project(":feature:stories"))
-        implementation(project(":feature:profile"))
-     implementation(project(":feature:arrudeia"))
+    implementation(project(":feature:stories"))
+    implementation(project(":feature:profile"))
+    implementation(project(":feature:arrudeia"))
 }
 
-apply(plugin="com.google.gms.google-services")
+apply(plugin = "com.google.gms.google-services")

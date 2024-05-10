@@ -59,6 +59,7 @@ turbine = "0.12.1"
 glideVer = "1.0.0-beta01"
 androixCredentialsVer = "1.0.0-alpha02"
 firebaseFirestoreVer = "22.0.1"
+firebaseAppDistributionVer = "5.0.0"
 mockkVer = "1.13.5"
 mockitoVer = "5.10.0"
 apolloVer = "3.8.3"
@@ -144,6 +145,7 @@ firebase-cloud-messaging = { group = "com.google.firebase", name = "firebase-mes
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }
 firebase-performance = { group = "com.google.firebase", name = "firebase-perf-ktx" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth" }
+firebase-appdistribution-gradle = { group = "com.google.firebase", name = "firebase-appdistribution-gradle", version.ref = "firebaseAppDistributionVer"}
 firebase-performance-gradle = { group = "com.google.firebase", name = "perf-plugin", version.ref = "firebasePerfPlugin" }
 google-auth = { group = "com.google.android.gms", name = "play-services-auth", version.ref = "googleOssAuth" }
 google-oss-licenses = { group = "com.google.android.gms", name = "play-services-oss-licenses", version.ref = "googleOss" }
@@ -188,6 +190,7 @@ ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devto
 work-testing = { group = "androidx.work", name = "work-testing", version = "2.8.1" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3", version = "1.1.2" }
 material = { group = "com.google.android.material", name = "material", version = "1.10.0" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
