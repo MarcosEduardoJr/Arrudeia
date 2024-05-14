@@ -8,6 +8,8 @@ const val storiesRoute = "stories_route"
 const val profileRoute = "profile_route"
 const val profilePersonalInformationRoute = "profile_personal_information_route"
 const val profileAddressRoute = "profile_address_route"
+const val checkListRoute = "checkList_route"
+
 
 
 const val arrudeiaRoute = "arrudeia_route"

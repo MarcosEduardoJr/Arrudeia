@@ -2,6 +2,7 @@
 
 @file:OptIn(ExperimentalMaterial3Api::class)package com.arrudeia.core.designsystem.component
 
+import android.R
 import androidx.annotation.StringRes
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -91,7 +92,7 @@ fun ArrudeiaTopAppBar(
 @Composable
 private fun ArrudeiaTopAppBarPreview() {
     ArrudeiaTopAppBar(
-        titleRes = android.R.string.untitled,
+        titleRes = R.string.untitled,
         navigationIcon = ArrudeiaIcons.Search,
         navigationIconContentDescription = "Navigation icon",
         actionIcon = ArrudeiaIcons.MoreVert,

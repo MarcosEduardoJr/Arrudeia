@@ -22,7 +22,7 @@ import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
 
 @ExperimentalCoroutinesApi
-@RunWith(MockitoJUnitRunner::class)
+@RunWith(MockitoJUnitRunner.Silent::class)
 class ProfileAddressViewModelTest : ViewModelTest() {
 
     @Mock
@@ -106,7 +106,7 @@ class ProfileAddressViewModelTest : ViewModelTest() {
             "Country"
         )
 
-        `when`(updateUserAddressUseCase.invoke(user)).thenReturn(Result.Error(R.string.error_update_user))
+        `when`(updateUserAddressUseCase(user)).thenReturn(Result.Error(R.string.error_update_user))
 
         viewModel.saveAddress("12345", "Street", 123, "District", "City", "State", "Country")
 

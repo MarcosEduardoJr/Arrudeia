@@ -8,7 +8,7 @@ import androidx.compose.ui.unit.sp
 /**
  * Android typography.
  */
-internal val ArrudeiaTypography = Typography(
+val ArrudeiaTypography = Typography(
     displayLarge = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 57.sp,

@@ -1,27 +1,31 @@
 pluginManagement {
     repositories {
-        includeBuild("build-logic")
-        google()
+        google {
+            content {
+                includeGroupByRegex("com\\.android.*")
+                includeGroupByRegex("com\\.google.*")
+                includeGroupByRegex("androidx.*")
+            }
+        }
         mavenCentral()
         gradlePluginPortal()
     }
 }
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-    repositories {
-        google()
-        mavenCentral()
-        maven ("jitpack.io")
+    dependencyResolutionManagement {
+        repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+        repositories {
+            google()
+            mavenCentral()
+        }
     }
 }
 
-rootProject.name = "arrudeia"
+rootProject.name = "Arrudeia"
 include(":app")
-include(":core:graphql")
 include(":core:designsystem")
 include(":core:common")
 include(":core:graphql")
-
 
 include(":feature:onboarding")
 include(":feature:sign")
@@ -30,3 +34,5 @@ include(":feature:trip")
 include(":feature:stories")
 include(":feature:profile")
 include(":feature:arrudeia")
+include(":feature:checklist")
+

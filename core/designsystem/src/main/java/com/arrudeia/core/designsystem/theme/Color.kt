@@ -6,4 +6,4 @@ import com.arrudeia.core.designsystem.R.color.colorPrimary
 /**
  *  colors.
  */
-internal val PrimaryColor = Color(colorPrimary)
+val PrimaryColor = Color(colorPrimary)

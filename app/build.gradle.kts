@@ -1,84 +1,89 @@
 plugins {
-    id("arrudeia.android.application")
-    id("arrudeia.android.application.compose")
-    id("arrudeia.android.application.flavors")
-    id("arrudeia.android.hilt")
-    id("arrudeia.android.application.firebase")
+    id("kotlin-android")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.jetbrains.kotlin.android)
     id("io.gitlab.arturbosch.detekt")
+    id("com.google.firebase.crashlytics")
+    id("kotlin-kapt")
+    id("com.google.firebase.appdistribution")
+    id("com.google.gms.google-services")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
+    namespace = "com.droidmaster.arrudeia"
+
+    compileSdk = 34
     defaultConfig {
+        multiDexEnabled = true
         applicationId = "com.droidmaster.arrudeia"
         versionCode = 21
+        minSdk = 21
+        targetSdk = 34
         versionName = "1.7.2" // X.Y.Z; X = Major, Y = minor, Z = Patch level
 
         // Custom test runner to set up Hilt dependency graph
-        //testInstrumentationRunner = "com.arrudeia.core.testing.ArrudeiaTestRunner"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
-        testOptions {
-            unitTests.isReturnDefaultValues = true
+    }
+    buildTypes {
+        named("debug") {
+              isDebuggable = true
         }
-        packaging {
-            resources {
-                excludes += "/META-INF/{AL2.0,LGPL2.1}"
-                excludes += "META-INF/LICENSE.md"
-                excludes += "META-INF/LICENSE-notice.md"
-            }
+        create("staging") {
+            applicationIdSuffix = ".staging"
+            isDebuggable = true
+        }
+        release {
+            isMinifyEnabled = true
+            isDebuggable = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
-
-    buildTypes {
-        debug {
-           // applicationIdSuffix = ArrudeiaBuildType.DEBUG.applicationIdSuffix
-        }
-        val release by getting {
-            isMinifyEnabled = true
-           // applicationIdSuffix = ArrudeiaBuildType.RELEASE.applicationIdSuffix
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-
-            // To publish on the Play store a private signing key is required, but to allow anyone
-            // who clones the code to sign and run the release variant, use the debug signing key.
-            // TODO: Abstract the signing configuration to a separate file to avoid hardcoding this.
-            signingConfig = signingConfigs.getByName("debug")
-        }
-        create("benchmark") {
-            // Enable all the optimizations from release build through initWith(release).
-            initWith(release)
-            matchingFallbacks.add("release")
-            // Debug key signing is available to everyone.
-            signingConfig = signingConfigs.getByName("debug")
-            // Only use benchmark proguard rules
-            proguardFiles("benchmark-rules.pro")
-            isMinifyEnabled = true
-            //applicationIdSuffix = ArrudeiaBuildType.BENCHMARK.applicationIdSuffix
-        }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.11"
     }
 
     packaging {
         resources {
-            excludes.add("/META-INF/{AL2.0,LGPL2.1}")
+            excludes.add("META-INF/LICENSE.md")
+            excludes.add("META-INF/LICENSE-notice.md")
+
         }
     }
     testOptions {
+
         unitTests {
             isIncludeAndroidResources = true
+            isReturnDefaultValues = true
         }
     }
-    namespace = "com.droidmaster.arrudeia"
 }
 
 dependencies {
+    compileOnly(libs.android.gradlePlugin)
+    compileOnly(libs.firebase.crashlytics.gradlePlugin)
+    compileOnly(libs.firebase.performance.gradlePlugin)
+    compileOnly(libs.kotlin.gradlePlugin)
+    compileOnly(libs.ksp.gradlePlugin)
 
-    implementation(project(":feature:onboarding"))
-    implementation(project(":feature:sign"))
-    implementation(project(":feature:home"))
-    implementation(project(":feature:trip"))
-    implementation(project(":feature:stories"))
-    implementation(project(":feature:profile"))
-    implementation(project(":feature:arrudeia"))
+    implementation(libs.multidex)
+    implementation(libs.kotlin.stdlib)
 
     implementation(libs.androidx.material3)
 
@@ -88,10 +93,8 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.testManifest)
     //debugImplementation(project(":ui-test-hilt-manifest"))
 
-    implementation(project(":core:designsystem"))
-    implementation(project(":core:graphql"))
-    implementation(project(":core:common"))
 
+    implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core.ktx)
@@ -100,21 +103,23 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtimeCompose)
     implementation(libs.androidx.compose.runtime.tracing)
     implementation(libs.androidx.compose.material3.windowSizeClass)
-    implementation(libs.androidx.hilt.navigation.compose)
+
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.window.manager)
     implementation(libs.androidx.profileinstaller)
     implementation(libs.kotlinx.coroutines.guava)
-    implementation(libs.coil.kt)
     implementation(libs.androidx.metrics)
-
+    implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.firestore)
-
+    implementation(libs.firebase.crashlytics)
     testImplementation(libs.androidx.navigation.testing)
     testImplementation(libs.accompanist.testharness)
     testImplementation(kotlin("test"))
     implementation(libs.work.testing)
-    kaptTest(libs.hilt.compiler)
+
+    implementation(libs.hilt.android)
+    implementation(libs.androidx.hilt.navigation.compose)
+    kapt(libs.hilt.compiler)
 
     api(libs.androidx.compose.foundation)
     api(libs.androidx.compose.foundation.layout)
@@ -127,4 +132,23 @@ dependencies {
     api(libs.androidx.metrics)
     api(libs.androidx.tracing.ktx)
 
+
+    implementation(libs.camera.camera2)
+    implementation(libs.camera.lifecycle)
+    implementation(libs.camera.view)
+
+    implementation(project(":core:designsystem"))
+    implementation(project(":core:graphql"))
+    implementation(project(":core:common"))
+
+    implementation(project(":feature:onboarding"))
+    implementation(project(":feature:sign"))
+    implementation(project(":feature:home"))
+    implementation(project(":feature:trip"))
+    implementation(project(":feature:stories"))
+    implementation(project(":feature:profile"))
+    implementation(project(":feature:arrudeia"))
+    implementation(project(":feature:checklist"))
 }
+
+apply(plugin = "com.google.gms.google-services")
