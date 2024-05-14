@@ -31,6 +31,14 @@ type ArrudeiaPlace {
     uuid: String
 }
 
+type CheckList{
+    checklist: [CheckListGraph]
+}
+
+type CheckListGraph{
+    name: String
+}
+
 type ArrudeiaAvailablePlaceGraph {
     id: ID
     name: String
@@ -47,6 +55,8 @@ type Query {
     arrudeiaPlaces: [ArrudeiaPlace]
     arrudeiaPlace(uuid: String!): ArrudeiaPlace
     arrudeiaAvailablePlace(placeId: String!): ArrudeiaAvailablePlaceGraph
+
+    checklist: [CheckListGraph]
 }
 
 type Mutation {

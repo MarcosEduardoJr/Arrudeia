@@ -17,6 +17,7 @@ import androidx.compose.material.icons.rounded.Email
 import androidx.compose.material.icons.rounded.Error
 import androidx.compose.material.icons.rounded.Grid3x3
 import androidx.compose.material.icons.rounded.Home
+import androidx.compose.material.icons.rounded.NoteAlt
 import androidx.compose.material.icons.rounded.Password
 import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material.icons.rounded.Search
@@ -33,6 +34,7 @@ object ArrudeiaIcons {
     val Add = Icons.Rounded.Add
     val ArrowBack = Icons.Rounded.ArrowBack
     val Bookmark = Icons.Rounded.Bookmark
+    val NoteAlt = Icons.Rounded.NoteAlt
     val BookmarkBorder = Icons.Rounded.BookmarkBorder
     val Bookmarks = Icons.Rounded.Bookmarks
     val BookmarksBorder = Icons.Outlined.Bookmarks

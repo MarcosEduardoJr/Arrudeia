@@ -2,6 +2,7 @@ package com.droidmaster.arrudeia.navigation
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import com.arrudeia.feature.checklist.presentation.navigation.checkListScreen
 import com.arrudeia.feature.home.presentation.navigation.homeGraph
 import com.arrudeia.feature.profile.presentation.navigation.profileScreen
 import com.arrudeia.feature.stories.presentation.navigation.storiesScreen

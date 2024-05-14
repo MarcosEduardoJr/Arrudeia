@@ -148,6 +148,7 @@ dependencies {
     implementation(project(":feature:stories"))
     implementation(project(":feature:profile"))
     implementation(project(":feature:arrudeia"))
+    implementation(project(":feature:checklist"))
 }
 
 apply(plugin = "com.google.gms.google-services")
