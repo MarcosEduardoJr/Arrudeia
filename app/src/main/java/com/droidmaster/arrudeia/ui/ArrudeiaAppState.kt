@@ -14,6 +14,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import androidx.tracing.trace
 import com.arrudeia.core.data.navigation.arrudeiaRoute
+import com.arrudeia.core.data.navigation.checkListRoute
 import com.arrudeia.core.data.navigation.homeRoute
 import com.arrudeia.core.data.navigation.profileRoute
 import com.arrudeia.feature.home.presentation.navigation.navigateToHome
@@ -78,6 +79,7 @@ class ArrudeiaAppState(
         when (topLevelDestination) {
             TopLevelDestination.HOME -> navController.navigate(homeRoute)
             TopLevelDestination.PROFILE -> navController.navigate(profileRoute)
+            TopLevelDestination.CHECKLIST -> navController.navigate(checkListRoute)
         }
     }
 }
