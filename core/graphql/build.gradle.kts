@@ -1,10 +1,9 @@
 plugins {
-    id("com.android.library")
-    id("kotlinx-serialization")
-    id("com.apollographql.apollo3").version("3.8.3")
-    id("kotlin-kapt")
-    id("com.google.dagger.hilt.android")
+    id("com.android.library" )
     id("kotlin-android")
+    id("com.apollographql.apollo3").version("3.8.3")
+    kotlin("kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 apollo {
@@ -19,27 +18,15 @@ android {
     namespace = "com.arrudeia.core.graphql"
     defaultConfig {
         minSdk = 21
-        targetSdk = 34
         multiDexEnabled = true
     }
 
-    testOptions {
-        unitTests {
-            isIncludeAndroidResources = true
-            isReturnDefaultValues = true
-        }
-    }
     packaging {
         resources {
             excludes.add("META-INF/LICENSE.md")
             excludes.add("META-INF/LICENSE-notice.md")
+
         }
-    }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.11"
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -51,23 +38,7 @@ android {
 }
 
 dependencies {
-    implementation(libs.kotlin.stdlib)
-
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.kotlinx.coroutines.android)
-    implementation(libs.kotlinx.datetime)
-    implementation(libs.kotlinx.serialization.json)
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.auth)
-
     implementation(libs.apollo.runtime)
-    implementation(libs.okhttp.logging)
-
-
-    implementation(libs.kotlinx.serialization.json)
-
     implementation(libs.hilt.android)
-    implementation(libs.androidx.hilt.navigation.compose)
-    implementation(libs.androidx.hilt.navigation.compose)
     kapt(libs.hilt.compiler)
 }

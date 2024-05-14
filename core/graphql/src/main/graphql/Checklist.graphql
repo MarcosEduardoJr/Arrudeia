@@ -1,0 +1,5 @@
+query CheckListGraph {
+    checklist {
+        name
+    }
+}

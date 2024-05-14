@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string name="onboarding_saved">Saved</string>
+    <string name="onboarding_saved_loading">Loading saved…</string>
+    <string name="onboarding_empty_error">No saved updates</string>
+    <string name="onboarding_empty_description">Updates you save will be stored here\nto read later</string>
+    <string name="onboarding_removed">Bookmark removed</string>
+    <string name="onboarding_undo">UNDO</string>
+    <string name="start">Começar</string>
+    <string name="title_sign">Entrar</string>
+     <string name="sign_description_tired_job"><![CDATA[Ta com a semana cansativa no trabalho? <a href="link_1">Arrudeia</a> e divirta-se pois você merece!]]></string>
+    <string name="please_sign_in_to_continue_our_app">Por favor, faça login para continuar usando nosso aplicativo.</string>
+    <string name="tools_title_trip_detail_name">Praia de Pipa</string>
+    <string name="tools_subtitle_trip_detail_name">Recife, PE</string>
+    <string name="from">A partir de</string>
+    <string name="tools_currency_price">R$80</string>
+    <string name="description">Descrição</string>
+    <string name="tools_lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Arcu amet tempor, in massa, habitasse habitasse fermentum, sed faucibus. Augue arcu, ac proin accumsan urna.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Arcu amet tempor, in massa, habitasse habitasse fermentum, sed faucibus. Augue arcu, ac proin accumsan urna.</string>
+<string name="talk_with_agency">Falar com a agência</string>
+    <string name="erro_message_list_travels">Estamos em manutenção, tente novamente mais tarde.</string>
+    <string name="loading">Carregando</string>
+    <string name="whatsapp_contact_message">Olá, tudo bem?\nDesejo saber mais informações sobre a viagem para %1$s no dia %2$s.</string>
+    <string name="include">Incluso</string>
+    <string name="optional">Opcional</string>
+    <string name="whatsapp_message">https://api.whatsapp.com/send?phone=%1$s&amp;text=%2$s</string>
+    <string name="checklist">Checklist</string>
+    <string name="background_checklist_img"><![CDATA[https://firebasestorage.googleapis.com/v0/b/arrudeia-5fedc.appspot.com/o/checklist%2Farrudeia_checklist.png?alt=media&token=ed0828ef-542f-47fa-bb13-d34dd87aaa38]]></string>
+    <string name="tip_of_bring">Dica do que levar para a viagem</string>
+
+
+    <string name="DOCUMENT">Documento</string>
+    <string name="VISA">Visto</string>
+    <string name="MONEY">Dinheiro</string>
+    <string name="CARD_PAYMENT">Pagamento com Cartão</string>
+    <string name="TICKET_TRANSPORT">Transporte de Bilhete</string>
+    <string name="HOTEL_RESERVATION_CONFIRMATION">Confirmação de Reserva de Hotel</string>
+    <string name="TRAVEL_INSURANCE">Seguro Viagem</string>
+    <string name="DRIVER_LICENSE">Carteira de Motorista</string>
+    <string name="PERSONAL_MEDICATIONS">Medicações Pessoais</string>
+    <string name="SUN_GLASSES">Óculos de Sol</string>
+    <string name="SUN_PROTECTION">Proteção Solar</string>
+    <string name="HAT">Chapéu</string>
+    <string name="PERSONAL_HYGINE_ITEMS">Itens de Higiene Pessoal</string>
+    <string name="CAMERA_PHOTO">Foto de Câmera</string>
+    <string name="CHARGERS_AND_PLUG">Carregadores e Plugs</string>
+    <string name="CLOTHES">Roupas</string>
+    <string name="SHOES">Sapatos</string>
+    <string name="BAG">Bolsa</string>
+    <string name="SNACKS">Lanches</string>
+    <string name="HEADSET">Fone de Ouvido</string>
+    <string name="MASK_AND_ALCOOL">Máscara e Álcool</string>
+    <string name="NECK_PILLOW">Travesseiro de Pescoço</string>
+
+</resources>

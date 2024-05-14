@@ -7,9 +7,19 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.navigation.NavDestination
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navOptions
+import androidx.tracing.trace
+import com.arrudeia.core.data.navigation.arrudeiaRoute
+import com.arrudeia.core.data.navigation.checkListRoute
+import com.arrudeia.core.data.navigation.homeRoute
+import com.arrudeia.core.data.navigation.profileRoute
+import com.arrudeia.feature.home.presentation.navigation.navigateToHome
+import com.droidmaster.arrudeia.navigation.TopLevelDestination
+import com.droidmaster.arrudeia.navigation.navigateToRoute
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
@@ -18,7 +28,7 @@ fun rememberArrudeiaAppState(
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     navController: NavHostController = rememberNavController(),
 ): ArrudeiaAppState {
-     return remember(
+    return remember(
         navController,
         coroutineScope,
         windowSizeClass,
@@ -42,8 +52,6 @@ class ArrudeiaAppState(
             .currentBackStackEntryAsState().value?.destination
 
 
-
-
     val shouldShowBottomBar: Boolean =
         windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact
 
@@ -51,18 +59,27 @@ class ArrudeiaAppState(
         get() = !shouldShowBottomBar
 
 
+    val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.values().asList()
 
+    fun navigateToTopLevelDestination(topLevelDestination: TopLevelDestination) {
+        val topLevelNavOptions = navOptions {
+            // Pop up to the start destination of the graph to
+            // avoid building up a large stack of destinations
+            // on the back stack as users select items
+            popUpTo(navController.graph.findStartDestination().id) {
+                saveState = true
+            }
+            // Avoid multiple copies of the same destination when
+            // reselecting the same item
+            launchSingleTop = true
+            // Restore state when reselecting a previously selected item
+            restoreState = true
+        }
 
-
-
-
-
-    fun navigateToSearch() {
-        //  navController.navigateToSearch()
+        when (topLevelDestination) {
+            TopLevelDestination.HOME -> navController.navigate(homeRoute)
+            TopLevelDestination.PROFILE -> navController.navigate(profileRoute)
+            TopLevelDestination.CHECKLIST -> navController.navigate(checkListRoute)
+        }
     }
 }
-
-/**
- * Stores information about navigation events to be used with JankStats
- */
-

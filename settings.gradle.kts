@@ -27,7 +27,6 @@ include(":core:designsystem")
 include(":core:common")
 include(":core:graphql")
 
-
 include(":feature:onboarding")
 include(":feature:sign")
 include(":feature:home")
@@ -35,4 +34,5 @@ include(":feature:trip")
 include(":feature:stories")
 include(":feature:profile")
 include(":feature:arrudeia")
+include(":feature:checklist")
 

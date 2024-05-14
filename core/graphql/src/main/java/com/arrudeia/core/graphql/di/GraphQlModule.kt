@@ -1,7 +1,6 @@
-package com.arrudeia.feature.profile.di
+package com.arrudeia.core.graphql.di
 
 import com.apollographql.apollo3.ApolloClient
-import com.arrudeia.feature.profile.data.ProfileRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,10 +18,6 @@ object GraphQlModule {
             .build()
     }
 
-    @Provides
-    @Singleton
-    fun provideCountryClient(apolloClient: ApolloClient): com.arrudeia.feature.profile.data.ProfileRepository {
-        return ProfileRepositoryImpl(apolloClient)
-    }
+
 
 }
