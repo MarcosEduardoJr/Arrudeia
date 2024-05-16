@@ -7,6 +7,9 @@ import com.arrudeia.feature.checklist.presentation.navigation.checkListScreen
 import com.arrudeia.feature.home.presentation.navigation.homeScreen
 import com.arrudeia.feature.onboarding.presentation.navigation.onboardingScreen
 import com.arrudeia.feature.profile.presentation.navigation.profileScreen
+import com.arrudeia.feature.receipt.presentation.navigation.param.ReceiptDetailParam
+import com.arrudeia.feature.receipt.presentation.navigation.receiptDetailScreen
+import com.arrudeia.feature.receipt.presentation.navigation.receiptScreen
 import com.arrudeia.feature.sign.presentation.navigation.signScreen
 import com.arrudeia.feature.stories.presentation.navigation.navigateToStories
 import com.arrudeia.feature.trip.presentation.navigation.navigateToTripDetail
@@ -40,5 +43,15 @@ fun NavGraphBuilder.screens(
     checkListScreen(
         onBackClick = { navController.popBackStack() }
     )
+    receiptScreen(
+        onReceiptDetailClick = { navController.navigate(it) },
+        onShowSnackbar = onShowSnackbar
+    )
+    receiptDetailScreen(
+        onShowSnackbar = onShowSnackbar,
+        onBackClick = { navController.popBackStack() }
+    )
 }
+
+
 

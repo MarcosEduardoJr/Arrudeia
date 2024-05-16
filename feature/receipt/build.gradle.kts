@@ -9,7 +9,7 @@ plugins {
 
 android {
     compileSdk = 34
-    namespace = "com.arrudeia.feature.checklist"
+    namespace = "com.arrudeia.feature.receipt"
     defaultConfig {
         minSdk = 21
         targetSdk = 34
@@ -41,32 +41,29 @@ dependencies {
     implementation(project(":core:designsystem"))
     implementation(project(":core:common"))
     implementation(project(":core:graphql"))
+    implementation(project(":feature:stories"))
+    implementation(project(":feature:trip"))
+    implementation(project(":feature:profile"))
+   implementation(project(":feature:arrudeia"))
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.glide.compose)
+
+    implementation(libs.kotlinx.serialization.json)
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.kotlinx.coroutines.test)
+
+    implementation(libs.firebase.bom)
+    implementation(libs.firebase.firestore)
 
     implementation(libs.apollo.runtime)
 
-    
-    implementation(libs.kotlinx.serialization.json)
-    implementation(libs.glide.compose)
-    testImplementation(libs.mockk)
-    testImplementation(libs.mockito.core)
-
-    testImplementation(libs.kotlinx.coroutines.test)
-
-    implementation(libs.androidx.compose.material3)
-
-    implementation(libs.firebase.firestore)
-
-    implementation(libs.coreTesting)
+    implementation(libs.androidx.dataStore.core)
+    implementation(libs.androidx.dataStore.preferences)
 
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.hilt.navigation.compose)
     kapt(libs.hilt.compiler)
-
-    implementation(libs.kotlinx.coroutines.test)
-    implementation(libs.mockito.core)
-    implementation(libs.mockk)
-    implementation(libs.coreTesting)
 
 
     implementation(platform(libs.androidx.compose.bom))
@@ -80,6 +77,12 @@ dependencies {
     implementation(libs.androidx.compose.runtime.tracing)
     implementation(libs.androidx.compose.material3.windowSizeClass)
 
+    implementation(libs.kotlinx.coroutines.test)
+    implementation(libs.mockito.core)
+    implementation(libs.mockk)
+    implementation(libs.coreTesting)
+
+
     implementation(libs.junit4)
     testImplementation(libs.junit4)
     androidTestImplementation(libs.androidx.junit)
@@ -87,4 +90,11 @@ dependencies {
 
     implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
+
+    implementation(libs.androidx.media3.exoplayer)
+    implementation(libs.androidx.media3.ui)
+    implementation(libs.androidyoutubeplayer)
+
 }
+
+

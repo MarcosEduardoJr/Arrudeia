@@ -31,6 +31,13 @@ type ArrudeiaPlace {
     uuid: String
 }
 
+
+type ArrudeiaAvailablePlaceGraph {
+    id: ID
+    name: String
+    placeId: String
+}
+
 type CheckList{
     checklist: [CheckListGraph]
 }
@@ -39,10 +46,34 @@ type CheckListGraph{
     name: String
 }
 
-type ArrudeiaAvailablePlaceGraph {
-    id: ID
+type RecipesGraph{
+    uuid: Int
     name: String
-    placeId: String
+    time: Int
+    quantity: String
+    img: String
+    level: String
+}
+
+type Recipes{
+    recipes: [RecipesGraph]
+}
+
+type RecipeDetailGraph {
+    description: String
+    img: String
+    ingredients : [Ingredients]
+    level: String
+    name: String
+    quantity: String
+    time: Int
+    urlVideo: String
+}
+
+type Ingredients{
+    id: Int
+    recipeId: String
+    step: String
 }
 
 type Query {
@@ -57,6 +88,9 @@ type Query {
     arrudeiaAvailablePlace(placeId: String!): ArrudeiaAvailablePlaceGraph
 
     checklist: [CheckListGraph]
+
+    recipes: [RecipesGraph]
+    recipe(uuid: String!): RecipeDetailGraph
 }
 
 type Mutation {

@@ -8,6 +8,7 @@ plugins {
     id("com.google.firebase.appdistribution")
     id("com.google.gms.google-services")
     id("com.google.dagger.hilt.android")
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -137,6 +138,9 @@ dependencies {
     implementation(libs.camera.lifecycle)
     implementation(libs.camera.view)
 
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.kotlinx.serialization.json)
+
     implementation(project(":core:designsystem"))
     implementation(project(":core:graphql"))
     implementation(project(":core:common"))
@@ -149,6 +153,7 @@ dependencies {
     implementation(project(":feature:profile"))
     implementation(project(":feature:arrudeia"))
     implementation(project(":feature:checklist"))
+    implementation(project(":feature:receipt"))
 }
 
 apply(plugin = "com.google.gms.google-services")

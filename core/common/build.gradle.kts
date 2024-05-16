@@ -78,6 +78,9 @@ dependencies {
     implementation(libs.androidx.compose.material3.windowSizeClass)
     implementation(libs.androidx.core.ktx)
 
+    implementation(libs.androidx.media3.exoplayer)
+    implementation(libs.androidx.media3.ui)
+
     implementation(libs.junit4)
     testImplementation(libs.junit4)
     androidTestImplementation(libs.androidx.junit)

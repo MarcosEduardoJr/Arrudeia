@@ -10,15 +10,12 @@ import javax.inject.Inject
 class CheckListRepositoryImpl @Inject constructor(
     private val apolloClient: ApolloClient
 ) : CheckListRepository {
-
-
     override suspend fun getChecklist(): Result<List<CheckListRepositoryEntity>?> {
         val response = apolloClient.query(CheckListGraphQuery()).execute()
         if (response.hasErrors() || response.data?.checklist.toEntity() == null)
             return Result.Error(null)
         return Result.Success(response.data!!.checklist!!.toEntity())
     }
-
 }
 
 

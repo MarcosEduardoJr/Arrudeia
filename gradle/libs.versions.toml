@@ -16,7 +16,7 @@ androidxHiltNavigationCompose = "1.0.0"
 androidxLifecycle = "2.6.1"
 androidxMacroBenchmark = "1.2.0-alpha16"
 androidxMetrics = "1.0.0-alpha03"
-androidxNavigation = "2.5.3"
+androidxNavigation = "2.8.0-alpha08"
 androidxProfileinstaller = "1.3.1"
 androidxStartup = "1.1.1"
 androidxTestCore = "1.5.0"
@@ -43,7 +43,7 @@ kotlin = "1.9.23"
 kotlinxCoroutines = "1.6.4"
 kotlinPlayServices = "1.4.1"
 kotlinxDatetime = "0.4.0"
-kotlinxSerializationJson = "1.5.1"
+kotlinxSerializationJson = "1.6.3"
 ksp = "1.9.0-1.0.13"
 lint = "31.0.2"
 okhttp = "4.10.0"
@@ -73,6 +73,8 @@ mockitoKotlin = "3.2.0"
 multidex = "2.0.1"
 apolloplugin = "2.3.1"
 junitVersion = "1.1.5"
+media3 = "1.0.0-beta02"
+
 [libraries]
 mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockitoKotlin" }
 coreTesting = { group = "androidx.arch.core", name = "core-testing", version.ref = "coreTesting" }
@@ -191,6 +193,9 @@ work-testing = { group = "androidx.work", name = "work-testing", version = "2.8.
 androidx-material3 = { group = "androidx.compose.material3", name = "material3", version = "1.1.2" }
 material = { group = "com.google.android.material", name = "material", version = "1.10.0" }
 
+androidx-media3-exoplayer = { group = "androidx.media3", name = "media3-exoplayer", version.ref = "media3" }
+androidx-media3-ui = { group = "androidx.media3", name = "media3-ui", version.ref = "media3" }
+androidyoutubeplayer = { group = "com.pierfrancescosoffritti.androidyoutubeplayer", name = "chromecast-sender", version = "0.28" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
@@ -208,4 +213,3 @@ roborazzi = { id = "io.github.takahirom.roborazzi", version.ref = "roborazzi" }
 secrets = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "secrets" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detektVer" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-

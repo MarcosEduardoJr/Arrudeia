@@ -35,4 +35,4 @@ include(":feature:stories")
 include(":feature:profile")
 include(":feature:arrudeia")
 include(":feature:checklist")
-
+include(":feature:receipt")

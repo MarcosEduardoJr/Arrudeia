@@ -1,0 +1,17 @@
+query GetRecipeDetail($uuid: String!) {
+    recipe(uuid: $uuid) {
+        description
+        img
+        ingredients {
+            id
+            recipeId
+            step
+        }
+        level
+        name
+        quantity
+        time
+        urlVideo
+    }
+}
+

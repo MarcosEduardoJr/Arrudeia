@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_home">Início</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_profile">Perfil</string>
+    <string name="description_buy_information_travel_fast_detail">
+        <![CDATA[
+        A compra <b> não é feita usando este app </b> , nós apenas rederecionamos para agencia que faz a viagem, este app faz uma <b>curadoria</b> dos melhores <b>bate&volta</b> disponiveis no mercado.
+]]>
+    </string>
+    <string name="talk_agency">Falar com a agência</string>
+    <string name="description_test">Lugar encangtador onde é possivel, bla bla bla bla bla blablablablablabalablblablablablablabalablblablablablablabalablblablablablablabalablblablablablablabalablblablablablablabalablblablablablablabalablblablablablablabalablblablablablablabalablblablablablablabalablblablablablablabalablblablablablablabalablblablablablablabalablblablablablablabalablblablablablablabalablblablablablablabalablblablablablablabalablblablablablablabalablblablablablablabalablblablablablablabalablblablablablablabalablblablablablablabalablblablablablablabalablblablablablablabalablblablablablablabalablblablablablablabalablblablablablablabalablblablablablablabalablblablablablablabalablblablablablablabalablblablablablablabalablblablablablablabalablblablablablablabalablblablablablablabalablblablablablablabalablblablablablablabalabl</string>
+    <string name="error_generic_network">Tente novamente mais tarde</string>
+    <string name="near_to_you">Perto de você</string>
+    <string name="destiny">Destino</string>
+    <string name="arrudeia_tv">Arrudeia TV</string>
+    <string name="recife_pe">Recife, PE</string>
+
+    <string name="EASY">Fácil</string>
+    <string name="MEDIUM">Medio</string>
+    <string name="HARD">Dificil</string>
+
+    <string name="time">Tempo</string>
+    <string name="receipts">Receitas</string>
+    <string name="erro_message_list_travels">Estamos em manutenção, tente novamente mais tarde.</string>
+    <string name="loading">Carregando</string>
+    <string name="travels_only_this_city">Estamos com viagem apenas em Recife.</string>
+    <string name="receipt">Receitas</string>
+    <string name="error_get_user">Não foi possível retornar os dados do usuário tente novamente mais tarde</string>
+    <string name="ingredients">Ingredientes</string>
+    <string name="difficult">Dificuldade</string>
+    <string name="portions">Porções</string>
+    <string name="method_of_preparation">Modo de preparo</string>
+</resources>
