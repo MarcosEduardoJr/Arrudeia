@@ -1,4 +1,4 @@
-package com.arrudeia.feature.receipt.presentation.navigation
+package com.arrudeia.feature.aid.presentation.navigation
 
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.SavedStateHandle
@@ -12,7 +12,7 @@ private val URL_CHARACTER_ENCODING = Charsets.UTF_8.name()
 @VisibleForTesting
 const val RECEIPT_DETAIL_ID_ARG = "receiptDetailIdArg"
 
-internal class ReceiptDetailArgs(var id: String) {
+internal class AidDetailArgs(var id: String) {
     constructor(savedStateHandle: SavedStateHandle) :
             this(
                 URLDecoder.decode(
@@ -22,7 +22,7 @@ internal class ReceiptDetailArgs(var id: String) {
             )
 }
 
-fun NavController.navigateToReceiptDetail(id: String) {
+fun NavController.navigateToAidDetail(id: String) {
     val encodedId = URLEncoder.encode(id, URL_CHARACTER_ENCODING)
     this.navigate("$receiptDetailtRoute/$encodedId") {
         launchSingleTop = true

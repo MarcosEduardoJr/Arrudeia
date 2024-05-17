@@ -1,0 +1,15 @@
+query GetAidDetail($id: String!) {
+    aid(id: $id) {
+        description
+        id
+        img
+        name
+        urlVideo
+        steps {
+            aidId
+            id
+            step
+        }
+    }
+}
+

@@ -2,12 +2,13 @@ package com.droidmaster.arrudeia.navigation
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import com.arrudeia.feature.aid.presentation.navigation.aidDetailScreen
+import com.arrudeia.feature.aid.presentation.navigation.aidScreen
 import com.arrudeia.feature.arrudeia.presentation.navigation.arrudeiaScreen
 import com.arrudeia.feature.checklist.presentation.navigation.checkListScreen
 import com.arrudeia.feature.home.presentation.navigation.homeScreen
 import com.arrudeia.feature.onboarding.presentation.navigation.onboardingScreen
 import com.arrudeia.feature.profile.presentation.navigation.profileScreen
-import com.arrudeia.feature.receipt.presentation.navigation.param.ReceiptDetailParam
 import com.arrudeia.feature.receipt.presentation.navigation.receiptDetailScreen
 import com.arrudeia.feature.receipt.presentation.navigation.receiptScreen
 import com.arrudeia.feature.sign.presentation.navigation.signScreen
@@ -48,6 +49,14 @@ fun NavGraphBuilder.screens(
         onShowSnackbar = onShowSnackbar
     )
     receiptDetailScreen(
+        onShowSnackbar = onShowSnackbar,
+        onBackClick = { navController.popBackStack() }
+    )
+    aidScreen(
+        onReceiptDetailClick = { navController.navigate(it) },
+        onShowSnackbar = onShowSnackbar
+    )
+    aidDetailScreen(
         onShowSnackbar = onShowSnackbar,
         onBackClick = { navController.popBackStack() }
     )

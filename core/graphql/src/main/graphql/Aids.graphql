@@ -1,0 +1,10 @@
+query GetAids {
+    aids {
+        description
+        img
+        name
+        urlVideo
+        id
+    }
+}
+

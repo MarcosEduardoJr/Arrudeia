@@ -17,6 +17,8 @@ import androidx.compose.material.icons.rounded.Cookie
 import androidx.compose.material.icons.rounded.Email
 import androidx.compose.material.icons.rounded.Error
 import androidx.compose.material.icons.rounded.Grid3x3
+import androidx.compose.material.icons.rounded.Healing
+import androidx.compose.material.icons.rounded.HealthAndSafety
 import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.NoteAlt
 import androidx.compose.material.icons.rounded.Password
@@ -56,4 +58,5 @@ object ArrudeiaIcons {
     val CheckCircle = Icons.Rounded.CheckCircle
     val Home = Icons.Rounded.Home
     val Cookie = Icons.Rounded.Cookie
+    val Aid = Icons.Rounded.Healing
 }

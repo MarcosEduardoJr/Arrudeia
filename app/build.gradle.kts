@@ -154,6 +154,7 @@ dependencies {
     implementation(project(":feature:arrudeia"))
     implementation(project(":feature:checklist"))
     implementation(project(":feature:receipt"))
+    implementation(project(":feature:aid"))
 }
 
 apply(plugin = "com.google.gms.google-services")

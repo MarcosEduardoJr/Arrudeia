@@ -13,6 +13,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import androidx.tracing.trace
+import com.arrudeia.core.data.navigation.aidRoute
 import com.arrudeia.core.data.navigation.arrudeiaRoute
 import com.arrudeia.core.data.navigation.checkListRoute
 import com.arrudeia.core.data.navigation.homeRoute
@@ -82,6 +83,7 @@ class ArrudeiaAppState(
             TopLevelDestination.PROFILE -> navController.navigate(profileRoute)
             TopLevelDestination.CHECKLIST -> navController.navigate(checkListRoute)
             TopLevelDestination.RECEIPT -> navController.navigate(receiptRoute)
+            TopLevelDestination.AID -> navController.navigate(aidRoute)
         }
     }
 }
