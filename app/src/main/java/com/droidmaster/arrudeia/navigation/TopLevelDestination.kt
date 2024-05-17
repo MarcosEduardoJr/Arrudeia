@@ -2,6 +2,7 @@ package com.droidmaster.arrudeia.navigation
 
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.arrudeia.core.designsystem.icon.ArrudeiaIcons
+import com.arrudeia.feature.aid.R.string.aid
 import com.arrudeia.feature.checklist.R.string.checklist
 import com.arrudeia.feature.home.R.string.title_home
 import com.arrudeia.feature.profile.R.string.profile
@@ -24,6 +25,12 @@ enum class TopLevelDestination(
         unselectedIcon = ArrudeiaIcons.Cookie,
         iconTextId = receipt,
         titleTextId = receipt,
+    ),
+    AID(
+        selectedIcon = ArrudeiaIcons.Aid,
+        unselectedIcon = ArrudeiaIcons.Aid,
+        iconTextId = aid,
+        titleTextId = aid,
     ),
     CHECKLIST(
         selectedIcon = ArrudeiaIcons.NoteAlt,

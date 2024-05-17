@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
@@ -25,13 +26,13 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
@@ -39,15 +40,14 @@ import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
-import com.arrudeia.core.designsystem.theme.GradientColors
-import com.droidmaster.arrudeia.navigation.arrudeiaNavHost
 import com.arrudeia.core.designsystem.R.color.background_grey_F7F7F9
 import com.arrudeia.core.designsystem.component.ArrudeiaBackground
-import com.droidmaster.arrudeia.navigation.arrudeiaNavHost
 import com.arrudeia.core.designsystem.component.ArrudeiaGradientBackground
 import com.arrudeia.core.designsystem.component.ArrudeiaNavigationBar
 import com.arrudeia.core.designsystem.component.ArrudeiaNavigationBarItem
+import com.arrudeia.core.designsystem.theme.GradientColors
 import com.droidmaster.arrudeia.navigation.TopLevelDestination
+import com.droidmaster.arrudeia.navigation.arrudeiaNavHost
 
 @OptIn(
     ExperimentalMaterial3Api::class,
@@ -132,30 +132,35 @@ private fun ArrudeiaBottomBar(
     currentDestination: NavDestination?,
     modifier: Modifier = Modifier.background(Color.White),
 ) {
-    ArrudeiaNavigationBar(
-        modifier = modifier,
-    ) {
-        destinations.forEach { destination ->
-            val selected = currentDestination.isTopLevelDestinationInHierarchy(destination)
-            ArrudeiaNavigationBarItem(
-                selected = selected,
-                onClick = { onNavigateToDestination(destination) },
-                icon = {
-                    Icon(
-                        imageVector = destination.unselectedIcon,
-                        contentDescription = null,
-                    )
-                },
-                selectedIcon = {
-                    Icon(
-                        imageVector = destination.selectedIcon,
-                        contentDescription = null,
-                    )
-                },
-                label = { Text(stringResource(destination.iconTextId)) },
-                modifier = Modifier,
-            )
-        }
+      ArrudeiaNavigationBar(
+            modifier = modifier,
+        ) {
+            destinations.forEach { destination ->
+                val selected = currentDestination.isTopLevelDestinationInHierarchy(destination)
+                ArrudeiaNavigationBarItem(
+                    selected = selected,
+                    onClick = { onNavigateToDestination(destination) },
+                    icon = {
+                        Icon(
+                            imageVector = destination.unselectedIcon,
+                            contentDescription = null,
+                        )
+                    },
+                    selectedIcon = {
+                        Icon(
+                            imageVector = destination.selectedIcon,
+                            contentDescription = null,
+                        )
+                    },
+                    label = {
+                        Text(
+                            stringResource(destination.iconTextId),
+                            Modifier.align(Alignment.CenterVertically)
+                        )
+                    },
+                    modifier = Modifier.align(Alignment.CenterVertically)
+                )
+            }
     }
 }
 

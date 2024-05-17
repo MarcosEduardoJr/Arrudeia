@@ -76,6 +76,22 @@ type Ingredients{
     step: String
 }
 
+
+type AidGraph {
+    id: Int
+    description: String
+    img: String
+    steps : [AidSteps]
+    name: String
+    urlVideo: String
+}
+
+type AidSteps{
+    id: Int
+    aidId: String
+    step: String
+}
+
 type Query {
     _entities(representations: [_Any!]!): [_Entity]!
 
@@ -91,6 +107,9 @@ type Query {
 
     recipes: [RecipesGraph]
     recipe(uuid: String!): RecipeDetailGraph
+
+    aids: [AidGraph]
+    aid(id: String!): AidGraph
 }
 
 type Mutation {
