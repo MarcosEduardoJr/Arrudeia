@@ -8,8 +8,10 @@ import com.arrudeia.core.data.navigation.onboardingRoute
 
 fun NavGraphBuilder.onboardingScreen(
     onRouteClick: (String) -> Unit,
+    showBottomBar: (Boolean) -> Unit,
 ) {
+
     composable(route = onboardingRoute) {
-        onboardingRoute( onRouteClick)
+        onboardingRoute( onRouteClick,showBottomBar = showBottomBar)
     }
 }

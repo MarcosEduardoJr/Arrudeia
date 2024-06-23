@@ -56,6 +56,7 @@ fun RowScope.ArrudeiaNavigationBarItem(
             unselectedIconColor = ArrudeiaNavigationDefaults.navigationContentColor(),
             unselectedTextColor = ArrudeiaNavigationDefaults.navigationContentColor(),
             indicatorColor = ArrudeiaNavigationDefaults.navigationIndicatorColor(),
+            disabledTextColor = ArrudeiaNavigationDefaults.navigationSelectedTextColor(),
         ),
     )
 }

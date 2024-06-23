@@ -102,12 +102,14 @@ fun cityDrop(modifier: Modifier, onShowSnackbar: suspend (String, String?) -> Bo
         Icon(
             painter = painterResource(id = R.drawable.ic_pin),
             contentDescription = null,
-            modifier = Modifier.align(
-                Alignment.CenterVertically
-            ),
+            modifier = Modifier
+                .align(
+                    Alignment.CenterVertically
+                )
+                .size(12.dp),
             tint = colorResource(id = R.color.colorBlack)
         )
-        Text(text = "Recife, PE", modifier = Modifier.padding(4.dp))
+        Text(text = "Recife, PE", modifier = Modifier.padding(4.dp), color = Color.Black)
         Icon(
             painter = painterResource(id = R.drawable.ic_arrow_down),
             contentDescription = null,

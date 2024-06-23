@@ -13,7 +13,8 @@ fun arrudeiaNavHost(
     appState: ArrudeiaAppState,
     onShowSnackbar: suspend (String, String?) -> Boolean,
     modifier: Modifier = Modifier,
-    startDestination: String =  onboardingRoute,
+    startDestination: String = onboardingRoute,
+    showBottomBar: (Boolean) -> Unit,
 ) {
     val navController = appState.navController
     NavHost(
@@ -21,7 +22,7 @@ fun arrudeiaNavHost(
         startDestination = startDestination,
         modifier = modifier,
     ) {
-        screens(navController, onShowSnackbar)
+        screens(navController, onShowSnackbar,showBottomBar)
         homeGraph(navController, onShowSnackbar)
         profileGraph(navController, onShowSnackbar)
     }

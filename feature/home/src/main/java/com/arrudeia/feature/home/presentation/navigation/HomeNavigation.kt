@@ -23,6 +23,7 @@ fun NavGraphBuilder.homeScreen(
     onStoriesClick: (String) -> Unit,
     onTripDetailClick: (String) -> Unit,
     onShowSnackbar: suspend (String, String?) -> Boolean,
+    showBottomBar: (Boolean) -> Unit,
 ) {
 
     composable(route = homeRoute) {
@@ -30,7 +31,8 @@ fun NavGraphBuilder.homeScreen(
             onRouteClick,
             onStoriesClick = onStoriesClick,
             onTripDetailClick = onTripDetailClick,
-            onShowSnackbar = onShowSnackbar
+            onShowSnackbar = onShowSnackbar,
+            showBottomBar = showBottomBar
         )
     }
 }

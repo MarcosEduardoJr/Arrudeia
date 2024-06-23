@@ -19,6 +19,7 @@ import com.arrudeia.core.data.navigation.checkListRoute
 import com.arrudeia.core.data.navigation.homeRoute
 import com.arrudeia.core.data.navigation.profileRoute
 import com.arrudeia.core.data.navigation.receiptRoute
+import com.arrudeia.core.data.navigation.serviceRoute
 import com.arrudeia.feature.home.presentation.navigation.navigateToHome
 import com.droidmaster.arrudeia.navigation.TopLevelDestination
 import com.droidmaster.arrudeia.navigation.navigateToRoute
@@ -84,6 +85,7 @@ class ArrudeiaAppState(
             TopLevelDestination.CHECKLIST -> navController.navigate(checkListRoute)
             TopLevelDestination.RECEIPT -> navController.navigate(receiptRoute)
             TopLevelDestination.AID -> navController.navigate(aidRoute)
+            TopLevelDestination.SERVICES -> navController.navigate(serviceRoute)
         }
     }
 }

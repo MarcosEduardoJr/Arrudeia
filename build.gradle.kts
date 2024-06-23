@@ -11,6 +11,7 @@ buildscript {
         }
         classpath(libs.apollo.gradle.plugin)
         classpath(libs.firebase.appdistribution.gradle)
+
     }
 }
 

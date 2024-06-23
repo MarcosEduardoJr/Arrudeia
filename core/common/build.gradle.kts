@@ -16,6 +16,10 @@ android {
     }
     buildFeatures {
         buildConfig = true
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.11"
     }
     packaging {
         resources {
@@ -37,11 +41,16 @@ secrets {
 }
 
 dependencies {
+    implementation(project(":core:graphql"))
+    implementation(project(":core:designsystem"))
+    implementation(libs.apollo.runtime)
     implementation(libs.hilt.android)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.datetime)
 
    kapt(libs.hilt.compiler)
+
+    implementation(libs.androidx.hilt.navigation.compose)
 
     implementation(libs.kotlinx.serialization.json)
 
@@ -85,6 +94,7 @@ dependencies {
     testImplementation(libs.junit4)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.ui.test.junit4)
+
 }
 
 kapt {

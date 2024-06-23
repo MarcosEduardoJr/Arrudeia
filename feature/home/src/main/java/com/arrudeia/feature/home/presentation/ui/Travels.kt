@@ -106,25 +106,21 @@ fun travelItem(item: TravelUIModel, modifier: Modifier) {
         Card(
             modifier = modifier,
             elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-            shape = RoundedCornerShape(8.dp)
+            shape = RoundedCornerShape(50.dp)
         ) {
             Row(
                 modifier = Modifier
                     .background(Color.White)
-                    .padding(16.dp),
+                    .padding(6.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 image(item)
                 content(
                     item, Modifier
                         .weight(1f)
-                        .padding(6.dp)
+                        .padding(2.dp)
                 )
-                button(
-                    item, Modifier
-                        .height(18.dp)
-                        .align(Alignment.Top)
-                )
+
             }
         }
     }
@@ -134,7 +130,7 @@ fun travelItem(item: TravelUIModel, modifier: Modifier) {
 @OptIn(ExperimentalGlideComposeApi::class)
 private fun image(item: TravelUIModel) {
     Card(
-        shape = RoundedCornerShape(12.dp)
+        shape = RoundedCornerShape(50.dp)
     ) {
         GlideImage(
             loading = placeholder(
@@ -182,33 +178,43 @@ private fun content(item: TravelUIModel, modifier: Modifier) {
             text = item.name,
             fontWeight = FontWeight.Bold,
             fontSize = 14.sp,
-            color = Color.Black
+            color = Color.Black,
+            modifier = Modifier.padding(start = 4.dp,end = 2.dp)
         )
+
+
 
         Row(verticalAlignment = Alignment.CenterVertically) {
             Image(
                 painter = painterResource(ic_pin),
                 contentDescription = null,
-                modifier = Modifier.padding(end = 2.dp)
+                modifier = Modifier.padding(start = 4.dp,end = 2.dp)
             )
             Text(
                 text = item.shortLocation(),
                 fontSize = 12.sp,
                 color = Color.Gray
             )
-        }
 
-        Row(verticalAlignment = Alignment.CenterVertically) {
             Image(
                 painter = painterResource(ic_calendar),
                 contentDescription = null,
-                modifier = Modifier.padding(end = 2.dp)
+                modifier = Modifier.padding(start = 6.dp, end = 2.dp)
             )
             Text(
                 text = item.date(),
                 fontSize = 12.sp,
                 color = Color.Gray
             )
+
+
         }
+
+        button(
+            item, Modifier
+                .height(14.dp)
+                .padding(start = 6.dp)
+        )
+
     }
 }

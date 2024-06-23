@@ -1,0 +1,10 @@
+query GetCepAddress($cep: String!) {
+    cepAddress(cep: $cep) {
+        city
+        country
+        district
+        state
+        street
+        zipCode
+    }
+}

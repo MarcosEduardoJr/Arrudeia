@@ -38,7 +38,9 @@ internal fun homeRoute(
     onStoriesClick: (String) -> Unit,
     onTripDetailClick: (String) -> Unit,
     onShowSnackbar: suspend (String, String?) -> Boolean,
+    showBottomBar: (Boolean) -> Unit,
 ) {
+    showBottomBar(true)
     val viewModel: HomeViewModel = hiltViewModel()
     viewModel.getUserPersonalInformation()
     homeView(onRouteClick, viewModel, onStoriesClick, onTripDetailClick, onShowSnackbar)

@@ -10,12 +10,16 @@ import com.arrudeia.feature.profile.domain.entity.UserPersonalInformationUseCase
 import javax.inject.Inject
 
 import com.arrudeia.core.result.Result
+
 class UpdateUserPersonalInformationUseCase @Inject constructor(
     private val repository: ProfileRepositoryImpl,
     private val repositoryDataStore: ProfileDataStoreUserRepositoryImpl,
     private val firebaseUserRepositoryImpl: FirebaseUserRepositoryImpl
 ) {
-    suspend operator fun invoke(user: UserPersonalInformationUseCaseEntity, image: Uri?): Result<String?> {
+    suspend operator fun invoke(
+        user: UserPersonalInformationUseCaseEntity,
+        image: Uri?
+    ): Result<String?> {
         image?.let { img ->
             firebaseUserRepositoryImpl.saveUserImage(img)?.let {
                 user.profileImage = it
@@ -23,6 +27,12 @@ class UpdateUserPersonalInformationUseCase @Inject constructor(
         }
         val result = repository.updateUserPersonalInformation(user.toRepositoryEntity())
         repositoryDataStore.saveUser(user.toDataStoreRepositoryEntity())
+        firebaseUserRepositoryImpl.createOrUpdateProfileImageToFirebaseDatabaseChat(
+            user.profileImage.orEmpty(),
+            user.uuid.orEmpty(),
+            user.email.orEmpty(),
+            user.name.orEmpty()
+        )
         return result
     }
 

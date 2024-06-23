@@ -1,0 +1,40 @@
+query GetServices {
+    services {
+        id
+        categoryId
+        name
+        description
+        city
+        country
+        imageUrl
+    }
+}
+
+query GetServicesExpertise {
+    servicesExpertise {
+        name
+        id
+    }
+}
+
+query GetService($id: Int!) {
+    service(id: $id) {
+        categoryId
+        city
+        country
+        description
+        district
+        id
+        image {
+            id
+            serviceId
+            url
+        }
+        name
+        number
+        state
+        street
+        uuidUserCreator
+        zipCode
+    }
+}
