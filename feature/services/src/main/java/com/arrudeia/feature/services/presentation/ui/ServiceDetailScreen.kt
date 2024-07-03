@@ -20,7 +20,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -45,14 +47,20 @@ import com.arrudeia.core.designsystem.component.ArrudeiaButtonColor
 import com.arrudeia.core.designsystem.component.ArrudeiaLoadingWheel
 import com.arrudeia.core.designsystem.component.CircularIconButton
 import com.arrudeia.core.designsystem.theme.ArrudeiaTheme
+import com.arrudeia.core.profile.param.ProfilePersonalParam
 import com.arrudeia.feature.services.R
 import com.arrudeia.feature.services.presentation.model.ServiceDetailUiModel
+import com.arrudeia.feature.services.presentation.navigation.param.NewServiceParam
 import com.arrudeia.feature.services.presentation.navigation.param.ServiceDetailParam
 import com.arrudeia.feature.services.presentation.ui.chat.chatwithme.presentation.userlist.UserListViewModel
 import com.arrudeia.feature.services.presentation.viewmodel.ServiceDetailUiState
 import com.arrudeia.feature.services.presentation.viewmodel.ServiceDetailViewModel
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
 internal fun ServiceDetailRoute(
@@ -60,7 +68,46 @@ internal fun ServiceDetailRoute(
     onBackClick: () -> Unit,
     onShowSnackbar: suspend (String, String?) -> Boolean,
     args: ServiceDetailParam,
+    onProfilePersonalParamNavigationClick: (ProfilePersonalParam) -> Unit,
 ) {
+
+
+    val hasSavedDocId by remember { mutableStateOf(viewModel.hasIdentificationDoc) }
+    val isLoading by remember { mutableStateOf(viewModel.isLoading) }
+    var callingNewService by remember { mutableStateOf(false) }
+    var openProfile by remember { mutableStateOf(false) }
+    var uuidUserCreator by remember { mutableStateOf("") }
+
+    val docErrorMsg = stringResource(id = R.string.do_you_need_fill_all_personal_information_try_do_job)
+
+    if (callingNewService) {
+        callingNewService = false
+        if (hasSavedDocId.value) {
+            viewModel.createFriendshipRegisterToFirebase(
+                uuidUserCreator
+            )
+        } else {
+            LaunchedEffect(Unit) {
+                CoroutineScope(Dispatchers.IO).launch {
+                    onShowSnackbar(docErrorMsg, "")
+                    delay(300)
+                    openProfile = true
+                }
+            }
+        }
+    }
+
+    if (openProfile) {
+        openProfile = false
+        onProfilePersonalParamNavigationClick(ProfilePersonalParam())
+    }
+
+
+    if (isLoading.value)
+        ArrudeiaLoadingWheel(
+            modifier = Modifier
+        )
+
     val arrTvUiState by viewModel.sharedFlow.collectAsStateWithLifecycle()
     viewModel.fetchData(args.id)
     when (arrTvUiState) {
@@ -83,7 +130,9 @@ internal fun ServiceDetailRoute(
             val item = (arrTvUiState as ServiceDetailUiState.Success).item
             receiptDetail(
                 item,
-                onBackClick
+                onBackClick,
+                { callingNewService = it },
+                { uuidUserCreator = it }
             )
         }
     }
@@ -96,8 +145,11 @@ internal fun ServiceDetailRoute(
 internal fun receiptDetail(
     item: ServiceDetailUiModel?,
     onBackClick: () -> Unit,
+    callingNewService: (Boolean) -> Unit,
+    uuidUserCreator: (String) -> Unit,
     viewModel: UserListViewModel = hiltViewModel()
 ) {
+
     val context = LocalContext.current
     val configuration = LocalConfiguration.current
 
@@ -148,9 +200,10 @@ internal fun receiptDetail(
                     ServiceDetailContent(item = item)
                     ArrudeiaButtonColor(
                         onClick = {
-                            viewModel.createFriendshipRegisterToFirebase(
-                                item?.uuidUserCreator.orEmpty()
-                            )
+                            callingNewService(true)
+                            uuidUserCreator(item?.uuidUserCreator.orEmpty())
+                            viewModel.checkHasIdentificationDoc()
+
                         },
                         modifier = Modifier
                             .align(Alignment.BottomCenter)
@@ -235,7 +288,8 @@ private fun buttonBottom(onBackClick: () -> Unit, modifier: Modifier) {
             },
             icon = Icons.Rounded.ArrowBack,
             backgroundColor = colorResource(id = background_grey_F7F7F9),
-            iconSize = 50.dp
+            iconSize = 50.dp,
+            modifier = Modifier
         )
     }
 }

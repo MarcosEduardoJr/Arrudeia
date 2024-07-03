@@ -18,4 +18,7 @@
     <string name="success_saved_user">Atualizado</string>
 
     <string name="logout">Sair</string>
+    <string name="document">Documento</string>
+    <string name="identification_document">Documento de identificação</string>
+    <string name="identification_document_to_use_services">É necessário documento de identificação para requisitar ou fornecer serviços</string>
 </resources>

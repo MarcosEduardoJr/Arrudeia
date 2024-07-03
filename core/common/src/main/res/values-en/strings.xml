@@ -1,6 +1,7 @@
 <resources>
     <string name="loading">Loading</string>
 
+
     <string name="zip_code">Zip Code</string>
     <string name="street">Street</string>
     <string name="number">Number</string>
@@ -11,4 +12,6 @@
 
 
     <string name="erro_message_list_travels">We are undergoing maintenance, please try again later.</string>
+    <string name="document_analisys_description">Register your document containing CPF (front and back), so you can register a service</string>
+    <string name="document_analisys_error">The photo of the document must be legible</string>
 </resources>

@@ -59,17 +59,17 @@ import com.arrudeia.core.designsystem.component.DropListUiModel
 import com.arrudeia.core.designsystem.component.TextFieldInput
 import com.arrudeia.core.designsystem.component.camera.ImageSelectionScreen
 import com.arrudeia.core.ui.address.ArrudeiaddressForm
+import com.arrudeia.feature.services.R.string.category
+import com.arrudeia.feature.services.R.string.description
+import com.arrudeia.feature.services.R.string.fill_correct_field
+import com.arrudeia.feature.services.R.string.photo
+import com.arrudeia.feature.services.R.string.title
 import com.arrudeia.feature.services.presentation.model.NewServiceUserUiModel
 import com.arrudeia.feature.services.presentation.viewmodel.NewServiceUiState
 import com.arrudeia.feature.services.presentation.viewmodel.NewServiceViewModel
 import com.arrudeia.feature.services.presentation.viewmodel.ServiceExpertiseUiState
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
-import com.arrudeia.feature.services.R.string.fill_correct_field
-import com.arrudeia.feature.services.R.string.title
-import com.arrudeia.feature.services.R.string.description
-import com.arrudeia.feature.services.R.string.category
-import com.arrudeia.feature.services.R.string.photo
 
 @Composable
 internal fun NewServiceRoute(
@@ -96,11 +96,14 @@ internal fun NewServiceRoute(
             DropListUiModel()
         )
     }
+
+
     var showCamera by rememberSaveable { mutableStateOf(false) }
 
     var saveForm by rememberSaveable { mutableStateOf(false) }
 
     val savedForm by viewModel.sharedFlow.collectAsStateWithLifecycle()
+
 
     when (savedForm) {
         is NewServiceUiState.Loading -> {
@@ -122,6 +125,9 @@ internal fun NewServiceRoute(
             onBackClick()
         }
     }
+
+
+
     if (listDrop.isEmpty())
         fetchData(viewModel, { listDrop = it }, { dropChoosed = it })
     else if (showCamera)
@@ -157,7 +163,7 @@ internal fun NewServiceRoute(
             dropChoosed = { dropChoosed = it }, listDrop, dropChoosed,
             { showCamera = it },
             { saveForm = it },
-            saveForm
+            saveForm,
         )
     }
 }
@@ -197,6 +203,8 @@ fun screenView(
 ) {
     val context = LocalContext.current
     var messageErrorForm by rememberSaveable { mutableStateOf("") }
+
+
     if (messageErrorForm.isNotEmpty())
         LaunchedEffect(true) {
             onShowSnackbar(messageErrorForm, "")
@@ -219,7 +227,8 @@ fun screenView(
                 },
                 icon = Icons.Rounded.ArrowBack,
                 backgroundColor = colorResource(id = R.color.background_grey_F7F7F9),
-                iconSize = 50.dp
+                iconSize = 50.dp,
+                modifier = Modifier
             )
         }
 
@@ -261,6 +270,7 @@ fun screenView(
             colorButton = colorResource(R.color.colorPrimary)
             textColorButton = Color.White
             clickButton = {
+
                 when (val result = validAddressForm(
                     zipCode,
                     street,
@@ -319,7 +329,7 @@ fun validAddressForm(
     return if (dropChoosed.id == -1) category
     else if (titleLabel.isEmpty()) title
     else if (descriptionLabel.isEmpty()) description
-    else if (listImagesSize==0) photo
+    else if (listImagesSize == 0) photo
     else if (zipCodeLabel.isEmpty()) R.string.zip_code
     else if (streetLabel.isEmpty()) R.string.street
     else if (numberLabel.isEmpty()) R.string.number

@@ -1,5 +1,6 @@
 package com.arrudeia.feature.arrudeia.presentation.model
 
+import android.graphics.Bitmap
 import com.arrudeia.feature.arrudeia.presentation.ui.CategoryOptions
 import com.arrudeia.feature.arrudeia.presentation.ui.SubCategoryOptions
 import com.google.android.gms.maps.model.LatLng
@@ -18,4 +19,5 @@ data class ArrudeiaPlaceDetailsUiModel(
     val priceLevel: Int?= 0,
     val comments: List<String>? = listOf(),
     val available: List<ArrudeiaAvailablePlaceUiModel>? = listOf(),
+    var imageBitmap: Bitmap?
 )

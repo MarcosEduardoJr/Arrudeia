@@ -41,11 +41,12 @@ fun NavGraphBuilder.screens(
     profileScreen(
         onBackClick = { navController.popBackStack() },
         onRouteClick = navController::navigateToRoute,
-        onShowSnackbar = onShowSnackbar
+        onShowSnackbar = onShowSnackbar,
     )
     arrudeiaScreen(
         onBackClick = { navController.popBackStack() },
-        onShowSnackbar = onShowSnackbar
+        onShowSnackbar = onShowSnackbar,
+        showBottomBar = showBottomBar
     )
     checkListScreen(
         onBackClick = { navController.popBackStack() }
@@ -71,10 +72,12 @@ fun NavGraphBuilder.screens(
         onChatClick = { navController.navigate(it) },
         onShowSnackbar = onShowSnackbar,
         onNewServiceNavigationClick = { navController.navigate(it) },
+        onProfilePersonalParamNavigationClick = { navController.navigate(it) }
     )
     newServiceScreen(
         onShowSnackbar = onShowSnackbar,
-        onBackClick = { navController.popBackStack() }
+        onBackClick = { navController.popBackStack() },
+        onProfilePersonalParamNavigationClick = { navController.navigate(it) }
     )
 }
 

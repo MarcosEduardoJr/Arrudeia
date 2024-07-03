@@ -5,6 +5,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.arrudeia.core.data.navigation.serviceRoute
 import com.arrudeia.core.designsystem.component.DropListUiModel
+import com.arrudeia.core.profile.param.ProfilePersonalParam
 import com.arrudeia.feature.services.presentation.navigation.param.ChatParam
 import com.arrudeia.feature.services.presentation.navigation.param.NewServiceParam
 import com.arrudeia.feature.services.presentation.navigation.param.ServiceDetailParam
@@ -20,6 +21,7 @@ fun NavGraphBuilder.servicesScreen(
     serviceDetailNavigationClick: (ServiceDetailParam) -> Unit,
     onChatClick: (ChatParam) -> Unit,
     onNewServiceNavigationClick: (NewServiceParam) -> Unit,
+    onProfilePersonalParamNavigationClick: (ProfilePersonalParam) -> Unit,
 ) {
 
     composable(route = serviceRoute) {
@@ -27,7 +29,8 @@ fun NavGraphBuilder.servicesScreen(
             onShowSnackbar = onShowSnackbar,
             serviceDetailNavigationClick = serviceDetailNavigationClick,
             onChatClick = onChatClick,
-            onNewServiceNavigationClick = onNewServiceNavigationClick
+            onNewServiceNavigationClick = onNewServiceNavigationClick,
+            onProfilePersonalParamNavigationClick = onProfilePersonalParamNavigationClick,
         )
     }
 }
@@ -35,13 +38,15 @@ fun NavGraphBuilder.servicesScreen(
 fun NavGraphBuilder.newServiceScreen(
     onBackClick: () -> Unit,
     onShowSnackbar: suspend (String, String?) -> Boolean,
+    onProfilePersonalParamNavigationClick: (ProfilePersonalParam) -> Unit,
 ) {
     composable<ServiceDetailParam> {
         val args = it.toRoute<ServiceDetailParam>()
         ServiceDetailRoute(
             onBackClick = onBackClick,
             onShowSnackbar = onShowSnackbar,
-            args = args
+            args = args,
+            onProfilePersonalParamNavigationClick = onProfilePersonalParamNavigationClick,
         )
     }
     composable<ChatParam> {

@@ -42,6 +42,7 @@ import com.arrudeia.core.designsystem.component.ArrudeiaLoadingWheel
 import com.arrudeia.core.designsystem.component.DropDown
 import com.arrudeia.core.designsystem.component.DropListUiModel
 import com.arrudeia.core.designsystem.component.TextSwitch
+import com.arrudeia.core.profile.param.ProfilePersonalParam
 import com.arrudeia.feature.services.R
 import com.arrudeia.feature.services.R.string.my_services
 import com.arrudeia.feature.services.R.string.request_a_service
@@ -55,6 +56,15 @@ import com.arrudeia.feature.services.presentation.viewmodel.ServiceExpertiseUiSt
 import com.arrudeia.feature.services.presentation.viewmodel.ServiceUiState
 import com.arrudeia.feature.services.presentation.viewmodel.ServiceViewModel
 import com.google.gson.Gson
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import okhttp3.internal.wait
+import java.util.Timer
+import kotlin.concurrent.schedule
 
 @Composable
 internal fun ServiceRoute(
@@ -62,15 +72,18 @@ internal fun ServiceRoute(
     serviceDetailNavigationClick: (ServiceDetailParam) -> Unit,
     onChatClick: (ChatParam) -> Unit,
     onNewServiceNavigationClick: (NewServiceParam) -> Unit,
+    onProfilePersonalParamNavigationClick: (ProfilePersonalParam) -> Unit,
 ) {
     Pager(
         serviceDetailNavigationClick,
         onChatClick = onChatClick,
         onShowSnackbar = onShowSnackbar,
-        onNewServiceNavigationClick = onNewServiceNavigationClick
+        onNewServiceNavigationClick = onNewServiceNavigationClick,
+        onProfilePersonalParamNavigationClick = onProfilePersonalParamNavigationClick
     )
 }
 
+@OptIn(DelicateCoroutinesApi::class)
 @Composable
 fun Pager(
     serviceDetailNavigationClick: (ServiceDetailParam) -> Unit,
@@ -78,6 +91,7 @@ fun Pager(
     onChatClick: (ChatParam) -> Unit,
     onShowSnackbar: suspend (String, String?) -> Boolean,
     onNewServiceNavigationClick: (NewServiceParam) -> Unit,
+    onProfilePersonalParamNavigationClick: (ProfilePersonalParam) -> Unit,
 ) {
     val pages = listOf(
         stringResource(id = service_oppotunities),
@@ -93,6 +107,40 @@ fun Pager(
             null
         )
     }
+
+    val hasSavedDocId by remember { mutableStateOf(viewModel.hasIdentificationDoc) }
+    val isLoading by remember { mutableStateOf(viewModel.isLoading) }
+    var callingNewService by remember { mutableStateOf(false) }
+    var openProfile by remember { mutableStateOf(false) }
+
+    val docErrorMsg = stringResource(id = R.string.do_you_need_fill_all_personal_information)
+
+    if (callingNewService) {
+        callingNewService = false
+        if (hasSavedDocId.value)
+            onNewServiceNavigationClick(NewServiceParam())
+        else {
+            LaunchedEffect(Unit) {
+                CoroutineScope(Dispatchers.IO).launch {
+                    onShowSnackbar(docErrorMsg, "")
+                    delay(300)
+                    openProfile = true
+                }
+            }
+        }
+    }
+
+    if (openProfile) {
+        openProfile = false
+        onProfilePersonalParamNavigationClick(ProfilePersonalParam())
+    }
+
+
+    if (isLoading.value)
+        ArrudeiaLoadingWheel(
+            modifier = Modifier
+        )
+
     LaunchedEffect(selectedTab) {
         pagerState.scrollToPage(selectedTab)
     }
@@ -136,7 +184,7 @@ fun Pager(
                                 if (listDrop.isNotEmpty() && listDrop[0].id != -1) {
                                     val dropComponentList = mutableListOf(
                                         DropListUiModel(
-                                            stringResource(id = R.string.select),
+                                            stringResource(id = R.string.category),
                                             Icons.Outlined.Build,
                                             -1
                                         )
@@ -189,7 +237,8 @@ fun Pager(
                 .padding(end = 16.dp, bottom = 16.dp),
             shape = CircleShape,
             onClick = {
-                onNewServiceNavigationClick(NewServiceParam())
+                callingNewService = true
+                viewModel.checkHasIdentificationDoc()
             },
             containerColor = colorResource(id = colorPrimary),
             contentColor = Color.White

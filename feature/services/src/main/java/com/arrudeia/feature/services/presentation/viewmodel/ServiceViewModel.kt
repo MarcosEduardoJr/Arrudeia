@@ -1,14 +1,17 @@
 package com.arrudeia.feature.services.presentation.viewmodel
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.arrudeia.core.designsystem.component.DropListUiModel
+import com.arrudeia.core.domain.IsSavedIdDocUserDataStoreUseCase
 import com.arrudeia.core.result.Result
 import com.arrudeia.feature.services.R.string.erro_message_list_travels
 import com.arrudeia.feature.services.domain.GetServicesExpertiseUseCase
 import com.arrudeia.feature.services.domain.GetServicesUseCase
 import com.arrudeia.feature.services.presentation.map.mapToUiModel
 import com.arrudeia.feature.services.presentation.map.toEntity
+import com.arrudeia.feature.services.presentation.model.CepAddressUiModel
 import com.arrudeia.feature.services.presentation.model.ServiceExpertiseUiModel
 import com.arrudeia.feature.services.presentation.model.ServiceUIModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,6 +25,7 @@ import javax.inject.Inject
 class ServiceViewModel @Inject constructor(
     private val useCase: GetServicesUseCase,
     private val useCaseExpertise: GetServicesExpertiseUseCase,
+    private val useCaseHasIdentificationDoc: IsSavedIdDocUserDataStoreUseCase,
 ) : ViewModel() {
 
     var uiState: MutableStateFlow<ServiceUiState> =
@@ -61,6 +65,7 @@ class ServiceViewModel @Inject constructor(
     }
 
     fun fetchDataExpertise() {
+        uiStateExpertise.value = ServiceExpertiseUiState.Loading
         viewModelScope.launch {
             when (val result = useCaseExpertise()) {
                 is Result.Success -> {
@@ -78,6 +83,24 @@ class ServiceViewModel @Inject constructor(
                     uiStateExpertise.value = ServiceExpertiseUiState.Loading
                 }
             }
+        }
+    }
+
+    var hasIdentificationDoc = mutableStateOf(false)
+        private set
+    var isLoading = mutableStateOf(false)
+        private set
+
+    private fun loadingRequest() {
+        isLoading.value = !isLoading.value
+    }
+
+    fun checkHasIdentificationDoc() {
+        loadingRequest()
+        viewModelScope.launch {
+            val result = useCaseHasIdentificationDoc()
+            hasIdentificationDoc.value = result
+            loadingRequest()
         }
     }
 }

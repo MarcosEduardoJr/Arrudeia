@@ -9,8 +9,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Dangerous
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
@@ -26,6 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.arrudeia.core.designsystem.R
+
 @Composable
 fun RectangleItemButton(icon: ImageVector, name: String, modifier: Modifier) {
 
@@ -33,7 +32,6 @@ fun RectangleItemButton(icon: ImageVector, name: String, modifier: Modifier) {
         Card(
             modifier = modifier,
             elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-            shape = RoundedCornerShape(50.dp)
         ) {
             Row(
                 modifier = Modifier
@@ -64,7 +62,7 @@ fun RectangleItemButton(icon: ImageVector, name: String, modifier: Modifier) {
                     )
                 }
                 Image(
-                        painter = painterResource(R.drawable.ic_arrow_down),
+                    painter = painterResource(R.drawable.ic_arrow_down),
                     contentDescription = null,
                     modifier = Modifier.padding(end = 2.dp),
                     colorFilter = ColorFilter.tint(colorResource(id = R.color.colorBlack))
@@ -73,3 +71,5 @@ fun RectangleItemButton(icon: ImageVector, name: String, modifier: Modifier) {
         }
     }
 }
+
+

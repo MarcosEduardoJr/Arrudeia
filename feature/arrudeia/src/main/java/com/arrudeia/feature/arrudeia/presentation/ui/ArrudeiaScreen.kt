@@ -7,11 +7,18 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Canvas
+import android.graphics.Paint
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
+import android.graphics.Rect
+import android.graphics.RectF
+import android.graphics.drawable.Drawable
 import android.location.Geocoder
 import android.net.Uri
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -42,6 +49,8 @@ import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.LocationOn
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
@@ -110,9 +119,11 @@ import com.arrudeia.feature.arrudeia.presentation.model.ArrudeiaSubCategoryPlace
 import com.arrudeia.feature.arrudeia.presentation.viewmodel.ArrudeiaViewModel
 import com.arrudeia.feature.arrudeia.presentation.viewmodel.LocationState
 import com.arrudeia.feature.arrudeia.presentation.viewmodel.SaveMarkerUiState
+import com.bumptech.glide.Glide
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
-import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.bumptech.glide.integration.compose.Transition
+import com.bumptech.glide.request.target.CustomTarget
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -129,6 +140,10 @@ import com.google.maps.android.compose.Polyline
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.maps.android.compose.rememberMarkerState
 import kotlinx.coroutines.launch
+import java.io.IOException
+import java.net.HttpURLConnection
+import java.net.URL
+
 
 @Composable
 fun arrudeiaRoute(
@@ -140,7 +155,7 @@ fun arrudeiaRoute(
     viewModel.getPlacesMarker()
     viewModel.fusedLocationClient =
         LocationServices.getFusedLocationProviderClient(context as Activity)
-    Places.initialize(context.applicationContext,BuildConfig.MAPS_API_KEY)
+    Places.initialize(context.applicationContext, BuildConfig.MAPS_API_KEY)
     viewModel.placesClient = Places.createClient(context)
     viewModel.geoCoder = Geocoder(context)
     viewModel.getCurrentLocation()
@@ -271,6 +286,8 @@ fun locationScreen(
                 val mapUiSettings by remember { mutableStateOf(MapUiSettings(zoomControlsEnabled = false)) }
                 val mapProperties by remember { mutableStateOf(MapProperties(isMyLocationEnabled = true)) }
                 val scope = rememberCoroutineScope()
+                var showMarkers by remember { mutableStateOf(true) }
+
 
                 LaunchedEffect(viewModel.currentLatLong) {
                     cameraPositionState.animate(CameraUpdateFactory.newLatLng(viewModel.currentLatLong))
@@ -310,31 +327,49 @@ fun locationScreen(
                             }
                         }
                     ) {
+
                         viewModel.places.forEach { place ->
                             place.location?.let {
-                                val bitmap = getBitmap(
-                                    getMarkerIcon(place.categoryName.name),
-                                    LocalContext.current
-                                )
+                                var image by remember {
+                                    mutableStateOf<Bitmap?>(null)
+                                }
+                                //    var bmp = if (place.image.isNotEmpty()) {
+                                if (place.imageBitmap == null) {
+                                    getBitmapFromUrl(context = context, place.image) { bitmap ->
+                                        place.imageBitmap = bitmap
+                                        image = place.imageBitmap
+                                    }
+                                } else {
+                                    image = place.imageBitmap
+                                }
+                                image?.let { img ->
+                                    Marker(
+                                        state = rememberMarkerState(
+                                            position = LatLng(
+                                                it.latitude,
+                                                it.longitude
+                                            )
+                                        ),
+                                        draggable = false,
+                                        title = place.name,
+                                        onClick = {
+                                            isPlaceClicked = place
+                                            false
+                                        },
+                                        icon = BitmapDescriptorFactory.fromBitmap(img)
+                                    )
 
-                                Marker(
-                                    state = rememberMarkerState(
-                                        position = LatLng(
-                                            it.latitude,
-                                            it.longitude
-                                        )
-                                    ),
-                                    draggable = false,
-                                    title = place.name,
-                                    onClick = {
-                                        isPlaceClicked = place
-                                        false
-                                    },
-                                    icon = BitmapDescriptorFactory.fromBitmap(bitmap!!)
-                                )
+                                }
+                                //      } else {
+                                //          getBitmap(
+                                //              getMarkerIcon(place.categoryName.name),
+                                //             LocalContext.current
+                                //       )
+                                //  }
+
                             }
-
                         }
+
                         if (isNavigationStarted) {
                             viewModel.currentLocation.value?.let {
                                 Marker(
@@ -421,7 +456,8 @@ fun locationScreen(
                             backgroundColor = colorResource(
                                 id = com.arrudeia.core.designsystem.R.color.background_grey_F7F7F9
                             ),
-                            iconSize = 50.dp
+                            iconSize = 50.dp,
+                            modifier = Modifier
                         )
 
 
@@ -460,11 +496,16 @@ private fun searchAddress(
     arrudeia: Boolean,
     openGoogleMapChange: (Boolean) -> Unit
 ) {
-    val color = colorResource(id = com.arrudeia.core.designsystem.R.color.background_grey_F7F7F9)
+    val color =
+        colorResource(id = com.arrudeia.core.designsystem.R.color.background_grey_F7F7F9)
     var addMarker by rememberSaveable { mutableStateOf(false) }
     var showCamera by rememberSaveable { mutableStateOf(false) }
     var categoryChose by rememberSaveable { mutableStateOf<ArrudeiaCategoryPlaceUiModel?>(null) }
-    var subCategoryChose by rememberSaveable { mutableStateOf<ArrudeiaSubCategoryPlaceUiModel?>(null) }
+    var subCategoryChose by rememberSaveable {
+        mutableStateOf<ArrudeiaSubCategoryPlaceUiModel?>(
+            null
+        )
+    }
     var description by rememberSaveable { mutableStateOf("") }
     var phone by rememberSaveable { mutableStateOf("") }
     var socialNetwork by rememberSaveable { mutableStateOf("") }
@@ -1036,13 +1077,17 @@ private fun formCategoriesDetail(
                 .wrapContentHeight(Alignment.CenterVertically),
             value = description,
             onValueChange = onDescriptionChange,
-            label = { Text(text = stringResource(R.string.description)) },
+            label = { Text(text = stringResource(R.string.description), color = Color.Black) },
             minLines = 2,
             maxLines = 6,
-            colors = TextFieldDefaults.textFieldColors(
-                containerColor = Color.White,
+            colors = TextFieldDefaults.colors(
+                focusedTextColor = Color.Black,
+                focusedContainerColor = Color.White,
+                unfocusedContainerColor = Color.White,
                 focusedIndicatorColor = Color.White,
-                unfocusedIndicatorColor = Color.White
+                unfocusedIndicatorColor = Color.White,
+                cursorColor = Color.Black,
+                unfocusedTextColor = Color.Black,
             ),
             shape = RoundedCornerShape(16.dp),
         )
@@ -1113,10 +1158,14 @@ private fun searchAddressInput(
                 tint = Color.Black
             )
         },
-        colors = TextFieldDefaults.textFieldColors(
-            containerColor = Color.White,
+        colors = TextFieldDefaults.colors(
+            focusedTextColor = Color.Black,
+            focusedContainerColor = Color.White,
+            unfocusedContainerColor = Color.White,
             focusedIndicatorColor = Color.White,
-            unfocusedIndicatorColor = Color.White
+            unfocusedIndicatorColor = Color.White,
+            cursorColor = Color.Black,
+            unfocusedTextColor = Color.Black,
         ),
         shape = RoundedCornerShape(25.dp),
     )
@@ -1327,4 +1376,48 @@ const val BITMAP_HEIGHT = 100
 private fun getBitmap(drawableRes: Int, context: Context): Bitmap? {
     val bitmapdraw = ContextCompat.getDrawable(context, drawableRes)
     return bitmapdraw?.toBitmap(BITMAP_WIDTH, BITMAP_HEIGHT)
+}
+
+fun getBitmapFromUrl(context: Context, url: String, callback: (Bitmap) -> Unit) {
+    Glide.with(context)
+        .asBitmap()
+        .load(url)
+        .into(object : CustomTarget<Bitmap>() {
+            override fun onResourceReady(
+                resource: Bitmap,
+                transition: com.bumptech.glide.request.transition.Transition<in Bitmap>?
+            ) {
+                callback(resizeBitmap(getRoundedBitmap(resource), BITMAP_WIDTH, BITMAP_HEIGHT))
+            }
+
+            override fun onLoadCleared(placeholder: Drawable?) {
+                // Handle cleanup here if necessary
+            }
+        })
+}
+
+
+fun resizeBitmap(source: Bitmap, width: Int, height: Int): Bitmap {
+    return Bitmap.createScaledBitmap(source, width, height, false)
+}
+
+fun getRoundedBitmap(bitmap: Bitmap): Bitmap {
+    val output = Bitmap.createBitmap(bitmap.width, bitmap.height, Bitmap.Config.ARGB_8888)
+    val canvas = Canvas(output)
+
+    val paint = Paint()
+    val rect = Rect(0, 0, bitmap.width, bitmap.height)
+
+    val rectF = RectF(rect)
+    val roundPx = bitmap.width.coerceAtMost(bitmap.height) / 2.0f
+
+    paint.isAntiAlias = true
+    canvas.drawARGB(0, 0, 0, 0)
+    paint.color = com.arrudeia.core.designsystem.R.color.colorPrimary
+    canvas.drawRoundRect(rectF, roundPx, roundPx, paint)
+
+    paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
+    canvas.drawBitmap(bitmap, rect, rect, paint)
+
+    return output
 }

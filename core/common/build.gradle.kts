@@ -4,6 +4,8 @@ plugins {
     kotlin("kapt")
     id("kotlin-android")
    id("com.google.dagger.hilt.android")
+    alias(libs.plugins.kotlin.serialization)
+
 }
 
 android {
@@ -63,8 +65,10 @@ dependencies {
     implementation(libs.androidx.dataStore.preferences)
 
     implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.firestore)
     implementation(libs.firebase.auth)
+    implementation(libs.firebase.storage)
+    implementation(libs.firebase.database)
+    implementation(libs.firebase.firestore)
 
     implementation(libs.kotlinx.coroutines.test)
 
@@ -90,6 +94,10 @@ dependencies {
     implementation(libs.androidx.media3.exoplayer)
     implementation(libs.androidx.media3.ui)
 
+    implementation(libs.accompanist.drawablepainter)
+
+    implementation("com.google.android.gms:play-services-mlkit-text-recognition:19.0.0")
+    implementation(libs.glide.compose)
     implementation(libs.junit4)
     testImplementation(libs.junit4)
     androidTestImplementation(libs.androidx.junit)

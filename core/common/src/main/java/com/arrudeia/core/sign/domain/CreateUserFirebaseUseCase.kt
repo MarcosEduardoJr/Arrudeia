@@ -1,8 +1,8 @@
-package com.arrudeia.feature.sign.domain
+package com.arrudeia.core.sign.domain
 
-import com.arrudeia.feature.sign.data.SignFirebaseUserRepositoryImpl
+import com.arrudeia.core.sign.data.SignFirebaseUserRepositoryImpl
 import com.arrudeia.feature.sign.data.entity.SignFirebaseUserRepositoryEntity
-import com.arrudeia.feature.sign.domain.entity.SignFirebaseUserUseCaseEntity
+import com.arrudeia.core.sign.domain.entity.SignFirebaseUserUseCaseEntity
 import javax.inject.Inject
 
 class CreateUserFirebaseUseCase @Inject constructor(

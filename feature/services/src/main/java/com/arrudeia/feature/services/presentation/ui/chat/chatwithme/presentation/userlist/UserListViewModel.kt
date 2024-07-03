@@ -3,6 +3,7 @@ package com.arrudeia.feature.services.presentation.ui.chat.chatwithme.presentati
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.arrudeia.core.domain.IsSavedIdDocUserDataStoreUseCase
 import com.arrudeia.core.result.Result
 import com.arrudeia.feature.services.domain.GetUserPersonalInformationUseCase
 import com.arrudeia.feature.services.domain.entity.UserPersonalInformationUseCaseEntity
@@ -20,8 +21,9 @@ import javax.inject.Inject
 @HiltViewModel
 class UserListViewModel @Inject constructor(
     private val userListScreenUseCases: UserListScreenUseCases,
-    private val userUseCase: GetUserPersonalInformationUseCase
-) : ViewModel() {
+    private val useCaseHasIdentificationDoc: IsSavedIdDocUserDataStoreUseCase,
+
+    ) : ViewModel() {
     var pendingFriendRequestList = mutableStateOf<List<FriendListRegister>>(listOf())
         private set
 
@@ -47,31 +49,9 @@ class UserListViewModel @Inject constructor(
         }
     }
 
-    fun fetchServiceUser(uuidUser: String) {
-        viewModelScope.launch {
-            when (val response = userUseCase(uuidUser)) {
-                is Result.Loading -> {
-                    toastMessage.value = ""
-                }
 
-                is Result.Success -> {
-                    if (response.data != null) {
-                        currentUser.value = response.data
-                        checkChatRoomExistFromFirebaseAndCreateIfNot(
-                            currentUser.value?.email.orEmpty(),
-                            currentUser.value?.uuid.orEmpty(),
-                        )
-                    }
-                }
 
-                is Result.Error -> {}
-            }
-        }
-    }
 
-    fun createFriendshipRegisterToFirebase(uuidUser : String ) {
-        fetchServiceUser(uuidUser)
-    }
 
     fun acceptPendingFriendRequestToFirebase(registerUUID: String) {
         viewModelScope.launch {
@@ -144,144 +124,21 @@ class UserListViewModel @Inject constructor(
          }
     }
 
-    private suspend fun checkChatRoomExistFromFirebaseAndCreateIfNot(
-        acceptorEmail: String,
-        acceptorUUID: String,
-    ) {
+    var hasIdentificationDoc = mutableStateOf(false)
+        private set
+    var isLoading = mutableStateOf(false)
+        private set
 
-            userListScreenUseCases.checkChatRoomExistedFromFirebase.invoke(acceptorUUID)
-                .collect { response ->
-                    when (response) {
-                        is Response.Loading -> {}
-                        is Response.Success -> {
-                            if (response.data == Constants.NO_CHATROOM_IN_FIREBASE_DATABASE) {
-                                createChatRoomToFirebase(
-                                    acceptorEmail,
-                                    acceptorUUID,
-                                )
-                            } else {
-                                checkFriendListRegisterIsExistFromFirebase(
-                                    response.data,
-                                    acceptorEmail,
-                                    acceptorUUID,
-                                )
-                            }
-                        }
-
-                        is Response.Error -> {
-                            toastMessage.value = "Tente novamente mais tarde!"
-                        }
-                    }
-
-        }
+    private fun loadingRequest() {
+        isLoading.value = !isLoading.value
     }
 
-    private fun createChatRoomToFirebase(
-        acceptorEmail: String,
-        acceptorUUID: String,
-    ) {
+    fun checkHasIdentificationDoc() {
+        loadingRequest()
         viewModelScope.launch {
-            userListScreenUseCases.createChatRoomToFirebase.invoke(acceptorUUID)
-                .collect { response ->
-                    when (response) {
-                        is Response.Loading -> {}
-                        is Response.Success -> {
-                            //Chat Room Created.
-                            checkFriendListRegisterIsExistFromFirebase(
-                                response.data,
-                                acceptorEmail,
-                                acceptorUUID,
-                            )
-                        }
-
-                        is Response.Error -> {}
-                    }
-                }
-        }
-    }
-
-    private fun checkFriendListRegisterIsExistFromFirebase(
-        chatRoomUUID: String,
-        acceptorEmail: String,
-        acceptorUUID: String,
-    ) {
-        viewModelScope.launch {
-            userListScreenUseCases.checkFriendListRegisterIsExistedFromFirebase.invoke(
-                acceptorEmail,
-                acceptorUUID
-            ).collect { response ->
-                when (response) {
-                    is Response.Loading -> {
-                        toastMessage.value = ""
-                    }
-
-                    is Response.Success -> {
-                        if (response.data.equals(FriendListRegister())) {
-                            toastMessage.value = "Friend Request Sent."
-                            createFriendListRegisterToFirebase(
-                                chatRoomUUID,
-                                acceptorEmail,
-                                acceptorUUID,
-                            )
-                        } else if (response.data.status.equals(FriendStatus.PENDING.toString())) {
-                            toastMessage.value = "Already Have Friend Request"
-                        } else if (response.data.status.equals(FriendStatus.ACCEPTED.toString())) {
-                            toastMessage.value = "You Are Already Friend."
-                        } else if (response.data.status.equals(FriendStatus.BLOCKED.toString())) {
-                            openBlockedFriendToFirebase(response.data.registerUUID)
-                        }
-                    }
-
-                    is Response.Error -> {}
-                }
-            }
-        }
-    }
-
-    private fun createFriendListRegisterToFirebase(
-        chatRoomUUID: String,
-        acceptorEmail: String,
-        acceptorUUID: String,
-    ) {
-        viewModelScope.launch {
-            userListScreenUseCases.createFriendListRegisterToFirebase.invoke(
-                chatRoomUUID,
-                acceptorEmail,
-                acceptorUUID,
-            ).collect { response ->
-                when (response) {
-                    is Response.Loading -> {}
-                    is Response.Success -> {
-                    }
-
-                    is Response.Error -> {}
-                }
-
-            }
-        }
-    }
-
-    private fun openBlockedFriendToFirebase(registerUUID: String) {
-        viewModelScope.launch {
-            userListScreenUseCases.openBlockedFriendToFirebase.invoke(registerUUID)
-                .collect { response ->
-                    when (response) {
-                        is Response.Loading -> {
-                            toastMessage.value = ""
-                        }
-
-                        is Response.Success -> {
-                            if (response.data) {
-                                toastMessage.value = "User Block Opened And Accept As Friend"
-                            } else {
-                                toastMessage.value = "You Are Blocked by User"
-                            }
-
-                        }
-
-                        is Response.Error -> {}
-                    }
-                }
+            val result = useCaseHasIdentificationDoc()
+            hasIdentificationDoc.value = result
+            loadingRequest()
         }
     }
 }

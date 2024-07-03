@@ -74,8 +74,11 @@ multidex = "2.0.1"
 apolloplugin = "2.3.1"
 junitVersion = "1.1.5"
 media3 = "1.0.0-beta02"
+composeUidAndroid = "1.6.4"
+accompanistDrawablepainterVersion = "0.20.0"
 
 [libraries]
+accompanist-drawablepainter = { group = "com.google.accompanist", name = "accompanist-drawablepainter", version.ref = "accompanistDrawablepainterVersion" }
 mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockitoKotlin" }
 coreTesting = { group = "androidx.arch.core", name = "core-testing", version.ref = "coreTesting" }
 truth = { group = "com.google.truth", name = "truth", version.ref = "truth" }
@@ -115,6 +118,7 @@ androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-compose-ui-util = { group = "androidx.compose.ui", name = "ui-util" }
 androidx-compose-ui = { group = "androidx.compose.ui", name = "ui" }
+androidx-compose-ui-android = { group = "androidx.compose.ui", name = "ui-android" , version.ref = "composeUidAndroid"}
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidxCore" }
 androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "androidxCoreSplashscreen" }
 androidx-dataStore-core = { group = "androidx.datastore", name = "datastore", version.ref = "androidxDataStore" }

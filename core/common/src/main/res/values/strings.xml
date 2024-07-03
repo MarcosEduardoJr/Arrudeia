@@ -13,4 +13,10 @@
 
 
     <string name="erro_message_list_travels">Estamos em manutenção, tente novamente mais tarde.</string>
+    <string name="document_analisys_description">Cadastre seu documento contendo CPF (frente e verso), para que possa cadastrar um serviço</string>
+    <string name="document_analisys_error">A foto do documento precisa ser legivel</string>
+
+    <string name="error_request">Estamos em manutenção, tente novamente mais tarde.</string>
+    <string name="identification_document">Documento de identificação</string>
+    <string name="error_try_again_later">Um erro ocorreu, tente novamente mais tarde!</string>
 </resources>

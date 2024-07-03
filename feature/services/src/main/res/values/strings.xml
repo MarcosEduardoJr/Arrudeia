@@ -66,5 +66,7 @@
 
     <string name="photo">Foto</string>
     <string name="title">Título</string>
+    <string name="do_you_need_fill_all_personal_information">Voce precisa preencher todas informações pessoais para pedir um serviço</string>
+    <string name="do_you_need_fill_all_personal_information_try_do_job">Voce precisa preencher todas informações pessoais para fornecer um serviço</string>
 
 </resources>

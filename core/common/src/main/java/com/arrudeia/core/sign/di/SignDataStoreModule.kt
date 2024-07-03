@@ -1,9 +1,9 @@
-package com.arrudeia.feature.sign.di
+package com.arrudeia.core.sign.di
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import com.arrudeia.feature.sign.data.SignDataStoreUserRepository
-import com.arrudeia.feature.sign.data.SignDataStoreUserRepositoryImpl
+import com.arrudeia.core.sign.data.SignDataStoreUserRepository
+import com.arrudeia.core.sign.data.SignDataStoreUserRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -81,7 +81,8 @@ fun navigation(
                 },
                 icon = Icons.Rounded.ArrowBack,
                 backgroundColor = colorResource(id = R.color.background_grey_F7F7F9),
-                iconSize = 60.dp
+                iconSize = 60.dp,
+                modifier = Modifier
             )
             Spacer(modifier = Modifier.size(10.dp))
             CircularIconButton(
@@ -91,7 +92,8 @@ fun navigation(
                 },
                 icon = Icons.Rounded.ArrowForward,
                 backgroundColor = colorResource(id = R.color.background_grey_F7F7F9),
-                iconSize = 60.dp
+                iconSize = 60.dp,
+                modifier = Modifier
             )
         }
 

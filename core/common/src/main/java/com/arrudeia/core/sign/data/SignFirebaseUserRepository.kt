@@ -1,4 +1,4 @@
-package com.arrudeia.feature.sign.data
+package com.arrudeia.core.sign.data
 
 import com.arrudeia.feature.sign.data.entity.SignFirebaseUserRepositoryEntity
 

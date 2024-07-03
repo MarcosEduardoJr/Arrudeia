@@ -193,7 +193,7 @@ class ArrudeiaViewModel @Inject constructor(
                                 rating = item.rating,
                                 socialNetwork = item.socialNetwork.orEmpty(),
                                 subCategoryName = SubCategoryOptions.valueOf(item.subCategoryName.orEmpty()),
-                                uuid = item.uuid.orEmpty()
+                                uuid = item.uuid.orEmpty(), imageBitmap =  null
                             )
                         )
                     }
@@ -261,7 +261,7 @@ class ArrudeiaViewModel @Inject constructor(
                             categoryName = CategoryOptions.valueOf(categoryName),
                             subCategoryName = SubCategoryOptions.valueOf(subCategoryName),
                             location = target,
-                            available = availables
+                            available = availables, imageBitmap = null
                         )
                     )
                     saveMarkerUiState.value = SaveMarkerUiState.Success(

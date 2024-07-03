@@ -24,7 +24,7 @@ fun arrudeiaNavHost(
     ) {
         screens(navController, onShowSnackbar,showBottomBar)
         homeGraph(navController, onShowSnackbar)
-        profileGraph(navController, onShowSnackbar)
+        profileGraph(navController, onShowSnackbar, showBottomBar)
     }
 }
 
