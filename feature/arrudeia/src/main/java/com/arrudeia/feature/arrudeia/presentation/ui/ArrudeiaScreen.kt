@@ -7,7 +7,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.PorterDuff
@@ -21,6 +20,7 @@ import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -32,6 +32,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -49,13 +50,10 @@ import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.LocationOn
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -122,7 +120,6 @@ import com.arrudeia.feature.arrudeia.presentation.viewmodel.SaveMarkerUiState
 import com.bumptech.glide.Glide
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
-import com.bumptech.glide.integration.compose.Transition
 import com.bumptech.glide.request.target.CustomTarget
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -140,9 +137,6 @@ import com.google.maps.android.compose.Polyline
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.maps.android.compose.rememberMarkerState
 import kotlinx.coroutines.launch
-import java.io.IOException
-import java.net.HttpURLConnection
-import java.net.URL
 
 
 @Composable
@@ -413,6 +407,8 @@ fun locationScreen(
                         openGoogleMap = false
                     }
 
+                    var addMarker by rememberSaveable { mutableStateOf(false) }
+
                     if (isPlaceClicked != null) {
                         placeDetailScreen(
                             modifier = Modifier
@@ -439,29 +435,32 @@ fun locationScreen(
                             isNavigationStarted,
                             arrudeiaChange = { arrudeia = it },
                             arrudeia,
-                            { openGoogleMap = it }
+                            { openGoogleMap = it },
+                            addMarker,
+                            { addMarker = it }
                         )
                     }
-                    Box(
-                        modifier = Modifier
-                            .align(Alignment.TopStart)
-                            .padding(16.dp)
-                    ) {
-
-                        CircularIconButton(
-                            onClick = {
-                                onBackClick()
-                            },
-                            icon = Icons.Rounded.ArrowBack,
-                            backgroundColor = colorResource(
-                                id = com.arrudeia.core.designsystem.R.color.background_grey_F7F7F9
-                            ),
-                            iconSize = 50.dp,
+                    if (!addMarker)
+                        Box(
                             modifier = Modifier
-                        )
+                                .align(Alignment.TopStart)
+                                .padding(16.dp)
+                        ) {
+
+                            CircularIconButton(
+                                onClick = {
+                                    onBackClick()
+                                },
+                                icon = Icons.Rounded.ArrowBack,
+                                backgroundColor = colorResource(
+                                    id = com.arrudeia.core.designsystem.R.color.background_grey_F7F7F9
+                                ),
+                                iconSize = 50.dp,
+                                modifier = Modifier
+                            )
 
 
-                    }
+                        }
                 }
             }
         }
@@ -494,14 +493,16 @@ private fun searchAddress(
     isNavigationStarted: Boolean,
     arrudeiaChange: (Boolean) -> Unit,
     arrudeia: Boolean,
-    openGoogleMapChange: (Boolean) -> Unit
+    openGoogleMapChange: (Boolean) -> Unit,
+    addMarker: Boolean,
+    addMarkerChange: (Boolean) -> Unit,
 ) {
     val color =
         colorResource(id = com.arrudeia.core.designsystem.R.color.background_grey_F7F7F9)
-    var addMarker by rememberSaveable { mutableStateOf(false) }
+
     var showCamera by rememberSaveable { mutableStateOf(false) }
-    var categoryChose by rememberSaveable { mutableStateOf<ArrudeiaCategoryPlaceUiModel?>(null) }
-    var subCategoryChose by rememberSaveable {
+    var categoryChose by remember { mutableStateOf<ArrudeiaCategoryPlaceUiModel?>(null) }
+    var subCategoryChose by remember {
         mutableStateOf<ArrudeiaSubCategoryPlaceUiModel?>(
             null
         )
@@ -524,7 +525,7 @@ private fun searchAddress(
             if (addMarker) {
                 addMarkerBottomSheet(
                     {
-                        addMarker = false
+                        addMarkerChange(false)
                         viewModel.onTakePhoto(null)
                     },
                     viewModel,
@@ -544,141 +545,142 @@ private fun searchAddress(
                     cameraPositionState,
                     onShowSnackbar
                 )
-            }
-
-            val titleAddNewPlace = stringResource(id = R.string.add_new_place)
-            ExtendedFloatingActionButton(
-                text = { Text(text = titleAddNewPlace) },
-                icon = { Icon(Icons.Rounded.AddLocationAlt, null) },
-                modifier = Modifier
-                    .align(Alignment.End)
-                    .padding(end = 16.dp, bottom = 16.dp),
-                shape = CircleShape,
-                onClick = {
-                    categoryChose = null
-                    subCategoryChose = null
-                    description = ""
-                    phone = ""
-                    socialNetwork = ""
-                    name = ""
-                    addMarker = true
-                },
-                containerColor = colorResource(id = com.arrudeia.core.designsystem.R.color.colorPrimary),
-                contentColor = Color.White
-            )
-
-
-            Box(
-                modifier = Modifier
-                    .background(
-                        color,
-                        shape = RoundedCornerShape(16.dp)
-                    )
-            ) {
-
-                Column(
+            } else {
+                val titleAddNewPlace = stringResource(id = R.string.add_new_place)
+                ExtendedFloatingActionButton(
+                    text = { Text(text = titleAddNewPlace) },
+                    icon = { Icon(Icons.Rounded.AddLocationAlt, null) },
                     modifier = Modifier
-                        .padding(16.dp)
-                        .heightIn(100.dp, 400.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    val context = LocalContext.current
-                    val keyboardController = LocalSoftwareKeyboardController.current
-                    var focusInSearchAddress by remember { mutableStateOf(false) }
-                    val fusedLocationClient = LocationServices.getFusedLocationProviderClient(
-                        context
-                    )
+                        .align(Alignment.End)
+                        .padding(end = 16.dp, bottom = 16.dp),
+                    shape = CircleShape,
+                    onClick = {
+                        categoryChose = null
+                        subCategoryChose = null
+                        description = ""
+                        phone = ""
+                        socialNetwork = ""
+                        name = ""
+                        addMarkerChange(true)
+                    },
+                    containerColor = colorResource(id = com.arrudeia.core.designsystem.R.color.colorPrimary),
+                    contentColor = Color.White
+                )
 
-                    if (focusInSearchAddress) {
-                        Text(
-                            modifier = Modifier
-                                .padding(16.dp)
-                                .align(Alignment.End)
-                                .clickable { focusInSearchAddress = false },
-                            text = stringResource(R.string.down),
-                            color = colorResource(id = com.arrudeia.core.designsystem.R.color.text_grey)
+
+                Box(
+                    modifier = Modifier
+                        .background(
+                            color,
+                            shape = RoundedCornerShape(16.dp)
                         )
-                    } else {
-                        keyboardController?.hide()
-                    }
+                ) {
 
+                    Column(
+                        modifier = Modifier
+                            .padding(16.dp)
+                            .heightIn(100.dp, 400.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        val context = LocalContext.current
+                        val keyboardController = LocalSoftwareKeyboardController.current
+                        var focusInSearchAddress by remember { mutableStateOf(false) }
+                        val fusedLocationClient = LocationServices.getFusedLocationProviderClient(
+                            context
+                        )
 
-                    searchAddressInput(
-                        Modifier
-                            .fillMaxWidth()
-                            .wrapContentHeight(Alignment.CenterVertically)
-                            .clip(CircleShape)
-                            .onFocusChanged {
-                                focusInSearchAddress = it.isFocused
-                            },
-                        viewModel, arrudeiaChange = { arrudeiaChange(it) },
-                    )
-                    if (!arrudeia)
-                        resultSearchAddress(
-                            focusInSearchAddress,
-                            viewModel,
-                            arrudeiaChange = { arrudeiaChange(it) },
-                            focusInSearchAddressChange = { focusInSearchAddress = it })
-
-
-                    if (isNavigationStarted) {
-
-                        ArrudeiaButtonColor(
-                            onClick = {
-                                isNavigationStartedChange(false)
-                            },
-                            modifier = Modifier
-                                .padding(start = 16.dp, end = 16.dp, top = 10.dp)
-                                .fillMaxWidth(),
-                            colorButton = colorResource(com.arrudeia.core.designsystem.R.color.text_grey),
-                        ) {
-
+                        if (focusInSearchAddress) {
                             Text(
-                                text = stringResource(R.string.back),
-                                style = MaterialTheme.typography.titleMedium,
-                                color = Color.White
+                                modifier = Modifier
+                                    .padding(16.dp)
+                                    .align(Alignment.End)
+                                    .clickable { focusInSearchAddress = false },
+                                text = stringResource(R.string.down),
+                                color = colorResource(id = com.arrudeia.core.designsystem.R.color.text_grey)
                             )
+                        } else {
+                            keyboardController?.hide()
                         }
-                    }
 
 
-                    if (arrudeia) {
-                        ArrudeiaButtonColor(
-                            onClick = {
-                                if (!isNavigationStarted)
-                                    arrudeia(
-                                        context,
-                                        fusedLocationClient,
-                                        viewModel,
-                                        cameraPositionState,
-                                        isNavigationStartedChange
-                                    )
-                                else
-                                    openGoogleMapChange(true)
+                        searchAddressInput(
+                            Modifier
+                                .fillMaxWidth()
+                                .wrapContentHeight(Alignment.CenterVertically)
+                                .clip(CircleShape)
+                                .onFocusChanged {
+                                    focusInSearchAddress = it.isFocused
+                                },
+                            viewModel, arrudeiaChange = { arrudeiaChange(it) },
+                        )
+                        if (!arrudeia)
+                            resultSearchAddress(
+                                focusInSearchAddress,
+                                viewModel,
+                                arrudeiaChange = { arrudeiaChange(it) },
+                                focusInSearchAddressChange = { focusInSearchAddress = it })
 
-                            },
-                            modifier = Modifier
-                                .padding(16.dp)
-                                .fillMaxWidth(),
-                            colorButton = colorResource(com.arrudeia.core.designsystem.R.color.colorPrimary),
-                        ) {
-                            Icon(
-                                painterResource(id = com.arrudeia.core.designsystem.R.drawable.ic_navigation_up),
-                                contentDescription = null,
-                                tint = Color.White
-                            )
-                            val textButton =
-                                if (isNavigationStarted) stringResource(id = R.string.navigate) else stringResource(
-                                    id = R.string.arrudeia
+
+                        if (isNavigationStarted) {
+
+                            ArrudeiaButtonColor(
+                                onClick = {
+                                    isNavigationStartedChange(false)
+                                },
+                                modifier = Modifier
+                                    .padding(start = 16.dp, end = 16.dp, top = 10.dp)
+                                    .fillMaxWidth(),
+                                colorButton = colorResource(com.arrudeia.core.designsystem.R.color.text_grey),
+                            ) {
+
+                                Text(
+                                    text = stringResource(R.string.back),
+                                    style = MaterialTheme.typography.titleMedium,
+                                    color = Color.White
                                 )
-                            Text(
-                                text = textButton,
-                                style = MaterialTheme.typography.titleMedium,
-                                color = Color.White
-                            )
+                            }
+                        }
+
+
+                        if (arrudeia) {
+                            ArrudeiaButtonColor(
+                                onClick = {
+                                    if (!isNavigationStarted)
+                                        arrudeia(
+                                            context,
+                                            fusedLocationClient,
+                                            viewModel,
+                                            cameraPositionState,
+                                            isNavigationStartedChange
+                                        )
+                                    else
+                                        openGoogleMapChange(true)
+
+                                },
+                                modifier = Modifier
+                                    .padding(16.dp)
+                                    .fillMaxWidth(),
+                                colorButton = colorResource(com.arrudeia.core.designsystem.R.color.colorPrimary),
+                            ) {
+                                Icon(
+                                    painterResource(id = com.arrudeia.core.designsystem.R.drawable.ic_navigation_up),
+                                    contentDescription = null,
+                                    tint = Color.White
+                                )
+                                val textButton =
+                                    if (isNavigationStarted) stringResource(id = R.string.navigate) else stringResource(
+                                        id = R.string.arrudeia
+                                    )
+                                Text(
+                                    text = textButton,
+                                    style = MaterialTheme.typography.titleMedium,
+                                    color = Color.White
+                                )
+                            }
                         }
                     }
                 }
+
             }
 
         }
@@ -754,10 +756,12 @@ fun addMarkerBottomSheet(
     val sheetState = rememberModalBottomSheetState()
     val saveMarkerSharedFlow by viewModel.saveMarkerSharedFlow.collectAsStateWithLifecycle()
     var saving by rememberSaveable { mutableStateOf(false) }
-    ModalBottomSheet(
-        containerColor = colorResource(id = com.arrudeia.core.designsystem.R.color.background_grey_F7F7F9),
-        onDismissRequest = onDismissRequest,
-        sheetState = sheetState
+    var priceLevel by rememberSaveable { mutableStateOf(1) }
+    var rating by rememberSaveable { mutableStateOf(1) }
+    Column(
+        modifier = Modifier.background(colorResource(id = com.arrudeia.core.designsystem.R.color.background_grey_F7F7F9)),
+        //  onDismissRequest = onDismissRequest,
+        //  sheetState = sheetState
     ) {
 
         if (saving)
@@ -797,24 +801,38 @@ fun addMarkerBottomSheet(
                 id = R.string.category_of_place
             ) else stringResource(id = R.string.type_of_place)
 
-        Box(modifier = Modifier.fillMaxWidth()) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 30.dp)
+        ) {
             if (categoryPlace != null && subCategoryPlace != null) {
-                sheetState
+
                 TextButton(
                     modifier = Modifier
                         .padding(end = 16.dp)
                         .align(Alignment.CenterStart),
                     onClick = {
                         if (!saving)
-                            viewModel.savePlace(
-                                name.orEmpty(),
-                                phone.orEmpty(),
-                                socialNetwork.orEmpty(),
-                                description.orEmpty(),
-                                categoryPlace.category.name,
-                                subCategoryPlace.category.name,
-                                cameraPositionState.position.target
-                            )
+                            viewModel.getCityStateCountry(
+                                context,
+                                viewModel
+                            ) { city, state, country ->
+                                viewModel.savePlace(
+                                    name.orEmpty(),
+                                    phone.orEmpty(),
+                                    socialNetwork.orEmpty(),
+                                    description.orEmpty(),
+                                    categoryPlace.category.name,
+                                    subCategoryPlace.category.name,
+                                    cameraPositionState.position.target,
+                                    city.orEmpty(),
+                                    state.orEmpty(),
+                                    country.orEmpty(),
+                                    priceLevel,
+                                    rating
+                                )
+                            }
                         saving = true
                     },
                 ) {
@@ -823,11 +841,7 @@ fun addMarkerBottomSheet(
                         color = colorResource(id = com.arrudeia.core.designsystem.R.color.colorPrimary)
                     )
                 }
-                LaunchedEffect(Unit) {
-                    scope.launch {
-                        sheetState.expand()
-                    }
-                }
+
             }
 
             Text(
@@ -882,6 +896,8 @@ fun addMarkerBottomSheet(
                             socialNetwork.orEmpty(),
                             onDescriptionChange = onDescriptionChange,
                             description.orEmpty(),
+                            priceLevelChange = { priceLevel = it },
+                            ratingChange = { rating = it }
                         )
                     }
                 }
@@ -998,23 +1014,23 @@ private fun formCategoriesDetail(
     socialNetwork: String,
     onDescriptionChange: (String) -> Unit,
     description: String,
+    priceLevelChange: (Int) -> Unit,
+    ratingChange: (Int) -> Unit,
 ) {
     val availableChoose = viewModel.availables
     val context = LocalContext.current
 
     Column(modifier = Modifier.padding(16.dp)) {
 
-
         Spacer(modifier = Modifier.size(10.dp))
-
-
         TextFieldInput(
             hint = stringResource(id = R.string.name),
-            name,
-            icon = painterResource(id = com.arrudeia.core.designsystem.R.drawable.ic_pin),
+            value = name,
+            icon = painterResource(id = ic_pin),
             onValueChange = onNameChange,
-            KeyboardType.Text,
-            ImeAction.Next
+            keyboardType = KeyboardType.Text,
+            imeAction = ImeAction.Next,
+            modifier = Modifier.focusable(false),
         )
 
 
@@ -1074,6 +1090,7 @@ private fun formCategoriesDetail(
         TextField(
             modifier = Modifier
                 .fillMaxWidth()
+                .imePadding()
                 .wrapContentHeight(Alignment.CenterVertically),
             value = description,
             onValueChange = onDescriptionChange,
@@ -1092,6 +1109,11 @@ private fun formCategoriesDetail(
             shape = RoundedCornerShape(16.dp),
         )
     }
+    Spacer(modifier = Modifier.size(10.dp))
+    PriceRangePriceLevelSlider(onValueChange = priceLevelChange)
+    Spacer(modifier = Modifier.size(10.dp))
+    RatingRangeSlider(onValueChange = ratingChange)
+    Spacer(modifier = Modifier.size(10.dp))
     LazyVerticalGrid(
         modifier = Modifier
             .fillMaxWidth(),

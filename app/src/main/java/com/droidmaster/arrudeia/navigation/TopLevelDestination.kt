@@ -3,23 +3,24 @@ package com.droidmaster.arrudeia.navigation
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Build
 import androidx.compose.material.icons.rounded.Cookie
+import androidx.compose.material.icons.rounded.DirectionsRun
+import androidx.compose.material.icons.rounded.Hiking
 import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.MedicalServices
 import androidx.compose.material.icons.rounded.NoteAlt
-import androidx.compose.material.icons.rounded.Person
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.arrudeia.core.data.navigation.aidRoute
 import com.arrudeia.core.data.navigation.checkListRoute
 import com.arrudeia.core.data.navigation.homeRoute
-import com.arrudeia.core.data.navigation.profileRoute
 import com.arrudeia.core.data.navigation.receiptRoute
+import com.arrudeia.core.data.navigation.runOverviewRoute
 import com.arrudeia.core.data.navigation.serviceRoute
 import com.arrudeia.feature.aid.R.string.aid
 import com.arrudeia.feature.checklist.R.string.checklist
 import com.arrudeia.feature.home.R.string.title_home
-import com.arrudeia.feature.profile.R.string.profile
 import com.arrudeia.feature.receipt.R.string.receipt
 import com.arrudeia.feature.services.R.string.services
+import com.arrudeia.feature.trail.R.string.trail
 
 enum class TopLevelDestination(
     val selectedIcon: ImageVector,
@@ -42,6 +43,13 @@ enum class TopLevelDestination(
         titleTextId = services,
         route = serviceRoute,
     ),
+    TRAIL(
+        selectedIcon = Icons.Rounded.Hiking,
+        unselectedIcon = Icons.Rounded.Hiking,
+        iconTextId = trail,
+        titleTextId = trail,
+        route = runOverviewRoute,
+    ),
     RECEIPT(
         selectedIcon = Icons.Rounded.Cookie,
         unselectedIcon = Icons.Rounded.Cookie,
@@ -62,13 +70,6 @@ enum class TopLevelDestination(
         iconTextId = checklist,
         titleTextId = checklist,
         route = checkListRoute,
-    ),
-    PROFILE(
-        selectedIcon = Icons.Rounded.Person,
-        unselectedIcon = Icons.Rounded.Person,
-        iconTextId = profile,
-        titleTextId = profile,
-        route = profileRoute,
     ),
 
 }

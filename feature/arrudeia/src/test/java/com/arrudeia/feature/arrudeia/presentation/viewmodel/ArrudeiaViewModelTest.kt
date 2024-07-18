@@ -1,9 +1,8 @@
-import android.net.Uri
 import com.arrudeia.core.test.ViewModelTest
 import com.arrudeia.feature.arrudeia.R
-import com.arrudeia.feature.arrudeia.domain.GetAllArrudeiaPlacesUseCase
+import com.arrudeia.core.places.domain.GetAllArrudeiaPlacesUseCase
 import com.arrudeia.feature.arrudeia.domain.SaveArrudeiaPlaceUseCase
-import com.arrudeia.feature.arrudeia.domain.entity.ArrudeiaPlaceDetailsUseCaseEntity
+import com.arrudeia.core.places.domain.entity.ArrudeiaPlaceDetailsUseCaseEntity
 import com.arrudeia.feature.arrudeia.presentation.model.ArrudeiaAvailablePlaceUiModel
 import com.arrudeia.feature.arrudeia.presentation.ui.AvailableOptions
 import com.arrudeia.feature.arrudeia.presentation.ui.CategoryOptions
@@ -20,7 +19,6 @@ import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
-import kotlinx.coroutines.test.advanceUntilIdle
 import com.arrudeia.core.result.Result
 
 @ExperimentalCoroutinesApi

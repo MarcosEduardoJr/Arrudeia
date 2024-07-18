@@ -158,6 +158,7 @@ dependencies {
     implementation(project(":feature:receipt"))
     implementation(project(":feature:aid"))
     implementation(project(":feature:services"))
+    implementation(project(":feature:trail"))
 }
 
 apply(plugin = "com.google.gms.google-services")

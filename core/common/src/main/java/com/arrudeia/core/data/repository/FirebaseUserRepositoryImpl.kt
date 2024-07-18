@@ -12,7 +12,6 @@ import kotlin.coroutines.resume
 
 class FirebaseUserRepositoryImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
-    private val database: FirebaseDatabase,
 ) : FirebaseUserRepository {
 
 

@@ -21,6 +21,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.arrudeia.core.designsystem.R.color.background_grey_F7F7F9
+import com.arrudeia.core.designsystem.component.util.MaskVisualTransformation
 
 @Composable
 fun TextFieldInput(
@@ -31,10 +32,12 @@ fun TextFieldInput(
     keyboardType: KeyboardType,
     imeAction: ImeAction,
     enabled: Boolean = true,
+    modifier: Modifier = Modifier,
+    mask: String = ""
 ) {
 
     TextField(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .wrapContentHeight(Alignment.CenterVertically)
             .clip(CircleShape),
@@ -64,6 +67,7 @@ fun TextFieldInput(
         shape = RoundedCornerShape(25.dp),
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType, imeAction = imeAction),
         enabled = enabled,
+        visualTransformation = MaskVisualTransformation(mask)
     )
 }
 

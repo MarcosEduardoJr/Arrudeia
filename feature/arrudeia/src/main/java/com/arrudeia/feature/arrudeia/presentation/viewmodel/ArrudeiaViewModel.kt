@@ -1,7 +1,9 @@
 package com.arrudeia.feature.arrudeia.presentation.viewmodel
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.location.Geocoder
+import android.location.Location
 import android.net.Uri
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
@@ -13,9 +15,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.arrudeia.core.common.BuildConfig
 import com.arrudeia.core.result.Result
-import com.arrudeia.feature.arrudeia.domain.GetAllArrudeiaPlacesUseCase
+import com.arrudeia.core.places.domain.GetAllArrudeiaPlacesUseCase
 import com.arrudeia.feature.arrudeia.domain.SaveArrudeiaPlaceUseCase
-import com.arrudeia.feature.arrudeia.domain.entity.ArrudeiaPlaceDetailsUseCaseEntity
+import com.arrudeia.core.places.domain.entity.ArrudeiaPlaceDetailsUseCaseEntity
 import com.arrudeia.feature.arrudeia.presentation.mock.categoriesPlace
 import com.arrudeia.feature.arrudeia.presentation.model.ArrudeiaAvailablePlaceUiModel
 import com.arrudeia.feature.arrudeia.presentation.model.ArrudeiaCategoryPlaceUiModel
@@ -26,6 +28,7 @@ import com.arrudeia.feature.arrudeia.presentation.ui.SubCategoryOptions
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.Priority
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.tasks.Task
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.net.FetchPlaceRequest
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
@@ -152,56 +155,55 @@ class ArrudeiaViewModel @Inject constructor(
 
     fun getPlacesMarker() {
         viewModelScope.launch {
-           when(val result =   getAllArrudeiaPlacesUseCase())
-           {
-               is Result.Success -> {
-                   result.data.toEntity()?.map {
-                       places.add(it)
-                   }
-               }
-               else ->{}
-           }
+            when (val result = getAllArrudeiaPlacesUseCase("")) {
+                is Result.Success -> {
+                    result.data.toEntity()?.map {
+                        places.add(it)
+                    }
+                }
+
+                else -> {}
+            }
         }
     }
 
     private fun List<ArrudeiaPlaceDetailsUseCaseEntity>?.toEntity():
             MutableList<ArrudeiaPlaceDetailsUiModel>? = if (this == null) null
-        else {
-            val list = mutableListOf<ArrudeiaPlaceDetailsUiModel>()
-            this.let { place ->
-                place.forEach { item ->
-                    item.let {
-                        val listAvaliable = mutableListOf<ArrudeiaAvailablePlaceUiModel>()
-                        item.available?.forEach { itemAvaliable ->
-                            listAvaliable.add(
-                                ArrudeiaAvailablePlaceUiModel(
-                                    AvailableOptions.valueOf(itemAvaliable.name)
-                                )
-                            )
-                        }
-
-                        list.add(
-                            ArrudeiaPlaceDetailsUiModel(
-                                available = listAvaliable,
-                                categoryName = CategoryOptions.valueOf(item.categoryName.orEmpty()),
-                                description = item.description.orEmpty(),
-                                image = item.image.orEmpty(),
-                                location = it.location,
-                                name = item.name.orEmpty(),
-                                phone = item.phone.orEmpty(),
-                                priceLevel = item.priceLevel,
-                                rating = item.rating,
-                                socialNetwork = item.socialNetwork.orEmpty(),
-                                subCategoryName = SubCategoryOptions.valueOf(item.subCategoryName.orEmpty()),
-                                uuid = item.uuid.orEmpty(), imageBitmap =  null
+    else {
+        val list = mutableListOf<ArrudeiaPlaceDetailsUiModel>()
+        this.let { place ->
+            place.forEach { item ->
+                item.let {
+                    val listAvaliable = mutableListOf<ArrudeiaAvailablePlaceUiModel>()
+                    item.available?.forEach { itemAvaliable ->
+                        listAvaliable.add(
+                            ArrudeiaAvailablePlaceUiModel(
+                                AvailableOptions.valueOf(itemAvaliable.name)
                             )
                         )
                     }
+
+                    list.add(
+                        ArrudeiaPlaceDetailsUiModel(
+                            available = listAvaliable,
+                            categoryName = CategoryOptions.valueOf(item.categoryName.orEmpty()),
+                            description = item.description.orEmpty(),
+                            image = item.image.orEmpty(),
+                            location = it.location,
+                            name = item.name.orEmpty(),
+                            phone = item.phone.orEmpty(),
+                            priceLevel = item.priceLevel,
+                            rating = item.rating,
+                            socialNetwork = item.socialNetwork.orEmpty(),
+                            subCategoryName = SubCategoryOptions.valueOf(item.subCategoryName.orEmpty()),
+                            uuid = item.uuid.orEmpty(), imageBitmap = null
+                        )
+                    )
                 }
             }
-            list
         }
-
+        list
+    }
 
 
     fun addPlace(place: ArrudeiaPlaceDetailsUiModel) {
@@ -227,6 +229,31 @@ class ArrudeiaViewModel @Inject constructor(
         _availables.remove(available)
     }
 
+    fun getCityStateCountry(
+        context: Context,
+        viewModel: ArrudeiaViewModel,
+        callback: (String?, String?, String?) -> Unit
+    ) {
+
+        val locationTask: Task<Location> = viewModel.fusedLocationClient.lastLocation
+        locationTask.addOnSuccessListener { location: Location? ->
+            location?.let {
+                val geocoder = Geocoder(context)
+                val addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1)
+                if (addresses?.isNotEmpty() == true) {
+                    val cityName = addresses[0].subAdminArea.orEmpty()
+                    val state = addresses[0].adminArea.orEmpty()
+                    val country = addresses[0].countryCode.orEmpty()
+                    callback(cityName, state, country)
+                } else {
+                    callback(null, null, null)
+                }
+            } ?: callback(null, null, null)
+        }.addOnFailureListener {
+            callback(null, null, null)
+        }
+    }
+
     fun savePlace(
         name: String,
         phone: String,
@@ -234,8 +261,15 @@ class ArrudeiaViewModel @Inject constructor(
         description: String,
         categoryName: String,
         subCategoryName: String,
-        target: LatLng
+        target: LatLng,
+        city: String,
+        state: String,
+        country: String,
+        priceLevel: Int,
+        rating: Int
     ) {
+
+
         saveMarkerUiState.value = SaveMarkerUiState.Loading
         viewModelScope.launch {
             val result = saveArrudeiaPlaceUseCase(
@@ -247,10 +281,15 @@ class ArrudeiaViewModel @Inject constructor(
                 availables,
                 categoryName,
                 subCategoryName,
-                location = target
+                location = target,
+                city = city,
+                state = state,
+                country = country,
+                priceLevel = priceLevel,
+                rating = rating
             )
 
-            when(result){
+            when (result) {
                 is Result.Success -> {
                     addPlace(
                         ArrudeiaPlaceDetailsUiModel(
@@ -268,9 +307,11 @@ class ArrudeiaViewModel @Inject constructor(
                         true
                     )
                 }
-                else ->{
+
+                else -> {
                     saveMarkerUiState.value = SaveMarkerUiState.Error(
-                    com.arrudeia.feature.arrudeia.R.string.not_possible_save)
+                        com.arrudeia.feature.arrudeia.R.string.not_possible_save
+                    )
                 }
             }
         }

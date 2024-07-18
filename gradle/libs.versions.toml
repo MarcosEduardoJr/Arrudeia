@@ -53,7 +53,7 @@ retrofit = "2.9.0"
 retrofitKotlinxSerializationJson = "1.0.0"
 robolectric = "4.10.3"
 roborazzi = "1.5.0-alpha-2"
-room = "2.5.2"
+room = "2.6.1"
 secrets = "2.0.1"
 turbine = "0.12.1"
 glideVer = "1.0.0-beta01"
@@ -75,9 +75,27 @@ apolloplugin = "2.3.1"
 junitVersion = "1.1.5"
 media3 = "1.0.0-beta02"
 composeUidAndroid = "1.6.4"
-accompanistDrawablepainterVersion = "0.20.0"
+maps = "4.3.3"
+ktor = "2.3.11"
+ktorClientLogging = "2.3.8"
+ktorServerCallLogging = "2.3.7"
+work = "2.9.0"
 
+#wear
+accompanistDrawablepainterVersion = "0.20.0"
+playServicesWearable = "18.2.0"
+composeMaterial = "1.0.0-alpha23"
+composeFoundation = "1.2.1"
+tiles = "1.1.0"
+tilesMaterial = "1.1.0"
+horologistComposeTools = "0.4.8"
+horologistTiles = "0.4.8"
+watchfaceComplicationsDataSourceKtx = "1.1.1"
+wear = "1.3.0"
+health = "1.0.0-rc02"
+composeRuntimendroid = "1.7.0-beta05"
 [libraries]
+google-maps-android-compose = { module = "com.google.maps.android:maps-compose", version.ref = "maps" }
 accompanist-drawablepainter = { group = "com.google.accompanist", name = "accompanist-drawablepainter", version.ref = "accompanistDrawablepainterVersion" }
 mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockitoKotlin" }
 coreTesting = { group = "androidx.arch.core", name = "core-testing", version.ref = "coreTesting" }
@@ -110,6 +128,7 @@ androidx-compose-material3 = { group = "androidx.compose.material3", name = "mat
 androidx-compose-material3old = { group = "androidx.compose.material3:material3", name = "material3old" }
 androidx-compose-material3-windowSizeClass = { group = "androidx.compose.material3", name = "material3-window-size-class" }
 androidx-compose-runtime = { group = "androidx.compose.runtime", name = "runtime" }
+androidx-compose-runtime-android = { group = "androidx.compose.runtime", name = "runtime-android" , version.ref = "composeRuntimendroid" }
 androidx-compose-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata" }
 androidx-compose-runtime-tracing = { group = "androidx.compose.runtime", name = "runtime-tracing", version.ref = "androidxComposeRuntimeTracing" }
 androidx-compose-ui-test = { group = "androidx.compose.ui", name = "ui-test-junit4" }
@@ -203,6 +222,27 @@ androidx-media3-exoplayer = { group = "androidx.media3", name = "media3-exoplaye
 androidx-media3-ui = { group = "androidx.media3", name = "media3-ui", version.ref = "media3" }
 androidyoutubeplayer = { group = "com.pierfrancescosoffritti.androidyoutubeplayer", name = "chromecast-sender", version = "0.28" }
 
+play-services-wearable = { group = "com.google.android.gms", name = "play-services-wearable", version.ref = "playServicesWearable" }
+androidx-wear-compose-material = { group = "androidx.wear.compose", name = "compose-material3", version.ref = "composeMaterial" }
+compose-wear-foundation = { group = "androidx.wear.compose", name = "compose-foundation", version.ref = "composeFoundation" }
+androidx-wear-tiles = { group = "androidx.wear.tiles", name = "tiles", version.ref = "tiles" }
+androidx-wear-tiles-material = { group = "androidx.wear.tiles", name = "tiles-material", version.ref = "tilesMaterial" }
+horologist-compose-tools = { group = "com.google.android.horologist", name = "horologist-compose-tools", version.ref = "horologistComposeTools" }
+horologist-tiles = { group = "com.google.android.horologist", name = "horologist-tiles", version.ref = "horologistTiles" }
+androidx-wear-watchface-complications-data-source-ktx = { group = "androidx.wear.watchface", name = "watchface-complications-data-source-ktx", version.ref = "watchfaceComplicationsDataSourceKtx" }
+androidx-health-services-client = { group = "androidx.health", name = "health-services-client", version.ref = "health" }
+androidx-wear = { group = "androidx.wear", name = "wear", version.ref = "wear" }
+
+ktor-client-auth = { module = "io.ktor:ktor-client-auth", version.ref = "ktor" }
+ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktorClientLogging" }
+ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+
+androidx-work = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "work" }
+
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
@@ -219,3 +259,13 @@ roborazzi = { id = "io.github.takahirom.roborazzi", version.ref = "roborazzi" }
 secrets = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "secrets" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detektVer" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+
+[bundles]
+ktor = [
+    "ktor-client-auth",
+    "ktor-client-cio",
+    "ktor-client-content-negotiation",
+    "ktor-client-core",
+    "ktor-client-logging",
+    "ktor-serialization-kotlinx-json"
+]

@@ -7,6 +7,7 @@ import com.arrudeia.feature.aid.presentation.navigation.aidScreen
 import com.arrudeia.feature.arrudeia.presentation.navigation.arrudeiaScreen
 import com.arrudeia.feature.checklist.presentation.navigation.checkListScreen
 import com.arrudeia.feature.home.presentation.navigation.homeScreen
+import com.arrudeia.feature.home.presentation.navigation.placeDetailScreen
 import com.arrudeia.feature.onboarding.presentation.navigation.onboardingScreen
 import com.arrudeia.feature.profile.presentation.navigation.profileScreen
 import com.arrudeia.feature.receipt.presentation.navigation.receiptDetailScreen
@@ -16,6 +17,8 @@ import com.arrudeia.feature.services.presentation.navigation.servicesScreen
 import com.arrudeia.feature.sign.presentation.navigation.signScreen
 import com.arrudeia.feature.stories.presentation.navigation.navigateToStories
 import com.arrudeia.feature.trip.presentation.navigation.navigateToTripDetail
+import com.droidmaster.arrudeia.activeRunScreen
+import com.droidmaster.arrudeia.runOverviewScreen
 
 fun NavGraphBuilder.screens(
     navController: NavHostController,
@@ -36,7 +39,9 @@ fun NavGraphBuilder.screens(
         onStoriesClick = navController::navigateToStories,
         onTripDetailClick = navController::navigateToTripDetail,
         onShowSnackbar = onShowSnackbar,
-        showBottomBar = showBottomBar
+        showBottomBar = showBottomBar,
+        onNewPlaceClick  = navController::navigateToRoute,
+        onPlaceDetailsClick = { navController.navigate(it) }
     )
     profileScreen(
         onBackClick = { navController.popBackStack() },
@@ -78,6 +83,15 @@ fun NavGraphBuilder.screens(
         onShowSnackbar = onShowSnackbar,
         onBackClick = { navController.popBackStack() },
         onProfilePersonalParamNavigationClick = { navController.navigate(it) }
+    )
+    runOverviewScreen(
+        onActiveRunClick = navController::navigateToRoute,
+    )
+    activeRunScreen(
+        onBackClick = { navController.popBackStack() },
+    )
+    placeDetailScreen(
+        onBackClick = { navController.popBackStack() },
     )
 }
 

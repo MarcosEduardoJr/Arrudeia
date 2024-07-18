@@ -66,7 +66,8 @@ fun ArrudeiaddressForm(
 
             },
             KeyboardType.Number,
-            ImeAction.Next
+            ImeAction.Next,
+            mask =  "##.###-###"
         )
         Spacer(modifier = Modifier.size(4.dp))
         TextFieldInput(

@@ -18,6 +18,8 @@ const val aidDetailRoute = "aid_detailt_route"
 
 
 const val serviceRoute = "service_route"
+const val runOverviewRoute = "run_overview_route"
+const val activeRunRoute = "active_run"
 
 
 const val arrudeiaRoute = "arrudeia_route"

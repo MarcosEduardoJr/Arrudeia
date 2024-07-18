@@ -57,11 +57,6 @@ fun TextSwitch(
 
     BoxWithConstraints(
         modifier
-            .padding(8.dp)
-            .height(56.dp)
-            .clip(RoundedCornerShape(50.dp))
-            .background(Color.White)
-            .padding(8.dp)
     ) {
         if (items.isNotEmpty()) {
 

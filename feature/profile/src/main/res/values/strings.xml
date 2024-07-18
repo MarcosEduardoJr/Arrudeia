@@ -21,4 +21,5 @@
     <string name="document">Documento</string>
     <string name="identification_document">Documento de identificação</string>
     <string name="identification_document_to_use_services">É necessário documento de identificação para requisitar ou fornecer serviços</string>
+    <string name="cpf">Cpf</string>
 </resources>

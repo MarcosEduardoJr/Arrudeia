@@ -7,11 +7,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Build
 import androidx.compose.material.icons.rounded.Add
@@ -29,6 +31,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
@@ -85,7 +88,7 @@ internal fun ServiceRoute(
 
 @OptIn(DelicateCoroutinesApi::class)
 @Composable
-fun Pager(
+private fun Pager(
     serviceDetailNavigationClick: (ServiceDetailParam) -> Unit,
     viewModel: ServiceViewModel = hiltViewModel(),
     onChatClick: (ChatParam) -> Unit,
@@ -163,6 +166,11 @@ fun Pager(
             Spacer(modifier = Modifier.size(10.dp))
 
             TextSwitch(
+                modifier = Modifier.padding(8.dp)
+                    .height(56.dp)
+                    .clip(RoundedCornerShape(50.dp))
+                    .background(Color.White)
+                    .padding(8.dp),
                 selectedIndex = selectedTab,
                 items = pages,
                 onSelectionChange = {

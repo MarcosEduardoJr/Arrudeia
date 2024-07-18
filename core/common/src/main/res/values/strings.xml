@@ -19,4 +19,6 @@
     <string name="error_request">Estamos em manutenção, tente novamente mais tarde.</string>
     <string name="identification_document">Documento de identificação</string>
     <string name="error_try_again_later">Um erro ocorreu, tente novamente mais tarde!</string>
+
+    <string name="active_run">Active Run</string>
 </resources>

@@ -25,10 +25,13 @@ type ArrudeiaPlace {
     name: String
     phone: String
     priceLevel: Int
-    rating: Float
+    rating: Int
     socialNetwork: String
     subCategoryName: String
     uuid: String
+    city: String
+    state: String
+    country: String
 }
 
 
@@ -138,7 +141,7 @@ type Query {
 
     user(uuid: String!): UserGraph
 
-    arrudeiaPlaces: [ArrudeiaPlace]
+    arrudeiaPlaces(state: String!): [ArrudeiaPlace]
     arrudeiaPlace(uuid: String!): ArrudeiaPlace
     arrudeiaAvailablePlace(placeId: String!): ArrudeiaAvailablePlaceGraph
 
@@ -218,10 +221,13 @@ type Mutation {
         name: String,
         phone: String,
         priceLevel: Int,
-        rating: Float,
+        rating: Int,
         socialNetwork: String,
         subCategoryName: String,
-        uuid: String
+        uuid: String,
+        city: String,
+        state: String,
+        country: String
     ) : String
 
     createArrudeiaAvailablePlace(

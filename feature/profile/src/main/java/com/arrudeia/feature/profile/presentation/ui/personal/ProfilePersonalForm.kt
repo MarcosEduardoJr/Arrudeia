@@ -26,6 +26,7 @@ import com.arrudeia.core.designsystem.component.RectangleCircleBorderItemButton
 import com.arrudeia.core.designsystem.component.TextFieldInput
 import com.arrudeia.core.ui.document.DocumentAnalisys
 import com.arrudeia.feature.profile.R
+import com.arrudeia.feature.profile.R.string.cpf
 
 @Composable
 fun form(
@@ -66,12 +67,13 @@ fun form(
         Spacer(modifier = Modifier.size(4.dp))
 
         TextFieldInput(
-            hint = stringResource(id = R.string.document_id),
+            hint = stringResource(id = R.string.cpf),
             docId,
             icon = painterResource(id = ic_document),
             onValueChange = onDocIdChange,
             KeyboardType.Phone,
-            ImeAction.Next
+            ImeAction.Next,
+            mask = "###.###.###-##"
         )
         Spacer(modifier = Modifier.size(4.dp))
 
@@ -91,7 +93,8 @@ fun form(
             icon = painterResource(id = ic_smartphone),
             onValueChange = onPhoneChange,
             KeyboardType.Phone,
-            ImeAction.Next
+            ImeAction.Next,
+            mask = "(##) #####-####"
         )
         Spacer(modifier = Modifier.size(4.dp))
 
@@ -101,7 +104,8 @@ fun form(
             icon = painterResource(id = ic_calendar_event),
             onValueChange = onBirthDateChange,
             KeyboardType.Number,
-            ImeAction.Done
+            ImeAction.Done,
+            mask = "##/##/####"
         )
 
     }

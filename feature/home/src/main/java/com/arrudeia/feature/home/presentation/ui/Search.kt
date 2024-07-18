@@ -15,6 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.arrudeia.feature.home.R
 import com.arrudeia.core.designsystem.R.color.text_grey
+import com.arrudeia.feature.home.R.string.search
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -23,7 +24,7 @@ fun search(modifier: Modifier, searchTravel: String, onSearchTravelChange: (Stri
         modifier = modifier,
         value = searchTravel,
         onValueChange = onSearchTravelChange,
-        label = { Text(text = stringResource(R.string.destiny),color = colorResource(id = text_grey)) },
+        label = { Text(text = stringResource( search),color = colorResource(id = text_grey)) },
         singleLine = true,
         leadingIcon = {
             Icon(
