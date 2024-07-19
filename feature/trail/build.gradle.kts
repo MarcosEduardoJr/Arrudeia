@@ -127,7 +127,7 @@ dependencies {
     implementation(libs.places)
 
     implementation(libs.androidx.compose.runtime.android)
-    implementation(libs.android.desugarJdkLibs)
+    coreLibraryDesugaring(libs.android.desugarJdkLibs)
 }
 
 
