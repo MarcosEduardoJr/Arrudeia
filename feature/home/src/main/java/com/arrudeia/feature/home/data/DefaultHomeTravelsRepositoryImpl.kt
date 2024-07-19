@@ -1,8 +1,10 @@
 package com.arrudeia.feature.home.data
 
 import com.arrudeia.feature.home.data.entity.ArrudeiaTvRepositoryEntity
+import com.arrudeia.feature.home.data.entity.StateRepositoryEntity
 import com.arrudeia.feature.home.data.entity.TravelRepositoryEntity
 import com.google.firebase.firestore.FirebaseFirestore
+import io.mockk.InternalPlatformDsl.toArray
 import kotlinx.coroutines.suspendCancellableCoroutine
 import javax.inject.Inject
 import kotlin.coroutines.resume
@@ -47,9 +49,38 @@ class DefaultHomeTravelsRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getStates(country: String): List<StateRepositoryEntity> {
+        val list = mutableListOf<StateRepositoryEntity>()
+        return suspendCancellableCoroutine { continuation ->
+            db.collection(HOME_COUNTRY).get()
+                .addOnSuccessListener { snapshot ->
+                    snapshot.forEach { doc ->
+                        if (doc.id == country) {
+                            if (doc.data["states"] is List<*>) {
+                                (doc.data["states"] as List<*>).forEach { item ->
+                                    if (item is Map<*, *>) {
+                                        val state = StateRepositoryEntity(
+                                            name = item["name"] as? String ?: ""
+
+                                        )
+                                        list.add(state)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    continuation.resume(list)
+                }
+                .addOnFailureListener { exception ->
+                    continuation.resume(listOf())
+                }
+        }
+    }
+
     companion object {
         const val HOME_TRAVELS = "home_travels"
         const val HOME_ARRUDEIA_TV = "home_arrudeia_tv"
+        const val HOME_COUNTRY = "country"
     }
 }
 

@@ -4,6 +4,9 @@
 
 import android.R
 import androidx.annotation.StringRes
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.MoreVert
+import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -18,7 +21,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.arrudeia.core.designsystem.icon.ArrudeiaIcons
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -93,9 +95,9 @@ fun ArrudeiaTopAppBar(
 private fun ArrudeiaTopAppBarPreview() {
     ArrudeiaTopAppBar(
         titleRes = R.string.untitled,
-        navigationIcon = ArrudeiaIcons.Search,
+        navigationIcon = Icons.Rounded.Search,
         navigationIconContentDescription = "Navigation icon",
-        actionIcon = ArrudeiaIcons.MoreVert,
+        actionIcon = Icons.Rounded.MoreVert,
         actionIconContentDescription = "Action icon",
     )
 }

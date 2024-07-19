@@ -11,56 +11,48 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
-import com.arrudeia.core.designsystem.theme.ArrudeiaTypography
-import com.arrudeia.core.designsystem.theme.BackgroundTheme
-import com.arrudeia.core.designsystem.theme.GradientColors
-import com.arrudeia.core.designsystem.theme.LocalBackgroundTheme
-import com.arrudeia.core.designsystem.theme.LocalGradientColors
-import com.arrudeia.core.designsystem.theme.LocalTintTheme
-import com.arrudeia.core.designsystem.theme.PrimaryColor
-import com.arrudeia.core.designsystem.theme.TintTheme
 
 /**
  * Light default theme color scheme
  */
 @VisibleForTesting
 val LightDefaultColorScheme = lightColorScheme(
-    primary = PrimaryColor ,
-    onPrimary = PrimaryColor,
-    primaryContainer = PrimaryColor,
-    onPrimaryContainer = PrimaryColor,
-    secondary = PrimaryColor,
+    primary = BackgroundColorGreyF7F7F9 ,
+    onPrimary = BackgroundColorGreyF7F7F9,
+    primaryContainer = BackgroundColorGreyF7F7F9,
+    onPrimaryContainer = BackgroundColorGreyF7F7F9,
+    secondary = BackgroundColorGreyF7F7F9,
     onSecondary = Color.White,
-    secondaryContainer = PrimaryColor,
-    onSecondaryContainer = PrimaryColor,
-    tertiary = PrimaryColor,
+    secondaryContainer = BackgroundColorGreyF7F7F9,
+    onSecondaryContainer = BackgroundColorGreyF7F7F9,
+    tertiary = BackgroundColorGreyF7F7F9,
     onTertiary = Color.White,
-    tertiaryContainer = PrimaryColor,
-    onTertiaryContainer = PrimaryColor,
-    error = PrimaryColor,
+    tertiaryContainer = BackgroundColorGreyF7F7F9,
+    onTertiaryContainer = BackgroundColorGreyF7F7F9,
+    error = BackgroundColorGreyF7F7F9,
     onError = Color.White,
-    errorContainer = PrimaryColor,
-    onErrorContainer = PrimaryColor,
-    background = PrimaryColor,
-    onBackground = PrimaryColor,
-    surface = PrimaryColor,
-    onSurface = PrimaryColor,
-    surfaceVariant = PrimaryColor,
-    onSurfaceVariant = PrimaryColor,
-    inverseSurface = PrimaryColor,
-    inverseOnSurface = PrimaryColor,
-    outline = PrimaryColor,
+    errorContainer = BackgroundColorGreyF7F7F9,
+    onErrorContainer = BackgroundColorGreyF7F7F9,
+    background = BackgroundColorGreyF7F7F9,
+    onBackground = BackgroundColorGreyF7F7F9,
+    surface = BackgroundColorGreyF7F7F9,
+    onSurface = BackgroundColorGreyF7F7F9,
+    surfaceVariant = BackgroundColorGreyF7F7F9,
+    onSurfaceVariant = BackgroundColorGreyF7F7F9,
+    inverseSurface = BackgroundColorGreyF7F7F9,
+    inverseOnSurface = BackgroundColorGreyF7F7F9,
+    outline = BackgroundColorGreyF7F7F9,
 )
 
 /**
  * Light Android gradient colors
  */
-val LightAndroidGradientColors = GradientColors(container = PrimaryColor)
+val LightAndroidGradientColors = GradientColors(container = BackgroundColorGreyF7F7F9)
 
 /**
  * Light Android background theme
  */
-val LightAndroidBackgroundTheme = BackgroundTheme(color = PrimaryColor)
+val LightAndroidBackgroundTheme = BackgroundTheme(color = BackgroundColorGreyF7F7F9)
 
 
 
@@ -75,7 +67,7 @@ public fun ArrudeiaTheme(
     val gradientColors = LightAndroidGradientColors
 
     val backgroundTheme = LightAndroidBackgroundTheme
-    val tintTheme = TintTheme(colorScheme.primary)
+    val tintTheme = TintTheme(BackgroundColorGreyF7F7F9)
     // Composition locals
     CompositionLocalProvider(
         LocalGradientColors provides gradientColors,

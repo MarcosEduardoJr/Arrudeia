@@ -3,13 +3,14 @@ package com.arrudeia.feature.profile.presentation.navigation
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.arrudeia.feature.profile.presentation.ui.address.profileAddressRoute
-import com.arrudeia.feature.profile.presentation.ui.personal.profilePersonalInformationRoute
-import com.arrudeia.feature.profile.presentation.ui.profile.profileRoute
 import com.arrudeia.core.data.navigation.PROFILE_GRAPH_ROUTE_PATTERN
 import com.arrudeia.core.data.navigation.profileAddressRoute
 import com.arrudeia.core.data.navigation.profilePersonalInformationRoute
 import com.arrudeia.core.data.navigation.profileRoute
+import com.arrudeia.core.profile.param.ProfilePersonalParam
+import com.arrudeia.feature.profile.presentation.ui.address.profileAddressRoute
+import com.arrudeia.feature.profile.presentation.ui.personal.profilePersonalInformationRoute
+import com.arrudeia.feature.profile.presentation.ui.profile.profileRoute
 
 fun NavGraphBuilder.profileScreen(
     onRouteClick: (String) -> Unit,
@@ -28,11 +29,15 @@ fun NavGraphBuilder.profileScreen(
 fun NavGraphBuilder.profilePersonalInformationScreen(
     onBackClick: () -> Unit,
     onShowSnackbar: suspend (String, String?) -> Boolean,
+    showBottomBar: (Boolean) -> Unit,
 ) {
-    composable(
-        route = profilePersonalInformationRoute,
+    composable<ProfilePersonalParam>(
     ) {
-        profilePersonalInformationRoute(onBackClick = onBackClick, onShowSnackbar = onShowSnackbar)
+        profilePersonalInformationRoute(
+            onBackClick = onBackClick,
+            onShowSnackbar = onShowSnackbar,
+            showBottomBar = showBottomBar
+        )
     }
 }
 
@@ -40,9 +45,7 @@ fun NavGraphBuilder.profileAddressScreen(
     onBackClick: () -> Unit,
     onShowSnackbar: suspend (String, String?) -> Boolean,
 ) {
-    composable(
-        route = profileAddressRoute,
-    ) {
+    composable(route = profileAddressRoute) {
         profileAddressRoute(onBackClick = onBackClick, onShowSnackbar = onShowSnackbar)
     }
 }
@@ -52,13 +55,18 @@ fun NavGraphBuilder.profileGraph(
     nestedGraphs: NavGraphBuilder.() -> Unit,
     onBackClick: () -> Unit,
     onShowSnackbar: suspend (String, String?) -> Boolean,
+    showBottomBar: (Boolean) -> Unit,
 ) {
     navigation(
         route = PROFILE_GRAPH_ROUTE_PATTERN,
         startDestination = profilePersonalInformationRoute,
     ) {
         composable(route = profilePersonalInformationRoute) {
-            profilePersonalInformationRoute(onBackClick, onShowSnackbar = onShowSnackbar)
+            profilePersonalInformationRoute(
+                onBackClick,
+                onShowSnackbar = onShowSnackbar,
+                showBottomBar = showBottomBar
+            )
         }
         composable(route = profileAddressRoute) {
             profileAddressRoute(onBackClick, onShowSnackbar = onShowSnackbar)

@@ -4,6 +4,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ShortText
+import androidx.compose.material.icons.rounded.ViewDay
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -12,7 +15,6 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.arrudeia.core.designsystem.icon.ArrudeiaIcons
 
 /**
  *  view toggle button with included trailing icon as well as compact and expanded
@@ -48,7 +50,7 @@ fun ArrudeiaViewToggleButton(
             text = if (expanded) expandedText else compactText,
             trailingIcon = {
                 Icon(
-                    imageVector = if (expanded) ArrudeiaIcons.ViewDay else ArrudeiaIcons.ShortText,
+                    imageVector = if (expanded) Icons.Rounded.ViewDay else Icons.Rounded.ShortText,
                     contentDescription = null,
                 )
             },

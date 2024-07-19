@@ -1,8 +1,8 @@
 package com.arrudeia.feature.sign.domain
 
-import com.arrudeia.feature.sign.data.SignFirebaseUserRepositoryImpl
+import com.arrudeia.core.sign.domain.CreateUserFirebaseUseCase
+import com.arrudeia.core.sign.data.SignFirebaseUserRepositoryImpl
 import com.arrudeia.feature.sign.data.entity.SignFirebaseUserRepositoryEntity
-import com.arrudeia.feature.sign.domain.entity.SignFirebaseUserUseCaseEntity
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull

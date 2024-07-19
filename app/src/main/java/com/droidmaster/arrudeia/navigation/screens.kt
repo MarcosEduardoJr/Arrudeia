@@ -7,39 +7,51 @@ import com.arrudeia.feature.aid.presentation.navigation.aidScreen
 import com.arrudeia.feature.arrudeia.presentation.navigation.arrudeiaScreen
 import com.arrudeia.feature.checklist.presentation.navigation.checkListScreen
 import com.arrudeia.feature.home.presentation.navigation.homeScreen
+import com.arrudeia.feature.home.presentation.navigation.placeDetailScreen
 import com.arrudeia.feature.onboarding.presentation.navigation.onboardingScreen
 import com.arrudeia.feature.profile.presentation.navigation.profileScreen
 import com.arrudeia.feature.receipt.presentation.navigation.receiptDetailScreen
 import com.arrudeia.feature.receipt.presentation.navigation.receiptScreen
+import com.arrudeia.feature.services.presentation.navigation.newServiceScreen
+import com.arrudeia.feature.services.presentation.navigation.servicesScreen
 import com.arrudeia.feature.sign.presentation.navigation.signScreen
 import com.arrudeia.feature.stories.presentation.navigation.navigateToStories
 import com.arrudeia.feature.trip.presentation.navigation.navigateToTripDetail
+import com.droidmaster.arrudeia.activeRunScreen
+import com.droidmaster.arrudeia.runOverviewScreen
 
 fun NavGraphBuilder.screens(
     navController: NavHostController,
-    onShowSnackbar: suspend (String, String?) -> Boolean
+    onShowSnackbar: suspend (String, String?) -> Boolean,
+    showBottomBar: (Boolean) -> Unit,
 ) {
     signScreen(
         onRouteClick = navController::navigateToRoute,
         onShowSnackbar = onShowSnackbar,
+        showBottomBar = showBottomBar
     )
     onboardingScreen(
-        onRouteClick = navController::navigateToRoute
+        onRouteClick = navController::navigateToRoute,
+        showBottomBar = showBottomBar
     )
     homeScreen(
         onRouteClick = navController::navigateToRoute,
         onStoriesClick = navController::navigateToStories,
         onTripDetailClick = navController::navigateToTripDetail,
-        onShowSnackbar = onShowSnackbar
+        onShowSnackbar = onShowSnackbar,
+        showBottomBar = showBottomBar,
+        onNewPlaceClick  = navController::navigateToRoute,
+        onPlaceDetailsClick = { navController.navigate(it) }
     )
     profileScreen(
         onBackClick = { navController.popBackStack() },
         onRouteClick = navController::navigateToRoute,
-        onShowSnackbar = onShowSnackbar
+        onShowSnackbar = onShowSnackbar,
     )
     arrudeiaScreen(
         onBackClick = { navController.popBackStack() },
-        onShowSnackbar = onShowSnackbar
+        onShowSnackbar = onShowSnackbar,
+        showBottomBar = showBottomBar
     )
     checkListScreen(
         onBackClick = { navController.popBackStack() }
@@ -59,6 +71,27 @@ fun NavGraphBuilder.screens(
     aidDetailScreen(
         onShowSnackbar = onShowSnackbar,
         onBackClick = { navController.popBackStack() }
+    )
+    servicesScreen(
+        serviceDetailNavigationClick = { navController.navigate(it) },
+        onChatClick = { navController.navigate(it) },
+        onShowSnackbar = onShowSnackbar,
+        onNewServiceNavigationClick = { navController.navigate(it) },
+        onProfilePersonalParamNavigationClick = { navController.navigate(it) }
+    )
+    newServiceScreen(
+        onShowSnackbar = onShowSnackbar,
+        onBackClick = { navController.popBackStack() },
+        onProfilePersonalParamNavigationClick = { navController.navigate(it) }
+    )
+    runOverviewScreen(
+        onActiveRunClick = navController::navigateToRoute,
+    )
+    activeRunScreen(
+        onBackClick = { navController.popBackStack() },
+    )
+    placeDetailScreen(
+        onBackClick = { navController.popBackStack() },
     )
 }
 

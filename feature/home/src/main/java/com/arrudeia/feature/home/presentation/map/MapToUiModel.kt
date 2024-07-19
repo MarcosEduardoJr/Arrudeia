@@ -1,8 +1,10 @@
 package com.arrudeia.feature.home.presentation.map
 
 import com.arrudeia.feature.home.domain.entity.ArrudeiaUseCaseEntity
+import com.arrudeia.feature.home.domain.entity.StatesByCountryUseCaseEntity
 import com.arrudeia.feature.home.domain.entity.TravelUseCaseEntity
 import com.arrudeia.feature.home.presentation.model.ArrudeiaTvUIModel
+import com.arrudeia.feature.home.presentation.model.StateUIModel
 import com.arrudeia.feature.home.presentation.model.TravelUIModel
 
 fun List<TravelUseCaseEntity>?.mapTravelsToUiModel(): List<TravelUIModel> {
@@ -34,6 +36,18 @@ fun List<ArrudeiaUseCaseEntity>?.mapArrTvToUiModel(): List<ArrudeiaTvUIModel> {
             ArrudeiaTvUIModel(
                 id = it.id,
                 imageUrl = it.imageUrl
+            )
+        )
+    }
+    return listResult
+}
+
+fun List<StatesByCountryUseCaseEntity>?.mapStateToUiModel(): List<StateUIModel> {
+    val listResult = mutableListOf<StateUIModel>()
+    this?.forEach {
+        listResult.add(
+            StateUIModel(
+                name = it.name
             )
         )
     }

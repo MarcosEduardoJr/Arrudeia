@@ -1,8 +1,8 @@
 import com.arrudeia.core.test.ViewModelTest
-import com.arrudeia.feature.sign.domain.CreateUserDataStoreUseCase
-import com.arrudeia.feature.sign.domain.CreateUserFirebaseUseCase
-import com.arrudeia.feature.sign.domain.SignInUserFirebaseUseCase
-import com.arrudeia.feature.sign.domain.entity.SignFirebaseUserUseCaseEntity
+import com.arrudeia.core.sign.domain.CreateUserDataStoreUseCase
+import com.arrudeia.core.sign.domain.CreateUserFirebaseUseCase
+import com.arrudeia.core.sign.domain.SignInUserFirebaseUseCase
+import com.arrudeia.core.sign.domain.entity.SignFirebaseUserUseCaseEntity
 import com.arrudeia.feature.sign.presentation.viewmodel.SignViewModel
 import com.arrudeia.feature.sign.presentation.viewmodel.SignViewModel.SignUiState
 import kotlinx.coroutines.ExperimentalCoroutinesApi

@@ -1,6 +1,7 @@
 package com.arrudeia.feature.sign.domain
 
-import com.arrudeia.feature.sign.data.SignDataStoreUserRepository
+import com.arrudeia.core.sign.domain.CreateUserDataStoreUseCase
+import com.arrudeia.core.sign.data.SignDataStoreUserRepository
 import com.arrudeia.feature.sign.data.entity.SignDataStoreUserRepositoryEntity
 import io.mockk.coEvery
 import io.mockk.mockk

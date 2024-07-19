@@ -1,6 +1,7 @@
 package com.arrudeia.feature.sign.domain
 
-import com.arrudeia.feature.sign.data.SignFirebaseUserRepositoryImpl
+import com.arrudeia.core.sign.domain.SignInUserFirebaseUseCase
+import com.arrudeia.core.sign.data.SignFirebaseUserRepositoryImpl
 import com.arrudeia.feature.sign.data.entity.SignFirebaseUserRepositoryEntity
 import io.mockk.coEvery
 import io.mockk.mockk

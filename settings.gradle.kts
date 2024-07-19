@@ -37,3 +37,12 @@ include(":feature:arrudeia")
 include(":feature:checklist")
 include(":feature:receipt")
 include(":feature:aid")
+include(":feature:services")
+include(":feature:trail")
+
+
+include(":wear:app")
+include(":wear:run:data")
+include(":wear:run:domain")
+include(":wear:run:presentation")
+include(":core:designsystem_wear")

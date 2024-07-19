@@ -47,3 +47,10 @@ mutation UpdateUserAddressGraph($uuid: String!, $zipCode: String!, $street: Stri
         country: $country
     )
 }
+
+mutation UpdateIdUserDocGraph($uuid: String!, $idUserDoc: String!) {
+    updateUser(
+        uuid: $uuid,
+        idUserDoc: $idUserDoc,
+    )
+}

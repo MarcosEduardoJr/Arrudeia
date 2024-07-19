@@ -8,4 +8,5 @@ data class ProfileDataStoreUserRepositoryEntity(
     var name: String = "",
     var email: String = "",
     var image: String = "",
+    var isSavedDoc: Boolean = false,
 )

@@ -1,9 +1,10 @@
 package com.arrudeia.feature.arrudeia.domain
 
 import com.arrudeia.core.result.Result
-import com.arrudeia.feature.arrudeia.data.ArrudeiaPlaceRepositoryImpl
-import com.arrudeia.feature.arrudeia.data.entity.ArrudeiaPlaceRepositoryEntity
-import com.arrudeia.feature.arrudeia.data.entity.AvailableRepositoryEntity
+import com.arrudeia.core.places.data.ArrudeiaPlaceRepositoryImpl
+import com.arrudeia.core.places.data.entity.ArrudeiaPlaceRepositoryEntity
+import com.arrudeia.core.places.data.entity.AvailableRepositoryEntity
+import com.arrudeia.core.places.domain.GetAllArrudeiaPlacesUseCase
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals

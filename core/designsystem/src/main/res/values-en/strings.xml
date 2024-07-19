@@ -1,3 +1,11 @@
 <resources>
     <string name="loading">Loading</string>
+
+    <string name="zip_code">Zip Code</string>
+    <string name="street">Street</string>
+    <string name="number">Number</string>
+    <string name="district">Neighborhood</string>
+    <string name="city">City</string>
+    <string name="state">State</string>
+    <string name="country">Country</string>
 </resources>

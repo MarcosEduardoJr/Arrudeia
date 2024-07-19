@@ -17,12 +17,9 @@
     <string name="error_update_user">Não foi possível atualizar os dados do usuário tente novamente mais tarde</string>
     <string name="success_saved_user">Atualizado</string>
 
-    <string name="zip_code">CEP</string>
-    <string name="street">Rua</string>
-    <string name="number">Número</string>
-    <string name="district">Bairro</string>
-    <string name="city">Cidade</string>
-    <string name="state">Estado</string>
-    <string name="country">País</string>
     <string name="logout">Sair</string>
+    <string name="document">Documento</string>
+    <string name="identification_document">Documento de identificação</string>
+    <string name="identification_document_to_use_services">É necessário documento de identificação para requisitar ou fornecer serviços</string>
+    <string name="cpf">Cpf</string>
 </resources>

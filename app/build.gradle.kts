@@ -8,7 +8,7 @@ plugins {
     id("com.google.firebase.appdistribution")
     id("com.google.gms.google-services")
     id("com.google.dagger.hilt.android")
-    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.kotlin.serialization) 
 }
 
 android {
@@ -141,6 +141,8 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
 
+
+
     implementation(project(":core:designsystem"))
     implementation(project(":core:graphql"))
     implementation(project(":core:common"))
@@ -155,6 +157,8 @@ dependencies {
     implementation(project(":feature:checklist"))
     implementation(project(":feature:receipt"))
     implementation(project(":feature:aid"))
+    implementation(project(":feature:services"))
+    implementation(project(":feature:trail"))
 }
 
 apply(plugin = "com.google.gms.google-services")

@@ -4,6 +4,8 @@ plugins {
     kotlin("kapt")
     id("kotlin-android")
    id("com.google.dagger.hilt.android")
+    alias(libs.plugins.kotlin.serialization)
+
 }
 
 android {
@@ -16,6 +18,10 @@ android {
     }
     buildFeatures {
         buildConfig = true
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.11"
     }
     packaging {
         resources {
@@ -24,6 +30,7 @@ excludes.add("META-INF/LICENSE-notice.md")
         }
     }
     compileOptions {
+        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
@@ -37,11 +44,16 @@ secrets {
 }
 
 dependencies {
+    implementation(project(":core:graphql"))
+    implementation(project(":core:designsystem"))
+    implementation(libs.apollo.runtime)
     implementation(libs.hilt.android)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.datetime)
 
    kapt(libs.hilt.compiler)
+
+    implementation(libs.androidx.hilt.navigation.compose)
 
     implementation(libs.kotlinx.serialization.json)
 
@@ -54,8 +66,10 @@ dependencies {
     implementation(libs.androidx.dataStore.preferences)
 
     implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.firestore)
     implementation(libs.firebase.auth)
+    implementation(libs.firebase.storage)
+    implementation(libs.firebase.database)
+    implementation(libs.firebase.firestore)
 
     implementation(libs.kotlinx.coroutines.test)
 
@@ -81,10 +95,37 @@ dependencies {
     implementation(libs.androidx.media3.exoplayer)
     implementation(libs.androidx.media3.ui)
 
+    implementation(libs.accompanist.drawablepainter)
+
+    implementation("com.google.android.gms:play-services-mlkit-text-recognition:19.0.0")
+    implementation(libs.glide.compose)
     implementation(libs.junit4)
     testImplementation(libs.junit4)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.ui.test.junit4)
+
+    implementation(libs.play.services.wearable)
+
+    implementation(libs.google.maps.services)
+
+    implementation(libs.accompanist.permissions)
+
+    implementation("com.google.maps.android:maps-compose:4.3.3")
+
+    // Optionally, you can include the Compose utils library for Clustering,
+    // Street View metadata checks, etc.
+    implementation("com.google.maps.android:maps-compose-utils:4.3.3")
+
+    // Optionally, you can include the widgets library for ScaleBar, etc.
+    implementation("com.google.maps.android:maps-compose-widgets:4.3.3")
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
+    implementation("com.google.android.gms:play-services-location:21.2.0")
+    implementation(libs.places)
+
+    implementation(libs.room.runtime)
+    kapt(libs.room.compiler)
+    implementation(libs.room.ktx)
+
 }
 
 kapt {

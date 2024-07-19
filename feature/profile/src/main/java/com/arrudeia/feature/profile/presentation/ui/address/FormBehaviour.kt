@@ -17,6 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.arrudeia.core.ui.address.ArrudeiaddressForm
 import com.arrudeia.feature.profile.R
 import com.arrudeia.feature.profile.presentation.viewmodel.ProfileAddressViewModel
 
@@ -58,14 +59,21 @@ fun formBehaviour(
         Spacer(modifier = Modifier.size(40.dp))
 
         if (showForm)
-            form(
-                zipCode, zipCodeChange,
-                street, streetChange,
-                number, numberChange,
-                district, districtChange,
-                city, cityChange,
-                state, stateChange,
-                country, countryChange
+            ArrudeiaddressForm(
+                zipCode,
+                zipCodeChange,
+                street,
+                streetChange,
+                number,
+                numberChange,
+                district,
+                districtChange,
+                city,
+                cityChange,
+                state,
+                stateChange,
+                country,
+                countryChange
             )
         else {
             fetchUser(
