@@ -30,7 +30,7 @@ excludes.add("META-INF/LICENSE-notice.md")
         }
     }
     compileOptions {
-        isCoreLibraryDesugaringEnabled = true
+        isCoreLibraryDesugaringEnabled = false
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
@@ -125,8 +125,7 @@ dependencies {
     implementation(libs.room.runtime)
     kapt(libs.room.compiler)
     implementation(libs.room.ktx)
-
-    implementation(libs.android.desugarJdkLibs)
+ 
 
 }
 
