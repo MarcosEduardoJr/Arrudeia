@@ -1,5 +1,5 @@
-query GetArrudeiaPlaces {
-    arrudeiaPlaces {
+query GetArrudeiaPlaces($state: String!) {
+    arrudeiaPlaces(state: $state) {
         available {
             id
             name
@@ -17,6 +17,9 @@ query GetArrudeiaPlaces {
         socialNetwork
         subCategoryName
         uuid
+        city
+        state
+        country
     }
 }
 
@@ -50,8 +53,10 @@ query GetArrudeiaAvailablePlace($placeId: String!) {
     }
 }
 
-
-mutation CreateArrudeiaPlace($categoryName: String!, $description: String!, $image: String!, $latitude: Float!, $longitude: Float!, $name: String!, $phone: String!, $priceLevel: Int!, $rating: Float!, $socialNetwork: String!, $subCategoryName: String!, $uuid: String!) {
+mutation CreateArrudeiaPlace($categoryName: String!, $description: String!, $image: String!, $latitude: Float!, $longitude: Float!,
+    $name: String!, $phone: String!, $priceLevel: Int!, $rating: Int!, $socialNetwork: String!, $subCategoryName: String!, $uuid: String!,
+    $city: String!, $state: String!, $country: String!
+) {
     createArrudeiaPlace(
         categoryName: $categoryName
         description: $description
@@ -65,6 +70,9 @@ mutation CreateArrudeiaPlace($categoryName: String!, $description: String!, $ima
         socialNetwork: $socialNetwork
         subCategoryName: $subCategoryName
         uuid: $uuid
+        city: $city
+        state: $state
+        country: $country
     )
 }
 

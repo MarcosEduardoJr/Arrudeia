@@ -25,4 +25,13 @@
 
 
     <string name="error_get_user">Não foi possível retornar os dados do usuário tente novamente mais tarde</string>
+    <string name="places">Lugares</string>
+    <string name="trips">Viagens</string>
+    <string name="search">Pesquisa</string>
+
+    <string name="permission_required">Permissão requerida</string>
+    <string name="need_know_location_permission">Precisamos que a pemissão de localização seja habilitada para que todas as funcionalidades funcionem corretamente</string>
+    <string name="yes">Sim</string>
+    <string name="register_new_place">Cadastrar novo lugar</string>
+    <string name="empty_list_places">Não existem lugares avaliados para essa cidade, seja o primeiro e avalie lugares e ajude a comunidade turista</string>
 </resources>

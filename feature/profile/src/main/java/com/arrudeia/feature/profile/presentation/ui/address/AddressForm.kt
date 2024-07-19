@@ -11,88 +11,93 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import com.arrudeia.core.designsystem.R.string.city
+import com.arrudeia.core.designsystem.R.string.country
+import com.arrudeia.core.designsystem.R.string.district
+import com.arrudeia.core.designsystem.R.string.number
+import com.arrudeia.core.designsystem.R.string.state
+import com.arrudeia.core.designsystem.R.string.street
+import com.arrudeia.core.designsystem.R.string.zip_code
 import com.arrudeia.core.designsystem.component.TextFieldInput
-import com.arrudeia.feature.profile.R
-
 
 @Suppress("LongMethod")
 @Composable
 fun form(
-    zipCode: String,
-    zipCodeChange: (String) -> Unit,
-    street: String,
-    streetChange: (String) -> Unit,
-    number: String,
-    numberChange: (String) -> Unit,
-    district: String,
-    districtChange: (String) -> Unit,
-    city: String,
-    cityChange: (String) -> Unit,
-    state: String,
-    stateChange: (String) -> Unit,
-    country: String,
-    countryChange: (String) -> Unit,
+    zipCodeParam: String,
+    zipCodeParamChange: (String) -> Unit,
+    streetParam: String,
+    streetParamChange: (String) -> Unit,
+    numberParam: String,
+    numberParamChange: (String) -> Unit,
+    districtParam: String,
+    districtParamChange: (String) -> Unit,
+    cityParam: String,
+    cityParamChange: (String) -> Unit,
+    stateParam: String,
+    stateParamChange: (String) -> Unit,
+    countryParam: String,
+    countryParamChange: (String) -> Unit,
 ) {
     Column(Modifier.padding(horizontal = 16.dp)) {
         TextFieldInput(
-            hint = stringResource(id = R.string.zip_code),
-            zipCode,
+            hint = stringResource(id = zip_code),
+            zipCodeParam,
             icon = painterResource(id = com.arrudeia.core.designsystem.R.drawable.ic_home),
-            onValueChange = zipCodeChange,
+            onValueChange = zipCodeParamChange,
             KeyboardType.Number,
             ImeAction.Next
         )
         Spacer(modifier = Modifier.size(4.dp))
         TextFieldInput(
-            hint = stringResource(id = R.string.street),
-            street,
+            hint = stringResource(id = street),
+            streetParam,
             icon = painterResource(id = com.arrudeia.core.designsystem.R.drawable.ic_street),
-            onValueChange = streetChange,
+            onValueChange = streetParamChange,
             KeyboardType.Text,
             ImeAction.Next
         )
         Spacer(modifier = Modifier.size(4.dp))
         TextFieldInput(
-            hint = stringResource(id = R.string.number),
-            value = number,
+            hint = stringResource(id = number),
+            value = numberParam,
             icon = painterResource(id = com.arrudeia.core.designsystem.R.drawable.ic_number_123),
-            onValueChange = numberChange,
+            onValueChange = numberParamChange,
             KeyboardType.Number,
             ImeAction.Next
         )
         Spacer(modifier = Modifier.size(4.dp))
         TextFieldInput(
-            hint = stringResource(id = R.string.district),
-            district,
+            hint = stringResource(id = district),
+            districtParam,
             icon = painterResource(id = com.arrudeia.core.designsystem.R.drawable.ic_pin_drop),
-            onValueChange = districtChange,
+            onValueChange = districtParamChange,
             KeyboardType.Text,
             ImeAction.Next
         )
         Spacer(modifier = Modifier.size(4.dp))
         TextFieldInput(
-            hint = stringResource(id = R.string.city),
-            city,
+            hint = stringResource(id = city),
+            cityParam,
             icon = painterResource(id = com.arrudeia.core.designsystem.R.drawable.ic_pin_drop),
-            onValueChange = cityChange,
+            onValueChange = cityParamChange,
             KeyboardType.Text,
             ImeAction.Next
         )
         Spacer(modifier = Modifier.size(4.dp))
         TextFieldInput(
-            hint = stringResource(id = R.string.state),
-            state,
+            hint = stringResource(id = state),
+            stateParam,
             icon = painterResource(id = com.arrudeia.core.designsystem.R.drawable.ic_pin_drop),
-            onValueChange = stateChange,
+            onValueChange = stateParamChange,
             KeyboardType.Text,
             ImeAction.Next
         )
         Spacer(modifier = Modifier.size(4.dp))
         TextFieldInput(
-            hint = stringResource(id = R.string.country),
-            country,
+            hint = stringResource(id = country),
+            countryParam,
             icon = painterResource(id = com.arrudeia.core.designsystem.R.drawable.ic_pin_drop),
-            onValueChange = countryChange,
+            onValueChange = countryParamChange,
             KeyboardType.Text,
             ImeAction.Done
         )

@@ -135,7 +135,8 @@ fun screenView(
                 },
                 icon = Icons.Rounded.ArrowBack,
                 backgroundColor = colorResource(id = background_grey_F7F7F9),
-                iconSize = 50.dp
+                iconSize = 50.dp,
+                modifier = Modifier
             )
         }
 

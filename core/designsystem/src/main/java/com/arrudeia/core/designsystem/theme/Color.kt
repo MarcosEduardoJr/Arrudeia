@@ -1,9 +1,8 @@
 package com.arrudeia.core.designsystem.theme
 
 import androidx.compose.ui.graphics.Color
-import com.arrudeia.core.designsystem.R.color.colorPrimary
 
 /**
  *  colors.
  */
-val PrimaryColor = Color(colorPrimary)
+val BackgroundColorGreyF7F7F9 = Color(0xF7F7F9)

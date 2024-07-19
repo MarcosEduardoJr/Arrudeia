@@ -8,8 +8,10 @@ import com.arrudeia.core.data.navigation.signRoute
 fun NavGraphBuilder.signScreen(
     onRouteClick: (String) -> Unit,
     onShowSnackbar: suspend (String, String?) -> Boolean,
+    showBottomBar: (Boolean) -> Unit,
 ) {
+
     composable(route = signRoute) {
-        SignRoute(onRouteClick, onShowSnackbar)
+        SignRoute(onRouteClick, onShowSnackbar, showBottomBar = showBottomBar)
     }
 }

@@ -40,7 +40,7 @@ fun fetchUser(
         is ProfilePersonalInformationViewModel.PersonalInformationUiState.Error -> {
             val message =
                 stringResource(
-                    (uiState as ProfilePersonalInformationViewModel.PersonalInformationUpdateUserUiState.Error).message
+                    (uiState as ProfilePersonalInformationViewModel.PersonalInformationUiState.Error).message
                 )
             LaunchedEffect(Unit) {
                 CoroutineScope(Dispatchers.IO).launch {

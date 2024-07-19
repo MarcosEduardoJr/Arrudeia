@@ -1,6 +1,8 @@
+import com.arrudeia.core.places.domain.GetAllArrudeiaPlacesUseCase
 import com.arrudeia.core.result.Result
 import com.arrudeia.core.test.ViewModelTest
 import com.arrudeia.feature.home.domain.GetAllArrudeiaTvUseCase
+import com.arrudeia.feature.home.domain.GetAllStatesByCountryUseCase
 import com.arrudeia.feature.home.domain.GetAllTravelHomeUseCase
 import com.arrudeia.feature.home.domain.GetUserPersonalInformationUseCase
 import com.arrudeia.feature.home.domain.entity.ArrudeiaUseCaseEntity
@@ -35,6 +37,12 @@ class HomeViewModelTest : ViewModelTest() {
     @Mock
     private lateinit var getUserPersonalInformationUseCase: GetUserPersonalInformationUseCase
 
+    @Mock
+    private lateinit var statesByCountryUseCase: GetAllStatesByCountryUseCase
+    @Mock
+    private lateinit var getAllArrudeiaPlacesUseCase: GetAllArrudeiaPlacesUseCase
+
+
     private lateinit var viewModel: HomeViewModel
 
     @Before
@@ -42,7 +50,9 @@ class HomeViewModelTest : ViewModelTest() {
         viewModel = HomeViewModel(
             getAllTravelHomeUseCase,
             getAllArrudeiaTvUseCase,
-            getUserPersonalInformationUseCase
+            getUserPersonalInformationUseCase,
+            statesByCountryUseCase,
+            getAllArrudeiaPlacesUseCase
         )
     }
 

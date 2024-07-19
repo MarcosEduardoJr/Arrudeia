@@ -4,15 +4,18 @@ import android.net.Uri
 import com.arrudeia.feature.profile.data.entity.FirebaseUserRepositoryEntity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 import kotlin.coroutines.resume
 
 
 class FirebaseUserRepositoryImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
+    private val database: FirebaseDatabase,
 ) : FirebaseUserRepository {
 
     override suspend fun createUserWithEmailAndPassword(
@@ -72,6 +75,24 @@ class FirebaseUserRepositoryImpl @Inject constructor(
                 continuation.resume(null)
             }
         }
+    }
+
+    suspend fun createOrUpdateProfileImageToFirebaseDatabaseChat(
+        imgUrl: String,
+        userUUID: String,
+        userEmail: String,
+        userName: String
+    ) {
+        val databaseReference =
+            database.getReference("Profiles").child(userUUID).child("profile")
+        val childUpdates = mutableMapOf<String, Any>()
+        childUpdates["/profileUUID/"] = userUUID
+        if (userEmail.isNotEmpty()) childUpdates["/userEmail/"] = userEmail
+        if (imgUrl.isNotEmpty()) childUpdates["/userProfilePictureUrl/"] =
+            imgUrl
+        if (userName.isNotEmpty()) childUpdates["/userName/"] = userName
+
+        databaseReference.updateChildren(childUpdates).await()
     }
 
     private fun FirebaseUser.mapToRepository(): FirebaseUserRepositoryEntity {

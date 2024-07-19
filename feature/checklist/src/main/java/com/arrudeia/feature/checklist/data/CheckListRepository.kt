@@ -5,5 +5,4 @@ import com.arrudeia.feature.checklist.data.entity.CheckListRepositoryEntity
 
 interface CheckListRepository {
     suspend fun getChecklist(): Result<List<CheckListRepositoryEntity>?>
-
 }

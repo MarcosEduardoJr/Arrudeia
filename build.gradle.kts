@@ -11,6 +11,7 @@ buildscript {
         }
         classpath(libs.apollo.gradle.plugin)
         classpath(libs.firebase.appdistribution.gradle)
+
     }
 }
 
@@ -29,6 +30,7 @@ plugins {
     alias(libs.plugins.roborazzi) apply false
     alias(libs.plugins.secrets) apply false
     alias(libs.plugins.detekt) apply true
+    alias(libs.plugins.android.library) apply false
     //alias(libs.plugins.apollo.gradle.plugin) apply true
 }
 

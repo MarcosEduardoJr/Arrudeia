@@ -1,6 +1,6 @@
 plugins {
     id("com.android.library")
-
+    alias(libs.plugins.kotlin.serialization)
     id("kotlin-android")
 }
 
@@ -55,4 +55,5 @@ dependencies {
     implementation(libs.camera.lifecycle)
     implementation(libs.camera.view)
 
+    implementation(libs.kotlinx.serialization.json)
 }
