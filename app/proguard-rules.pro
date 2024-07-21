@@ -22,3 +22,8 @@
 -keep class com.google.android.gms.** { *; }
 -dontwarn com.google.firebase.**
 -dontwarn com.google.android.gms.**
+
+
+# Keep rules from missing_rules.txt
+-keep class org.apiguardian.api.API { *; }
+-keep class org.apiguardian.api.API$Status { *; }

@@ -1,0 +1,9 @@
+- new features :
+    - services
+    - checklist
+    - aid
+    - trail
+    - contact
+    - places list by state home screen
+
+- bug fixes :
