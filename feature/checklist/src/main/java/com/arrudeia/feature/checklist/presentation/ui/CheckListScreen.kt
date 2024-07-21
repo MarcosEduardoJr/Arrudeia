@@ -100,29 +100,6 @@ internal fun tripDetail(item: List<CheckListUIModel?>, onBackClick: () -> Unit) 
                     content(item = item)
                 }
             }
-            buttonBottom(
-                onBackClick, Modifier
-                    .align(Alignment.TopStart)
-                    .padding(16.dp)
-            )
         }
-    }
-}
-
-@Composable
-private fun buttonBottom(onBackClick: () -> Unit, modifier: Modifier) {
-    Box(
-        modifier = modifier
-    ) {
-
-        CircularIconButton(
-            onClick = {
-                onBackClick()
-            },
-            icon = Icons.Rounded.ArrowBack,
-            backgroundColor = colorResource(id = background_grey_F7F7F9),
-            iconSize = 50.dp,
-            modifier = Modifier
-        )
     }
 }
