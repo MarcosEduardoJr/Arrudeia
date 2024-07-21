@@ -21,4 +21,9 @@
     <string name="error_try_again_later">Um erro ocorreu, tente novamente mais tarde!</string>
 
     <string name="active_run">Active Run</string>
+
+    <string name="permission_required">Permission required</string>
+    <string name="need_know_location_permission">Precisamos que a pemissão de localização seja habilitada para que todas as funcionalidades funcionem corretamente</string>
+    <string name="yes">Sim</string>
+    <string name="no">Não</string>
 </resources>

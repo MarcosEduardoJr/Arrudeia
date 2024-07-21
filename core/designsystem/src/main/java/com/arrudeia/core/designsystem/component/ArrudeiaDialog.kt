@@ -3,10 +3,13 @@ package com.arrudeia.core.designsystem.component
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -26,9 +29,9 @@ fun ArrudeiaDialog(
     title: String,
     onDismiss: () -> Unit,
     description: String,
-    primaryButton: @Composable RowScope.() -> Unit,
+    primaryButton: @Composable ColumnScope.() -> Unit,
     modifier: Modifier = Modifier,
-    secondaryButton: @Composable RowScope.() -> Unit = {}
+    secondaryButton: @Composable ColumnScope.() -> Unit = {}
 ) {
     Dialog(onDismissRequest = onDismiss) {
         Column(
@@ -36,7 +39,6 @@ fun ArrudeiaDialog(
                 .clip(RoundedCornerShape(15.dp))
                 .background(Color.Black)
                 .padding(15.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
@@ -45,22 +47,20 @@ fun ArrudeiaDialog(
                 textAlign = TextAlign.Center,
                 color = Color.White
             )
+
+            Spacer(modifier = Modifier.size(12.dp))
+
             Text(
                 text = description,
                 fontSize = 12.sp,
                 textAlign = TextAlign.Center,
                 color = Color.White
             )
+            Spacer(modifier = Modifier.size(12.dp))
 
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                secondaryButton()
-                primaryButton()
-            }
+            secondaryButton()
+            primaryButton()
+
         }
     }
 }
