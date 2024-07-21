@@ -57,6 +57,7 @@ import com.arrudeia.core.designsystem.component.ArrudeiaOutlinedActionButton
 import com.arrudeia.core.ui.hasFineLocationPermission
 import com.arrudeia.core.ui.hasNotificationPermission
 import com.arrudeia.core.ui.showShouldLocationPermission
+import com.arrudeia.core.utils.ShowPermissionLocationDialog
 import com.arrudeia.feature.home.R.string.need_know_location_permission
 import com.arrudeia.feature.home.R.string.permission_required
 import com.arrudeia.feature.home.R.string.yes
@@ -145,38 +146,42 @@ fun cityDrop(
     onShowSnackbar: suspend (String, String?) -> Boolean,
     viewModel: HomeViewModel
 ) {
-
-
     val context = LocalContext.current
-    val activity = context as ComponentActivity
-    var showCityDrop by rememberSaveable { mutableStateOf(true) }
-    val permissionLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestMultiplePermissions()
-    ) { perms ->
-        showCityDrop = true
-    }
+    var needPermission by rememberSaveable { mutableStateOf(true) }
+
+    if(needPermission)
+    ShowPermissionLocationDialog({ needPermission = it })
+
+    /*
+      val activity = context as ComponentActivity
+      var showCityDrop by rememberSaveable { mutableStateOf(true) }
+      val permissionLauncher = rememberLauncherForActivityResult(
+          contract = ActivityResultContracts.RequestMultiplePermissions()
+      ) { perms ->
+          showCityDrop = true
+      }
 
 
 
-    if (activity.showShouldLocationPermission()) {
-        showCityDrop = false
-        ArrudeiaDialog(
-            title = stringResource(id = permission_required),
-            onDismiss = { /* Normal dismissing not allowed for permissions */ },
-            description =
-            stringResource(id = need_know_location_permission),
-            primaryButton = {
-                ArrudeiaOutlinedActionButton(
-                    text = stringResource(id = yes),
-                    isLoading = false,
-                    onClick = {
-                        permissionLauncher.requestArrudeiaPermissions(context)
-                    },
-                )
-            }
-        )
-    }
-    if (showCityDrop) {
+      if (activity.showShouldLocationPermission()) {
+          showCityDrop = false
+          ArrudeiaDialog(
+              title = stringResource(id = permission_required),
+              onDismiss = { /* Normal dismissing not allowed for permissions */ },
+              description =
+              stringResource(id = need_know_location_permission),
+              primaryButton = {
+                  ArrudeiaOutlinedActionButton(
+                      text = stringResource(id = yes),
+                      isLoading = false,
+                      onClick = {
+                          permissionLauncher.requestArrudeiaPermissions(context)
+                      },
+                  )
+              }
+          )
+      }*/
+    if (needPermission.not()) {
 
         var showCityDropList by rememberSaveable { mutableStateOf(false) }
 
