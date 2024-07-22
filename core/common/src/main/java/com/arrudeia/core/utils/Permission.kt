@@ -63,6 +63,8 @@ fun ShowPermissionLocationDialog(
                 )
             },
         )
+    }else{
+        needPermission(false)
     }
 }
 

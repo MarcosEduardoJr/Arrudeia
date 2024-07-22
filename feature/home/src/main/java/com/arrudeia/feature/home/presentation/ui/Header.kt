@@ -130,8 +130,8 @@ fun cityDrop(
     val context = LocalContext.current
     var needPermission by rememberSaveable { mutableStateOf(true) }
 
-    if(needPermission)
-    ShowPermissionLocationDialog({ needPermission = it })
+    if (needPermission)
+        ShowPermissionLocationDialog({ needPermission = it })
 
     /*
       val activity = context as ComponentActivity
