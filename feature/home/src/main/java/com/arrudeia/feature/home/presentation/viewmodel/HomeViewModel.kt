@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.arrudeia.core.places.domain.GetAllArrudeiaPlacesUseCase
 import com.arrudeia.core.places.domain.entity.ArrudeiaPlaceDetailsUseCaseEntity
-import com.arrudeia.feature.home.R.string.erro_message_list_travels
 import com.arrudeia.feature.home.domain.GetAllArrudeiaTvUseCase
 import com.arrudeia.feature.home.domain.GetAllTravelHomeUseCase
 import com.arrudeia.feature.home.domain.GetUserPersonalInformationUseCase
@@ -32,7 +31,7 @@ import com.arrudeia.feature.home.domain.GetAllStatesByCountryUseCase
 import com.arrudeia.feature.home.presentation.map.mapStateToUiModel
 import com.arrudeia.feature.home.presentation.model.StateUIModel
 import com.google.android.gms.maps.model.LatLng
-
+import com.arrudeia.core.common.R.string.generic_error
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val travelUseCase: GetAllTravelHomeUseCase,
@@ -75,7 +74,7 @@ class HomeViewModel @Inject constructor(
                     list = result.mapArrTvToUiModel()
                 )
             else {
-                arrTvUiState.value = ArrudeiaTvUiState.Error(erro_message_list_travels)
+                arrTvUiState.value = ArrudeiaTvUiState.Error(generic_error)
             }
         }
     }
@@ -95,7 +94,7 @@ class HomeViewModel @Inject constructor(
                 ).list
                 fetchPlaces()
             } else {
-                stateUiState.value = StatesUiState.Error(erro_message_list_travels)
+                stateUiState.value = StatesUiState.Error(generic_error)
             }
             loading.value = false
         }
@@ -164,7 +163,7 @@ class HomeViewModel @Inject constructor(
                 )
             else
                 travelUiState.value = TravelUiState.Error(
-                    erro_message_list_travels
+                    generic_error
                 )
         }
     }

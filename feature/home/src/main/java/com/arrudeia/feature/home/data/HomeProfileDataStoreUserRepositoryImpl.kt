@@ -10,7 +10,7 @@ import com.arrudeia.feature.home.data.entity.ProfileDataStoreUserRepositoryEntit
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
-
+import com.arrudeia.core.common.R.string.generic_error
 
 class HomeProfileDataStoreUserRepositoryImpl @Inject constructor(
     private val dataStore: DataStore<Preferences>
@@ -39,7 +39,7 @@ class HomeProfileDataStoreUserRepositoryImpl @Inject constructor(
                 isSavedDoc
             )
         }.firstOrNull()
-        return if (result != null) Result.Success(result) else Result.Error(R.string.error_get_user)
+        return if (result != null) Result.Success(result) else Result.Error(generic_error)
     }
 
 }

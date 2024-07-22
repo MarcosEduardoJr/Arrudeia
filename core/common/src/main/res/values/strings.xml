@@ -8,6 +8,9 @@
     <string name="trail">Trilha</string>
     <string name="_continue">Continuar</string>
     <string name="finish">Finalizar</string>
+    <string name="search">Pesquisar</string>
+    <string name="places">Lugares</string>
+    <string name="trips">Viagens</string>
     <string name="permission_required">Permissão necessária</string>
     <string name="location_rationale">Para rastrear sua localização, este aplicativo precisa de sua permissão para isso. Confirme para conceder.</string>
     <string name="notification_rationale">Para exibir a hora atual como uma notificação, este aplicativo precisa da sua permissão para isso. Confirme para conceder.</string>
