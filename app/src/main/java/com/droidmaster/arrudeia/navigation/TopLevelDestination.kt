@@ -3,12 +3,12 @@ package com.droidmaster.arrudeia.navigation
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Build
 import androidx.compose.material.icons.rounded.Cookie
-import androidx.compose.material.icons.rounded.DirectionsRun
 import androidx.compose.material.icons.rounded.Hiking
 import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.MedicalServices
 import androidx.compose.material.icons.rounded.NoteAlt
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.arrudeia.core.common.R.string.trail
 import com.arrudeia.core.data.navigation.aidRoute
 import com.arrudeia.core.data.navigation.checkListRoute
 import com.arrudeia.core.data.navigation.homeRoute
@@ -20,7 +20,6 @@ import com.arrudeia.feature.checklist.R.string.checklist
 import com.arrudeia.feature.home.R.string.title_home
 import com.arrudeia.feature.receipt.R.string.receipt
 import com.arrudeia.feature.services.R.string.services
-import com.arrudeia.core.common.R.string.trail
 
 enum class TopLevelDestination(
     val selectedIcon: ImageVector,

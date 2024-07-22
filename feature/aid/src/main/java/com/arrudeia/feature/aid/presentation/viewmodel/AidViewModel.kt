@@ -3,7 +3,6 @@ package com.arrudeia.feature.aid.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.arrudeia.core.result.Result
-import com.arrudeia.feature.aid.R.string.erro_message_list_travels
 import com.arrudeia.feature.aid.domain.GetAidsUseCase
 import com.arrudeia.feature.aid.presentation.map.mapToUiModel
 import com.arrudeia.feature.aid.presentation.model.AidUIModel
@@ -13,6 +12,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import com.arrudeia.core.common.R.string.generic_error
 
 @HiltViewModel
 class AidViewModel @Inject constructor(
@@ -37,7 +37,7 @@ class AidViewModel @Inject constructor(
                 }
 
                 is Result.Error -> {
-                    uiState.value = AidsUiState.Error(erro_message_list_travels)
+                    uiState.value = AidsUiState.Error(generic_error)
                 }
 
                 is Result.Loading -> {

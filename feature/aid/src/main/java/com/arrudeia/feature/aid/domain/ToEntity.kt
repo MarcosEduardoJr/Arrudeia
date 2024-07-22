@@ -1,7 +1,7 @@
 package com.arrudeia.feature.aid.domain
 
+import com.arrudeia.core.common.R.string.generic_error
 import com.arrudeia.core.result.Result
-import com.arrudeia.feature.aid.R
 import com.arrudeia.feature.aid.data.entity.AidDetailRepositoryEntity
 import com.arrudeia.feature.aid.data.entity.AidRepositoryEntity
 import com.arrudeia.feature.aid.data.entity.AidStepRepositoryEntity
@@ -11,7 +11,7 @@ import com.arrudeia.feature.aid.domain.entity.AidUseCaseEntity
 
 fun Result<AidDetailRepositoryEntity?>.toEntity(): Result<AidDetailUseCaseEntity?> {
     var item: Result<AidDetailUseCaseEntity?> =
-        Result.Error(R.string.erro_message_list_travels)
+        Result.Error(generic_error)
     when (this) {
         is Result.Success -> {
             this.data?.let {
@@ -33,7 +33,7 @@ fun Result<AidDetailRepositoryEntity?>.toEntity(): Result<AidDetailUseCaseEntity
         }
 
         else -> {
-            item = Result.Error(R.string.erro_message_list_travels)
+            item = Result.Error(generic_error)
         }
     }
 
@@ -64,7 +64,7 @@ fun List<AidStepRepositoryEntity?>?.toEntity(): List<AidStepUseCaseEntity?>? {
 
 fun Result<List<AidRepositoryEntity?>?>.mapToUseCaseEntity(): Result<List<AidUseCaseEntity?>?> {
     var item: Result<List<AidUseCaseEntity>?> =
-        Result.Error(R.string.erro_message_list_travels)
+        Result.Error(generic_error)
     when (this) {
         is Result.Success -> {
             Result.Success(this.data?.let { it ->
@@ -91,7 +91,7 @@ fun Result<List<AidRepositoryEntity?>?>.mapToUseCaseEntity(): Result<List<AidUse
         }
 
         else -> {
-            item = Result.Error(R.string.erro_message_list_travels)
+            item = Result.Error(generic_error)
         }
     }
     return item

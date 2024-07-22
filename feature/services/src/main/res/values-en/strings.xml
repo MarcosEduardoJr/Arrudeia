@@ -27,9 +27,7 @@
     <string name="difficult">Difficulty</string>
     <string name="portions">Portions</string>
     <string name="method_of_preparation">Preparation mode</string>
-    <string name="first_aid">First aid</string>
-    <string name="aid">Socorro</string>
-    <string name="step_to_step">Step by step</string>
+     <string name="aid">Socorro</string>
     <string name="services">services</string>
     <string name="my_services">My services</string>
     <string name="service_oppotunities">Service Opportunities</string>
