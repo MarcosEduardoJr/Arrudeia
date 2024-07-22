@@ -37,7 +37,7 @@
     <string name="email">Email</string>
     <string name="phone">Cell phone</string>
     <string name="birth_date">Birthday</string>
-    <string name="logout">To go out</string>
+    <string name="logout">Logout</string>
     <string name="cancel">Cancel</string>
     <string name="shoot_image">Take a picture</string>
     <string name="social_network">Social network</string>
