@@ -1,19 +1,9 @@
 <resources>
-    <string name="loading">Loading</string>
-    <string name="profile">Profile</string>
-    <string name="personal_information">Personal information</string>
-    <string name="address">Address</string>
-    <string name="change_image">Change photo</string>
-    <string name="name">Name</string>
-    <string name="full_name">Full name</string>
-    <string name="document_id">Document id</string>
-    <string name="email">Email</string>
-    <string name="phone">Cell phone</string>
-    <string name="birth_date">Birthday</string>
-    <string name="save">Save</string>
     <string name="error_get_user">Unable to return user data, try again later</string>
     <string name="error_update_user">Unable to update user data, try again later</string>
+    <string name="identification_document">Identification document</string>
+    <string name="identification_document_to_use_services">Identification document is required to request or provide services</string>
+    <string name="change_image">Change photo</string>
+    <string name="personal_information">Personal information</string>
     <string name="success_saved_user">Updated</string>
-
-
 </resources>

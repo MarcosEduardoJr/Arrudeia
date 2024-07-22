@@ -31,6 +31,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.arrudeia.core.common.R.string.address
+import com.arrudeia.core.common.R.string.logout
 import com.arrudeia.core.data.navigation.profileAddressRoute
 import com.arrudeia.core.data.navigation.profilePersonalInformationRoute
 import com.arrudeia.core.designsystem.R
@@ -38,7 +40,6 @@ import com.arrudeia.core.designsystem.component.CircularIconButton
 import com.arrudeia.core.designsystem.component.RectangleCircleBorderItemButton
 import com.arrudeia.feature.profile.presentation.model.ProfileUiModel
 import com.arrudeia.feature.profile.presentation.viewmodel.ProfileViewModel
-
 
 @Composable
 fun profileContent(
@@ -108,7 +109,7 @@ private fun profileOptions(
 
     RectangleCircleBorderItemButton(
         iconStart = R.drawable.ic_home,
-        name = stringResource(id = com.arrudeia.feature.profile.R.string.address),
+        name = stringResource(id = address),
         modifier = Modifier.clickable {
             onRouteClick(profileAddressRoute)
         })
@@ -118,7 +119,7 @@ private fun profileOptions(
     RectangleCircleBorderItemButton(
         iconStart =
         R.drawable.ic_logout,
-        name = stringResource(id = com.arrudeia.feature.profile.R.string.logout),
+        name = stringResource(id = logout),
         modifier = Modifier.clickable {
             logout(
                 onRouteClick, viewModel

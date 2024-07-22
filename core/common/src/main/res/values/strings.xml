@@ -19,7 +19,7 @@
     <string name="title">Título</string>
     <string name="category">Categoria</string>
     <string name="services">Serviços</string>
-
+    <string name="address">Endereço</string>
     <string name="zip_code">CEP</string>
     <string name="street">Rua</string>
     <string name="number">Número</string>
@@ -27,7 +27,14 @@
     <string name="city">Cidade</string>
     <string name="state">Estado</string>
     <string name="country">País</string>
-
+    <string name="save">Salvar</string>
+    <string name="profile">Perfil</string>
+    <string name="cpf">Cpf</string>
+    <string name="full_name">Nome completo</string>
+    <string name="email">Email</string>
+    <string name="phone">Celular</string>
+    <string name="birth_date">Data de aniversário</string>
+    <string name="logout">Sair</string>
 
     <string name="erro_message_list_travels">Estamos em manutenção, tente novamente mais tarde.</string>
     <string name="document_analisys_description">Cadastre seu documento contendo CPF (frente e verso), para que possa cadastrar um serviço</string>
