@@ -1,12 +1,10 @@
 package com.arrudeia.feature.trip.presentation.viewmodel
 
-import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.arrudeia.core.common.R.string.generic_error
 import com.arrudeia.core.result.Result
-import com.arrudeia.feature.trip.R
-import com.arrudeia.feature.trip.R.string.erro_message_list_travels
 import com.arrudeia.feature.trip.domain.GetTravelByIdUseCase
 import com.arrudeia.feature.trip.presentation.map.mapTravelToUiModel
 import com.arrudeia.feature.trip.presentation.model.TripUIModel
@@ -46,7 +44,7 @@ class TripDetailViewModel @Inject constructor(
                 }
 
                 is Result.Error -> {
-                    travelUiState.value = TripDetailUiState.Error(erro_message_list_travels)
+                    travelUiState.value = TripDetailUiState.Error(generic_error)
                 }
 
                 is Result.Loading -> {

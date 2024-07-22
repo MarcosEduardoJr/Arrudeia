@@ -32,11 +32,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.arrudeia.core.common.R.string.description
+import com.arrudeia.core.common.R.string.include
+import com.arrudeia.core.common.R.string.optional
 import com.arrudeia.core.designsystem.R
 import com.arrudeia.core.designsystem.R.color.colorPrimary
 import com.arrudeia.core.designsystem.component.ArrudeiaButtonColor
 import com.arrudeia.core.domain.util.toCurrencyReal
-import com.arrudeia.feature.trip.R.string.description
 import com.arrudeia.feature.trip.R.string.from
 import com.arrudeia.feature.trip.R.string.talk_with_agency
 import com.arrudeia.feature.trip.presentation.model.TripUIModel
@@ -176,7 +178,7 @@ private fun headerContentDescription(item: TripUIModel?) {
 private fun optional(item: TripUIModel?) {
     if (item?.optional.orEmpty().isNotEmpty()) {
         Text(
-            text = stringResource(com.arrudeia.feature.trip.R.string.optional),
+            text = stringResource(optional),
             color = Color.Black,
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold,
@@ -214,7 +216,7 @@ private fun optional(item: TripUIModel?) {
 private fun include(item: TripUIModel?) {
     if (item?.include.orEmpty().isNotEmpty()) {
         Text(
-            text = stringResource(com.arrudeia.feature.trip.R.string.include),
+            text = stringResource(include),
             color = Color.Black,
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold,

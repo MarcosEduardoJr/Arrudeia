@@ -7,6 +7,7 @@ import javax.inject.Inject
 import kotlin.coroutines.resume
 import com.arrudeia.core.result.Result
 import com.arrudeia.feature.trip.R
+import com.arrudeia.core.common.R.string.generic_error
 
 class TripTravelRepositoryImpl @Inject constructor(
     private val db: FirebaseFirestore
@@ -25,7 +26,7 @@ class TripTravelRepositoryImpl @Inject constructor(
                     continuation.resume(Result.Success(list))
                 }
                 .addOnFailureListener {
-                    continuation.resume(Result.Error(R.string.erro_message_list_travels))
+                    continuation.resume(Result.Error(generic_error))
                 }
         }
     }
@@ -33,7 +34,7 @@ class TripTravelRepositoryImpl @Inject constructor(
 
     override suspend fun getTravelById(id: Long): Result<TravelRepositoryEntity?> {
         var item: Result<TravelRepositoryEntity?> =
-            Result.Error(R.string.erro_message_list_travels)
+            Result.Error(generic_error)
 
         when (val result = getAllTravels()) {
             is Result.Success -> {
@@ -45,7 +46,7 @@ class TripTravelRepositoryImpl @Inject constructor(
             }
 
             else -> {
-                item = Result.Error(R.string.erro_message_list_travels)
+                item = Result.Error(generic_error)
             }
         }
 

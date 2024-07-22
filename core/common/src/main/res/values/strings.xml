@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="generic_error">Estamos em manutenção, tente novamente mais tarde.</string>
     <string name="loading">Carregando</string>
+    <string name="description">Descrição</string>
+    <string name="include">Incluso</string>
+    <string name="optional">Opcional</string>
 
 
     <string name="zip_code">CEP</string>
