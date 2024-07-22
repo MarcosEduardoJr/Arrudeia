@@ -39,7 +39,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.arrudeia.core.designsystem.R.color.background_grey_F7F7F9
 import com.arrudeia.core.designsystem.R.color.colorPrimary
 import com.arrudeia.core.designsystem.component.ArrudeiaLoadingWheel
-import com.arrudeia.feature.receipt.R.string.time
+import com.arrudeia.core.common.R.string.time
 import com.arrudeia.feature.receipt.presentation.model.ReceiptUIModel
 import com.arrudeia.feature.receipt.presentation.navigation.param.ReceiptDetailParam
 import com.arrudeia.feature.receipt.presentation.viewmodel.ReceiptViewModel

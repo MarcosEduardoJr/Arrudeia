@@ -1,31 +1,8 @@
 <resources>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
-    <string name="title_profile">Profile</string>
-    <string name="description_buy_information_travel_fast_detail"><![CDATA[The purchase <b> is not made using this app </b>, we only redirect it to the agency that makes the trip, this app <b>curates</b> the best <b>bate&volta</b> available on the Marketplace.]]></string>
-    <string name="talk_agency">Speak to the agency</string>
-    <string name="description_test">Lugar encantador onde possivel, blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah</string>
-    <string name="error_generic_network">Try again later</string>
-    <string name="near_to_you">Near to you</string>
-    <string name="destiny">Destiny</string>
-    <string name="arrudeia_tv">Arrudeia TV</string>
-    <string name="recife_pe">Recife, PE</string>
-
-    <string name="erro_message_list_travels">We are undergoing maintenance, please try again later.</string>
-    <string name="loading">Loading</string>
-    <string name="travels_only_this_city">We are only have traveling in Recife.</string>
-    <string name="receipt">Receitas</string>
-
-    <string name="receipts">Receipts</string>
-
-    <string name="time">Time</string>
-
-
-    <string name="EASY">Easy</string>
-    <string name="MEDIUM">Medium</string>
-    <string name="HARD">Hard</string>
-
-    <string name="ingredients">Ingredientes</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="difficult">Difficulty</string>
+    <string name="portions">Portions</string>
+    <string name="method_of_preparation">Preparation mode</string>
+    <string name="receipts">Revenues</string>
+    <string name="receipt">Revenue</string>
 </resources>
