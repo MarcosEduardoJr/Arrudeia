@@ -1,23 +1,16 @@
 <resources>
-    <string name="app_name">Arrudeia Wear</string>
-    <!--
-    This string is used for square devices and overridden by hello_world in
-    values-round/strings.xml for round devices.
-    -->
-    <string name="hello_world">From the Square world,\nHello, %1$s!</string>
-    <string name="tile_label">Example tile</string>
-    <string name="complication_label">Example complication</string>
 
-    <string name="connect_your_phone">This app requires the Arrudeia phone app to be installed and connected.</string>
-    <string name="heart_rate">Heart rate</string>
-    <string name="unsupported">Unsupported</string>
-    <string name="distance">Distance</string>
-    <string name="open_active_run_screen">Please open the new run screen on your phone to get started.</string>
-    <string name="pause_run">Pause run</string>
-    <string name="start_run">Start run</string>
-    <string name="finish_run">Finish run</string>
-    <string name="error_ongoing_exercise">There is already an ongoing exercise.</string>
-    <string name="error_exercise_already_ended">The exercise has already ended.</string>
+    <string name="app_name">Arrudeia Wear</string>
+    <string name="error_ongoing_exercise">Já exite uma trilha em andamento.</string>
+    <string name="error_exercise_already_ended">Trilha finalizada.</string>
     <string name="error_unknown">Erro Desconhecido</string>
+    <string name="unsupported">Não suportado</string>
+    <string name="heart_rate">Batimento cardíaco</string>
+    <string name="pause_run">Pausar trilha</string>
+    <string name="start_run">Começar trilha</string>
+    <string name="finish_run">Finalizar trilha</string>
+    <string name="open_active_run_screen">Por favor comece uma nova trilha no seu celular para começar.</string>
+    <string name="connect_your_phone">Esse aplicativo requer que tenha instalado o aplicativo do celular e esteja conectado.</string>
+
 
 </resources>
