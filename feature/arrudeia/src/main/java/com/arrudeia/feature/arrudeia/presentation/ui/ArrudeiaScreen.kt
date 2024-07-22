@@ -137,7 +137,15 @@ import com.google.maps.android.compose.Polyline
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.maps.android.compose.rememberMarkerState
 import kotlinx.coroutines.launch
-
+import com.arrudeia.core.common.R.string.address
+import com.arrudeia.core.common.R.string.phone as phoneResource
+import com.arrudeia.core.common.R.string.save
+import com.arrudeia.core.common.R.string.cancel
+import com.arrudeia.core.common.R.string.social_network
+import com.arrudeia.core.common.R.string.services
+import com.arrudeia.core.common.R.string.shoot_image
+import com.arrudeia.core.common.R.string.name as nameResource
+import com.arrudeia.core.common.R.string.description as descriptionResource
 
 @Composable
 fun arrudeiaRoute(
@@ -837,7 +845,7 @@ fun addMarkerBottomSheet(
                     },
                 ) {
                     Text(
-                        stringResource(R.string.save),
+                        stringResource( save),
                         color = colorResource(id = com.arrudeia.core.designsystem.R.color.colorPrimary)
                     )
                 }
@@ -867,7 +875,7 @@ fun addMarkerBottomSheet(
                 },
             ) {
                 Text(
-                    stringResource(R.string.cancel),
+                    stringResource( cancel),
                     color = colorResource(id = com.arrudeia.core.designsystem.R.color.text_grey)
                 )
             }
@@ -1024,7 +1032,7 @@ private fun formCategoriesDetail(
 
         Spacer(modifier = Modifier.size(10.dp))
         TextFieldInput(
-            hint = stringResource(id = R.string.name),
+            hint = stringResource(id =  nameResource),
             value = name,
             icon = painterResource(id = ic_pin),
             onValueChange = onNameChange,
@@ -1038,7 +1046,7 @@ private fun formCategoriesDetail(
 
 
         TextFieldInput(
-            hint = stringResource(id = R.string.phone),
+            hint = stringResource(id =  phoneResource),
             phone,
             icon = painterResource(id = com.arrudeia.core.designsystem.R.drawable.ic_smartphone),
             onValueChange = onPhoneChange,
@@ -1049,7 +1057,7 @@ private fun formCategoriesDetail(
 
 
         TextFieldInput(
-            hint = stringResource(id = R.string.social_network),
+            hint = stringResource(id =  social_network),
             socialNetwork,
             icon = painterResource(id = com.arrudeia.core.designsystem.R.drawable.ic_email),
             onValueChange = onSocialNetworkChange,
@@ -1070,7 +1078,7 @@ private fun formCategoriesDetail(
             },
         ) {
             Text(
-                stringResource(R.string.shoot_image),
+                stringResource( shoot_image),
                 color = Color.White
             )
         }
@@ -1094,7 +1102,7 @@ private fun formCategoriesDetail(
                 .wrapContentHeight(Alignment.CenterVertically),
             value = description,
             onValueChange = onDescriptionChange,
-            label = { Text(text = stringResource(R.string.description), color = Color.Black) },
+            label = { Text(text = stringResource(descriptionResource), color = Color.Black) },
             minLines = 2,
             maxLines = 6,
             colors = TextFieldDefaults.colors(
@@ -1170,7 +1178,7 @@ private fun searchAddressInput(
             viewModel.searchPlaces(it)
             arrudeiaChange(false)
         },
-        label = { Text(text = stringResource(R.string.address)) },
+        label = { Text(text = stringResource(address)) },
         minLines = 2,
         maxLines = 2,
         leadingIcon = {
@@ -1332,7 +1340,7 @@ fun placeDetailScreen(
 
             if (place.available?.isNotEmpty() == true) {
                 Text(
-                    text = stringResource(id = R.string.services),
+                    text = stringResource(id =  services),
                     fontWeight = FontWeight.Bold,
                     color = Color.Black,
                     modifier = Modifier.padding(bottom = 8.dp)

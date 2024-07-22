@@ -1,11 +1,20 @@
 <resources>
     <string name="loading">Loading</string>
+    <string name="error_disk_full">Failed to save because there is no free memory space.</string>
+    <string name="error_request_timeout">Request timeout exceeded</string>
+    <string name="error_too_many_requests">You\'ve reached your heart rate limit.</string>
+    <string name="error_no_internet">Unable to connect to the server, please check your connection.</string>
+    <string name="error_payload_too_large">The file you are trying to upload is very large.</string>
+    <string name="error_server_error">Something went wrong, please try again later.</string>
+    <string name="error_serialization">Unable to serialize the data.</string>
+    <string name="error_unknown">Unknown error.</string>
 
-    <string name="zip_code">Zip Code</string>
-    <string name="street">Street</string>
+    <string name="zip_code">CEP</string>
+    <string name="street">Two</string>
     <string name="number">Number</string>
     <string name="district">Neighborhood</string>
     <string name="city">City</string>
-    <string name="state">State</string>
+    <string name="state">state</string>
     <string name="country">Country</string>
+
 </resources>

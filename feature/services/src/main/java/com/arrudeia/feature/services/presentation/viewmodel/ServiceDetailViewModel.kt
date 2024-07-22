@@ -6,11 +6,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
+import com.arrudeia.core.common.R.string.generic_error
 import com.arrudeia.core.domain.IsSavedIdDocUserDataStoreUseCase
 import com.arrudeia.core.result.Result
 import com.arrudeia.core.ui.MetaDataReader
 import com.arrudeia.core.ui.VideoItem
-import com.arrudeia.feature.services.R.string.erro_message_list_travels
 import com.arrudeia.feature.services.domain.GetServiceDetailUseCase
 import com.arrudeia.feature.services.domain.GetUserPersonalInformationUseCase
 import com.arrudeia.feature.services.domain.entity.UserPersonalInformationUseCaseEntity
@@ -86,7 +86,7 @@ class ServiceDetailViewModel @Inject constructor(
             when (val result = useCase(id)) {
                 is Result.Success -> {
                     if (result.data == null) {
-                        uiState.value = ServiceDetailUiState.Error(erro_message_list_travels)
+                        uiState.value = ServiceDetailUiState.Error(generic_error)
                         return@launch
                     }
                     result.data?.let {
@@ -97,7 +97,7 @@ class ServiceDetailViewModel @Inject constructor(
                 }
 
                 is Result.Error -> {
-                    uiState.value = ServiceDetailUiState.Error(erro_message_list_travels)
+                    uiState.value = ServiceDetailUiState.Error(generic_error)
                 }
 
                 is Result.Loading -> {
@@ -132,9 +132,10 @@ class ServiceDetailViewModel @Inject constructor(
     var currentUser = mutableStateOf<UserPersonalInformationUseCaseEntity?>(null)
         private set
 
-    fun createFriendshipRegisterToFirebase(uuidUser : String ) {
+    fun createFriendshipRegisterToFirebase(uuidUser: String) {
         fetchServiceUser(uuidUser)
     }
+
     fun fetchServiceUser(uuidUser: String) {
         viewModelScope.launch {
             when (val response = userUseCase(uuidUser)) {

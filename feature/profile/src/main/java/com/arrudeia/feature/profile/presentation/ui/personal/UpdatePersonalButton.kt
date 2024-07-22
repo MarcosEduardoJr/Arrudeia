@@ -7,7 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import com.arrudeia.core.designsystem.component.ArrudeiaButtonColor
-import com.arrudeia.feature.profile.R
+import com.arrudeia.core.common.R.string.save
 
 @Composable
 fun updatePersonalButton(
@@ -21,7 +21,7 @@ fun updatePersonalButton(
         colorButton = colorButton,
     ) {
         Text(
-            text = stringResource(id = R.string.save),
+            text = stringResource(id =  save),
             style = MaterialTheme.typography.titleMedium,
             color = Color.White,
         )

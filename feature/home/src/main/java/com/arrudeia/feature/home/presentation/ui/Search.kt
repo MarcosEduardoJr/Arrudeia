@@ -1,7 +1,6 @@
 package com.arrudeia.feature.home.presentation.ui
 
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -13,18 +12,16 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.arrudeia.feature.home.R
+import com.arrudeia.core.common.R.string.search
 import com.arrudeia.core.designsystem.R.color.text_grey
-import com.arrudeia.feature.home.R.string.search
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun search(modifier: Modifier, searchTravel: String, onSearchTravelChange: (String) -> Unit) {
     TextField(
         modifier = modifier,
         value = searchTravel,
         onValueChange = onSearchTravelChange,
-        label = { Text(text = stringResource( search),color = colorResource(id = text_grey)) },
+        label = { Text(text = stringResource(search), color = colorResource(id = text_grey)) },
         singleLine = true,
         leadingIcon = {
             Icon(

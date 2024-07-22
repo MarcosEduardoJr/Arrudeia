@@ -32,12 +32,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.arrudeia.core.common.R.string.description
+import com.arrudeia.core.common.R.string.include
+import com.arrudeia.core.common.R.string.optional
 import com.arrudeia.core.designsystem.R
 import com.arrudeia.core.designsystem.R.color.colorPrimary
-import com.arrudeia.core.domain.util.toCurrencyReal
 import com.arrudeia.feature.arrudeia.presentation.model.ArrudeiaPlaceDetailsUiModel
-import com.arrudeia.feature.trip.R.string.description
-import com.arrudeia.feature.trip.R.string.from
 import com.arrudeia.feature.trip.presentation.model.TripUIModel
 
 @Composable
@@ -181,7 +181,7 @@ private fun headerContentDescription(item: ArrudeiaPlaceDetailsUiModel) {
 private fun optional(item: TripUIModel?) {
     if (item?.optional.orEmpty().isNotEmpty()) {
         Text(
-            text = stringResource(com.arrudeia.feature.trip.R.string.optional),
+            text = stringResource(optional),
             color = Color.Black,
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold,
@@ -200,7 +200,7 @@ private fun optional(item: TripUIModel?) {
                         contentDescription = null,
                         modifier = Modifier
                             .size(24.dp),
-                        colorFilter = ColorFilter.tint(color = colorResource(id = R.color.colorPrimary))
+                        colorFilter = ColorFilter.tint(color = colorResource(id = colorPrimary))
                     )
                     Spacer(modifier = Modifier.size(2.dp))
                     Text(
@@ -220,7 +220,7 @@ private fun Availables(item: ArrudeiaPlaceDetailsUiModel) {
     val context = LocalContext.current
     if (item.available?.isNotEmpty() == true) {
         Text(
-            text = stringResource(com.arrudeia.feature.trip.R.string.include),
+            text = stringResource(include),
             color = Color.Black,
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold,

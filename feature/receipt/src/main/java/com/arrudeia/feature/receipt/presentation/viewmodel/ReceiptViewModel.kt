@@ -3,7 +3,7 @@ package com.arrudeia.feature.receipt.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.arrudeia.core.result.Result
-import com.arrudeia.feature.receipt.R.string.erro_message_list_travels
+import com.arrudeia.core.common.R.string.generic_error
 import com.arrudeia.feature.receipt.domain.GetReceiptsUseCase
 import com.arrudeia.feature.receipt.presentation.map.mapToUiModel
 import com.arrudeia.feature.receipt.presentation.model.ReceiptUIModel
@@ -37,7 +37,7 @@ class ReceiptViewModel @Inject constructor(
                 }
 
                 is Result.Error -> {
-                    uiState.value = ReceiptsUiState.Error(erro_message_list_travels)
+                    uiState.value = ReceiptsUiState.Error(generic_error)
                 }
 
                 is Result.Loading -> {

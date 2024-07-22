@@ -1,7 +1,7 @@
 package com.arrudeia.feature.checklist.domain
 
+import com.arrudeia.core.common.R.string.generic_error
 import com.arrudeia.core.result.Result
-import com.arrudeia.feature.checklist.R
 import com.arrudeia.feature.checklist.data.CheckListRepositoryImpl
 import com.arrudeia.feature.checklist.data.entity.CheckListRepositoryEntity
 import com.arrudeia.feature.checklist.domain.entity.CheckListUseCaseEntity
@@ -16,7 +16,7 @@ class GetCheckListUseCase @Inject constructor(
 
     private fun Result<List<CheckListRepositoryEntity>?>.mapToUseCaseEntity(): Result<List<CheckListUseCaseEntity>?> {
         var item: Result<List<CheckListUseCaseEntity>?> =
-            Result.Error(R.string.erro_message_list_travels)
+            Result.Error(generic_error)
         when (this) {
             is Result.Success -> {
                 Result.Success(this.data?.let {
@@ -39,7 +39,7 @@ class GetCheckListUseCase @Inject constructor(
             }
 
             else -> {
-                item = Result.Error(R.string.erro_message_list_travels)
+                item = Result.Error(generic_error)
             }
         }
         return item

@@ -8,7 +8,6 @@ import androidx.media3.common.Player
 import com.arrudeia.core.result.Result
 import com.arrudeia.core.ui.MetaDataReader
 import com.arrudeia.core.ui.VideoItem
-import com.arrudeia.feature.aid.R.string.erro_message_list_travels
 import com.arrudeia.feature.aid.domain.GetAidDetailUseCase
 import com.arrudeia.feature.aid.presentation.map.toEntity
 import com.arrudeia.feature.aid.presentation.model.AidDetailUiModel
@@ -19,6 +18,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import com.arrudeia.core.common.R.string.generic_error
 
 @HiltViewModel
 class AidDetailViewModel @Inject constructor(
@@ -74,7 +74,7 @@ class AidDetailViewModel @Inject constructor(
             when (val result = useCase(id)) {
                 is Result.Success -> {
                     if (result.data == null) {
-                        uiState.value = AidDetailUiState.Error(erro_message_list_travels)
+                        uiState.value = AidDetailUiState.Error(generic_error)
                         return@launch
                     }
                     result.data?.let {
@@ -85,7 +85,7 @@ class AidDetailViewModel @Inject constructor(
                 }
 
                 is Result.Error -> {
-                    uiState.value = AidDetailUiState.Error(erro_message_list_travels)
+                    uiState.value = AidDetailUiState.Error(generic_error)
                 }
 
                 is Result.Loading -> {

@@ -54,6 +54,7 @@ import com.arrudeia.core.notification.ActiveRunService
 import com.droidmaster.arrudeia.wear.app.R
 import com.droidmaster.arrudeia.wear.app.ambient.AmbientObserver
 import com.droidmaster.arrudeia.wear.app.ambient.ambientMode
+import com.arrudeia.core.common.R.string.distance
 
 @Composable
 fun TrackerScreenRoot(
@@ -168,7 +169,7 @@ private fun TrackerScreen(
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 RunDataCard(
-                    title = stringResource(id = R.string.distance),
+                    title = stringResource(id =  distance),
                     value = (state.distanceMeters / 1000.0).toFormattedKm(),
                     modifier = Modifier.weight(1f)
                 )

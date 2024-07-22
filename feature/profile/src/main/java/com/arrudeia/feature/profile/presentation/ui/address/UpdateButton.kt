@@ -9,7 +9,7 @@ import androidx.compose.ui.res.stringResource
 import com.arrudeia.core.designsystem.component.ArrudeiaButtonColor
 import com.arrudeia.feature.profile.R
 
-
+import com.arrudeia.core.common.R.string.save
 @Composable
 fun updateButton(
     clickButton: () -> Unit,
@@ -22,7 +22,7 @@ fun updateButton(
         colorButton = colorButton,
     ) {
         Text(
-            text = stringResource(id = R.string.save),
+            text = stringResource(id =  save),
             style = MaterialTheme.typography.titleMedium,
             color = Color.White,
         )

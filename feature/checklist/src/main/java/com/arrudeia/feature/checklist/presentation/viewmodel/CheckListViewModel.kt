@@ -4,7 +4,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.arrudeia.core.result.Result
-import com.arrudeia.feature.checklist.R.string.erro_message_list_travels
 import com.arrudeia.feature.checklist.domain.GetCheckListUseCase
 import com.arrudeia.feature.checklist.presentation.model.CheckListUIModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,6 +13,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import com.arrudeia.feature.checklist.presentation.map.mapToCheckListUiModel
+import com.arrudeia.core.common.R.string.generic_error
 
 @HiltViewModel
 class CheckListViewModel @Inject constructor(
@@ -41,7 +41,7 @@ class CheckListViewModel @Inject constructor(
                 }
 
                 is Result.Error -> {
-                    uiState.value = CheckListUiState.Error(erro_message_list_travels)
+                    uiState.value = CheckListUiState.Error(generic_error)
                 }
 
                 is Result.Loading -> {

@@ -1,9 +1,9 @@
 package com.arrudeia.feature.home.data
 
 import com.apollographql.apollo3.ApolloClient
+import com.arrudeia.core.common.R.string.generic_error
 import com.arrudeia.core.graphql.GetUserGraphQuery
 import com.arrudeia.core.result.Result
-import com.arrudeia.feature.home.R
 import com.arrudeia.feature.home.data.entity.UserPersonalInformationRepositoryEntity
 import javax.inject.Inject
 
@@ -15,7 +15,7 @@ class HomeProfileRepositoryImpl @Inject constructor(
             Result<UserPersonalInformationRepositoryEntity?> {
         val response = apolloClient.query(GetUserGraphQuery(uuid)).execute()
         if (response.hasErrors())
-            return Result.Error(R.string.error_get_user)
+            return Result.Error(generic_error)
         return Result.Success(response.data?.user?.toEntity())
     }
 }

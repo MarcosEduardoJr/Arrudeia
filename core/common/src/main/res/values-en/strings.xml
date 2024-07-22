@@ -1,7 +1,28 @@
 <resources>
+    <string name="generic_error">We are undergoing maintenance, please try again later.</string>
     <string name="loading">Loading</string>
-
-
+    <string name="description">Description</string>
+    <string name="include">Even</string>
+    <string name="optional">Optional</string>
+    <string name="trail">Trail</string>
+    <string name="_continue">Continue</string>
+    <string name="finish">Finish</string>
+    <string name="search">To look for</string>
+    <string name="places">Places</string>
+    <string name="trips">Trips</string>
+    <string name="permission_required">Permission required</string>
+    <string name="location_rationale">To track your location, this app needs your permission to do so. Confirm to grant.</string>
+    <string name="notification_rationale">To display the current time as a notification, this app needs your permission to do so. Confirm to grant.</string>
+    <string name="duration">Duration</string>
+    <string name="distance">Distance</string>
+    <string name="delete">To switch off</string>
+    <string name="time">Tempo</string>
+    <string name="photo">Photo</string>
+    <string name="title">Title</string>
+    <string name="category">Category</string>
+    <string name="services">Services</string>
+    <string name="address">Address</string>
+    <string name="name">Name</string>
     <string name="zip_code">Zip Code</string>
     <string name="street">Street</string>
     <string name="number">Number</string>
@@ -9,9 +30,28 @@
     <string name="city">City</string>
     <string name="state">State</string>
     <string name="country">Country</string>
-
-
+    <string name="save">To save</string>
+    <string name="profile">Profile</string>
+    <string name="cpf">Cpf</string>
+    <string name="full_name">Full name</string>
+    <string name="email">Email</string>
+    <string name="phone">Cell phone</string>
+    <string name="birth_date">Birthday</string>
+    <string name="logout">To go out</string>
+    <string name="cancel">Cancel</string>
+    <string name="shoot_image">Take a picture</string>
+    <string name="social_network">Social network</string>
     <string name="erro_message_list_travels">We are undergoing maintenance, please try again later.</string>
     <string name="document_analisys_description">Register your document containing CPF (front and back), so you can register a service</string>
     <string name="document_analisys_error">The photo of the document must be legible</string>
+
+    <string name="error_request">We are undergoing maintenance, please try again later.</string>
+    <string name="identification_document">Identification document</string>
+    <string name="error_try_again_later">An error occurred, please try again later!</string>
+
+    <string name="active_run">Active Run</string>
+
+    <string name="need_know_location_permission">We need location permission to be enabled for all features to work correctly</string>
+    <string name="yes">Sim</string>
+    <string name="no">No</string>
 </resources>

@@ -6,13 +6,10 @@ import androidx.lifecycle.viewModelScope
 import com.arrudeia.core.designsystem.component.DropListUiModel
 import com.arrudeia.core.domain.IsSavedIdDocUserDataStoreUseCase
 import com.arrudeia.core.result.Result
-import com.arrudeia.feature.services.R.string.erro_message_list_travels
 import com.arrudeia.feature.services.domain.GetServicesExpertiseUseCase
 import com.arrudeia.feature.services.domain.GetServicesUseCase
 import com.arrudeia.feature.services.presentation.map.mapToUiModel
 import com.arrudeia.feature.services.presentation.map.toEntity
-import com.arrudeia.feature.services.presentation.model.CepAddressUiModel
-import com.arrudeia.feature.services.presentation.model.ServiceExpertiseUiModel
 import com.arrudeia.feature.services.presentation.model.ServiceUIModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,6 +17,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import com.arrudeia.core.common.R.string.generic_error
 
 @HiltViewModel
 class ServiceViewModel @Inject constructor(
@@ -54,7 +52,7 @@ class ServiceViewModel @Inject constructor(
                 }
 
                 is Result.Error -> {
-                    uiState.value = ServiceUiState.Error(erro_message_list_travels)
+                    uiState.value = ServiceUiState.Error(generic_error)
                 }
 
                 is Result.Loading -> {
@@ -76,7 +74,7 @@ class ServiceViewModel @Inject constructor(
 
                 is Result.Error -> {
                     uiStateExpertise.value =
-                        ServiceExpertiseUiState.Error(erro_message_list_travels)
+                        ServiceExpertiseUiState.Error(generic_error)
                 }
 
                 is Result.Loading -> {

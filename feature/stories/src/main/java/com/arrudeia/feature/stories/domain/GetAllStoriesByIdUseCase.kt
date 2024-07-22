@@ -1,7 +1,7 @@
 package com.arrudeia.feature.stories.domain
 
+import com.arrudeia.core.common.R.string.generic_error
 import com.arrudeia.core.result.Result
-import com.arrudeia.feature.stories.R
 import com.arrudeia.feature.stories.data.StoriesRepositoryImpl
 import com.arrudeia.feature.stories.data.entity.StoryRepositoryEntity
 import com.arrudeia.feature.stories.domain.entity.StoryUseCaseEntity
@@ -22,7 +22,7 @@ class GetAllStoriesByIdUseCase @Inject constructor(
                 }
             }
 
-            is Result.Error, is Result.Loading -> return Result.Error(R.string.erro_message_stories)
+            is Result.Error, is Result.Loading -> return Result.Error(generic_error)
         }
 
         return Result.Success(result)

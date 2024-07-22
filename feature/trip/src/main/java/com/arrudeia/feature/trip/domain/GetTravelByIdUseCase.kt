@@ -1,11 +1,11 @@
 package com.arrudeia.feature.trip.domain
 
+import com.arrudeia.core.common.R.string.generic_error
+import com.arrudeia.core.result.Result
 import com.arrudeia.feature.trip.data.TripTravelRepositoryImpl
 import com.arrudeia.feature.trip.data.entity.TravelRepositoryEntity
 import com.arrudeia.feature.trip.domain.entity.TravelUseCaseEntity
 import javax.inject.Inject
-import com.arrudeia.core.result.Result
-import com.arrudeia.feature.trip.R
 
 class GetTravelByIdUseCase @Inject constructor(
     private val repository: TripTravelRepositoryImpl,
@@ -15,7 +15,7 @@ class GetTravelByIdUseCase @Inject constructor(
         repository.getTravelById(id).mapToTravelUseCaseEntity()
 
     private fun Result<TravelRepositoryEntity?>.mapToTravelUseCaseEntity(): Result<TravelUseCaseEntity?> {
-        var item: Result<TravelUseCaseEntity?> = Result.Error(R.string.erro_message_list_travels)
+        var item: Result<TravelUseCaseEntity?> = Result.Error(generic_error)
         when (this) {
             is Result.Success -> {
                 Result.Success(this.data?.let {
@@ -45,7 +45,7 @@ class GetTravelByIdUseCase @Inject constructor(
             }
 
             else -> {
-                item = Result.Error(R.string.erro_message_list_travels)
+                item = Result.Error(generic_error)
             }
         }
 

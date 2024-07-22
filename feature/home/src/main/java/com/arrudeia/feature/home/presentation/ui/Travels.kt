@@ -59,31 +59,28 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.arrudeia.core.common.R.string.places
+import com.arrudeia.core.common.R.string.trips
 import com.arrudeia.core.data.navigation.arrudeiaRoute
 import com.arrudeia.core.designsystem.R
 import com.arrudeia.core.designsystem.R.color.background_grey_F7F7F9
 import com.arrudeia.core.designsystem.R.color.colorPrimary
 import com.arrudeia.core.designsystem.R.drawable.ic_calendar
 import com.arrudeia.core.designsystem.R.drawable.ic_pin
-import com.arrudeia.core.designsystem.R.drawable.paid_24px
 import com.arrudeia.core.designsystem.component.ArrudeiaLoadingWheel
 import com.arrudeia.core.designsystem.component.TextSwitch
 import com.arrudeia.core.domain.util.toCurrencyReal
 import com.arrudeia.feature.arrudeia.presentation.model.ArrudeiaPlaceDetailsUiModel
-import com.arrudeia.feature.home.R.string.places
+import com.arrudeia.feature.home.R.string.empty_list_places
 import com.arrudeia.feature.home.R.string.register_new_place
-import com.arrudeia.feature.home.R.string.trips
 import com.arrudeia.feature.home.presentation.model.TravelUIModel
+import com.arrudeia.feature.home.presentation.navigation.param.PlaceDetailParam
 import com.arrudeia.feature.home.presentation.viewmodel.HomeViewModel
 import com.arrudeia.feature.home.presentation.viewmodel.TravelUiState
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
-import kotlinx.coroutines.DelicateCoroutinesApi
-import com.arrudeia.feature.home.R.string.empty_list_places
-import com.arrudeia.feature.home.presentation.navigation.param.PlaceDetailParam
 
-@OptIn(DelicateCoroutinesApi::class)
 @Composable
 fun PagerHome(
     viewModel: HomeViewModel,

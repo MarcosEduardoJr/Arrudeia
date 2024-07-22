@@ -27,6 +27,8 @@ import com.arrudeia.core.designsystem.component.util.toFormattedPace
 import com.arrudeia.core.run.domain.RunData
 import com.arrudeia.feature.trail.R
 import kotlin.time.Duration
+import com.arrudeia.core.common.R.string.duration
+import com.arrudeia.core.common.R.string.distance
 
 @Composable
 fun RunDataCard(
@@ -42,7 +44,7 @@ fun RunDataCard(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         RunDataItem(
-            title = stringResource(id = R.string.duration),
+            title = stringResource(id =  duration),
             value = elapsedTime.formatted(),
             valueFontSize = 32.sp
         )
@@ -54,7 +56,7 @@ fun RunDataCard(
             horizontalArrangement = Arrangement.SpaceAround
         ) {
             RunDataItem(
-                title = stringResource(id = R.string.distance),
+                title = stringResource(id =  distance),
                 value = (runData.distanceMeters / 1000.0).toFormattedKm(),
                 modifier = Modifier
                     .defaultMinSize(minWidth = 75.dp)

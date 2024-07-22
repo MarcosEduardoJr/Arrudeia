@@ -1,31 +1,18 @@
 <resources>
-    <string name="onboarding_saved">Saved</string>
-    <string name="onboarding_saved_loading">Loading saved…</string>
-    <string name="onboarding_empty_error">No saved updates</string>
-    <string name="onboarding_empty_description">Updates you save will be stored here\nto read later</string>
-    <string name="onboarding_removed">Bookmark removed</string>
-    <string name="onboarding_undo">UNDO</string>
-    <string name="start">Start</string>
-    <string name="sign">Enter</string>
+    <string name="start">To start</string>
+    <string name="sign">To enter</string>
+    <string name="sign_description_tired_job"><![CDATA[Do you have a tiring week at work\? <a href=\"link_1\">Arrudeia</a> and have fun because you deserve it!]]></string>
     <string name="sign_register">Register</string>
     <string name="sign_email">Email</string>
     <string name="sign_password">Password</string>
     <string name="sign_password_again">Confirm the Password</string>
-     <string name="sign_description_tired_job"><![CDATA[Do you have a tiring week at work\? <a href=\"link_1\">Arrudeia</a> and have fun because you deserve it!]]></string>
-    <string name="please_sign_in_to_continue_our_app">Log in to continue using our application.</string>
-    <string name="google_web_client_id_auth">1:400545955934:web:55a41052707b52883174cf</string>
     <string name="sign_password_lenght_error">The minimum password length is 6</string>
     <string name="sign_password_not_equals_to_confirm_password_error">Passwords must be the same</string>
-    <string name="sign_error_register">Unable to register, check the data entered</string>
-    <string name="sign_error_sign">User data not found</string>
-    <!-- content description -->
-    <string name="sign_content_description_email">Enter your email</string>
-    <string name="sign_content_description_password">Type the password</string>
-    <string name="sign_content_description_password_again">Enter the same password again</string>
-    <string name="erro_sign_user">We are undergoing maintenance, please try again later.</string>
-    <string name="loading">Loading</string>
-    <string name="forgot_password">I forgot the password</string>
-    <string name="reset_password">Change password</string>
     <string name="open_email_reset_password">Open your email to change password</string>
     <string name="erro_reset_password_try_later">Unable to change your password, try again later</string>
+    <string name="reset_password">Change password</string>
+    <string name="forgot_password">I forgot the password</string>
+    <string name="erro_sign_user">We are undergoing maintenance, please try again later.</string>
+    <string name="sign_error_sign">User data not found</string>
+
 </resources>

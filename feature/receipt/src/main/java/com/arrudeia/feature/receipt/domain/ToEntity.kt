@@ -8,11 +8,11 @@ import com.arrudeia.feature.receipt.data.entity.ReceiptRepositoryEntity
 import com.arrudeia.feature.receipt.domain.entity.IngredientReceiptDetailUseCaseEntity
 import com.arrudeia.feature.receipt.domain.entity.ReceiptDetailUseCaseEntity
 import com.arrudeia.feature.receipt.domain.entity.ReceiptUseCase
-
+import com.arrudeia.core.common.R.string.generic_error
 
 fun Result<ReceiptDetailRepositoryEntity?>.toEntity(): Result<ReceiptDetailUseCaseEntity?> {
     var item: Result<ReceiptDetailUseCaseEntity?> =
-        Result.Error(R.string.erro_message_list_travels)
+        Result.Error(generic_error)
     when (this) {
         is Result.Success -> {
             this.data?.let {
@@ -36,7 +36,7 @@ fun Result<ReceiptDetailRepositoryEntity?>.toEntity(): Result<ReceiptDetailUseCa
         }
 
         else -> {
-            item = Result.Error(R.string.erro_message_list_travels)
+            item = Result.Error(generic_error)
         }
     }
 
@@ -67,7 +67,7 @@ fun List<IngredientReceiptDetailRepositoryEntity?>?.toEntity(): List<IngredientR
 
 fun Result<List<ReceiptRepositoryEntity?>?>.mapToUseCaseEntity(): Result<List<ReceiptUseCase?>?> {
     var item: Result<List<ReceiptUseCase>?> =
-        Result.Error(R.string.erro_message_list_travels)
+        Result.Error(generic_error)
     when (this) {
         is Result.Success -> {
             Result.Success(this.data?.let {
@@ -95,7 +95,7 @@ fun Result<List<ReceiptRepositoryEntity?>?>.mapToUseCaseEntity(): Result<List<Re
         }
 
         else -> {
-            item = Result.Error(R.string.erro_message_list_travels)
+            item = Result.Error(generic_error)
         }
     }
     return item

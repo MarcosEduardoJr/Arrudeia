@@ -29,20 +29,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.arrudeia.core.common.R.string.time
 import com.arrudeia.core.designsystem.R
 import com.arrudeia.core.designsystem.R.color.colorPrimary
-import com.arrudeia.feature.receipt.presentation.model.ReceiptDetailUiModel
-import com.arrudeia.feature.receipt.R.string.ingredients
 import com.arrudeia.feature.receipt.R.string.difficult
-import com.arrudeia.feature.receipt.R.string.time
-import com.arrudeia.feature.receipt.R.string.portions
+import com.arrudeia.feature.receipt.R.string.ingredients
 import com.arrudeia.feature.receipt.R.string.method_of_preparation
+import com.arrudeia.feature.receipt.R.string.portions
+import com.arrudeia.feature.receipt.presentation.model.ReceiptDetailUiModel
 
 @Composable
 fun ReceiptDetailContent(
     item: ReceiptDetailUiModel?,
 ) {
-    val context = LocalContext.current
     Column(
         modifier = Modifier
             .padding(top = 240.dp)

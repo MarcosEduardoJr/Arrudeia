@@ -4,14 +4,11 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.media3.common.MediaItem
-import androidx.media3.common.MimeTypes
 import androidx.media3.common.Player
-import androidx.media3.datasource.DefaultDataSource
-import androidx.media3.exoplayer.source.ProgressiveMediaSource
+import com.arrudeia.core.common.R.string.generic_error
 import com.arrudeia.core.result.Result
 import com.arrudeia.core.ui.MetaDataReader
 import com.arrudeia.core.ui.VideoItem
-import com.arrudeia.feature.receipt.R.string.erro_message_list_travels
 import com.arrudeia.feature.receipt.domain.GetReceiptDetailUseCase
 import com.arrudeia.feature.receipt.presentation.map.toEntity
 import com.arrudeia.feature.receipt.presentation.model.ReceiptDetailUiModel
@@ -54,9 +51,7 @@ class ReceiptDetailViewModel @Inject constructor(
 
     fun playVideo() {
 
-player.play()
-
-
+        player.play()
 
 
     }
@@ -79,7 +74,7 @@ player.play()
             when (val result = useCase(id)) {
                 is Result.Success -> {
                     if (result.data == null) {
-                        uiState.value = ReceiptsDetailUiState.Error(erro_message_list_travels)
+                        uiState.value = ReceiptsDetailUiState.Error(generic_error)
                         return@launch
                     }
                     result.data?.let {
@@ -90,7 +85,7 @@ player.play()
                 }
 
                 is Result.Error -> {
-                    uiState.value = ReceiptsDetailUiState.Error(erro_message_list_travels)
+                    uiState.value = ReceiptsDetailUiState.Error(generic_error)
                 }
 
                 is Result.Loading -> {
