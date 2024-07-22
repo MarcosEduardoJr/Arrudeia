@@ -141,19 +141,16 @@ internal fun Sign(
     var passwordIconValueState by rememberSaveable { mutableStateOf(false) }
     var confirmPasswordValueState by rememberSaveable { mutableStateOf("") }
     var confirmPasswordIconValueState by rememberSaveable { mutableStateOf(false) }
-
+    var isLoading by rememberSaveable { mutableStateOf(false) }
     val sharedFlow by viewModel.sharedFlow.collectAsStateWithLifecycle()
     when (sharedFlow) {
         is SignUiState.Loading -> {
-            ArrudeiaLoadingWheel(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(50.dp),
-            )
+            isLoading = true
         }
 
         is SignUiState.Success -> {
             onRouteClick(homeRoute)
+            isLoading = false
         }
 
         is SignUiState.Error -> {
@@ -161,6 +158,11 @@ internal fun Sign(
             LaunchedEffect(true) {
                 onShowSnackbar(message, null)
             }
+            isLoading = false
+        }
+
+        else -> {
+            isLoading = false
         }
     }
 
@@ -200,6 +202,7 @@ internal fun Sign(
                         .clipToBounds(),
                     contentScale = ContentScale.Crop,
                 )
+
             }
             Box(
                 modifier = Modifier
@@ -211,6 +214,15 @@ internal fun Sign(
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 80.dp),
                     html = stringResource(id = sign_description_tired_job)
                 )
+
+                if (isLoading)
+                    ArrudeiaLoadingWheel(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(50.dp)
+                            .align(Alignment.Center),
+                    )
+
 
                 Column(
                     modifier = Modifier
@@ -461,7 +473,7 @@ private fun signTextField(
             focusedContainerColor = Color.White,
             unfocusedContainerColor = Color.White,
             cursorColor = Color.LightGray,
-             focusedTextColor = Color.Black,
+            focusedTextColor = Color.Black,
             unfocusedTextColor = Color.Black
         ),
         leadingIcon = {

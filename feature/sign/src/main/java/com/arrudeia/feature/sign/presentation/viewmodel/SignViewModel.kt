@@ -23,11 +23,11 @@ class SignViewModel @Inject constructor(
 ) : ViewModel() {
 
     var uiState: MutableStateFlow<SignUiState> =
-        MutableStateFlow(SignUiState.Loading)
+        MutableStateFlow(SignUiState.None)
     val sharedFlow = uiState.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(),
-        initialValue = SignUiState.Loading
+        initialValue = SignUiState.None
     )
 
     fun signUp(email: String, password: String) {
@@ -74,6 +74,7 @@ class SignViewModel @Inject constructor(
         data class Success(val success: Boolean = true) : SignUiState
         data class Error(val message: Int) : SignUiState
         data object Loading : SignUiState
+        data object None : SignUiState
     }
 
 }
