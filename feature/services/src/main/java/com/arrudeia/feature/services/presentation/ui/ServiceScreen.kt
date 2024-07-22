@@ -39,6 +39,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.arrudeia.core.common.R.string.category
 import com.arrudeia.core.designsystem.R.color.background_grey_F7F7F9
 import com.arrudeia.core.designsystem.R.color.colorPrimary
 import com.arrudeia.core.designsystem.component.ArrudeiaLoadingWheel
@@ -58,16 +59,11 @@ import com.arrudeia.feature.services.presentation.ui.chat.chatwithme.presentatio
 import com.arrudeia.feature.services.presentation.viewmodel.ServiceExpertiseUiState
 import com.arrudeia.feature.services.presentation.viewmodel.ServiceUiState
 import com.arrudeia.feature.services.presentation.viewmodel.ServiceViewModel
-import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import okhttp3.internal.wait
-import java.util.Timer
-import kotlin.concurrent.schedule
 
 @Composable
 internal fun ServiceRoute(
@@ -166,7 +162,8 @@ private fun Pager(
             Spacer(modifier = Modifier.size(10.dp))
 
             TextSwitch(
-                modifier = Modifier.padding(8.dp)
+                modifier = Modifier
+                    .padding(8.dp)
                     .height(56.dp)
                     .clip(RoundedCornerShape(50.dp))
                     .background(Color.White)
@@ -192,7 +189,7 @@ private fun Pager(
                                 if (listDrop.isNotEmpty() && listDrop[0].id != -1) {
                                     val dropComponentList = mutableListOf(
                                         DropListUiModel(
-                                            stringResource(id = R.string.category),
+                                            stringResource(id = category),
                                             Icons.Outlined.Build,
                                             -1
                                         )

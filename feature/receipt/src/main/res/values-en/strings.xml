@@ -3,6 +3,6 @@
     <string name="difficult">Difficulty</string>
     <string name="portions">Portions</string>
     <string name="method_of_preparation">Preparation mode</string>
-    <string name="receipts">Revenues</string>
-    <string name="receipt">Revenue</string>
+    <string name="receipts">Recipes</string>
+    <string name="receipt">Recipe</string>
 </resources>

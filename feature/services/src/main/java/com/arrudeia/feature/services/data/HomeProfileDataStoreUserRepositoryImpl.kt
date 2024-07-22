@@ -9,6 +9,7 @@ import com.arrudeia.feature.services.data.entity.ProfileDataStoreUserRepositoryE
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
+import com.arrudeia.core.common.R.string.generic_error
 
 
 class HomeProfileDataStoreUserRepositoryImpl @Inject constructor(
@@ -35,7 +36,7 @@ class HomeProfileDataStoreUserRepositoryImpl @Inject constructor(
                 image
             )
         }.firstOrNull()
-        return if (result != null) Result.Success(result) else Result.Error(R.string.error_get_user)
+        return if (result != null) Result.Success(result) else Result.Error(generic_error)
     }
 
 }

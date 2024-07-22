@@ -50,6 +50,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.arrudeia.core.common.R.string.category
+import com.arrudeia.core.common.R.string.description
+import com.arrudeia.core.common.R.string.photo
+import com.arrudeia.core.common.R.string.title
 import com.arrudeia.core.designsystem.R
 import com.arrudeia.core.designsystem.component.ArrudeiaButtonColor
 import com.arrudeia.core.designsystem.component.ArrudeiaLoadingWheel
@@ -59,11 +63,7 @@ import com.arrudeia.core.designsystem.component.DropListUiModel
 import com.arrudeia.core.designsystem.component.TextFieldInput
 import com.arrudeia.core.designsystem.component.camera.ImageSelectionScreen
 import com.arrudeia.core.ui.address.ArrudeiaddressForm
-import com.arrudeia.feature.services.R.string.category
-import com.arrudeia.feature.services.R.string.description
 import com.arrudeia.feature.services.R.string.fill_correct_field
-import com.arrudeia.feature.services.R.string.photo
-import com.arrudeia.feature.services.R.string.title
 import com.arrudeia.feature.services.presentation.model.NewServiceUserUiModel
 import com.arrudeia.feature.services.presentation.viewmodel.NewServiceUiState
 import com.arrudeia.feature.services.presentation.viewmodel.NewServiceViewModel
@@ -620,7 +620,7 @@ private fun fetchData(
         is ServiceExpertiseUiState.Success -> {
             val list = mutableListOf<DropListUiModel>(
                 DropListUiModel(
-                    stringResource(id = com.arrudeia.feature.services.R.string.category),
+                    stringResource(id = category),
                     Icons.Outlined.Build,
                     -1
                 )

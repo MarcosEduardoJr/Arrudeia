@@ -19,9 +19,11 @@ import com.arrudeia.feature.services.domain.entity.ServiceUserUseCaseEntity
 import com.arrudeia.feature.services.presentation.model.NewServiceUserImageUiModel
 import com.arrudeia.feature.services.presentation.model.NewServiceUserUiModel
 
+import com.arrudeia.core.common.R.string.generic_error
+
 fun Result<ServiceDetailRepositoryEntity?>.toServiceDetailUseCaseEntity(): Result<ServiceDetailUseCaseEntity?> {
     var item: Result<ServiceDetailUseCaseEntity?> =
-        Result.Error(R.string.erro_message_list_travels)
+        Result.Error(generic_error)
     when (this) {
         is Result.Success -> {
             this.data?.let {
@@ -50,7 +52,7 @@ fun Result<ServiceDetailRepositoryEntity?>.toServiceDetailUseCaseEntity(): Resul
         }
 
         else -> {
-            item = Result.Error(R.string.erro_message_list_travels)
+            item = Result.Error(generic_error)
         }
     }
 
@@ -81,7 +83,7 @@ fun List<ServiceImageRepositoryEntity?>?.toServiceUserImageUseCaseEntity(): List
 
 fun Result<List<ServiceRepositoryEntity?>?>.toServicesUseCaseEntity(): Result<List<ServiceCaseEntity>> {
     var item: Result<List<ServiceCaseEntity>> =
-        Result.Error(R.string.erro_message_list_travels)
+        Result.Error(generic_error)
     when (this) {
         is Result.Success -> {
             this.data?.let {
@@ -112,7 +114,7 @@ fun Result<List<ServiceRepositoryEntity?>?>.toServicesUseCaseEntity(): Result<Li
         }
 
         else -> {
-            item = Result.Error(R.string.erro_message_list_travels)
+            item = Result.Error(generic_error)
         }
     }
     return item
@@ -121,7 +123,7 @@ fun Result<List<ServiceRepositoryEntity?>?>.toServicesUseCaseEntity(): Result<Li
 
 fun Result<List<ServiceExpertiseRepositoryEntity>>.toEntity(): Result<List<ServiceExpertiseUseCaseEntity>> {
     var item: Result<List<ServiceExpertiseUseCaseEntity>> =
-        Result.Error(R.string.erro_message_list_travels)
+        Result.Error(generic_error)
     when (this) {
         is Result.Success -> {
             this.data?.let {
@@ -147,7 +149,7 @@ fun Result<List<ServiceExpertiseRepositoryEntity>>.toEntity(): Result<List<Servi
         }
 
         else -> {
-            item = Result.Error(R.string.erro_message_list_travels)
+            item = Result.Error(generic_error)
         }
     }
     return item
@@ -260,7 +262,7 @@ fun List<ServiceUserImageUseCase?>?.toServiceUserImageUiModel(): List<NewService
 
 fun Result<CepAddressRepositoryEntity?>.toCepAddressUseCaseEntity(): Result<CepAddressUseCaseEntity?> {
     var item: Result<CepAddressUseCaseEntity?> =
-        Result.Error(R.string.erro_message_list_travels)
+        Result.Error(generic_error)
     when (this) {
         is Result.Success -> {
             this.data?.let {
@@ -282,7 +284,7 @@ fun Result<CepAddressRepositoryEntity?>.toCepAddressUseCaseEntity(): Result<CepA
         }
 
         else -> {
-            item = Result.Error(R.string.erro_message_list_travels)
+            item = Result.Error(generic_error)
         }
     }
 

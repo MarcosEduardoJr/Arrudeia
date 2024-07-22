@@ -6,9 +6,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.arrudeia.core.common.R.string.generic_error
 import com.arrudeia.core.designsystem.component.DropListUiModel
 import com.arrudeia.core.result.Result
-import com.arrudeia.feature.services.R.string.erro_message_list_travels
 import com.arrudeia.feature.services.domain.CreateServiceImageUseCase
 import com.arrudeia.feature.services.domain.CreateServiceUseCase
 import com.arrudeia.feature.services.domain.GetAddressByZipCodeUseCase
@@ -79,7 +79,7 @@ class NewServiceViewModel @Inject constructor(
             when (val result = useCaseCepByZipCode(zipCode)) {
                 is Result.Success -> {
                     if (result.data == null) {
-                        uiStateZipCode.value = AddressUiState.Error(erro_message_list_travels)
+                        uiStateZipCode.value = AddressUiState.Error(generic_error)
                         return@launch
                     }
                     result.data?.let {
@@ -89,7 +89,7 @@ class NewServiceViewModel @Inject constructor(
                 }
 
                 is Result.Error -> {
-                    uiStateZipCode.value = AddressUiState.Error(erro_message_list_travels)
+                    uiStateZipCode.value = AddressUiState.Error(generic_error)
                 }
 
                 is Result.Loading -> {
@@ -104,7 +104,7 @@ class NewServiceViewModel @Inject constructor(
             when (val result = useCase(newServiceUserUiModel.toServiceUserUseCase())) {
                 is Result.Success -> {
                     if (result.data == null) {
-                        uiState.value = NewServiceUiState.Error(erro_message_list_travels)
+                        uiState.value = NewServiceUiState.Error(generic_error)
                         return@launch
                     }
                     result.data?.let {
@@ -115,7 +115,7 @@ class NewServiceViewModel @Inject constructor(
                 }
 
                 is Result.Error -> {
-                    uiState.value = NewServiceUiState.Error(erro_message_list_travels)
+                    uiState.value = NewServiceUiState.Error(generic_error)
                 }
 
                 is Result.Loading -> {
@@ -136,7 +136,7 @@ class NewServiceViewModel @Inject constructor(
 
                 is Result.Error -> {
                     uiStateExpertise.value =
-                        ServiceExpertiseUiState.Error(erro_message_list_travels)
+                        ServiceExpertiseUiState.Error(generic_error)
                 }
 
                 is Result.Loading -> {
