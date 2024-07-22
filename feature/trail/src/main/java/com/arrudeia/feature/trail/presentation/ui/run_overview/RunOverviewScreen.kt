@@ -36,7 +36,7 @@ import com.arrudeia.core.data.navigation.activeRunRoute
 import com.arrudeia.core.designsystem.R
 import com.arrudeia.core.designsystem.theme.HikingIcon
 import com.arrudeia.feature.trail.R.string.empty_list_trail
-import com.arrudeia.feature.trail.R.string.trail
+import com.arrudeia.core.common.R.string.trail
 import com.arrudeia.feature.trail.presentation.ui.run_overview.components.RunListItem
 import com.arrudeia.feature.trail.presentation.viewmodel.RunOverviewViewModel
 

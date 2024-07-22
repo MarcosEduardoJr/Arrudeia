@@ -47,6 +47,13 @@ import com.arrudeia.feature.trail.presentation.ui.run_overview.ArrudeiaScaffold
 import com.arrudeia.feature.trail.presentation.ui.run_overview.ArrudeiaFloatingActionButton
 import com.arrudeia.feature.trail.presentation.viewmodel.ActiveRunViewModel
 import java.io.ByteArrayOutputStream
+import com.arrudeia.core.common.R.string.trail
+import com.arrudeia.core.common.R.string._continue
+import com.arrudeia.core.common.R.string.finish
+import com.arrudeia.core.common.R.string.permission_required
+import com.arrudeia.core.common.R.string.location_rationale
+import com.arrudeia.core.common.R.string.notification_rationale
+import com.arrudeia.core.common.R.string.yes
 
 @Composable
 fun ActiveRunScreenRoot(
@@ -57,7 +64,7 @@ fun ActiveRunScreenRoot(
 ) {
     DisposableEffect(Unit) {
         onDispose {
-           viewModel.clear()
+            viewModel.clear()
         }
     }
 
@@ -174,7 +181,7 @@ private fun ActiveRunScreen(
         topAppBar = {
             ArrudeiaRunToolbar(
                 showBackButton = true,
-                title = stringResource(id = R.string.trail),
+                title = stringResource(id = trail),
                 onBackClick = {
                     onAction(ActiveRunAction.OnBackClick)
                 },
@@ -191,11 +198,7 @@ private fun ActiveRunScreen(
                     onAction(ActiveRunAction.OnToggleRunClick)
                 },
                 iconSize = 20.dp,
-                contentDescription = if (state.shouldTrack) {
-                    stringResource(id = R.string.pause_run)
-                } else {
-                    stringResource(id = R.string.start_run)
-                }
+                contentDescription = null
             )
         }
     ) { padding ->
@@ -235,14 +238,14 @@ private fun ActiveRunScreen(
 
     if (!state.shouldTrack && state.hasStartedRunning) {
         ArrudeiaDialog(
-            title = stringResource(id = R.string.running_is_paused),
+            title = stringResource(id = R.string.trail_is_paused),
             onDismiss = {
                 onAction(ActiveRunAction.OnResumeRunClick)
             },
             description = stringResource(id = R.string.resume_or_finish_run),
             primaryButton = {
                 ArrudeiaActionButton(
-                    text = stringResource(id = R.string.resume),
+                    text = stringResource(id = _continue),
                     isLoading = false,
                     onClick = {
                         onAction(ActiveRunAction.OnResumeRunClick)
@@ -252,7 +255,7 @@ private fun ActiveRunScreen(
             },
             secondaryButton = {
                 ArrudeiaOutlinedActionButton(
-                    text = stringResource(id = R.string.finish),
+                    text = stringResource(id = finish),
                     isLoading = state.isSavingRun,
                     onClick = {
                         onAction(ActiveRunAction.OnFinishRunClick)
@@ -265,24 +268,24 @@ private fun ActiveRunScreen(
 
     if (state.showLocationRationale || state.showNotificationRationale) {
         ArrudeiaDialog(
-            title = stringResource(id = R.string.permission_required),
+            title = stringResource(id = permission_required),
             onDismiss = { /* Normal dismissing not allowed for permissions */ },
             description = when {
                 state.showLocationRationale && state.showNotificationRationale -> {
-                    stringResource(id = R.string.location_notification_rationale)
+                    stringResource(id = R.string.trail_location_notification_rationale)
                 }
 
                 state.showLocationRationale -> {
-                    stringResource(id = R.string.location_rationale)
+                    stringResource(id = location_rationale)
                 }
 
                 else -> {
-                    stringResource(id = R.string.notification_rationale)
+                    stringResource(id = notification_rationale)
                 }
             },
             primaryButton = {
                 ArrudeiaOutlinedActionButton(
-                    text = stringResource(id = R.string.okay),
+                    text = stringResource(id =  yes),
                     isLoading = false,
                     onClick = {
                         onAction(ActiveRunAction.DismissRationaleDialog)

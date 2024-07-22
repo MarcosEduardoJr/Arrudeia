@@ -43,10 +43,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.arrudeia.core.common.R.string.delete
+import com.arrudeia.core.common.R.string.distance
 import com.arrudeia.core.designsystem.theme.ArrudeiaTheme
 import com.arrudeia.core.designsystem.theme.CalendarIcon
 import com.arrudeia.core.designsystem.theme.HikingIcon
-import com.arrudeia.core.designsystem.theme.RunOutlinedIcon
 import com.arrudeia.core.run.domain.Run
 import com.arrudeia.core.run.domain.location.Location
 import com.arrudeia.feature.trail.R
@@ -103,7 +104,7 @@ fun RunListItem(
         ) {
             DropdownMenuItem(
                 text = {
-                    Text(text = stringResource(id = R.string.delete))
+                    Text(text = stringResource(id = delete))
                 },
                 onClick = {
                     showDropDown = false
@@ -122,7 +123,7 @@ private fun MapImage(
 ) {
     GlideImage(
         model = imageUrl,
-        contentDescription = stringResource(id = R.string.run_map),
+        contentDescription = null,
         modifier = modifier
             .fillMaxWidth()
             .aspectRatio(16 / 9f)
@@ -165,7 +166,7 @@ private fun RunningTimeSection(
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = stringResource(id = R.string.total_running_time),
+                text = stringResource(id = R.string.total_trail_time),
                 color = Color.Black
             )
             Text(
@@ -205,7 +206,7 @@ private fun DataGrid(
 ) {
     val runDataUiList = listOf(
         RunDataUi(
-            name = stringResource(id = R.string.distance),
+            name = stringResource(id = distance),
             value = run.distance
         ),
         RunDataUi(

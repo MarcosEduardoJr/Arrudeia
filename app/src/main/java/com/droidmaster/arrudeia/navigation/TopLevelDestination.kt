@@ -20,7 +20,7 @@ import com.arrudeia.feature.checklist.R.string.checklist
 import com.arrudeia.feature.home.R.string.title_home
 import com.arrudeia.feature.receipt.R.string.receipt
 import com.arrudeia.feature.services.R.string.services
-import com.arrudeia.feature.trail.R.string.trail
+import com.arrudeia.core.common.R.string.trail
 
 enum class TopLevelDestination(
     val selectedIcon: ImageVector,
