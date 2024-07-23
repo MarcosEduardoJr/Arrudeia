@@ -125,7 +125,10 @@ dependencies {
     implementation(libs.room.runtime)
     kapt(libs.room.compiler)
     implementation(libs.room.ktx)
- 
+
+    testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.mockito.core)
+    testImplementation("com.apollographql.apollo3:apollo-testing-support:3.8.5")
 
 }
 
