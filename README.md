@@ -1,3 +1,4 @@
+https://vimeo.com/996205131?share=copy
 
 
 | O Arrudeia is a travel app made by tourists for tourists.<br/> It offers discounts on trips, a map with locations reviewed by other travelers, quick and cheap recipes, as well as first aid tips to ensure a more convenient, economical, and safe travel experience. | [Download](https://play.google.com/apps/internaltest/4701533423351218713) |
