@@ -4,10 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.arrudeia.feature.sign.R.string.erro_sign_user
 import com.arrudeia.feature.sign.R.string.sign_error_sign
-import com.arrudeia.feature.sign.domain.CreateUserDataStoreUseCase
-import com.arrudeia.feature.sign.domain.CreateUserFirebaseUseCase
-import com.arrudeia.feature.sign.domain.SignInUserFirebaseUseCase
-import com.arrudeia.feature.sign.domain.entity.SignFirebaseUserUseCaseEntity
+import com.arrudeia.core.sign.domain.CreateUserDataStoreUseCase
+import com.arrudeia.core.sign.domain.CreateUserFirebaseUseCase
+import com.arrudeia.core.sign.domain.SignInUserFirebaseUseCase
+import com.arrudeia.core.sign.domain.entity.SignFirebaseUserUseCaseEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -23,11 +23,11 @@ class SignViewModel @Inject constructor(
 ) : ViewModel() {
 
     var uiState: MutableStateFlow<SignUiState> =
-        MutableStateFlow(SignUiState.Loading)
+        MutableStateFlow(SignUiState.None)
     val sharedFlow = uiState.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(),
-        initialValue = SignUiState.Loading
+        initialValue = SignUiState.None
     )
 
     fun signUp(email: String, password: String) {
@@ -47,7 +47,7 @@ class SignViewModel @Inject constructor(
     fun signIn(email: String, password: String) {
         viewModelScope.launch {
             uiState.value = SignUiState.Loading
-            val result = signUseCase.invoke(email, password)
+            val result = signUseCase(email, password)
             if (result != null) {
                 saveLocally(result)
             } else {
@@ -74,6 +74,7 @@ class SignViewModel @Inject constructor(
         data class Success(val success: Boolean = true) : SignUiState
         data class Error(val message: Int) : SignUiState
         data object Loading : SignUiState
+        data object None : SignUiState
     }
 
 }

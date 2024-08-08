@@ -1,4 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="loading">Carregando</string>
+    <string name="error_disk_full">Falha ao salvar pois não tem espaço em memória livre.</string>
+    <string name="error_request_timeout">Ultrapassou tempo limite de requisição</string>
+    <string name="error_too_many_requests">Tu bateu o limite do batimento.</string>
+    <string name="error_no_internet">Não foi possivel conectar com o servidor, por favor verifique sua conexão.</string>
+    <string name="error_payload_too_large">O arquivo que tu esta tentando subir é muito grande.</string>
+    <string name="error_server_error">Algo aconteceu de errado, tente novamente mais tarde.</string>
+    <string name="error_serialization">Não foi possível serializar o dado.</string>
+    <string name="error_unknown">Erro desconhecido.</string>
+
+    <string name="zip_code">CEP</string>
+    <string name="street">Rua</string>
+    <string name="number">Número</string>
+    <string name="district">Bairro</string>
+    <string name="city">Cidade</string>
+    <string name="state">Estado</string>
+    <string name="country">País</string>
+
 </resources>

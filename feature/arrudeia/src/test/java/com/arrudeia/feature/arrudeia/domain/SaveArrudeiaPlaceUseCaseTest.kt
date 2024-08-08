@@ -1,8 +1,8 @@
 package com.arrudeia.feature.arrudeia.domain
 
 import android.net.Uri
-import com.arrudeia.feature.arrudeia.data.ArrudeiaPlaceRepositoryImpl
-import com.arrudeia.feature.arrudeia.data.FirebaseArrudeiaMapRepositoryImpl
+import com.arrudeia.core.places.data.ArrudeiaPlaceRepositoryImpl
+import com.arrudeia.core.places.data.FirebaseArrudeiaMapRepositoryImpl
 import com.arrudeia.feature.arrudeia.presentation.model.ArrudeiaAvailablePlaceUiModel
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.auth.FirebaseAuth
@@ -51,7 +51,10 @@ class SaveArrudeiaPlaceUseCaseTest {
                 anyString(),
                 anyString(),
                 anyInt(),
-                anyDouble(),
+                anyInt(),
+                anyString(),
+                anyString(),
+                anyString(),
                 anyString(),
                 anyString(),
                 anyString()
@@ -74,7 +77,10 @@ class SaveArrudeiaPlaceUseCaseTest {
             availables,
             "testCategoryName",
             "testSubCategoryName",
-            location
+            location,
+            1,
+            1,
+            "", "", "",
         )
 
         verify(firebaseArrudeiaMapRepositoryImpl).savePlaceImage(anyString(), anyOrNull())
@@ -87,7 +93,10 @@ class SaveArrudeiaPlaceUseCaseTest {
             anyString(),
             anyString(),
             anyInt(),
-            anyDouble(),
+            anyInt(),
+            anyString(),
+            anyString(),
+            anyString(),
             anyString(),
             anyString(),
             anyString()

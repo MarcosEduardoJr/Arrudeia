@@ -22,6 +22,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.CheckCircle
+import androidx.compose.material.icons.rounded.Close
+import androidx.compose.material.icons.rounded.Email
+import androidx.compose.material.icons.rounded.Lock
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -40,6 +45,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.autofill.AutofillType
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -73,7 +79,6 @@ import com.arrudeia.core.designsystem.R.color.colorWhite
 import com.arrudeia.core.designsystem.component.ArrudeiaButtonColor
 import com.arrudeia.core.designsystem.component.ArrudeiaLoadingWheel
 import com.arrudeia.core.designsystem.component.DefaultLinkMovementMethod
-import com.arrudeia.core.designsystem.icon.ArrudeiaIcons
 import com.arrudeia.core.designsystem.theme.ArrudeiaTheme
 import com.arrudeia.feature.sign.R
 import com.arrudeia.feature.sign.R.drawable.ic_bg_onboarding
@@ -88,6 +93,7 @@ import com.arrudeia.feature.sign.R.string.sign_register
 import com.arrudeia.feature.sign.presentation.viewmodel.SignViewModel
 import com.arrudeia.feature.sign.presentation.viewmodel.SignViewModel.SignUiState
 import com.arrudeia.core.data.navigation.homeRoute
+import com.arrudeia.core.designsystem.R.color.text_grey
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -106,7 +112,9 @@ internal fun SignRoute(
     onShowSnackbar: suspend (String, String?) -> Boolean,
     modifier: Modifier = Modifier,
     viewModel: SignViewModel = hiltViewModel(),
+    showBottomBar: (Boolean) -> Unit,
 ) {
+    showBottomBar(false)
     Sign(
         onRouteClick,
         viewModel,
@@ -114,6 +122,7 @@ internal fun SignRoute(
     )
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @SuppressLint("DesignSystem")
 @Composable
 internal fun Sign(
@@ -132,19 +141,16 @@ internal fun Sign(
     var passwordIconValueState by rememberSaveable { mutableStateOf(false) }
     var confirmPasswordValueState by rememberSaveable { mutableStateOf("") }
     var confirmPasswordIconValueState by rememberSaveable { mutableStateOf(false) }
-
+    var isLoading by rememberSaveable { mutableStateOf(false) }
     val sharedFlow by viewModel.sharedFlow.collectAsStateWithLifecycle()
     when (sharedFlow) {
         is SignUiState.Loading -> {
-            ArrudeiaLoadingWheel(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(50.dp),
-            )
+            isLoading = true
         }
 
         is SignUiState.Success -> {
             onRouteClick(homeRoute)
+            isLoading = false
         }
 
         is SignUiState.Error -> {
@@ -152,6 +158,11 @@ internal fun Sign(
             LaunchedEffect(true) {
                 onShowSnackbar(message, null)
             }
+            isLoading = false
+        }
+
+        else -> {
+            isLoading = false
         }
     }
 
@@ -191,6 +202,7 @@ internal fun Sign(
                         .clipToBounds(),
                     contentScale = ContentScale.Crop,
                 )
+
             }
             Box(
                 modifier = Modifier
@@ -203,6 +215,15 @@ internal fun Sign(
                     html = stringResource(id = sign_description_tired_job)
                 )
 
+                if (isLoading)
+                    ArrudeiaLoadingWheel(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(50.dp)
+                            .align(Alignment.Center),
+                    )
+
+
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -213,7 +234,7 @@ internal fun Sign(
                         onSearchQueryChanged = {},
                         textValueFieldParam = emailValueState,
                         onSearchTriggered = {},
-                        icon = ArrudeiaIcons.Email,
+                        icon = Icons.Rounded.Email,
                         imeAction = ImeAction.Next,
                         requestFocus = false,
                         placeHolderValue = stringResource(id = sign_email),
@@ -230,7 +251,7 @@ internal fun Sign(
                             onSearchQueryChanged = {},
                             textValueFieldParam = passwordValueState,
                             onSearchTriggered = {},
-                            icon = ArrudeiaIcons.Password,
+                            icon = Icons.Rounded.Lock,
                             imeAction = ImeAction.Done,
                             requestFocus = false,
                             placeHolderValue = stringResource(id = sign_password),
@@ -253,7 +274,7 @@ internal fun Sign(
                             onSearchQueryChanged = {},
                             textValueFieldParam = confirmPasswordValueState,
                             onSearchTriggered = {},
-                            icon = ArrudeiaIcons.Password,
+                            icon = Icons.Rounded.Lock,
                             imeAction = ImeAction.Done,
                             requestFocus = false,
                             placeHolderValue = stringResource(id = sign_password_again),
@@ -452,6 +473,8 @@ private fun signTextField(
             focusedContainerColor = Color.White,
             unfocusedContainerColor = Color.White,
             cursorColor = Color.LightGray,
+            focusedTextColor = Color.Black,
+            unfocusedTextColor = Color.Black
         ),
         leadingIcon = {
             Icon(
@@ -472,7 +495,7 @@ private fun signTextField(
                         },
                     ) {
                         Icon(
-                            imageVector = ArrudeiaIcons.CheckCircle,
+                            imageVector = Icons.Rounded.CheckCircle,
                             contentDescription = stringResource(
                                 id = sign,
                             ),
@@ -486,7 +509,7 @@ private fun signTextField(
                         },
                     ) {
                         Icon(
-                            imageVector = ArrudeiaIcons.Error,
+                            imageVector = Icons.Rounded.Close,
                             contentDescription = stringResource(
                                 id = sign,
                             ),
@@ -522,7 +545,7 @@ private fun signTextField(
         ),
         maxLines = 1,
         singleLine = true,
-        placeholder = { Text(placeHolderValue) },
+        placeholder = { Text(placeHolderValue, color = colorResource(id = text_grey)) },
     )
     LaunchedEffect(Unit) {
         if (requestFocus)

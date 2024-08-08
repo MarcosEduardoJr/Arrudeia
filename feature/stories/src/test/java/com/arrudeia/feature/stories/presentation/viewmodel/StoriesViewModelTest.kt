@@ -1,9 +1,9 @@
 package com.arrudeia.feature.stories.presentation.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
+import com.arrudeia.core.common.R.string.generic_error
 import com.arrudeia.core.result.Result
 import com.arrudeia.core.test.ViewModelTest
-import com.arrudeia.feature.stories.R
 import com.arrudeia.feature.stories.domain.GetAllStoriesByIdUseCase
 import com.arrudeia.feature.stories.domain.entity.StoryUseCaseEntity
 import com.arrudeia.feature.stories.presentation.navigation.STORIES_ID_ARG
@@ -44,12 +44,12 @@ class StoriesViewModelTest  : ViewModelTest(){
 
     @Test
     fun testFetchStoriesError() = coTest {
-        `when`(useCase.invoke(1)).thenReturn(Result.Error(R.string.erro_message_stories))
+        `when`(useCase.invoke(1)).thenReturn(Result.Error(generic_error))
 
         viewModel.fetchStories()
 
         Assert.assertTrue(viewModel.uiState.value is StoriesViewModel.StoriesUiState.Error)
-        Assert.assertEquals((viewModel.uiState.value as StoriesViewModel.StoriesUiState.Error).message, R.string.erro_message_stories)
+        Assert.assertEquals((viewModel.uiState.value as StoriesViewModel.StoriesUiState.Error).message, generic_error)
     }
 
     @Test

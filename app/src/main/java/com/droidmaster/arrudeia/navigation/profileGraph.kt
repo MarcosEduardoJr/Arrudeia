@@ -8,20 +8,24 @@ import com.arrudeia.feature.profile.presentation.navigation.profilePersonalInfor
 
 fun NavGraphBuilder.profileGraph(
     navController: NavHostController,
-    onShowSnackbar: suspend (String, String?) -> Boolean
+    onShowSnackbar: suspend (String, String?) -> Boolean,
+    showBottomBar: (Boolean) -> Unit,
 ) {
     profileGraph(
         onBackClick = { navController.popBackStack() },
         nestedGraphs = {
             profilePersonalInformationScreen(
                 onBackClick = { navController.popBackStack() },
-                onShowSnackbar = onShowSnackbar
+                onShowSnackbar = onShowSnackbar,
+                showBottomBar
             )
             profileAddressScreen(
                 onBackClick = { navController.popBackStack() },
                 onShowSnackbar = onShowSnackbar
             )
         },
-        onShowSnackbar = onShowSnackbar
+        onShowSnackbar = onShowSnackbar,
+        showBottomBar = showBottomBar
     )
+
 }

@@ -27,6 +27,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.arrudeia.core.designsystem.R
+import com.arrudeia.feature.profile.R.string.change_image
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
@@ -75,7 +76,7 @@ fun profileShorDetail(
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable { showDialogChangePhoto(true) },
-            text = stringResource(id = com.arrudeia.feature.profile.R.string.change_image),
+            text = stringResource(id = change_image),
             color = colorResource(id = R.color.colorPrimary),
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold,

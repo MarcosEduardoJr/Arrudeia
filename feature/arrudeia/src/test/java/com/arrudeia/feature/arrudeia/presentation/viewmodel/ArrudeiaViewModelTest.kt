@@ -1,9 +1,8 @@
-import android.net.Uri
 import com.arrudeia.core.test.ViewModelTest
 import com.arrudeia.feature.arrudeia.R
-import com.arrudeia.feature.arrudeia.domain.GetAllArrudeiaPlacesUseCase
+import com.arrudeia.core.places.domain.GetAllArrudeiaPlacesUseCase
 import com.arrudeia.feature.arrudeia.domain.SaveArrudeiaPlaceUseCase
-import com.arrudeia.feature.arrudeia.domain.entity.ArrudeiaPlaceDetailsUseCaseEntity
+import com.arrudeia.core.places.domain.entity.ArrudeiaPlaceDetailsUseCaseEntity
 import com.arrudeia.feature.arrudeia.presentation.model.ArrudeiaAvailablePlaceUiModel
 import com.arrudeia.feature.arrudeia.presentation.ui.AvailableOptions
 import com.arrudeia.feature.arrudeia.presentation.ui.CategoryOptions
@@ -20,7 +19,6 @@ import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
-import kotlinx.coroutines.test.advanceUntilIdle
 import com.arrudeia.core.result.Result
 
 @ExperimentalCoroutinesApi
@@ -57,14 +55,14 @@ class ArrudeiaViewModelTest : ViewModelTest() {
                 description = "",
                 image = "",
                 location = LatLng(0.0, 0.0),
-                rating = 0.0,
+                rating = 1,
                 priceLevel = 0,
                 comments = listOf(),
                 available = listOf()
             )
         )
 
-        `when`(getAllArrudeiaPlacesUseCase()).thenReturn(Result.Success(placeList))
+        `when`(getAllArrudeiaPlacesUseCase("")).thenReturn(Result.Success(placeList))
 
         viewModel.getPlacesMarker()
 
@@ -73,7 +71,7 @@ class ArrudeiaViewModelTest : ViewModelTest() {
 
     @Test
     fun `test getPlacesMarker with error`() = coTest {
-        `when`(getAllArrudeiaPlacesUseCase.invoke()).thenReturn(Result.Error(null))
+        `when`(getAllArrudeiaPlacesUseCase.invoke("")).thenReturn(Result.Error(null))
 
         viewModel.getPlacesMarker()
 
@@ -83,7 +81,7 @@ class ArrudeiaViewModelTest : ViewModelTest() {
     @Test
     fun `test savePlace with valid data`() = coTest {
         val place = "Place1"
-         viewModel.addAvailables( ArrudeiaAvailablePlaceUiModel(AvailableOptions.AVAILABLE_WI_FI))
+        viewModel.addAvailables(ArrudeiaAvailablePlaceUiModel(AvailableOptions.AVAILABLE_WI_FI))
         `when`(
             saveArrudeiaPlaceUseCase(
                 "name",
@@ -95,8 +93,8 @@ class ArrudeiaViewModelTest : ViewModelTest() {
                 categoryName = CategoryOptions.CATEGORY_FOOD.name,
                 subCategoryName = SubCategoryOptions.SUBCATEGORY_AIRPORT.name,
                 LatLng(0.0, 0.0),
-                0,
-               0.0
+                1,
+                1, "", "", ""
             )
         ).thenReturn(Result.Success(place))
 
@@ -107,7 +105,7 @@ class ArrudeiaViewModelTest : ViewModelTest() {
             "description",
             categoryName = CategoryOptions.CATEGORY_FOOD.name,
             subCategoryName = SubCategoryOptions.SUBCATEGORY_AIRPORT.name,
-            LatLng(0.0, 0.0)
+            LatLng(0.0, 0.0), "", "", "", priceLevel = 1, rating = 1
         )
 
         Assert.assertTrue(viewModel.saveMarkerUiState.value is SaveMarkerUiState.Success)
@@ -125,7 +123,7 @@ class ArrudeiaViewModelTest : ViewModelTest() {
                 listOf(),
                 CategoryOptions.CATEGORY_FOOD.name,
                 SubCategoryOptions.SUBCATEGORY_AIRPORT.name,
-                location = LatLng(0.0, 0.0)
+                location = LatLng(0.0, 0.0), 1,1, "", "", ""
             )
         ).thenReturn(Result.Error(R.string.not_possible_save))
 
@@ -136,7 +134,7 @@ class ArrudeiaViewModelTest : ViewModelTest() {
             "description",
             categoryName = CategoryOptions.CATEGORY_FOOD.name,
             subCategoryName = SubCategoryOptions.SUBCATEGORY_AIRPORT.name,
-            LatLng(0.0, 0.0)
+            LatLng(0.0, 0.0), "", "", "", priceLevel = 1, rating = 1
         )
 
         Assert.assertTrue(viewModel.saveMarkerUiState.value is SaveMarkerUiState.Error)

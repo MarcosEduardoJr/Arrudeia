@@ -22,6 +22,7 @@ import com.arrudeia.core.designsystem.R.color.background_grey_F7F7F9
 import com.arrudeia.core.designsystem.R.color.colorPrimary
 import com.arrudeia.core.designsystem.component.CircularIconButton
 import com.arrudeia.core.designsystem.component.camera.ImageSelectionScreen
+import com.arrudeia.core.ui.document.DocumentAnalisys
 import com.arrudeia.feature.profile.presentation.viewmodel.ProfilePersonalInformationViewModel
 
 @Composable
@@ -29,6 +30,7 @@ fun profilePersonalInformationRoute(
     onBackClick: () -> Unit,
     viewModel: ProfilePersonalInformationViewModel = hiltViewModel(),
     onShowSnackbar: suspend (String, String?) -> Boolean,
+    showBottomBar: (Boolean) -> Unit,
 ) {
     viewModel.getUserPersonalInformation()
 
@@ -40,8 +42,15 @@ fun profilePersonalInformationRoute(
     var birthDateValue by rememberSaveable { mutableStateOf("") }
     var profileImageValue by rememberSaveable { mutableStateOf("") }
     var showForm by rememberSaveable { mutableStateOf(false) }
+    var showDocumentAnalysisValue by rememberSaveable { mutableStateOf(false) }
 
-    if (showDialogChangePhoto)
+    if (showDocumentAnalysisValue)
+        DocumentAnalisys(
+            showDocumentAnalysis = { showDocumentAnalysisValue = it  },
+            onShowSnackbar = onShowSnackbar,
+            showBottomBar = showBottomBar
+        )
+    else if (showDialogChangePhoto)
         ImageSelectionScreen(
             { viewModel.onTakePhoto(it) },
             { showDialogChangePhoto = it }
@@ -65,10 +74,13 @@ fun profilePersonalInformationRoute(
             viewModel.uri.value ?: profileImageValue,
             { profileImageValue = it },
             onShowSnackbar,
-            onBackClick
+            onBackClick,
+            showDocumentAnalysisChange = { showDocumentAnalysisValue = it },
+            showDocumentAnalysisValue
         )
 
 }
+
 @Suppress("LongMethod")
 @Composable
 fun screenView(
@@ -90,6 +102,8 @@ fun screenView(
     onProfileImageChange: (String) -> Unit,
     onShowSnackbar: suspend (String, String?) -> Boolean,
     onBackClick: () -> Unit,
+    showDocumentAnalysisChange: (Boolean) -> Unit,
+    showDocumentAnalysis: Boolean
 ) {
     var updatingUser by rememberSaveable { mutableStateOf(false) }
     Box(
@@ -109,7 +123,8 @@ fun screenView(
                 },
                 icon = Icons.Rounded.ArrowBack,
                 backgroundColor = colorResource(id = background_grey_F7F7F9),
-                iconSize = 50.dp
+                iconSize = 50.dp,
+                modifier = Modifier
             )
         }
 
@@ -133,7 +148,10 @@ fun screenView(
             onShowSnackbar,
             Modifier
                 .fillMaxWidth()
-                .align(Alignment.TopCenter)
+                .align(Alignment.TopCenter),
+            onBackClick = onBackClick,
+            showDocumentAnalysisChange,
+            showDocumentAnalysis
         )
         var colorButton: Color
         var clickButton: () -> Unit

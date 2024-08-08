@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "400545955934",
+    "firebase_url": "https://arrudeia-5fedc-default-rtdb.firebaseio.com",
     "project_id": "arrudeia-5fedc",
     "storage_bucket": "arrudeia-5fedc.appspot.com"
   },
@@ -19,6 +20,14 @@
           "android_info": {
             "package_name": "com.droidmaster.arrudeia",
             "certificate_hash": "2938e67742599b94c55e62f1517264f34b0c4454"
+          }
+        },
+        {
+          "client_id": "400545955934-lg3hggl0jgrof1tid6093j0hf2uu48sq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.droidmaster.arrudeia",
+            "certificate_hash": "fc36829942f4136c2248fd0113126f954958939a"
           }
         },
         {

@@ -16,9 +16,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.arrudeia.feature.profile.R
 import com.arrudeia.feature.profile.presentation.model.ProfileUiModel
 
+import com.arrudeia.core.common.R.string.profile
 
 @Composable
 fun profileHeader(user: ProfileUiModel, modifier: Modifier) {
@@ -51,7 +51,7 @@ fun title(modifier: Modifier) {
     ) {
         Text(
             modifier = Modifier.padding(bottom = 10.dp),
-            text = stringResource(R.string.profile),
+            text = stringResource(profile),
             color = Color.Black,
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold,

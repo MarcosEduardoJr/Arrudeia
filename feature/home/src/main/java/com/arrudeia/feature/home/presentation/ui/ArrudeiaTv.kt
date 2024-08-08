@@ -50,16 +50,6 @@ fun arrudeiaTv(
     onStoriesClick: (String) -> Unit,
     modifier: Modifier
 ) {
-    Spacer(modifier = Modifier.size(30.dp))
-    Text(
-        modifier = Modifier.padding(bottom = 10.dp),
-        text = stringResource(R.string.arrudeia_tv),
-        color = Color.Black,
-        fontSize = 18.sp,
-        fontWeight = FontWeight.Bold,
-        textAlign = TextAlign.Start
-    )
-
 
     val arrTvUiState by viewModel.arrTvSharedFlow.collectAsStateWithLifecycle()
     viewModel.fetchDataArrTv()

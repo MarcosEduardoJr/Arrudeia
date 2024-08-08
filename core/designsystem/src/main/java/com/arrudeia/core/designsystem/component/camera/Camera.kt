@@ -147,7 +147,8 @@ fun ImageSelectionScreen(
                             onClick = {
                                 galleryLauncher.launch("image/*")
                             },
-                            icon = Icons.Default.Photo
+                            icon = Icons.Default.Photo,
+                            modifier = Modifier
                         )
 
                         CircularIconButton(
@@ -160,7 +161,8 @@ fun ImageSelectionScreen(
                                     showDialogChangePhotoChange
                                 )
                             },
-                            icon = Icons.Default.PhotoCamera
+                            icon = Icons.Default.PhotoCamera,
+                            modifier = Modifier
                         )
                     }
                 }

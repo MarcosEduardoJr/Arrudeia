@@ -85,10 +85,11 @@ fun CircularIconButton(
     iconTint: Color = colorResource(id = R.color.colorPrimary),
     backgroundColor: Color = Color.Black ,
     shape: Shape = CircleShape,
-    icon: ImageVector
+    icon: ImageVector,
+    modifier: Modifier
 ) {
     Box(
-        modifier = Modifier.size(iconSize),
+        modifier = modifier.size(iconSize),
         contentAlignment = Alignment.Center,
     ) {
         Box(

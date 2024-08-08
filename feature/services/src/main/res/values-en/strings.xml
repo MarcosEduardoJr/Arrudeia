@@ -1,0 +1,25 @@
+<resources>
+    <string name="do_you_need_fill_all_personal_information_try_do_job">You need to fill in all personal information to provide a service</string>
+    <string name="fill_correct_field">Fill in the field correctly:</string>
+    <string name="get_in_touch">Get in touch</string>
+    <string name="my_services">My services</string>
+    <string name="request_a_service">Request a service</string>
+    <string name="service_oppotunities">Service Opportunities</string>
+    <string name="do_you_need_fill_all_personal_information">You need to fill in all personal information to request a service</string>
+
+    <string name="TECHNOLOGY">Technology</string>
+    <string name="DOMESTIC">Domestic</string>
+    <string name="TECHNICAL_ASSISTANCE">Technical Assistance</string>
+    <string name="HEALTH_AND_WELLNESS">Health and Wellness</string>
+    <string name="EDUCATIONAL">Educational</string>
+    <string name="TRANSPORTATION">Transportation</string>
+    <string name="VEHICLE_MAINTENANCE">Vehicle Maintenance</string>
+    <string name="CONSULTING">Consulting</string>
+    <string name="ADMINISTRATIVE">Administrative</string>
+    <string name="ENTERTAINMENT_AND_EVENTS">Entertainment and Events</string>
+    <string name="CONSTRUCTION_AND_RENOVATION">Construction and Renovation</string>
+    <string name="LEGAL">Legal</string>
+    <string name="BEAUTY_AND_AESTHETICS">Beauty and Aesthetics</string>
+    <string name="GUIDE">Guide</string>
+    <string name="select">Select</string>
+</resources>

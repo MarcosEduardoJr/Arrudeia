@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string name="do_you_need_fill_all_personal_information_try_do_job">Voce precisa preencher todas informações pessoais para fornecer um serviço</string>
+    <string name="fill_correct_field">Preencha corretamento o campo:</string>
+    <string name="get_in_touch">Entrar em contato</string>
+    <string name="my_services">Meus serviços</string>
+    <string name="request_a_service">Solicite um serviço</string>
+    <string name="service_oppotunities">Oportunidades de Serviço</string>
+    <string name="do_you_need_fill_all_personal_information">Voce precisa preencher todas informações pessoais para pedir um serviço</string>
+
+    <string name="TECHNOLOGY">Technology</string>
+    <string name="DOMESTIC">Domestic</string>
+    <string name="TECHNICAL_ASSISTANCE">Technical Assistance</string>
+    <string name="HEALTH_AND_WELLNESS">Health and Wellness</string>
+    <string name="EDUCATIONAL">Educational</string>
+    <string name="TRANSPORTATION">Transportation</string>
+    <string name="VEHICLE_MAINTENANCE">Vehicle Maintenance</string>
+    <string name="CONSULTING">Consulting</string>
+    <string name="ADMINISTRATIVE">Administrative</string>
+    <string name="ENTERTAINMENT_AND_EVENTS">Entertainment and Events</string>
+    <string name="CONSTRUCTION_AND_RENOVATION">Construction and Renovation</string>
+    <string name="LEGAL">Legal</string>
+    <string name="BEAUTY_AND_AESTHETICS">Beauty and Aesthetics</string>
+    <string name="GUIDE">Guide</string>
+    <string name="select">Selecione</string>
+</resources>

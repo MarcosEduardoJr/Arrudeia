@@ -1,0 +1,16 @@
+<resources>
+
+    <string name="app_name">Arrudeia Wear</string>
+    <string name="error_ongoing_exercise">Já exite uma trilha em andamento.</string>
+    <string name="error_exercise_already_ended">Trilha finalizada.</string>
+    <string name="error_unknown">Erro Desconhecido</string>
+    <string name="unsupported">Não suportado</string>
+    <string name="heart_rate">Batimento cardíaco</string>
+    <string name="pause_run">Pausar trilha</string>
+    <string name="start_run">Começar trilha</string>
+    <string name="finish_run">Finalizar trilha</string>
+    <string name="open_active_run_screen">Por favor comece uma nova trilha no seu celular para começar.</string>
+    <string name="connect_your_phone">Esse aplicativo requer que tenha instalado o aplicativo do celular e esteja conectado.</string>
+
+
+</resources>

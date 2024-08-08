@@ -13,8 +13,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.arrudeia.feature.profile.R
-
+import com.arrudeia.core.common.R.string.profile
 
 @Composable
  fun header(
@@ -28,7 +27,7 @@ import com.arrudeia.feature.profile.R
         ) {
             Text(
                 modifier = Modifier.padding(bottom = 10.dp),
-                text = stringResource(R.string.profile),
+                text = stringResource( profile),
                 color = Color.Black,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,

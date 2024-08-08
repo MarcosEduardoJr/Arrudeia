@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="trail_is_paused">Trilha pausada</string>
+    <string name="resume_or_finish_run">Quer finalizar essa trilha?</string>
+    <string name="trail_location_notification_rationale">Para rastrear sua localização e exibir a hora atual como uma notificação, este aplicativo precisa da sua permissão para isso. Confirme para conceder.</string>
+    <string name="heart_rate">Frequência cardíaca</string>
+    <string name="avg_heart_rate">Frequência cardíaca média</string>
+    <string name="max_heart_rate">Frequência cardíaca máxima</string>
+    <string name="pace">Ritmo</string>
+    <string name="empty_list_trail">Não existem trilhas salvas</string>
+    <string name="total_trail_time">Tempo total da trilha</string>
+    <string name="avg_speed">Velocidade média</string>
+    <string name="max_speed">Velocidade máxima</string>
+    <string name="total_elevation">Elevação total</string>
+</resources>

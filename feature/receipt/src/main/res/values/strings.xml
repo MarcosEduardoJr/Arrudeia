@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string name="ingredients">Ingredientes</string>
+    <string name="difficult">Dificuldade</string>
+    <string name="portions">Porções</string>
+    <string name="method_of_preparation">Modo de preparo</string>
+    <string name="receipts">Receitas</string>
+    <string name="receipt">Receita</string>
+
+    <string name="EASY">Fácil</string>
+    <string name="MEDIUM">Médio</string>
+    <string name="HARD">Difícil</string>
+
+</resources>

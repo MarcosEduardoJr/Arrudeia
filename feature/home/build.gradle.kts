@@ -4,6 +4,7 @@ plugins {
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
     id("kotlin-android")
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -86,6 +87,12 @@ dependencies {
     testImplementation(libs.junit4)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.ui.test.junit4)
+
+    implementation(libs.converter.gson)
+
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
+    implementation("com.google.android.gms:play-services-location:21.2.0")
+
 }
 
 

@@ -31,13 +31,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.arrudeia.core.common.R.string.address
+import com.arrudeia.core.common.R.string.logout
 import com.arrudeia.core.data.navigation.profileAddressRoute
 import com.arrudeia.core.data.navigation.profilePersonalInformationRoute
 import com.arrudeia.core.designsystem.R
 import com.arrudeia.core.designsystem.component.CircularIconButton
+import com.arrudeia.core.designsystem.component.RectangleCircleBorderItemButton
 import com.arrudeia.feature.profile.presentation.model.ProfileUiModel
 import com.arrudeia.feature.profile.presentation.viewmodel.ProfileViewModel
-
 
 @Composable
 fun profileContent(
@@ -69,7 +71,7 @@ fun profileContent(
                         .verticalScroll(rememberScrollState())
                 )
 
-                Spacer(modifier = Modifier.size(40.dp))
+                Spacer(modifier = Modifier.size(20.dp))
 
                 profileOptions(onRouteClick, viewModel)
             }
@@ -86,7 +88,8 @@ fun profileContent(
                 },
                 icon = Icons.Rounded.ArrowBack,
                 backgroundColor = colorResource(id = R.color.background_grey_F7F7F9),
-                iconSize = 50.dp
+                iconSize = 50.dp,
+                modifier = Modifier
             )
         }
     }
@@ -97,26 +100,27 @@ private fun profileOptions(
     onRouteClick: (String) -> Unit,
     viewModel: ProfileViewModel
 ) {
-    items(
-        R.drawable.ic_profile_edit,
-        stringResource(id = com.arrudeia.feature.profile.R.string.personal_information),
-        Modifier.clickable { onRouteClick(profilePersonalInformationRoute) })
+    RectangleCircleBorderItemButton(
+        iconStart = R.drawable.ic_profile_edit,
+        name = stringResource(id = com.arrudeia.feature.profile.R.string.personal_information),
+        modifier = Modifier.clickable { onRouteClick(profilePersonalInformationRoute) })
 
-    Spacer(modifier = Modifier.size(4.dp))
+    Spacer(modifier = Modifier.size(10.dp))
 
-    items(
-        R.drawable.ic_home,
-        stringResource(id = com.arrudeia.feature.profile.R.string.address),
-        Modifier.clickable {
+    RectangleCircleBorderItemButton(
+        iconStart = R.drawable.ic_home,
+        name = stringResource(id = address),
+        modifier = Modifier.clickable {
             onRouteClick(profileAddressRoute)
         })
 
-    Spacer(modifier = Modifier.size(4.dp))
+    Spacer(modifier = Modifier.size(10.dp))
 
-    items(
+    RectangleCircleBorderItemButton(
+        iconStart =
         R.drawable.ic_logout,
-        stringResource(id = com.arrudeia.feature.profile.R.string.logout),
-        Modifier.clickable {
+        name = stringResource(id = logout),
+        modifier = Modifier.clickable {
             logout(
                 onRouteClick, viewModel
             )

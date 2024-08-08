@@ -25,10 +25,20 @@ type ArrudeiaPlace {
     name: String
     phone: String
     priceLevel: Int
-    rating: Float
+    rating: Int
     socialNetwork: String
     subCategoryName: String
     uuid: String
+    city: String
+    state: String
+    country: String
+}
+
+
+type ArrudeiaAvailablePlaceGraph {
+    id: ID
+    name: String
+    placeId: String
 }
 
 type CheckList{
@@ -39,11 +49,90 @@ type CheckListGraph{
     name: String
 }
 
-type ArrudeiaAvailablePlaceGraph {
-    id: ID
+type RecipesGraph{
+    uuid: Int
     name: String
-    placeId: String
+    time: Int
+    quantity: String
+    img: String
+    level: String
 }
+
+type Recipes{
+    recipes: [RecipesGraph]
+}
+
+type RecipeDetailGraph {
+    description: String
+    img: String
+    ingredients : [Ingredients]
+    level: String
+    name: String
+    quantity: String
+    time: Int
+    urlVideo: String
+}
+
+type Ingredients{
+    id: Int
+    recipeId: String
+    step: String
+}
+
+
+type AidGraph {
+    id: Int
+    description: String
+    img: String
+    steps : [AidSteps]
+    name: String
+    urlVideo: String
+}
+
+type AidSteps{
+    id: Int
+    aidId: String
+    step: String
+}
+
+type GetServiceType {
+    categoryId: Int
+    city: String
+    country: String
+    description: String
+    district: String
+    id: Int
+    image: [ImageServiceType]
+    name: String
+    number: Int
+    state: String
+    street: String
+    uuidUserCreator: String
+    zipCode: String
+    imageUrl: String
+}
+
+type ImageServiceType{
+    id: Int
+    serviceId: Int
+    url: String
+}
+
+type ServicesExpertiseType {
+    name: String!
+    id: Int!
+
+}
+
+type CepAddress {
+    city: String!
+    country: String!
+    district: String!
+    state: String!
+    street: String!
+    zipCode: String!
+}
+
 
 type Query {
     _entities(representations: [_Any!]!): [_Entity]!
@@ -52,14 +141,48 @@ type Query {
 
     user(uuid: String!): UserGraph
 
-    arrudeiaPlaces: [ArrudeiaPlace]
+    arrudeiaPlaces(state: String!): [ArrudeiaPlace]
     arrudeiaPlace(uuid: String!): ArrudeiaPlace
     arrudeiaAvailablePlace(placeId: String!): ArrudeiaAvailablePlaceGraph
 
     checklist: [CheckListGraph]
+
+    recipes: [RecipesGraph]
+    recipe(uuid: String!): RecipeDetailGraph
+
+    aids: [AidGraph]
+    aid(id: String!): AidGraph
+
+    services: [GetServiceType]
+    service(id: Int!): GetServiceType
+    servicesExpertise: [ServicesExpertiseType]
+
+    cepAddress(cep: String!): CepAddress
+}
+
+input Service {
+    uuidUserCreator: String!
+    name: String!
+    description: String!
+    zipCode: String!
+    street: String!
+    number: Int!
+    district: String!
+    city: String!
+    state: String!
+    country: String!
+    categoryId: Int!
+    image: [ImageInput]!
+}
+
+input ImageInput {
+    id: Int!
+    serviceId: Int!
+    url: String!
 }
 
 type Mutation {
+
     updateUser(
         uuid: String,
         name: String,
@@ -74,7 +197,8 @@ type Mutation {
         district: String,
         city: String,
         state: String,
-        country: String
+        country: String,
+        idUserDoc: String,
     ) : String
 
     updateUserAddress(
@@ -97,10 +221,13 @@ type Mutation {
         name: String,
         phone: String,
         priceLevel: Int,
-        rating: Float,
+        rating: Int,
         socialNetwork: String,
         subCategoryName: String,
-        uuid: String
+        uuid: String,
+        city: String,
+        state: String,
+        country: String
     ) : String
 
     createArrudeiaAvailablePlace(
@@ -108,9 +235,10 @@ type Mutation {
         placeId: String
     ) : String
 
+    createServiceCategory(
+        serviceType : Service
+    ) : Int
 }
-
-
 
 union _Entity = UserGraph
 

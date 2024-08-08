@@ -8,6 +8,7 @@ import com.arrudeia.feature.profile.domain.GetUserAddressUseCase
 import com.arrudeia.feature.profile.domain.UpdateUserAddressUseCase
 import com.arrudeia.feature.profile.domain.entity.UserAddressUseCaseEntity
 import com.arrudeia.feature.profile.presentation.model.ProfileAddressUiModel
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -18,10 +19,11 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileAddressViewModel @Inject constructor(
     private val useCase: GetUserAddressUseCase,
-    private val updateUseCase: UpdateUserAddressUseCase
+    private val updateUseCase: UpdateUserAddressUseCase,
+    private val firebaseAuth: FirebaseAuth
 ) : ViewModel() {
 
-    var uuidCurrentUser = ""
+    var uuidCurrentUser = firebaseAuth.currentUser?.uid.orEmpty()
 
     var uiState: MutableStateFlow<AddressUiState> =
         MutableStateFlow(AddressUiState.Loading)

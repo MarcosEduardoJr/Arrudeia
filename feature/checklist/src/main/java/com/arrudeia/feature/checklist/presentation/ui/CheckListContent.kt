@@ -31,7 +31,6 @@ import com.arrudeia.feature.checklist.presentation.model.CheckListUIModel
 fun content(
     item: List<CheckListUIModel?>
 ) {
-    val context = LocalContext.current
     Column(
         modifier = Modifier
             .padding(top = 260.dp)

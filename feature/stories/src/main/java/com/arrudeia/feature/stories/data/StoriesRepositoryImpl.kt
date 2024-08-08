@@ -1,7 +1,7 @@
 package com.arrudeia.feature.stories.data
 
+import com.arrudeia.core.common.R.string.generic_error
 import com.arrudeia.core.result.Result
-import com.arrudeia.feature.stories.R
 import com.arrudeia.feature.stories.data.entity.StoriesRepositoryEntity
 import com.arrudeia.feature.stories.data.entity.StoryRepositoryEntity
 import com.google.firebase.firestore.FirebaseFirestore
@@ -25,7 +25,7 @@ class StoriesRepositoryImpl @Inject constructor(
                     continuation.resume(Result.Success(list))
                 }
                 .addOnFailureListener {
-                    continuation.resume(Result.Error(R.string.erro_message_stories))
+                    continuation.resume(Result.Error(generic_error))
                 }
         }
     }
@@ -40,7 +40,7 @@ class StoriesRepositoryImpl @Inject constructor(
                 }
             }
 
-            is Result.Error, is Result.Loading -> return Result.Error(R.string.erro_message_stories)
+            is Result.Error, is Result.Loading -> return Result.Error(generic_error)
         }
         return Result.Success(result)
     }

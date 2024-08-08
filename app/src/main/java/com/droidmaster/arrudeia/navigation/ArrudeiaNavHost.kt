@@ -5,6 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import com.arrudeia.core.data.navigation.onboardingRoute
+import com.arrudeia.core.data.navigation.runOverviewRoute
 import com.droidmaster.arrudeia.ui.ArrudeiaAppState
 import java.net.URLEncoder
 
@@ -13,7 +14,8 @@ fun arrudeiaNavHost(
     appState: ArrudeiaAppState,
     onShowSnackbar: suspend (String, String?) -> Boolean,
     modifier: Modifier = Modifier,
-    startDestination: String =  onboardingRoute,
+    startDestination: String = onboardingRoute,
+    showBottomBar: (Boolean) -> Unit,
 ) {
     val navController = appState.navController
     NavHost(
@@ -21,9 +23,9 @@ fun arrudeiaNavHost(
         startDestination = startDestination,
         modifier = modifier,
     ) {
-        screens(navController, onShowSnackbar)
+        screens(navController, onShowSnackbar,showBottomBar)
         homeGraph(navController, onShowSnackbar)
-        profileGraph(navController, onShowSnackbar)
+        profileGraph(navController, onShowSnackbar, showBottomBar)
     }
 }
 

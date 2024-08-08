@@ -1,33 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
-    <string name="onboarding_saved">Saved</string>
-    <string name="onboarding_saved_loading">Loading saved…</string>
-    <string name="onboarding_empty_error">No saved updates</string>
-    <string name="onboarding_empty_description">Updates you save will be stored here\nto read later</string>
-    <string name="onboarding_removed">Bookmark removed</string>
-    <string name="onboarding_undo">UNDO</string>
     <string name="start">Começar</string>
     <string name="sign">Entrar</string>
+    <string name="sign_description_tired_job"><![CDATA[<h3>Descubra o mundo com o <font color="#FF6421"><br><b>Arrudeia!</b></font></h3><p>O aplicativo perfeito para turistas explorarem novos destinos de forma prática e divertida.<br>Salve trilhas, descubra lugares, receitas rápidas e dicas de viagem!</p>]]></string>
     <string name="sign_register">Cadastrar</string>
     <string name="sign_email">Email</string>
     <string name="sign_password">Senha</string>
     <string name="sign_password_again">Confirme a senha</string>
-     <string name="sign_description_tired_job"><![CDATA[Ta com a semana cansativa no trabalho? <a href="link_1">Arrudeia</a> e divirta-se pois você merece!]]></string>
-    <string name="please_sign_in_to_continue_our_app">Acesse para continuar usando o nosso aplicativo.</string>
-    <string name="google_web_client_id_auth">1:400545955934:web:55a41052707b52883174cf</string>
     <string name="sign_password_lenght_error">O tamanho minimo da senha é 6</string>
     <string name="sign_password_not_equals_to_confirm_password_error">As senhas precisam ser iguais</string>
-    <string name="sign_error_register">Não foi possível cadastrar, verifique os dados colocados</string>
-    <string name="sign_error_sign">Dados do usuário não encontrados</string>
-    <!-- content description -->
-    <string name="sign_content_description_email">Digite o seu email</string>
-    <string name="sign_content_description_password">Digite a senha</string>
-    <string name="sign_content_description_password_again">Digite novamente a mesma senha</string>
-    <string name="erro_sign_user">Estamos em manutenção, tente novamente mais tarde.</string>
-    <string name="loading">Carregando</string>
-    <string name="forgot_password">Esqueci a senha</string>
-    <string name="reset_password">Alterar a senha</string>
     <string name="open_email_reset_password">Abra seu email para alterar a senha</string>
     <string name="erro_reset_password_try_later">Não foi possivel alterar sua senha, tente novamente mais tarde</string>
+    <string name="reset_password">Alterar a senha</string>
+    <string name="forgot_password">Esqueci a senha</string>
+    <string name="erro_sign_user">Estamos em manutenção, tente novamente mais tarde.</string>
+    <string name="sign_error_sign">Dados do usuário não encontrados</string>
+
 </resources>

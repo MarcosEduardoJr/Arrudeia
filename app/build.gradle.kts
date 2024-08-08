@@ -8,6 +8,7 @@ plugins {
     id("com.google.firebase.appdistribution")
     id("com.google.gms.google-services")
     id("com.google.dagger.hilt.android")
+    alias(libs.plugins.kotlin.serialization) 
 }
 
 android {
@@ -17,7 +18,7 @@ android {
     defaultConfig {
         multiDexEnabled = true
         applicationId = "com.droidmaster.arrudeia"
-        versionCode = 21
+        versionCode = 25
         minSdk = 21
         targetSdk = 34
         versionName = "1.7.2" // X.Y.Z; X = Major, Y = minor, Z = Patch level
@@ -63,11 +64,9 @@ android {
         resources {
             excludes.add("META-INF/LICENSE.md")
             excludes.add("META-INF/LICENSE-notice.md")
-
         }
     }
     testOptions {
-
         unitTests {
             isIncludeAndroidResources = true
             isReturnDefaultValues = true
@@ -92,7 +91,6 @@ dependencies {
     androidTestImplementation(kotlin("test"))
     debugImplementation(libs.androidx.compose.ui.testManifest)
     //debugImplementation(project(":ui-test-hilt-manifest"))
-
 
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.activity.compose)
@@ -132,10 +130,15 @@ dependencies {
     api(libs.androidx.metrics)
     api(libs.androidx.tracing.ktx)
 
-
     implementation(libs.camera.camera2)
     implementation(libs.camera.lifecycle)
     implementation(libs.camera.view)
+
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.kotlinx.serialization.json)
+
+    implementation("org.junit.jupiter:junit-jupiter-engine:5.7.0")
+
 
     implementation(project(":core:designsystem"))
     implementation(project(":core:graphql"))
@@ -149,6 +152,10 @@ dependencies {
     implementation(project(":feature:profile"))
     implementation(project(":feature:arrudeia"))
     implementation(project(":feature:checklist"))
+    implementation(project(":feature:receipt"))
+    implementation(project(":feature:aid"))
+    implementation(project(":feature:services"))
+    implementation(project(":feature:trail"))
 }
 
 apply(plugin = "com.google.gms.google-services")

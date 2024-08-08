@@ -12,6 +12,8 @@ import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 import com.arrudeia.feature.trip.R
 
+import com.arrudeia.core.common.R.string.erro_message_list_travels
+
 class GetTravelByIdUseCaseTest {
 
     private lateinit var repository: TripTravelRepositoryImpl
@@ -53,7 +55,7 @@ class GetTravelByIdUseCaseTest {
     @Test
     fun `test invoke with invalid id`() = runBlocking {
         val id = -1L
-        `when`(repository.getTravelById(id)).thenReturn(Result.Error(R.string.erro_message_list_travels))
+        `when`(repository.getTravelById(id)).thenReturn(Result.Error( erro_message_list_travels))
 
         val result = useCase.invoke(id)
 

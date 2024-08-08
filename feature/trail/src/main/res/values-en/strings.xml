@@ -1,0 +1,14 @@
+<resources>
+    <string name="trail_is_paused">Trail paused</string>
+    <string name="resume_or_finish_run">Do you want to finish this trail\?</string>
+    <string name="trail_location_notification_rationale">To track your location and display the current time as a notification, this app needs your permission to do so. Confirm to grant.</string>
+    <string name="heart_rate">Heart rate</string>
+    <string name="avg_heart_rate">Average heart rate</string>
+    <string name="max_heart_rate">Maximum heart rate</string>
+    <string name="pace">Rhythm</string>
+    <string name="empty_list_trail">There are no saved tracks</string>
+    <string name="total_trail_time">Total trail time</string>
+    <string name="avg_speed">Average speed</string>
+    <string name="max_speed">Maximum speed</string>
+    <string name="total_elevation">Full elevation</string>
+</resources>

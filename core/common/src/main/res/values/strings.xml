@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="generic_error">Estamos em manutenção, tente novamente mais tarde.</string>
+    <string name="loading">Carregando</string>
+    <string name="description">Descrição</string>
+    <string name="include">Incluso</string>
+    <string name="optional">Opcional</string>
+    <string name="trail">Trilha</string>
+    <string name="_continue">Continuar</string>
+    <string name="finish">Finalizar</string>
+    <string name="search">Pesquisar</string>
+    <string name="places">Lugares</string>
+    <string name="trips">Viagens</string>
+    <string name="permission_required">Permissão necessária</string>
+    <string name="location_rationale">Para rastrear sua localização, este aplicativo precisa de sua permissão para isso. Confirme para conceder.</string>
+    <string name="notification_rationale">Para exibir a hora atual como uma notificação, este aplicativo precisa da sua permissão para isso. Confirme para conceder.</string>
+    <string name="duration">Duração</string>
+    <string name="distance">Distance</string>
+    <string name="delete">Apagar</string>
+    <string name="time">Tempo</string>
+    <string name="photo">Foto</string>
+    <string name="title">Título</string>
+    <string name="category">Categoria</string>
+    <string name="services">Serviços</string>
+    <string name="address">Endereço</string>
+    <string name="name">Nome</string>
+    <string name="zip_code">CEP</string>
+    <string name="street">Rua</string>
+    <string name="number">Número</string>
+    <string name="district">Bairro</string>
+    <string name="city">Cidade</string>
+    <string name="state">Estado</string>
+    <string name="country">País</string>
+    <string name="save">Salvar</string>
+    <string name="profile">Perfil</string>
+    <string name="cpf">Cpf</string>
+    <string name="full_name">Nome completo</string>
+    <string name="email">Email</string>
+    <string name="phone">Celular</string>
+    <string name="birth_date">Data de aniversário</string>
+    <string name="logout">Sair</string>
+    <string name="cancel">Cancel</string>
+    <string name="shoot_image">Tirar foto</string>
+    <string name="social_network">Rede social</string>
+    <string name="erro_message_list_travels">Estamos em manutenção, tente novamente mais tarde.</string>
+    <string name="document_analisys_description">Cadastre seu documento contendo CPF (frente e verso), para que possa cadastrar um serviço</string>
+    <string name="document_analisys_error">A foto do documento precisa ser legivel</string>
+
+    <string name="error_request">Estamos em manutenção, tente novamente mais tarde.</string>
+    <string name="identification_document">Documento de identificação</string>
+    <string name="error_try_again_later">Um erro ocorreu, tente novamente mais tarde!</string>
+
+    <string name="active_run">Active Run</string>
+
+    <string name="need_know_location_permission">Precisamos que a pemissão de localização seja habilitada para que todas as funcionalidades funcionem corretamente</string>
+    <string name="yes">Sim</string>
+    <string name="no">Não</string>
+    <string name="open_camera">Abrir a câmera</string>
+</resources>

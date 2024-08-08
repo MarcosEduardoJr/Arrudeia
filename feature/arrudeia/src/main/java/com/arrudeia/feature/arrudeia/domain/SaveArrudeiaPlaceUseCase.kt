@@ -1,8 +1,8 @@
 package com.arrudeia.feature.arrudeia.domain
 
 import android.net.Uri
-import com.arrudeia.feature.arrudeia.data.ArrudeiaPlaceRepositoryImpl
-import com.arrudeia.feature.arrudeia.data.FirebaseArrudeiaMapRepositoryImpl
+import com.arrudeia.core.places.data.ArrudeiaPlaceRepositoryImpl
+import com.arrudeia.core.places.data.FirebaseArrudeiaMapRepositoryImpl
 import com.arrudeia.feature.arrudeia.presentation.model.ArrudeiaAvailablePlaceUiModel
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.auth.FirebaseAuth
@@ -25,8 +25,11 @@ class SaveArrudeiaPlaceUseCase @Inject constructor(
         categoryName: String,
         subCategoryName: String,
         location: LatLng,
-        priceLevel: Int = 0,
-        rating: Double = 0.0,
+        priceLevel: Int = 1,
+        rating: Int = 1,
+        city: String,
+        state: String,
+        country: String
     ): Result<String?> {
         var image = ""
         uri?.let {
@@ -45,6 +48,9 @@ class SaveArrudeiaPlaceUseCase @Inject constructor(
             socialNetwork,
             subCategoryName,
             firebaseAuth.uid.orEmpty(),
+            city,
+            state,
+            country
         )
         return when (result) {
             is Result.Success -> {
@@ -58,9 +64,11 @@ class SaveArrudeiaPlaceUseCase @Inject constructor(
                 }
                 Result.Success(result.data)
             }
+
             is Result.Error -> {
                 Result.Error(null)
             }
+
             else -> {
                 Result.Error(null)
             }

@@ -33,7 +33,10 @@ fun formBehaviour(
     onShowFormChange: (Boolean) -> Unit,
     onProfileImageChange: (String) -> Unit,
     onShowSnackbar: suspend (String, String?) -> Boolean,
-    modifier: Modifier
+    modifier: Modifier,
+    onBackClick: () -> Unit,
+    showDocumentAnalysisChange: (Boolean) -> Unit,
+    showDocumentAnalysis: Boolean
 ) {
     Column(
         modifier = modifier
@@ -44,7 +47,7 @@ fun formBehaviour(
                 .fillMaxWidth()
                 .padding(top = 16.dp)
         )
-        Spacer(modifier = Modifier.size(30.dp))
+        Spacer(modifier = Modifier.size(20.dp))
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -59,7 +62,7 @@ fun formBehaviour(
                     showDialogChangePhoto = showDialogChangePhotoChange
                 )
         }
-        Spacer(modifier = Modifier.size(40.dp))
+        Spacer(modifier = Modifier.size(8.dp))
         if (showForm)
             form(
                 name, onNameChange,
@@ -67,6 +70,10 @@ fun formBehaviour(
                 email, onEmailChange,
                 phone, onPhoneChange,
                 birthDate, onBirthDateChange,
+                onBackClick = onBackClick,
+                onShowSnackbar = onShowSnackbar,
+                showDocumentAnalysisChange,
+                showDocumentAnalysis
             )
         else {
             fetchUser(

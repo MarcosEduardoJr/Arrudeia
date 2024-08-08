@@ -1,9 +1,10 @@
 package com.arrudeia.feature.arrudeia.domain
 
 import com.arrudeia.core.result.Result
-import com.arrudeia.feature.arrudeia.data.ArrudeiaPlaceRepositoryImpl
-import com.arrudeia.feature.arrudeia.data.entity.ArrudeiaPlaceRepositoryEntity
-import com.arrudeia.feature.arrudeia.data.entity.AvailableRepositoryEntity
+import com.arrudeia.core.places.data.ArrudeiaPlaceRepositoryImpl
+import com.arrudeia.core.places.data.entity.ArrudeiaPlaceRepositoryEntity
+import com.arrudeia.core.places.data.entity.AvailableRepositoryEntity
+import com.arrudeia.core.places.domain.GetAllArrudeiaPlacesUseCase
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
@@ -33,7 +34,7 @@ class GetAllArrudeiaPlacesUseCaseTest {
                 name = "testName1",
                 phone = "testPhone1",
                 priceLevel = 1,
-                rating = 1.0,
+                rating = 1,
                 socialNetwork = "testSocialNetwork1",
                 subCategoryName = "testSubCategoryName1",
                 uuid = "testUuid1"
@@ -50,18 +51,18 @@ class GetAllArrudeiaPlacesUseCaseTest {
                 name = "testName1",
                 phone = "testPhone1",
                 priceLevel = 1,
-                rating = 1.0,
+                rating = 1,
                 socialNetwork = "testSocialNetwork1",
                 subCategoryName = "testSubCategoryName1",
                 uuid = "testUuid1"
             ),
         )
 
-        `when`(repository.getArrudeiaPlaces()).thenReturn(Result.Success(arrudeiaPlaceList))
+        `when`(repository.getArrudeiaPlaces("")).thenReturn(Result.Success(arrudeiaPlaceList))
 
-        val result = useCase()
+        val result = useCase("")
 
-        verify(repository).getArrudeiaPlaces()
+        verify(repository).getArrudeiaPlaces("")
         assertTrue(result is Result.Success)
         result as Result.Success
         assertEquals(2, result.data?.size)
@@ -73,7 +74,7 @@ class GetAllArrudeiaPlacesUseCaseTest {
         assertEquals(LatLng(1.0, 1.0), result.data?.get(0)?.location)
         assertEquals("testPhone1", result.data?.get(0)?.phone)
         assertEquals(1, result.data?.get(0)?.priceLevel)
-        assertEquals(1.0, result.data?.get(0)?.rating)
+        assertEquals(1, result.data?.get(0)?.rating)
         assertEquals("testSocialNetwork1", result.data?.get(0)?.socialNetwork)
         assertEquals("testSubCategoryName1", result.data?.get(0)?.subCategoryName)
     }

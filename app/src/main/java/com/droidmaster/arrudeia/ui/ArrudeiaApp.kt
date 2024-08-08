@@ -1,5 +1,6 @@
 package com.droidmaster.arrudeia.ui
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -24,14 +25,16 @@ import androidx.compose.material3.SnackbarResult.ActionPerformed
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
@@ -39,15 +42,15 @@ import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
-import com.arrudeia.core.designsystem.theme.GradientColors
-import com.droidmaster.arrudeia.navigation.arrudeiaNavHost
 import com.arrudeia.core.designsystem.R.color.background_grey_F7F7F9
 import com.arrudeia.core.designsystem.component.ArrudeiaBackground
-import com.droidmaster.arrudeia.navigation.arrudeiaNavHost
 import com.arrudeia.core.designsystem.component.ArrudeiaGradientBackground
 import com.arrudeia.core.designsystem.component.ArrudeiaNavigationBar
 import com.arrudeia.core.designsystem.component.ArrudeiaNavigationBarItem
+import com.arrudeia.core.designsystem.theme.GradientColors
+import com.arrudeia.core.notification.ActiveRunService
 import com.droidmaster.arrudeia.navigation.TopLevelDestination
+import com.droidmaster.arrudeia.navigation.arrudeiaNavHost
 
 @OptIn(
     ExperimentalMaterial3Api::class,
@@ -66,7 +69,8 @@ fun arrudeiaApp(
             gradientColors = GradientColors()
         ) {
             val snackbarHostState = remember { SnackbarHostState() }
-
+            val showBottomBar = remember { mutableStateOf(true) }
+            val context = LocalContext.current
 
             Scaffold(
                 modifier = Modifier.semantics {
@@ -87,11 +91,13 @@ fun arrudeiaApp(
                     }
                 },
                 bottomBar = {
-                    ArrudeiaBottomBar(
-                        destinations = appState.topLevelDestinations,
-                        onNavigateToDestination = appState::navigateToTopLevelDestination,
-                        currentDestination = appState.currentDestination,
-                    )
+                    if (showBottomBar.value) {
+                        ArrudeiaBottomBar(
+                            destinations = appState.topLevelDestinations,
+                            onNavigateToDestination = appState::navigateToTopLevelDestination,
+                            currentDestination = appState.currentDestination,
+                        )
+                    }
                 },
             ) { padding ->
                 Row(
@@ -109,21 +115,20 @@ fun arrudeiaApp(
 
                     Column(Modifier.fillMaxSize()) {
                         // Show the top app bar on top level destinations.
-
-
                         arrudeiaNavHost(appState = appState, onShowSnackbar = { message, action ->
                             snackbarHostState.showSnackbar(
                                 message = message,
                                 actionLabel = action,
                                 duration = Short,
                             ) == ActionPerformed
-                        })
+                        }, showBottomBar = { showBottomBar.value = it })
                     }
                 }
             }
         }
     }
 }
+
 
 @Composable
 private fun ArrudeiaBottomBar(
@@ -152,8 +157,14 @@ private fun ArrudeiaBottomBar(
                         contentDescription = null,
                     )
                 },
-                label = { Text(stringResource(destination.iconTextId)) },
-                modifier = Modifier,
+                label = {
+                    Text(
+                        stringResource(destination.iconTextId),
+                        Modifier.align(Alignment.CenterVertically),
+                        color = Color.Black
+                    )
+                },
+                modifier = Modifier.align(Alignment.CenterVertically)
             )
         }
     }
@@ -181,6 +192,6 @@ private fun Modifier.notificationDot(): Modifier =
 
 private fun NavDestination?.isTopLevelDestinationInHierarchy(destination: TopLevelDestination) =
     this?.hierarchy?.any {
-        it.route?.contains(destination.name, true) ?: false
+        it.route?.contains(destination.route, true) ?: false
     } ?: false
 
