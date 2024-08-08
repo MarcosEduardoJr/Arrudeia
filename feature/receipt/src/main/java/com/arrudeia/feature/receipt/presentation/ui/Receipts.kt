@@ -47,6 +47,7 @@ import com.arrudeia.feature.receipt.presentation.viewmodel.ReceiptsUiState
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
+import com.arrudeia.feature.receipt.R.string.portions
 
 @Composable
 fun receipt(
@@ -197,8 +198,9 @@ private fun ReceiptDetailContent(item: ReceiptUIModel?, modifier: Modifier) {
             fontSize = 14.sp,
             color = Color.Black
         )
+
         Text(
-            text = item?.quantity.orEmpty(),
+            text = stringResource(id = portions).plus(" " + item?.quantity.orEmpty()),
             fontSize = 12.sp,
             color = Color.Gray
         )

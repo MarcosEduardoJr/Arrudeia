@@ -21,6 +21,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
@@ -121,24 +122,26 @@ fun PagerHome(
         ) {
             Spacer(modifier = Modifier.size(10.dp))
 
-            TextSwitch(
-                modifier = Modifier
-                    .height(56.dp)
-                    .clip(RoundedCornerShape(50.dp))
-                    .background(Color.White)
-                    .padding(8.dp),
-                selectedIndex = selectedTab,
-                items = pages,
-                onSelectionChange = {
-                    selectedTab = it
-                }
-            )
-
+            Box(modifier = Modifier.padding(horizontal = 16.dp)) {
+                TextSwitch(
+                    modifier = Modifier
+                        .height(56.dp)
+                        .clip(RoundedCornerShape(50.dp))
+                        .background(Color.White)
+                        .padding(8.dp),
+                    selectedIndex = selectedTab,
+                    items = pages,
+                    onSelectionChange = {
+                        selectedTab = it
+                    }
+                )
+            }
             Spacer(modifier = Modifier.size(16.dp))
 
             search(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
                     .wrapContentHeight(Alignment.CenterVertically)
                     .clip(CircleShape),
                 search,
@@ -168,6 +171,7 @@ fun PagerHome(
                             arrudeiaTv(
                                 viewModel, onStoriesClick,
                                 Modifier
+                                    .padding(horizontal = 16.dp)
                                     .fillMaxWidth()
                                     .height(74.dp)
                                     .align(Alignment.CenterHorizontally)
@@ -207,15 +211,21 @@ fun tripsScreen(
         is TravelUiState.Success -> {
             var list = (uiState as TravelUiState.Success).list
             list = filterSearchList(searchTravel, list)
+
             LazyColumn() {
-                items(items = list.toList(), itemContent = {
+                itemsIndexed(items = list.toList(), itemContent = { index, item ->
                     Spacer(modifier = Modifier.size(8.dp))
                     travelItem(
-                        it,
-                        Modifier.clickable { onTripDetailClick(it.id.toString()) })
+                        item,
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp)
+                            .clickable { onTripDetailClick(item.id.toString()) })
+                    if (index == list.size - 1) {
+                        Spacer(modifier = Modifier.height(100.dp))
+                    }
                 })
             }
-            Spacer(modifier = Modifier.height(40.dp))
         }
 
         else -> {}
@@ -293,7 +303,7 @@ fun PlacesScreen(
             icon = { Icon(Icons.Rounded.Add, null) },
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .padding(bottom = 16.dp),
+                .padding(bottom = 16.dp, end = 16.dp),
             shape = CircleShape,
             onClick = {
                 onClick(arrudeiaRoute)
@@ -426,7 +436,6 @@ fun travelItem(item: TravelUIModel, modifier: Modifier) {
 }
 
 
-
 @Composable
 @OptIn(ExperimentalGlideComposeApi::class)
 private fun image(item: TravelUIModel) {
@@ -468,8 +477,6 @@ private fun button(item: TravelUIModel, modifier: Modifier) {
         }
     )
 }
-
-
 
 
 @Composable

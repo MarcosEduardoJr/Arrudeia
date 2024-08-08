@@ -5,7 +5,7 @@
 
     <!-- Checklist enum translate -->
     <string name="DOCUMENT">Document</string>
-    <string name="VISA">View</string>
+    <string name="VISA">Visa</string>
     <string name="MONEY">Money</string>
     <string name="CARD_PAYMENT">Payment by Card</string>
     <string name="TICKET_TRANSPORT">Ticket Transport</string>
@@ -20,8 +20,8 @@
     <string name="CAMERA_PHOTO">Camera Photo</string>
     <string name="CHARGERS_AND_PLUG">Chargers and Plugs</string>
     <string name="CLOTHES">Clothes</string>
-    <string name="SHOES">shoes</string>
-    <string name="BAG">If so</string>
+    <string name="SHOES">Shoes</string>
+    <string name="BAG">Bag</string>
     <string name="SNACKS">Snacks</string>
     <string name="HEADSET">Headset</string>
     <string name="MASK_AND_ALCOOL">Mask and Alcohol</string>

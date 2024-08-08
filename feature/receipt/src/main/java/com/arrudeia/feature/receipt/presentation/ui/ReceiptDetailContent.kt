@@ -92,20 +92,23 @@ private fun contentDescription(item: ReceiptDetailUiModel?) {
             Spacer(modifier = Modifier.size(10.dp))
             include(item)
             Spacer(modifier = Modifier.size(10.dp))
-            Text(
-                text = stringResource(method_of_preparation),
-                color = Color.Black,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Start
-            )
-            Spacer(modifier = Modifier.size(10.dp))
-            Text(
-                text = item?.description.orEmpty(),
-                color = Color.Gray,
-                fontSize = 14.sp,
-                textAlign = TextAlign.Start
-            )
+            if (item?.description?.isNotEmpty() == true) {
+                Text(
+                    text = stringResource(method_of_preparation),
+                    color = Color.Black,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Start
+                )
+                Spacer(modifier = Modifier.size(10.dp))
+                Text(
+                    text = item?.description.orEmpty(),
+                    color = Color.Gray,
+                    fontSize = 14.sp,
+                    textAlign = TextAlign.Start
+                )
+            }
+
         }
     }
 }

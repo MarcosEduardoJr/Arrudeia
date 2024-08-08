@@ -15,6 +15,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
@@ -238,6 +239,7 @@ private fun ActiveRunScreen(
 
     if (!state.shouldTrack && state.hasStartedRunning) {
         ArrudeiaDialog(
+            modifier = Modifier.height(220.dp),
             title = stringResource(id = R.string.trail_is_paused),
             onDismiss = {
                 onAction(ActiveRunAction.OnResumeRunClick)

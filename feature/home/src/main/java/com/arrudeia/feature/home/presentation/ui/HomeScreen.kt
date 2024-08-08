@@ -34,12 +34,20 @@ internal fun homeRoute(
     onShowSnackbar: suspend (String, String?) -> Boolean,
     showBottomBar: (Boolean) -> Unit,
     onNewPlaceClick: (String) -> Unit,
-    onPlaceDetailsClick : (PlaceDetailParam) -> Unit
+    onPlaceDetailsClick: (PlaceDetailParam) -> Unit
 ) {
     showBottomBar(true)
     val viewModel: HomeViewModel = hiltViewModel()
     viewModel.getUserPersonalInformation()
-    homeView(onRouteClick, viewModel, onStoriesClick, onTripDetailClick, onShowSnackbar, onNewPlaceClick, onPlaceDetailsClick)
+    homeView(
+        onRouteClick,
+        viewModel,
+        onStoriesClick,
+        onTripDetailClick,
+        onShowSnackbar,
+        onNewPlaceClick,
+        onPlaceDetailsClick
+    )
 }
 
 @Composable
@@ -50,7 +58,7 @@ fun homeView(
     onTripDetailClick: (String) -> Unit,
     onShowSnackbar: suspend (String, String?) -> Boolean,
     onNewPlaceClick: (String) -> Unit,
-    onPlaceDetailsClick : (PlaceDetailParam) -> Unit
+    onPlaceDetailsClick: (PlaceDetailParam) -> Unit
 ) {
     var searchTravel by rememberSaveable { mutableStateOf("") }
     Box(
@@ -61,7 +69,7 @@ fun homeView(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 16.dp, top = 16.dp, end = 16.dp)
+                .padding(top = 16.dp)
                 .align(Alignment.TopCenter)
         ) {
 
@@ -73,12 +81,19 @@ fun homeView(
 
                 Spacer(modifier = Modifier.size(10.dp))
 
-                header(modifier = Modifier.fillMaxWidth(), onShowSnackbar, onRouteClick, viewModel)
+                header(
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                        .fillMaxWidth(),
+                    onShowSnackbar,
+                    onRouteClick,
+                    viewModel
+                )
 
                 Spacer(modifier = Modifier.size(10.dp))
 
                 PagerHome(
-                    viewModel, searchTravel, onTripDetailClick ,
+                    viewModel, searchTravel, onTripDetailClick,
                     searchChange = { searchTravel = it },
                     onStoriesClick = onStoriesClick,
                     onNewPlaceClick,

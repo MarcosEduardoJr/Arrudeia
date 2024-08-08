@@ -55,6 +55,8 @@ import com.bumptech.glide.integration.compose.GlideImage
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
+import com.arrudeia.core.common.R.string.save
+import com.arrudeia.core.common.R.string.open_camera
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Suppress("LongMethod")
@@ -277,7 +279,9 @@ private fun ContentResultAnalysis(
             colorButton = colorResource(id = R.color.colorPrimary),
         ) {
             Text(
-                text = if (resultDocumentAnalysis == true) "Salvar" else "Abrir a camera",
+                text = if (resultDocumentAnalysis == true) stringResource(id = save) else stringResource(
+                    id = open_camera
+                ),
                 style = MaterialTheme.typography.titleMedium,
                 color = Color.White,
             )
@@ -324,14 +328,19 @@ fun validateIdentifier(identifier: String): Boolean {
 
 fun extractAndValidateCPF(input: String): Boolean {
     val cpfRegex = "\\d{11}".toRegex()
+    val cpfRegexWithMask = "\\d{3}\\.\\d{3}\\.\\d{3}\\-\\d{2}".toRegex()
     val matchResult = cpfRegex.find(input)
-
-    return if (matchResult != null) {
-        val cpf = matchResult.value
-        val formattedCPF = cpf.substring(0, 3) + "." + cpf.substring(3, 6) + "." + cpf.substring(
-            6,
-            9
-        ) + "-" + cpf.substring(9, 11)
+    val matchResultMask = cpfRegexWithMask.find(input)
+    val result =
+        if (matchResult != null) matchResult else if (matchResultMask != null) matchResultMask else null
+    return if (result != null) {
+        val cpf = result.value
+        var formattedCPF = cpf
+        if (!formattedCPF.contains("."))
+            formattedCPF = cpf.substring(0, 3) + "." + cpf.substring(3, 6) + "." + cpf.substring(
+                6,
+                9
+            ) + "-" + cpf.substring(9, 11)
         validateIdentifier(formattedCPF)
     } else {
         false

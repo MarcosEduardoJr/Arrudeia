@@ -40,6 +40,7 @@ import com.arrudeia.feature.aid.presentation.viewmodel.AidDetailUiState.Loading
 import com.arrudeia.feature.aid.presentation.viewmodel.AidDetailUiState.Success
 import com.arrudeia.feature.aid.presentation.viewmodel.AidDetailViewModel
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
@@ -115,6 +116,8 @@ internal fun receiptDetail(
                                     super.onReady(youTubePlayer)
                                     youTubePlayer.cueVideo(item?.urlVideo.orEmpty(), 0f)
                                 }
+
+
                             }
                         )
                         view

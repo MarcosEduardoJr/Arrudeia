@@ -40,7 +40,7 @@ fun NavGraphBuilder.screens(
         onTripDetailClick = navController::navigateToTripDetail,
         onShowSnackbar = onShowSnackbar,
         showBottomBar = showBottomBar,
-        onNewPlaceClick  = navController::navigateToRoute,
+        onNewPlaceClick = navController::navigateToRoute,
         onPlaceDetailsClick = { navController.navigate(it) }
     )
     profileScreen(
@@ -86,9 +86,11 @@ fun NavGraphBuilder.screens(
     )
     runOverviewScreen(
         onActiveRunClick = navController::navigateToRoute,
+        showBottomBar = showBottomBar
     )
     activeRunScreen(
         onBackClick = { navController.popBackStack() },
+        showBottomBar = showBottomBar
     )
     placeDetailScreen(
         onBackClick = { navController.popBackStack() },

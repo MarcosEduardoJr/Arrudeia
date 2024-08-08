@@ -2,6 +2,6 @@
 
 <resources>
     <string name="start">Começar</string>
-    <string name="onboarding_description_tired_job">Ta com a semana cansativa no trabalho? <font color="#FF6421">Arrudeia</font> com viagens de um dia e se divirta pois você merece!</string>
+    <string name="onboarding_description_tired_job"><![CDATA[<h3>Descubra o mundo com o <font color="#FF6421"><br><b>Arrudeia!</b></font></h3><p>O aplicativo perfeito para turistas explorarem novos destinos de forma prática e divertida.<br>Salve trilhas, descubra lugares, receitas rápidas e dicas de viagem!</p>]]></string>
 
 </resources>

@@ -1,4 +1,4 @@
-package com.example.chatwithme.domain.repository
+package com.arrudeia.feature.services.presentation.ui.chat.chatwithme.domain.repository
 
 import com.arrudeia.feature.services.presentation.ui.chat.chatwithme.domain.model.ChatMessage
 import com.example.chatwithme.domain.model.User

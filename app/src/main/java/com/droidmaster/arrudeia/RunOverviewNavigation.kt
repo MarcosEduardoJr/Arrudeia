@@ -12,8 +12,10 @@ import com.arrudeia.feature.trail.presentation.ui.run_overview.RunOverviewScreen
 
 fun NavGraphBuilder.runOverviewScreen(
     onActiveRunClick: (String) -> Unit,
+    showBottomBar: (Boolean) -> Unit,
 ) {
     composable(route = runOverviewRoute) {
+        showBottomBar(true)
         RunOverviewScreenRoot(
             onActiveRunClick = onActiveRunClick
         )
@@ -22,6 +24,7 @@ fun NavGraphBuilder.runOverviewScreen(
 
 fun NavGraphBuilder.activeRunScreen(
     onBackClick: () -> Unit,
+    showBottomBar: (Boolean) -> Unit,
 ) {
     composable(route = activeRunRoute,
         deepLinks = listOf(
@@ -29,6 +32,7 @@ fun NavGraphBuilder.activeRunScreen(
                 uriPattern = "arrudeia://active_run"
             }
         )) {
+        showBottomBar(false)
         val context = LocalContext.current
         ActiveRunScreenRoot(
             onBack = onBackClick,

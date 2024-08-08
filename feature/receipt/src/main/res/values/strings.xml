@@ -7,4 +7,9 @@
     <string name="method_of_preparation">Modo de preparo</string>
     <string name="receipts">Receitas</string>
     <string name="receipt">Receita</string>
+
+    <string name="EASY">Fácil</string>
+    <string name="MEDIUM">Médio</string>
+    <string name="HARD">Difícil</string>
+
 </resources>

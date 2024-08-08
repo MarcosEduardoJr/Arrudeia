@@ -5,7 +5,7 @@ import com.arrudeia.feature.services.presentation.ui.chat.chatwithme.domain.mode
 import com.example.chatwithme.domain.model.FriendStatus
 import com.example.chatwithme.domain.model.MessageStatus
 import com.example.chatwithme.domain.model.User
-import com.example.chatwithme.domain.repository.ChatScreenRepository
+import com.arrudeia.feature.services.presentation.ui.chat.chatwithme.domain.repository.ChatScreenRepository
 import com.arrudeia.feature.services.presentation.ui.chat.chatwithme.utils.Response
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot

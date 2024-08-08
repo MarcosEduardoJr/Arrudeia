@@ -1,5 +1,5 @@
 <resources>
-    <string name="start">To start</string>
-    <string name="onboarding_description_tired_job">Do you have a tiring week at work\?<font color="#FF6421">Arrudeia</font>with day trips and have fun because you deserve it!</string>
- 
+    <string name="start">Start</string>
+    <string name="onboarding_description_tired_job"><![CDATA[<h3>Discover the world with <font color=\"#FF6421\"><br><b>Arrudeia!</b></font></h3><p>The perfect app for tourists to explore new destinations in a unique way practical and fun.<br>Save trails, discover places, quick recipes and travel tips!</p>]]></string>
+
 </resources>

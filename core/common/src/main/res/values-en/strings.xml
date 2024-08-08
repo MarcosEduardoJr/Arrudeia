@@ -2,12 +2,12 @@
     <string name="generic_error">We are undergoing maintenance, please try again later.</string>
     <string name="loading">Loading</string>
     <string name="description">Description</string>
-    <string name="include">Even</string>
+    <string name="include">Available</string>
     <string name="optional">Optional</string>
     <string name="trail">Trail</string>
     <string name="_continue">Continue</string>
     <string name="finish">Finish</string>
-    <string name="search">To look for</string>
+    <string name="search">Search</string>
     <string name="places">Places</string>
     <string name="trips">Trips</string>
     <string name="permission_required">Permission required</string>
@@ -30,7 +30,7 @@
     <string name="city">City</string>
     <string name="state">State</string>
     <string name="country">Country</string>
-    <string name="save">To save</string>
+    <string name="save">Save</string>
     <string name="profile">Profile</string>
     <string name="cpf">Cpf</string>
     <string name="full_name">Full name</string>
@@ -54,4 +54,5 @@
     <string name="need_know_location_permission">We need location permission to be enabled for all features to work correctly</string>
     <string name="yes">Sim</string>
     <string name="no">No</string>
+    <string name="open_camera">Open the camera</string>
 </resources>

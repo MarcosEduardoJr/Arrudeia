@@ -1,14 +1,11 @@
 package com.arrudeia.feature.services.presentation.ui.chat.chatwithme.di
 
-import android.app.Application
-import android.content.Context
-import androidx.datastore.core.DataStore
 import com.arrudeia.feature.services.presentation.ui.chat.chatwithme.data.repository.AuthScreenRepositoryImpl
 import com.arrudeia.feature.services.presentation.ui.chat.chatwithme.data.repository.ChatScreenRepositoryImpl
 import com.arrudeia.feature.services.presentation.ui.chat.chatwithme.data.repository.ProfileScreenRepositoryImpl
 import com.arrudeia.feature.services.presentation.ui.chat.chatwithme.data.repository.UserListScreenRepositoryImpl
 import com.example.chatwithme.domain.repository.AuthScreenRepository
-import com.example.chatwithme.domain.repository.ChatScreenRepository
+import com.arrudeia.feature.services.presentation.ui.chat.chatwithme.domain.repository.ChatScreenRepository
 import com.example.chatwithme.domain.repository.ProfileScreenRepository
 import com.example.chatwithme.domain.repository.UserListScreenRepository
 import com.arrudeia.feature.services.presentation.ui.chat.chatwithme.domain.usecase.authScreen.AuthUseCases

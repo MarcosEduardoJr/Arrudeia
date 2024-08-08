@@ -1,6 +1,6 @@
 package com.arrudeia.feature.services.presentation.ui.chat.chatwithme.domain.usecase.chatScreen
 
-import com.example.chatwithme.domain.repository.ChatScreenRepository
+import com.arrudeia.feature.services.presentation.ui.chat.chatwithme.domain.repository.ChatScreenRepository
 
 class BlockFriendToFirebase(
     private val chatScreenRepository: ChatScreenRepository
