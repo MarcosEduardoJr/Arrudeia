@@ -19,6 +19,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mockito
 import org.mockito.Mockito.`when`
+import com.arrudeia.core.common.R.string.erro_message_list_travels
 
 @ExperimentalCoroutinesApi
 class TripDetailViewModelTest : ViewModelTest(){
@@ -58,14 +59,14 @@ class TripDetailViewModelTest : ViewModelTest(){
 
     @Test
     fun testFetchDataError() = coTest {
-        `when`(useCase.invoke(1)).thenReturn(Result.Error(R.string.erro_message_list_travels))
+        `when`(useCase.invoke(1)).thenReturn(Result.Error( erro_message_list_travels))
 
         viewModel.fetchData()
 
         Assert.assertTrue(viewModel.travelUiState.value is TripDetailViewModel.TripDetailUiState.Error)
         Assert.assertEquals(
             (viewModel.travelUiState.value as TripDetailViewModel.TripDetailUiState.Error).message,
-            R.string.erro_message_list_travels
+             erro_message_list_travels
         )
     }
 
