@@ -1,4 +1,6 @@
 import com.android.build.gradle.internal.dsl.SigningConfig
+import java.io.FileInputStream
+import java.util.Properties
 
 plugins {
     id("kotlin-android")
@@ -37,10 +39,13 @@ android {
     signingConfigs {
 
         create("release") {
-            keyAlias = "arrudeia" // Substitua pelo alias da sua chave
-            keyPassword = "Vi@gem777" // Substitua pela senha da sua chave
-            storeFile = file("/Users/marcoseduflautista1gmail.com/Documents/arrudeia_keystore/arrkeystore.jks") // Substitua pelo caminho para o seu keystore
-            storePassword = "Vi@gem777" // Substitua pela senha do seu keystore
+            val properties = Properties().apply {
+                load(FileInputStream(rootProject.file("local.properties")))
+            }
+            keyAlias = properties.getProperty("MY_KEY_ALIAS")
+            keyPassword = properties.getProperty("MY_KEY_PASSWORD")
+            storeFile = file(properties.getProperty("MY_STORE_FILE"))
+            storePassword = properties.getProperty("MY_STORE_PASSWORD")
         }
     }
 
