@@ -49,7 +49,6 @@ android {
         }
     }
 
-
     buildTypes {
         named("debug") {
             isDebuggable = true
