@@ -1,4 +1,4 @@
-package com.droidmaster.arrudeia.core.designsystem_wear
+package com.arrudeia.core.designsystem_wear
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.droidmaster.arrudeia.core.designsystem_wear.test", appContext.packageName)
+        assertEquals("com.arrudeia.core.designsystem_wear.test", appContext.packageName)
     }
 }

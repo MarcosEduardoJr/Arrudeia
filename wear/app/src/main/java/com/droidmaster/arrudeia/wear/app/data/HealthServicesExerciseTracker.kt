@@ -1,4 +1,4 @@
-package com.droidmaster.arrudeia.wear.app.data
+package com.arrudeia.wear.app.data
 
 import android.Manifest
 import android.annotation.SuppressLint

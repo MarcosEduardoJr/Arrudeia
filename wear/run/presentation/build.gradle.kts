@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.droidmaster.arrudeia.wear.run.presentation"
+    namespace = "com.arrudeia.wear.run.presentation"
     compileSdk = 34
 
     defaultConfig {
@@ -21,6 +21,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            
         }
     }
     compileOptions {

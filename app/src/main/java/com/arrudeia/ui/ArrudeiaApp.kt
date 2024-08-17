@@ -1,4 +1,4 @@
-package com.droidmaster.arrudeia.ui
+package com.arrudeia.ui
 
 import android.content.Context
 import androidx.compose.foundation.background
@@ -49,8 +49,8 @@ import com.arrudeia.core.designsystem.component.ArrudeiaNavigationBar
 import com.arrudeia.core.designsystem.component.ArrudeiaNavigationBarItem
 import com.arrudeia.core.designsystem.theme.GradientColors
 import com.arrudeia.core.notification.ActiveRunService
-import com.droidmaster.arrudeia.navigation.TopLevelDestination
-import com.droidmaster.arrudeia.navigation.arrudeiaNavHost
+import com.arrudeia.navigation.TopLevelDestination
+import com.arrudeia.navigation.arrudeiaNavHost
 
 @OptIn(
     ExperimentalMaterial3Api::class,

@@ -1,4 +1,4 @@
-package com.droidmaster.arrudeia.wear.run.presentation
+package com.arrudeia.wear.run.presentation
 
 import org.junit.Test
 

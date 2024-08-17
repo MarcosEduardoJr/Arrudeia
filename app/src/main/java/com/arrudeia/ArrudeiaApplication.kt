@@ -1,4 +1,4 @@
-package com.droidmaster.arrudeia
+package com.arrudeia
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

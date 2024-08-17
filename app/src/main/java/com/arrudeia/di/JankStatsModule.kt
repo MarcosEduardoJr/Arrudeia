@@ -1,4 +1,4 @@
-package com.droidmaster.arrudeia.di
+package com.arrudeia.di
 
 import android.app.Activity
 import android.util.Log

@@ -1,12 +1,10 @@
-package com.droidmaster.arrudeia
+package com.arrudeia
 
-import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.annotation.RequiresApi
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.DisposableEffect
@@ -20,9 +18,8 @@ import com.google.firebase.firestore.FirebaseFirestoreSettings
 import dagger.hilt.android.AndroidEntryPoint
 import com.arrudeia.core.designsystem.R.color.background_grey_F7F7F9
 import com.arrudeia.core.designsystem.theme.ArrudeiaTheme
-import com.arrudeia.core.utils.Constants
-import com.arrudeia.feature.aid.presentation.viewmodel.AidViewModel
-import com.droidmaster.arrudeia.ui.arrudeiaApp
+import com.arrudeia.MainActivityViewModel
+import com.arrudeia.ui.arrudeiaApp
 import com.example.chatwithme.domain.model.UserStatus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

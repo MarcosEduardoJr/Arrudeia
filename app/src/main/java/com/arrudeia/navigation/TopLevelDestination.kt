@@ -1,4 +1,4 @@
-package com.droidmaster.arrudeia.navigation
+package com.arrudeia.navigation
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Build

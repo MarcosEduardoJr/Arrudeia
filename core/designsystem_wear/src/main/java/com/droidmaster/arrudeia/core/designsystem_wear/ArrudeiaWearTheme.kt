@@ -1,4 +1,4 @@
-package com.droidmaster.arrudeia.core.designsystem_wear
+package com.arrudeia.core.designsystem_wear
 
 
 import androidx.compose.material3.darkColorScheme

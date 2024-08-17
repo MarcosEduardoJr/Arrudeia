@@ -1,4 +1,4 @@
-package com.droidmaster.arrudeia.wear.app.presentation
+package com.arrudeia.wear.app.presentation
 
 sealed interface TrackerAction {
     data object OnToggleRunClick: TrackerAction

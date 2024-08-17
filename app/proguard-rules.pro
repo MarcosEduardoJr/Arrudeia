@@ -24,6 +24,10 @@
 -dontwarn com.google.android.gms.**
 
 
-# Keep rules from missing_rules.txt
+# Keep rules to prevent R8 from removing necessary classes
 -keep class org.apiguardian.api.API { *; }
 -keep class org.apiguardian.api.API$Status { *; }
+-keep class org.junit.jupiter.engine.JupiterTestEngine { *; }
+-keep class org.junit.jupiter.api.extension.ExtensionContext$Namespace { *; }
+-dontwarn edu.umd.cs.findbugs.annotations.SuppressFBWarnings
+-dontwarn java.lang.instrument.UnmodifiableClassException

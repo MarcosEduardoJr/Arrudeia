@@ -1,4 +1,4 @@
-package com.droidmaster.arrudeia.wear.run.data
+package com.arrudeia.wear.run.data
 
 import org.junit.Test
 

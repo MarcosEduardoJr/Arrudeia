@@ -1,6 +1,6 @@
 @file:OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
 
-package com.droidmaster.arrudeia.wear.app.presentation
+package com.arrudeia.wear.app.presentation
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.arrudeia.core.notification.ActiveRunService
 import com.arrudeia.core.run.domain.messaging.MessagingAction
-import com.droidmaster.arrudeia.wear.app.data.RunningTracker
+import com.arrudeia.wear.app.data.RunningTracker
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.Channel
@@ -29,7 +29,7 @@ import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
 import com.arrudeia.core.designsystem.component.util.util.Result
-import com.droidmaster.arrudeia.wear.app.data.HealthServicesExerciseTracker
+import com.arrudeia.wear.app.data.HealthServicesExerciseTracker
 import com.arrudeia.core.run.data.WatchToPhoneConnector
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

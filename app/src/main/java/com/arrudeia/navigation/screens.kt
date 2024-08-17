@@ -1,4 +1,4 @@
-package com.droidmaster.arrudeia.navigation
+package com.arrudeia.navigation
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -17,8 +17,8 @@ import com.arrudeia.feature.services.presentation.navigation.servicesScreen
 import com.arrudeia.feature.sign.presentation.navigation.signScreen
 import com.arrudeia.feature.stories.presentation.navigation.navigateToStories
 import com.arrudeia.feature.trip.presentation.navigation.navigateToTripDetail
-import com.droidmaster.arrudeia.activeRunScreen
-import com.droidmaster.arrudeia.runOverviewScreen
+import com.arrudeia.activeRunScreen
+import com.arrudeia.runOverviewScreen
 
 fun NavGraphBuilder.screens(
     navController: NavHostController,

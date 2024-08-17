@@ -1,4 +1,4 @@
-package com.droidmaster.arrudeia.wear.run.domain
+package com.arrudeia.wear.run.domain
 
 class MyClass {
 }

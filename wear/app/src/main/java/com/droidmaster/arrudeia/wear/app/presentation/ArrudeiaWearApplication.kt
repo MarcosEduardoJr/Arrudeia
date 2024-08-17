@@ -1,4 +1,4 @@
-package com.droidmaster.arrudeia.wear.app.presentation
+package com.arrudeia.wear.app.presentation
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

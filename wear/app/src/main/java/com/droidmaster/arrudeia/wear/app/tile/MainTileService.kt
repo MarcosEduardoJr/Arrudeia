@@ -1,4 +1,4 @@
-package com.droidmaster.arrudeia.wear.app.tile
+package com.arrudeia.wear.app.tile
 
 import android.content.Context
 import androidx.compose.runtime.Composable

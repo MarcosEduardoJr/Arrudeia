@@ -9,7 +9,7 @@ plugins {
 }
 
 android {
-    namespace = "com.droidmaster.arrudeia.core.designsystem_wear"
+    namespace = "com.arrudeia.core.designsystem_wear"
     compileSdk = 34
 
     defaultConfig {
@@ -26,6 +26,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            
         }
     }
     compileOptions {

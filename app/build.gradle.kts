@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.dsl.SigningConfig
+
 plugins {
     id("kotlin-android")
     alias(libs.plugins.android.application)
@@ -8,16 +10,16 @@ plugins {
     id("com.google.firebase.appdistribution")
     id("com.google.gms.google-services")
     id("com.google.dagger.hilt.android")
-    alias(libs.plugins.kotlin.serialization) 
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
-    namespace = "com.droidmaster.arrudeia"
+    namespace = "com.arrudeia"
 
     compileSdk = 34
     defaultConfig {
         multiDexEnabled = true
-        applicationId = "com.droidmaster.arrudeia"
+        applicationId = "com.arrudeia"
         versionCode = 25
         minSdk = 21
         targetSdk = 34
@@ -28,23 +30,42 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+        signingConfig = signingConfigs.getByName("debug")
     }
+
+
+    signingConfigs {
+
+        create("release") {
+            keyAlias = "arrudeia" // Substitua pelo alias da sua chave
+            keyPassword = "Vi@gem777" // Substitua pela senha da sua chave
+            storeFile = file("/Users/marcoseduflautista1gmail.com/Documents/arrudeia_keystore/arrkeystore.jks") // Substitua pelo caminho para o seu keystore
+            storePassword = "Vi@gem777" // Substitua pela senha do seu keystore
+        }
+    }
+
+
     buildTypes {
         named("debug") {
-              isDebuggable = true
+            isDebuggable = true
+            signingConfig = signingConfigs.getByName("debug")
         }
         create("staging") {
             applicationIdSuffix = ".staging"
             isDebuggable = true
+            signingConfig = signingConfigs.getByName("debug")
         }
         release {
             isMinifyEnabled = true
-            isDebuggable = true
+            isDebuggable = false
+            signingConfig = signingConfigs.getByName("release")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+
         }
+
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17

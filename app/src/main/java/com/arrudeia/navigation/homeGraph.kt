@@ -1,4 +1,4 @@
-package com.droidmaster.arrudeia.navigation
+package com.arrudeia.navigation
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController

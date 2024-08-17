@@ -1,6 +1,6 @@
 
 
-package com.droidmaster.arrudeia.wear.app.presentation
+package com.arrudeia.wear.app.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -21,9 +21,9 @@ import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.TimeText
 import com.arrudeia.core.notification.ActiveRunService
-import com.droidmaster.arrudeia.core.designsystem_wear.ArrudeiaWearTheme
-import com.droidmaster.arrudeia.wear.app.R
-import com.droidmaster.arrudeia.wear.app.presentation.theme.ArrudeiaTheme
+import com.arrudeia.core.designsystem_wear.ArrudeiaWearTheme
+import com.arrudeia.wear.app.R
+import com.arrudeia.wear.app.presentation.theme.ArrudeiaTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

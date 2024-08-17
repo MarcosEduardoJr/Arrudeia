@@ -1,4 +1,4 @@
-package com.droidmaster.arrudeia.wear.app.presentation.theme
+package com.arrudeia.wear.app.presentation.theme
 
 import androidx.compose.runtime.Composable
 import androidx.wear.compose.material.MaterialTheme

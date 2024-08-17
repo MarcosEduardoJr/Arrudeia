@@ -1,4 +1,4 @@
-package com.droidmaster.arrudeia.wear.app.complication
+package com.arrudeia.wear.app.complication
 
 import androidx.wear.watchface.complications.data.ComplicationData
 import androidx.wear.watchface.complications.data.ComplicationType

@@ -22,7 +22,7 @@
         android:name=".ArrudeiaApplication"
         tools:targetApi="31" >
         <activity
-            android:name=".MainActivity"
+            android:name="com.arrudeia.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.Arrudeia" >
             <intent-filter>

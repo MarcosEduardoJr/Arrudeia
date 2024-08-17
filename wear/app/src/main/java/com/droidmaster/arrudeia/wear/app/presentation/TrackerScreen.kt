@@ -1,4 +1,4 @@
-package com.droidmaster.arrudeia.wear.app.presentation
+package com.arrudeia.wear.app.presentation
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -51,9 +51,9 @@ import com.arrudeia.core.designsystem.theme.FinishIcon
 import com.arrudeia.core.designsystem.theme.PauseIcon
 import com.arrudeia.core.designsystem.theme.StartIcon
 import com.arrudeia.core.notification.ActiveRunService
-import com.droidmaster.arrudeia.wear.app.R
-import com.droidmaster.arrudeia.wear.app.ambient.AmbientObserver
-import com.droidmaster.arrudeia.wear.app.ambient.ambientMode
+import com.arrudeia.wear.app.R
+import com.arrudeia.wear.app.ambient.AmbientObserver
+import com.arrudeia.wear.app.ambient.ambientMode
 import com.arrudeia.core.common.R.string.distance
 
 @Composable

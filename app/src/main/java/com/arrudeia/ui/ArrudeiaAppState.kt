@@ -1,4 +1,4 @@
-package com.droidmaster.arrudeia.ui
+package com.arrudeia.ui
 
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -23,8 +23,8 @@ import com.arrudeia.core.data.navigation.runOverviewRoute
 import com.arrudeia.core.data.navigation.serviceRoute
 import com.arrudeia.core.notification.ActiveRunService
 import com.arrudeia.feature.home.presentation.navigation.navigateToHome
-import com.droidmaster.arrudeia.navigation.TopLevelDestination
-import com.droidmaster.arrudeia.navigation.navigateToRoute
+import com.arrudeia.navigation.TopLevelDestination
+import com.arrudeia.navigation.navigateToRoute
 import kotlinx.coroutines.CoroutineScope
 
 @Composable

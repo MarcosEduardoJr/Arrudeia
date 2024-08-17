@@ -1,4 +1,4 @@
-package com.droidmaster.arrudeia.wear.app.ambient
+package com.arrudeia.wear.app.ambient
 
 import androidx.activity.ComponentActivity
 import androidx.compose.runtime.Composable

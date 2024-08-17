@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalCoroutinesApi::class)
 
-package com.droidmaster.arrudeia.wear.app.data
+package com.arrudeia.wear.app.data
 
 import com.arrudeia.core.run.data.WatchToPhoneConnector
 import com.arrudeia.core.run.domain.messaging.MessagingAction

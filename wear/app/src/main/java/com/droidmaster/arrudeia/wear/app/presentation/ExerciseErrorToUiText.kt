@@ -1,7 +1,7 @@
-package com.droidmaster.arrudeia.wear.app.presentation
+package com.arrudeia.wear.app.presentation
 
 import com.arrudeia.core.designsystem.component.util.UiText
-import com.droidmaster.arrudeia.wear.app.R
+import com.arrudeia.wear.app.R
 import com.arrudeia.core.run.domain.wear.ExerciseError
 
 fun ExerciseError.toUiText(): UiText? {

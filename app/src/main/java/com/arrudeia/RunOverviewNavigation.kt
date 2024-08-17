@@ -1,9 +1,10 @@
-package com.droidmaster.arrudeia
+package com.arrudeia
 
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navDeepLink
+import com.arrudeia.MainActivity
 import com.arrudeia.core.data.navigation.activeRunRoute
 import com.arrudeia.core.data.navigation.runOverviewRoute
 import com.arrudeia.core.notification.ActiveRunService

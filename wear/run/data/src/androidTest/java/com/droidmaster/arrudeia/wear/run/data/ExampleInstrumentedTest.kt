@@ -1,4 +1,4 @@
-package com.droidmaster.arrudeia.wear.run.data
+package com.arrudeia.wear.run.data
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.droidmaster.arrudeia.wear.run.data.test", appContext.packageName)
+        assertEquals("com.arrudeia.wear.run.data.test", appContext.packageName)
     }
 }

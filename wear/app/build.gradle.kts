@@ -9,12 +9,12 @@ plugins {
 }
 
 android {
-    namespace = "com.droidmaster.arrudeia.wear.app"
+    namespace = "com.arrudeia.wear.app"
     compileSdk = 34
 
     defaultConfig {
         multiDexEnabled = true
-        applicationId = "com.droidmaster.arrudeia"
+        applicationId = "com.arrudeia"
         minSdk = 30
         targetSdk = 34
         versionCode = 1
@@ -38,6 +38,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            
         }
     }
     compileOptions {

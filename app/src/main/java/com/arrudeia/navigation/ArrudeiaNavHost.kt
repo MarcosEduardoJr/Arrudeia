@@ -1,4 +1,4 @@
-package com.droidmaster.arrudeia.navigation
+package com.arrudeia.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -6,7 +6,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import com.arrudeia.core.data.navigation.onboardingRoute
 import com.arrudeia.core.data.navigation.runOverviewRoute
-import com.droidmaster.arrudeia.ui.ArrudeiaAppState
+import com.arrudeia.ui.ArrudeiaAppState
 import java.net.URLEncoder
 
 @Composable
