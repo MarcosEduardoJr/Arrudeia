@@ -21,7 +21,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.arrudeia.core.designsystem.R.color.background_grey_F7F7F9
 import com.arrudeia.feature.home.presentation.model.TravelUIModel
-import com.arrudeia.feature.home.presentation.navigation.param.PlaceDetailParam
+import com.arrudeia.feature.home.presentation.navigation.param.EventDetailParam
+import com.arrudeia.feature.home.presentation.navigation.param.HotelDetailParam
 import com.arrudeia.feature.home.presentation.viewmodel.HomeViewModel
 import java.util.Locale
 
@@ -29,12 +30,10 @@ import java.util.Locale
 @Composable
 internal fun homeRoute(
     onRouteClick: (String) -> Unit,
-    onStoriesClick: (String) -> Unit,
-    onTripDetailClick: (String) -> Unit,
     onShowSnackbar: suspend (String, String?) -> Boolean,
     showBottomBar: (Boolean) -> Unit,
-    onNewPlaceClick: (String) -> Unit,
-    onPlaceDetailsClick: (PlaceDetailParam) -> Unit
+    onHotelDetailsClick: (HotelDetailParam) -> Unit,
+    onEventDetailsClick: (EventDetailParam) -> Unit
 ) {
     showBottomBar(true)
     val viewModel: HomeViewModel = hiltViewModel()
@@ -42,11 +41,9 @@ internal fun homeRoute(
     homeView(
         onRouteClick,
         viewModel,
-        onStoriesClick,
-        onTripDetailClick,
         onShowSnackbar,
-        onNewPlaceClick,
-        onPlaceDetailsClick
+        onHotelDetailsClick,
+        onEventDetailsClick
     )
 }
 
@@ -54,11 +51,9 @@ internal fun homeRoute(
 fun homeView(
     onRouteClick: (String) -> Unit,
     viewModel: HomeViewModel = hiltViewModel(),
-    onStoriesClick: (String) -> Unit,
-    onTripDetailClick: (String) -> Unit,
     onShowSnackbar: suspend (String, String?) -> Boolean,
-    onNewPlaceClick: (String) -> Unit,
-    onPlaceDetailsClick: (PlaceDetailParam) -> Unit
+    onHotelDetailsClick: (HotelDetailParam) -> Unit,
+    onEventDetailsClick: (EventDetailParam) -> Unit
 ) {
     var searchTravel by rememberSaveable { mutableStateOf("") }
     Box(
@@ -93,11 +88,11 @@ fun homeView(
                 Spacer(modifier = Modifier.size(10.dp))
 
                 PagerHome(
-                    viewModel, searchTravel, onTripDetailClick,
+                    viewModel,
                     searchChange = { searchTravel = it },
-                    onStoriesClick = onStoriesClick,
-                    onNewPlaceClick,
-                    onPlaceDetailsClick = onPlaceDetailsClick
+                    onHotelDetailsClick = onHotelDetailsClick,
+                    onShowSnackbar,
+                    onEventDetailsClick
                 )
             }
         }

@@ -13,9 +13,10 @@ import com.arrudeia.core.data.navigation.HOME_GRAPH_ROUTE_PATTERN
 import com.arrudeia.core.data.navigation.homeRoute
 import com.arrudeia.core.data.navigation.profileRoute
 import com.arrudeia.core.data.navigation.storiesRoute
-import com.arrudeia.core.profile.param.ProfilePersonalParam
-import com.arrudeia.feature.home.presentation.navigation.param.PlaceDetailParam
-import com.arrudeia.feature.home.presentation.ui.place_detail.PlacesDetailRoute
+import com.arrudeia.feature.home.presentation.navigation.param.EventDetailParam
+import com.arrudeia.feature.home.presentation.navigation.param.HotelDetailParam
+import com.arrudeia.feature.home.presentation.ui.events.detail.EventDetailRoute
+import com.arrudeia.feature.home.presentation.ui.hotels.detail.HotelDetailRoute
 
 
 fun NavController.navigateToHome(navOptions: NavOptions? = null) {
@@ -24,23 +25,19 @@ fun NavController.navigateToHome(navOptions: NavOptions? = null) {
 
 fun NavGraphBuilder.homeScreen(
     onRouteClick: (String) -> Unit,
-    onStoriesClick: (String) -> Unit,
-    onTripDetailClick: (String) -> Unit,
     onShowSnackbar: suspend (String, String?) -> Boolean,
     showBottomBar: (Boolean) -> Unit,
-    onNewPlaceClick: (String) -> Unit,
-    onPlaceDetailsClick : (PlaceDetailParam) -> Unit
+    onHotelDetailsClick: (HotelDetailParam) -> Unit,
+    onEventDetailsClick: (EventDetailParam) -> Unit
 ) {
 
     composable(route = homeRoute) {
         homeRoute(
             onRouteClick,
-            onStoriesClick = onStoriesClick,
-            onTripDetailClick = onTripDetailClick,
             onShowSnackbar = onShowSnackbar,
             showBottomBar = showBottomBar,
-            onNewPlaceClick = onNewPlaceClick,
-            onPlaceDetailsClick
+            onHotelDetailsClick,
+            onEventDetailsClick
         )
     }
 }
@@ -71,14 +68,31 @@ fun NavGraphBuilder.homeGraph(
 }
 
 
-fun NavGraphBuilder.placeDetailScreen(
+fun NavGraphBuilder.hotelDetailScreen(
     onBackClick: () -> Unit,
+    onShowSnackbar: suspend (String, String?) -> Boolean,
 ) {
-    composable<PlaceDetailParam> {
-        val args = it.toRoute<PlaceDetailParam>()
-        PlacesDetailRoute(
+    composable<HotelDetailParam> {
+        val args = it.toRoute<HotelDetailParam>()
+        HotelDetailRoute(
             onBackClick = onBackClick,
-            placeDetail = args.getParam()
+            args.query,
+            args.checkInDate,
+            args.checkOutDate,
+            args.adults,
+            args.children,
+            args.childrenAges,
+            args.propertyToken,
+            onShowSnackbar = onShowSnackbar,
+            amenities = args.amenities
+        )
+    }
+
+    composable<EventDetailParam> {
+        val args = it.toRoute<EventDetailParam>()
+        EventDetailRoute(
+            onBackClick = onBackClick,
+            event = args.getParam()
         )
     }
 }
