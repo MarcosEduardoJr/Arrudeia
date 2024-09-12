@@ -4,41 +4,52 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.arrudeia.core.common.R.string.generic_error
 import com.arrudeia.core.places.domain.GetAllArrudeiaPlacesUseCase
 import com.arrudeia.core.places.domain.entity.ArrudeiaPlaceDetailsUseCaseEntity
-import com.arrudeia.feature.home.domain.GetAllArrudeiaTvUseCase
-import com.arrudeia.feature.home.domain.GetAllTravelHomeUseCase
-import com.arrudeia.feature.home.domain.GetUserPersonalInformationUseCase
-import com.arrudeia.feature.home.domain.entity.UserPersonalInformationUseCaseEntity
-import com.arrudeia.feature.home.presentation.map.mapArrTvToUiModel
-import com.arrudeia.feature.home.presentation.map.mapTravelsToUiModel
-import com.arrudeia.feature.home.presentation.model.ArrudeiaTvUIModel
-import com.arrudeia.feature.home.presentation.model.TravelUIModel
-import com.arrudeia.feature.home.presentation.model.ProfileUiModel
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
-import javax.inject.Inject
 import com.arrudeia.core.result.Result
 import com.arrudeia.feature.arrudeia.presentation.model.ArrudeiaAvailablePlaceUiModel
 import com.arrudeia.feature.arrudeia.presentation.model.ArrudeiaPlaceDetailsUiModel
 import com.arrudeia.feature.arrudeia.presentation.ui.AvailableOptions
 import com.arrudeia.feature.arrudeia.presentation.ui.CategoryOptions
 import com.arrudeia.feature.arrudeia.presentation.ui.SubCategoryOptions
+import com.arrudeia.feature.home.data.entity.events.GoogleEventResponse
+import com.arrudeia.feature.home.data.entity.hotel.HotelDetailResponse
+import com.arrudeia.feature.home.data.entity.hotel.HotelSearchResponse
+import com.arrudeia.feature.home.domain.FetchHotelDetailUseCase
+import com.arrudeia.feature.home.domain.GetAllArrudeiaTvUseCase
 import com.arrudeia.feature.home.domain.GetAllStatesByCountryUseCase
+import com.arrudeia.feature.home.domain.GetAllTravelHomeUseCase
+import com.arrudeia.feature.home.domain.GetUserPersonalInformationUseCase
+import com.arrudeia.feature.home.domain.SearchGoogleEventUseCase
+import com.arrudeia.feature.home.domain.SearchHotelsUseCase
+import com.arrudeia.feature.home.domain.entity.UserPersonalInformationUseCaseEntity
+import com.arrudeia.feature.home.presentation.map.mapArrTvToUiModel
 import com.arrudeia.feature.home.presentation.map.mapStateToUiModel
+import com.arrudeia.feature.home.presentation.map.mapTravelsToUiModel
+import com.arrudeia.feature.home.presentation.model.ArrudeiaTvUIModel
+import com.arrudeia.feature.home.presentation.model.ProfileUiModel
 import com.arrudeia.feature.home.presentation.model.StateUIModel
-import com.google.android.gms.maps.model.LatLng
-import com.arrudeia.core.common.R.string.generic_error
+import com.arrudeia.feature.home.presentation.model.TravelUIModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val travelUseCase: GetAllTravelHomeUseCase,
     private val arrTvUseCase: GetAllArrudeiaTvUseCase,
     private val userUseCase: GetUserPersonalInformationUseCase,
     private val statesByCountryUseCase: GetAllStatesByCountryUseCase,
-    private val getAllArrudeiaPlacesUseCase: GetAllArrudeiaPlacesUseCase
+    private val getAllArrudeiaPlacesUseCase: GetAllArrudeiaPlacesUseCase,
+    private val searchHotelsUseCase: SearchHotelsUseCase,
+    private val fetchHotelDetailUseCase: FetchHotelDetailUseCase,
+    private val searchGoogleEventUseCase: SearchGoogleEventUseCase
 ) : ViewModel() {
 
     var travelUiState: MutableStateFlow<TravelUiState> =
@@ -65,6 +76,96 @@ class HomeViewModel @Inject constructor(
         initialValue = ResultUiState.Loading
     )
 
+    private val _hotelSearchState = MutableStateFlow<HotelSearchState>(HotelSearchState.Loading)
+    val hotelSearchState: StateFlow<HotelSearchState> = _hotelSearchState.asStateFlow()
+    fun searchHotels(
+        query: String,
+        checkInDate: String,
+        checkOutDate: String,
+        adults: Int,
+        children: Int,
+        nextPageToken: String,
+        childrenAges: String,
+    ) {
+        viewModelScope.launch {
+            try {
+                val response = searchHotelsUseCase(
+                    query,
+                    checkInDate,
+                    checkOutDate,
+                    adults,
+                    children,
+                    nextPageToken,
+                    childrenAges
+                )
+                _hotelSearchState.value = HotelSearchState.Success(response)
+            } catch (e: Exception) {
+                _hotelSearchState.value = HotelSearchState.Error(e.message ?: "Unknown error")
+            }
+        }
+    }
+
+
+    private val _eventSearchState =
+        MutableStateFlow<GoogleEventSearchState>(GoogleEventSearchState.Loading)
+    val eventSearchState: StateFlow<GoogleEventSearchState> = _eventSearchState.asStateFlow()
+    fun searchEvents(query: String) {
+        viewModelScope.launch {
+            try {
+                val response = searchGoogleEventUseCase(query)
+                _eventSearchState.value = GoogleEventSearchState.Success(response)
+            } catch (e: Exception) {
+                _eventSearchState.value = GoogleEventSearchState.Error(e.message ?: "Unknown error")
+            }
+        }
+    }
+
+    private val _hotelDetailState = MutableStateFlow<HotelDetailState>(HotelDetailState.Loading)
+    val hotelDetailState: StateFlow<HotelDetailState> = _hotelDetailState.asStateFlow()
+    fun fetchHotelDetail(
+        query: String,
+        checkInDate: String,
+        checkOutDate: String,
+        adults: Int,
+        children: Int,
+        childrenAges: String,
+        propertyToken: String,
+    ) {
+        viewModelScope.launch {
+            try {
+                val response = fetchHotelDetailUseCase(
+                    query,
+                    checkInDate,
+                    checkOutDate,
+                    adults,
+                    children,
+                    childrenAges,
+                    propertyToken
+                )
+                _hotelDetailState.value = HotelDetailState.Success(response)
+            } catch (e: Exception) {
+                _hotelDetailState.value = HotelDetailState.Error(e.message ?: "Unknown error")
+            }
+        }
+    }
+
+    sealed class HotelSearchState {
+        object Loading : HotelSearchState()
+        data class Success(val data: HotelSearchResponse) : HotelSearchState()
+        data class Error(val message: String) : HotelSearchState()
+    }
+
+    sealed class GoogleEventSearchState {
+        object Loading : GoogleEventSearchState()
+        data class Success(val data: GoogleEventResponse) : GoogleEventSearchState()
+        data class Error(val message: String) : GoogleEventSearchState()
+    }
+
+    sealed class HotelDetailState {
+        object Loading : HotelDetailState()
+        data class Success(val data: HotelDetailResponse) : HotelDetailState()
+        data class Error(val message: String) : HotelDetailState()
+    }
 
     fun fetchDataArrTv() {
         viewModelScope.launch {
@@ -108,6 +209,7 @@ class HomeViewModel @Inject constructor(
                     places.clear()
                     result.data.toEntity()?.let { places.addAll(it) }
                 }
+
                 else -> {}
             }
         }

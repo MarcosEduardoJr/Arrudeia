@@ -10,6 +10,8 @@
     <string name="finish">Finalizar</string>
     <string name="search">Pesquisar</string>
     <string name="places">Lugares</string>
+    <string name="hotels">Hotéis</string>
+    <string name="flights">Voos</string>
     <string name="trips">Viagens</string>
     <string name="permission_required">Permissão necessária</string>
     <string name="location_rationale">Para rastrear sua localização, este aplicativo precisa de sua permissão para isso. Confirme para conceder.</string>
@@ -56,4 +58,9 @@
     <string name="yes">Sim</string>
     <string name="no">Não</string>
     <string name="open_camera">Abrir a câmera</string>
+    <string name="events">Eventos</string>
+    <string name="more_info_on">Mais informações em</string>
+    <string name="TICKETS">ingressos</string>
+    <string name="MORE_INFO">mais informações</string>
+    <string name="no_tickets_available">Não há ingressos dispóniveis.</string>
 </resources>

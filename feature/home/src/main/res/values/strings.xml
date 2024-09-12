@@ -4,5 +4,14 @@
     <string name="empty_list_places">Não existem lugares avaliados para essa cidade, seja o primeiro e avalie lugares e ajude a comunidade turista</string>
     <string name="register_new_place">Cadastrar novo lugar</string>
     <string name="title_home">Início</string>
+    <string name="messageHeaderHome"><![CDATA[Ta com saudade de turistar?<br><b>Oxi, <font color="#FF6421">Arrudeia!</font></b> ]]></string>
+    <string name="hour_of_check_in">Horário do check-in</string>
+    <string name="hour_of_check_out">Horário do check-out</string>
+    <string name="infomations">Informações</string>
+    <string name="prices">Preços</string>
+    <string name="check_out">Check-out</string>
+    <string name="events">Eventos</string>
+    <string name="more_info_on">Mais informações em</string>
+    <string name="MORE_INFO">mais informações</string>
 
 </resources>

@@ -7,7 +7,7 @@ import com.arrudeia.feature.aid.presentation.navigation.aidScreen
 import com.arrudeia.feature.arrudeia.presentation.navigation.arrudeiaScreen
 import com.arrudeia.feature.checklist.presentation.navigation.checkListScreen
 import com.arrudeia.feature.home.presentation.navigation.homeScreen
-import com.arrudeia.feature.home.presentation.navigation.placeDetailScreen
+import com.arrudeia.feature.home.presentation.navigation.hotelDetailScreen
 import com.arrudeia.feature.onboarding.presentation.navigation.onboardingScreen
 import com.arrudeia.feature.profile.presentation.navigation.profileScreen
 import com.arrudeia.feature.receipt.presentation.navigation.receiptDetailScreen
@@ -36,12 +36,10 @@ fun NavGraphBuilder.screens(
     )
     homeScreen(
         onRouteClick = navController::navigateToRoute,
-        onStoriesClick = navController::navigateToStories,
-        onTripDetailClick = navController::navigateToTripDetail,
         onShowSnackbar = onShowSnackbar,
         showBottomBar = showBottomBar,
-        onNewPlaceClick = navController::navigateToRoute,
-        onPlaceDetailsClick = { navController.navigate(it) }
+        onHotelDetailsClick = { navController.navigate(it) },
+        onEventDetailsClick = { navController.navigate(it) }
     )
     profileScreen(
         onBackClick = { navController.popBackStack() },
@@ -92,8 +90,9 @@ fun NavGraphBuilder.screens(
         onBackClick = { navController.popBackStack() },
         showBottomBar = showBottomBar
     )
-    placeDetailScreen(
+    hotelDetailScreen(
         onBackClick = { navController.popBackStack() },
+        onShowSnackbar = onShowSnackbar,
     )
 }
 
