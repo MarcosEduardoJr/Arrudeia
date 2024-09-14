@@ -2,7 +2,6 @@ package com.arrudeia.feature.onboarding.presentation.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.content.MediaType.Companion.HtmlText
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -44,6 +43,7 @@ internal fun onboardingRoute(
     showBottomBar: (Boolean) -> Unit,
 ) {
     showBottomBar(false)
+    viewModel.loadLibKeys()
     val currentUserSharedFlow by viewModel.currentUserSharedFlow.collectAsStateWithLifecycle()
 
     when (currentUserSharedFlow) {
@@ -57,58 +57,57 @@ internal fun onboardingRoute(
 
         else -> {}
     }
-    viewModel.getCurrentUser()
 }
 
 
 @Composable
 internal fun onboarding(onRouteClick: (String) -> Unit) {
-     Scaffold(
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        containerColor = Color.Transparent,
+        contentColor = MaterialTheme.colorScheme.onBackground,
+        contentWindowInsets = WindowInsets(0, 0, 0, 0),
+        snackbarHost = {},
+        bottomBar = {},
+    ) { padding ->
+        Surface(
+            color = Color.Black.copy(alpha = 0.6f),
             modifier = Modifier.fillMaxSize(),
-            containerColor = Color.Transparent,
-            contentColor = MaterialTheme.colorScheme.onBackground,
-            contentWindowInsets = WindowInsets(0, 0, 0, 0),
-            snackbarHost = {},
-            bottomBar = {},
-        ) { padding ->
-            Surface(
-                color = Color.Black.copy(alpha = 0.6f),
-                modifier = Modifier.fillMaxSize(),
-            ) {
-                Image(
-                    painter = painterResource(id = ic_bg_onboarding),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .clipToBounds(),
-                    contentScale = ContentScale.Crop,
-                )
-            }
-            Box(
+        ) {
+            Image(
+                painter = painterResource(id = ic_bg_onboarding),
+                contentDescription = null,
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(Color.Black.copy(alpha = 0.6f)),
+                    .clipToBounds(),
+                contentScale = ContentScale.Crop,
+            )
+        }
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.Black.copy(alpha = 0.6f)),
+        ) {
+            HtmlText(
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 80.dp),
+                html = stringResource(id = onboarding_description_tired_job)
+            )
+            ArrudeiaButtonColor(
+                onClick = { onRouteClick(signRoute) },
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter),
+                colorButton = colorResource(colorPrimary),
             ) {
-                HtmlText(
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 80.dp),
-                    html = stringResource(id = onboarding_description_tired_job)
+                Text(
+                    text = stringResource(id = start),
+                    style = MaterialTheme.typography.titleMedium,
+                    color = Color.White
                 )
-                ArrudeiaButtonColor(
-                    onClick = { onRouteClick(signRoute) },
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxWidth()
-                        .align(Alignment.BottomCenter),
-                    colorButton = colorResource(colorPrimary),
-                ) {
-                    Text(
-                        text = stringResource(id = start),
-                        style = MaterialTheme.typography.titleMedium,
-                        color = Color.White
-                    )
-                }
             }
         }
     }
+}
 
 

@@ -4,6 +4,7 @@ package com.arrudeia.feature.aid.presentation.ui
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,6 +13,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -31,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.arrudeia.core.designsystem.R.color.background_grey_F7F7F9
+import com.arrudeia.core.designsystem.component.CircularIconButton
 import com.arrudeia.feature.aid.R
 import com.arrudeia.feature.aid.presentation.model.AidUIModel
 import com.arrudeia.feature.aid.presentation.navigation.param.AidDetailParam
@@ -42,9 +46,10 @@ import java.util.Locale
 internal fun AidRoute(
     onShowSnackbar: suspend (String, String?) -> Boolean,
     onReceiptDetailClick: (AidDetailParam) -> Unit,
+    onBackClick: () -> Unit,
 ) {
     val viewModel: AidViewModel = hiltViewModel()
-    ReceiptView(viewModel, onShowSnackbar = onShowSnackbar,onReceiptDetailClick)
+    ReceiptView(viewModel, onShowSnackbar = onShowSnackbar, onReceiptDetailClick,onBackClick)
 }
 
 @Composable
@@ -52,6 +57,7 @@ fun ReceiptView(
     viewModel: AidViewModel = hiltViewModel(),
     onShowSnackbar: suspend (String, String?) -> Boolean,
     onReceiptDetailClick: (AidDetailParam) -> Unit,
+    onBackClick: () -> Unit,
 ) {
     var searchTravel by rememberSaveable { mutableStateOf("") }
     Box(
@@ -72,15 +78,27 @@ fun ReceiptView(
                     .align(Alignment.TopCenter)
             ) {
 
-                Spacer(modifier = Modifier.size(30.dp))
-                Text(
-                    modifier = Modifier.padding(bottom = 10.dp),
-                    text = stringResource(R.string.first_aid),
-                    color = Color.Black,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Start
-                )
+                Row {
+
+                    CircularIconButton(
+                        onClick = {
+                            onBackClick()
+                        },
+                        icon = Icons.Rounded.ArrowBack,
+                        backgroundColor = colorResource(id = background_grey_F7F7F9),
+                        iconSize = 50.dp,
+                        modifier = Modifier
+                    )
+                    Text(
+                        modifier = Modifier.align(Alignment.CenterVertically),
+                        text = stringResource(R.string.first_aid),
+                        color = Color.Black,
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Start
+                    )
+
+                }
                 Spacer(modifier = Modifier.size(30.dp))
 
                 search(

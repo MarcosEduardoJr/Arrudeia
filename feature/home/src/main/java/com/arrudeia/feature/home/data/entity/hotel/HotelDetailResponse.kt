@@ -7,7 +7,7 @@ data class HotelDetailResponse(
     val description: String,
     val eco_certified: Boolean,
     val extracted_hotel_class: Int,
-    val featured_prices: List<FeaturedPrice>,
+    val featured_prices: List<FeaturedPrice>? = listOf(),
     val gps_coordinates: HotelDetailGpsCoordinates,
     val hotel_class: String,
     val images: List<Image>,

@@ -11,12 +11,14 @@ import com.arrudeia.feature.receipt.presentation.ui.ReceiptRoute
 fun NavGraphBuilder.receiptScreen(
     onShowSnackbar: suspend (String, String?) -> Boolean,
     onReceiptDetailClick: (ReceiptDetailParam) -> Unit,
+    onBackClick: () -> Unit,
 ) {
 
     composable(route = receiptRoute) {
         ReceiptRoute(
             onShowSnackbar = onShowSnackbar,
-            onReceiptDetailClick = onReceiptDetailClick
+            onReceiptDetailClick = onReceiptDetailClick,
+            onBackClick
         )
     }
 }

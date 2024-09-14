@@ -38,11 +38,11 @@ import com.arrudeia.core.designsystem.component.CircularIconButton
 import com.arrudeia.core.designsystem.component.ImagePagerWithDots
 import com.arrudeia.core.designsystem.component.TextSwitch
 import com.arrudeia.core.designsystem.theme.ArrudeiaTheme
+import com.arrudeia.feature.home.R.string.infomations
+import com.arrudeia.feature.home.R.string.prices
 import com.arrudeia.feature.home.data.entity.hotel.HotelDetailResponse
 import com.arrudeia.feature.home.presentation.viewmodel.HomeViewModel
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
-import com.arrudeia.feature.home.R.string.infomations
-import com.arrudeia.feature.home.R.string.prices
 
 @Composable
 internal fun HotelDetailRoute(
@@ -178,56 +178,56 @@ fun SwitchTabHomeDetail(
         selectedTab = pagerState.currentPage
     }
 
-        Box(
+    Box(
+        modifier = Modifier
+            .padding(top = 260.dp)
+            .fillMaxSize()
+            .clipToBounds()
+            .clip(RoundedCornerShape(12.dp))
+            .background(color = colorResource(id = background_grey_F7F7F9)),
+
+        ) {
+        Column(
             modifier = Modifier
-                .padding(top = 260.dp)
-                .fillMaxSize()
-                .clipToBounds()
-                .clip(RoundedCornerShape(12.dp))
+                .fillMaxWidth()
                 .background(color = colorResource(id = background_grey_F7F7F9)),
+            horizontalAlignment = Alignment.Start
+        ) {
 
-            ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(color = colorResource(id = background_grey_F7F7F9)),
-                horizontalAlignment = Alignment.Start
-            ) {
+            HotelHeaderContentDescription(item)
 
-                HotelHeaderContentDescription(item)
+            Box(modifier = Modifier.padding(16.dp)) {
+                TextSwitch(
+                    modifier = Modifier
+                        .height(56.dp)
+                        .clip(RoundedCornerShape(50.dp))
+                        .background(Color.White)
+                        .padding(8.dp),
+                    selectedIndex = selectedTab,
+                    items = pages,
+                    onSelectionChange = {
+                        selectedTab = it
+                    }
+                )
+            }
 
-                Box(modifier = Modifier.padding(16.dp)) {
-                    TextSwitch(
-                        modifier = Modifier
-                            .height(56.dp)
-                            .clip(RoundedCornerShape(50.dp))
-                            .background(Color.White)
-                            .padding( 8.dp),
-                        selectedIndex = selectedTab,
-                        items = pages,
-                        onSelectionChange = {
-                            selectedTab = it
+            HorizontalPager(state = pagerState) { currentPage ->
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.Start
+                ) {
+                    when (currentPage) {
+                        0 -> {
+                            HotelOfferOptionItem(item.featured_prices.orEmpty())
                         }
-                    )
-                }
 
-                HorizontalPager(state = pagerState) { currentPage ->
-                    Column(
-                        modifier = Modifier.fillMaxSize(),
-                        horizontalAlignment = Alignment.Start
-                    ) {
-                        when (currentPage) {
-                            0 -> {
-
-                                HotelOfferOptionItem(item.featured_prices)
-                            }
-                            1 -> {
-                                HotelDetailContent(item = item, amenities)
-                            }
+                        1 -> {
+                            HotelDetailContent(item = item, amenities)
                         }
                     }
                 }
             }
+        }
 
     }
 }

@@ -133,6 +133,12 @@ type CepAddress {
     zipCode: String!
 }
 
+type Key {
+    name: String!
+    key: String!
+}
+
+
 
 type Query {
     _entities(representations: [_Any!]!): [_Entity]!
@@ -158,6 +164,8 @@ type Query {
     servicesExpertise: [ServicesExpertiseType]
 
     cepAddress(cep: String!): CepAddress
+
+    keys: [Key]
 }
 
 input Service {

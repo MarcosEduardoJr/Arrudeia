@@ -3,7 +3,7 @@
 <resources>
     <string name="empty_list_places">Não existem lugares avaliados para essa cidade, seja o primeiro e avalie lugares e ajude a comunidade turista</string>
     <string name="register_new_place">Cadastrar novo lugar</string>
-    <string name="title_home">Início</string>
+    <string name="title_home">Explorar</string>
     <string name="messageHeaderHome"><![CDATA[Ta com saudade de turistar?<br><b>Oxi, <font color="#FF6421">Arrudeia!</font></b> ]]></string>
     <string name="hour_of_check_in">Horário do check-in</string>
     <string name="hour_of_check_out">Horário do check-out</string>

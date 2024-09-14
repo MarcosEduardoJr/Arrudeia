@@ -1,32 +1,17 @@
 package com.arrudeia.feature.home.presentation.viewmodel
 
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.arrudeia.core.common.R.string.generic_error
-import com.arrudeia.core.places.domain.GetAllArrudeiaPlacesUseCase
-import com.arrudeia.core.places.domain.entity.ArrudeiaPlaceDetailsUseCaseEntity
 import com.arrudeia.core.result.Result
-import com.arrudeia.feature.arrudeia.presentation.model.ArrudeiaAvailablePlaceUiModel
-import com.arrudeia.feature.arrudeia.presentation.model.ArrudeiaPlaceDetailsUiModel
-import com.arrudeia.feature.arrudeia.presentation.ui.AvailableOptions
-import com.arrudeia.feature.arrudeia.presentation.ui.CategoryOptions
-import com.arrudeia.feature.arrudeia.presentation.ui.SubCategoryOptions
 import com.arrudeia.feature.home.data.entity.events.GoogleEventResponse
 import com.arrudeia.feature.home.data.entity.hotel.HotelDetailResponse
 import com.arrudeia.feature.home.data.entity.hotel.HotelSearchResponse
 import com.arrudeia.feature.home.domain.FetchHotelDetailUseCase
-import com.arrudeia.feature.home.domain.GetAllArrudeiaTvUseCase
-import com.arrudeia.feature.home.domain.GetAllStatesByCountryUseCase
-import com.arrudeia.feature.home.domain.GetAllTravelHomeUseCase
 import com.arrudeia.feature.home.domain.GetUserPersonalInformationUseCase
 import com.arrudeia.feature.home.domain.SearchGoogleEventUseCase
 import com.arrudeia.feature.home.domain.SearchHotelsUseCase
 import com.arrudeia.feature.home.domain.entity.UserPersonalInformationUseCaseEntity
-import com.arrudeia.feature.home.presentation.map.mapArrTvToUiModel
-import com.arrudeia.feature.home.presentation.map.mapStateToUiModel
-import com.arrudeia.feature.home.presentation.map.mapTravelsToUiModel
 import com.arrudeia.feature.home.presentation.model.ArrudeiaTvUIModel
 import com.arrudeia.feature.home.presentation.model.ProfileUiModel
 import com.arrudeia.feature.home.presentation.model.StateUIModel
@@ -42,39 +27,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val travelUseCase: GetAllTravelHomeUseCase,
-    private val arrTvUseCase: GetAllArrudeiaTvUseCase,
     private val userUseCase: GetUserPersonalInformationUseCase,
-    private val statesByCountryUseCase: GetAllStatesByCountryUseCase,
-    private val getAllArrudeiaPlacesUseCase: GetAllArrudeiaPlacesUseCase,
     private val searchHotelsUseCase: SearchHotelsUseCase,
     private val fetchHotelDetailUseCase: FetchHotelDetailUseCase,
     private val searchGoogleEventUseCase: SearchGoogleEventUseCase
 ) : ViewModel() {
 
-    var travelUiState: MutableStateFlow<TravelUiState> =
-        MutableStateFlow(TravelUiState.Loading)
-    val travelSharedFlow = travelUiState.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(),
-        initialValue = ResultUiState.Loading
-    )
 
-    var arrTvUiState: MutableStateFlow<ArrudeiaTvUiState> =
-        MutableStateFlow(ArrudeiaTvUiState.Loading)
-    val arrTvSharedFlow = arrTvUiState.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(),
-        initialValue = ResultUiState.Loading
-    )
 
-    var stateUiState: MutableStateFlow<StatesUiState> =
-        MutableStateFlow(StatesUiState.Loading)
-    val stateSharedFlow = stateUiState.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(),
-        initialValue = ResultUiState.Loading
-    )
+
 
     private val _hotelSearchState = MutableStateFlow<HotelSearchState>(HotelSearchState.Loading)
     val hotelSearchState: StateFlow<HotelSearchState> = _hotelSearchState.asStateFlow()
@@ -167,108 +128,13 @@ class HomeViewModel @Inject constructor(
         data class Error(val message: String) : HotelDetailState()
     }
 
-    fun fetchDataArrTv() {
-        viewModelScope.launch {
-            val result = arrTvUseCase()
-            if (!result.isNullOrEmpty())
-                arrTvUiState.value = ArrudeiaTvUiState.Success(
-                    list = result.mapArrTvToUiModel()
-                )
-            else {
-                arrTvUiState.value = ArrudeiaTvUiState.Error(generic_error)
-            }
-        }
-    }
 
     var states = mutableStateOf(listOf<StateUIModel>())
     var stateChoosed = mutableStateOf<StateUIModel?>(null)
 
     var country = mutableStateOf<String>("")
     var loading = mutableStateOf(false)
-    fun fetchStatesByCountry(countryCode: String) {
-        loading.value = true
-        viewModelScope.launch {
-            val result = statesByCountryUseCase(countryCode)
-            if (!result.isNullOrEmpty()) {
-                states.value = StatesUiState.Success(
-                    list = result.mapStateToUiModel()
-                ).list
-                fetchPlaces()
-            } else {
-                stateUiState.value = StatesUiState.Error(generic_error)
-            }
-            loading.value = false
-        }
-    }
 
-    val places = mutableStateListOf<ArrudeiaPlaceDetailsUiModel>()
-    fun fetchPlaces() {
-        viewModelScope.launch {
-            when (val result = getAllArrudeiaPlacesUseCase(stateChoosed.value?.name.orEmpty())) {
-                is Result.Success -> {
-                    places.clear()
-                    result.data.toEntity()?.let { places.addAll(it) }
-                }
-
-                else -> {}
-            }
-        }
-    }
-
-    private fun List<ArrudeiaPlaceDetailsUseCaseEntity>?.toEntity():
-            MutableList<ArrudeiaPlaceDetailsUiModel>? = if (this == null) null
-    else {
-        val list = mutableListOf<ArrudeiaPlaceDetailsUiModel>()
-        this.let { place ->
-            place.forEach { item ->
-                item.let {
-                    val listAvaliable = mutableListOf<ArrudeiaAvailablePlaceUiModel>()
-                    item.available?.forEach { itemAvaliable ->
-                        listAvaliable.add(
-                            ArrudeiaAvailablePlaceUiModel(
-                                AvailableOptions.valueOf(itemAvaliable.name)
-                            )
-                        )
-                    }
-
-                    list.add(
-                        ArrudeiaPlaceDetailsUiModel(
-                            available = listAvaliable,
-                            categoryName = CategoryOptions.valueOf(item.categoryName.orEmpty()),
-                            description = item.description.orEmpty(),
-                            image = item.image.orEmpty(),
-                            location = it.location,
-                            name = item.name.orEmpty(),
-                            phone = item.phone.orEmpty(),
-                            priceLevel = item.priceLevel,
-                            rating = item.rating,
-                            socialNetwork = item.socialNetwork.orEmpty(),
-                            subCategoryName = SubCategoryOptions.valueOf(item.subCategoryName.orEmpty()),
-                            uuid = item.uuid.orEmpty(), imageBitmap = null,
-                            city = item.city.orEmpty(),
-                            state = item.state.orEmpty(),
-                            country = item.country
-                        )
-                    )
-                }
-            }
-        }
-        list
-    }
-
-    fun fetchDataTravels() {
-        viewModelScope.launch {
-            val result = travelUseCase.invoke()
-            if (result.isNotEmpty())
-                travelUiState.value = TravelUiState.Success(
-                    list = result.mapTravelsToUiModel()
-                )
-            else
-                travelUiState.value = TravelUiState.Error(
-                    generic_error
-                )
-        }
-    }
 
     var userUiState: MutableStateFlow<ProfileUiState> =
         MutableStateFlow(ProfileUiState.Loading)

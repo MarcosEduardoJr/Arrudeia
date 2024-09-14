@@ -1,12 +1,17 @@
 package com.arrudeia.feature.home.domain
 
-import com.arrudeia.core.common.BuildConfig
+import com.arrudeia.core.data.repository.MapKeysRepositoryImpl
 import com.arrudeia.feature.home.data.HotelRepository
 import javax.inject.Inject
 
 class FetchHotelDetailUseCase @Inject constructor(
-    private val repository: HotelRepository
+    private val repository: HotelRepository,
+    private val repositoryMapLibKey: MapKeysRepositoryImpl
 ) {
+
+    companion object {
+        const val SERPAPI_KEY = "SERPAPI_KEY"
+    }
     suspend operator fun invoke(
         query: String,
         checkInDate: String,
@@ -26,7 +31,7 @@ class FetchHotelDetailUseCase @Inject constructor(
         currency = "BRL",
         gl = "br",
         hl = "pt-br",
-        apiKey = BuildConfig.SERPAPI_KEY,
+        apiKey = repositoryMapLibKey.getLocalLibKeys()[SERPAPI_KEY].orEmpty(),
         propertyToken
     )
 }

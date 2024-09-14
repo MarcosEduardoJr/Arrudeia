@@ -2,9 +2,9 @@ package com.arrudeia.navigation
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import com.arrudeia.activeRunScreen
 import com.arrudeia.feature.aid.presentation.navigation.aidDetailScreen
 import com.arrudeia.feature.aid.presentation.navigation.aidScreen
-import com.arrudeia.feature.arrudeia.presentation.navigation.arrudeiaScreen
 import com.arrudeia.feature.checklist.presentation.navigation.checkListScreen
 import com.arrudeia.feature.home.presentation.navigation.homeScreen
 import com.arrudeia.feature.home.presentation.navigation.hotelDetailScreen
@@ -15,9 +15,7 @@ import com.arrudeia.feature.receipt.presentation.navigation.receiptScreen
 import com.arrudeia.feature.services.presentation.navigation.newServiceScreen
 import com.arrudeia.feature.services.presentation.navigation.servicesScreen
 import com.arrudeia.feature.sign.presentation.navigation.signScreen
-import com.arrudeia.feature.stories.presentation.navigation.navigateToStories
-import com.arrudeia.feature.trip.presentation.navigation.navigateToTripDetail
-import com.arrudeia.activeRunScreen
+import com.arrudeia.feature.tips.presentation.navigation.tipsScreen
 import com.arrudeia.runOverviewScreen
 
 fun NavGraphBuilder.screens(
@@ -46,17 +44,14 @@ fun NavGraphBuilder.screens(
         onRouteClick = navController::navigateToRoute,
         onShowSnackbar = onShowSnackbar,
     )
-    arrudeiaScreen(
-        onBackClick = { navController.popBackStack() },
-        onShowSnackbar = onShowSnackbar,
-        showBottomBar = showBottomBar
-    )
+
     checkListScreen(
         onBackClick = { navController.popBackStack() }
     )
     receiptScreen(
         onReceiptDetailClick = { navController.navigate(it) },
-        onShowSnackbar = onShowSnackbar
+        onShowSnackbar = onShowSnackbar,
+        onBackClick = { navController.popBackStack() }
     )
     receiptDetailScreen(
         onShowSnackbar = onShowSnackbar,
@@ -64,7 +59,8 @@ fun NavGraphBuilder.screens(
     )
     aidScreen(
         onReceiptDetailClick = { navController.navigate(it) },
-        onShowSnackbar = onShowSnackbar
+        onShowSnackbar = onShowSnackbar,
+        onBackClick = { navController.popBackStack() }
     )
     aidDetailScreen(
         onShowSnackbar = onShowSnackbar,
@@ -94,6 +90,7 @@ fun NavGraphBuilder.screens(
         onBackClick = { navController.popBackStack() },
         onShowSnackbar = onShowSnackbar,
     )
+    tipsScreen(navController::navigateToRoute)
 }
 
 

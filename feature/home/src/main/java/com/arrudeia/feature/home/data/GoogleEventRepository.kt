@@ -1,10 +1,7 @@
 package com.arrudeia.feature.home.data
 
 import com.arrudeia.feature.home.data.entity.events.GoogleEventResponse
-import com.arrudeia.feature.home.data.entity.hotel.HotelDetailResponse
-import com.arrudeia.feature.home.data.entity.hotel.HotelSearchResponse
 import com.arrudeia.feature.home.data.retrofit.GoogleEventApiService
-import com.arrudeia.feature.home.data.retrofit.HotelApiService
 import javax.inject.Inject
 
 class GoogleEventRepository @Inject constructor(
@@ -15,12 +12,14 @@ class GoogleEventRepository @Inject constructor(
         currency: String,
         gl: String,
         hl: String,
+        apiKey: String,
     ): GoogleEventResponse {
         return apiService.searchEvents(
             query = query,
             currency = currency,
             gl = gl,
             hl = hl,
+            apiKey = apiKey,
         )
     }
 }

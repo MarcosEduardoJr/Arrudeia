@@ -1,25 +1,19 @@
 package com.arrudeia.navigation
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Build
-import androidx.compose.material.icons.rounded.Cookie
 import androidx.compose.material.icons.rounded.Hiking
-import androidx.compose.material.icons.rounded.Home
-import androidx.compose.material.icons.rounded.MedicalServices
-import androidx.compose.material.icons.rounded.NoteAlt
+import androidx.compose.material.icons.rounded.LightMode
+import androidx.compose.material.icons.rounded.People
+import androidx.compose.material.icons.rounded.TravelExplore
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.arrudeia.core.common.R.string.explore
+import com.arrudeia.core.common.R.string.social
+import com.arrudeia.core.common.R.string.tips
 import com.arrudeia.core.common.R.string.trail
-import com.arrudeia.core.data.navigation.aidRoute
-import com.arrudeia.core.data.navigation.checkListRoute
 import com.arrudeia.core.data.navigation.homeRoute
-import com.arrudeia.core.data.navigation.receiptRoute
+import com.arrudeia.core.data.navigation.profileRoute
 import com.arrudeia.core.data.navigation.runOverviewRoute
-import com.arrudeia.core.data.navigation.serviceRoute
-import com.arrudeia.feature.aid.R.string.aid
-import com.arrudeia.feature.checklist.R.string.checklist
-import com.arrudeia.feature.home.R.string.title_home
-import com.arrudeia.feature.receipt.R.string.receipt
-import com.arrudeia.core.common.R.string.services
+import com.arrudeia.core.data.navigation.tipsRoute
 
 enum class TopLevelDestination(
     val selectedIcon: ImageVector,
@@ -29,18 +23,18 @@ enum class TopLevelDestination(
     val route: String,
 ) {
     HOME(
-        selectedIcon = Icons.Rounded.Home,
-        unselectedIcon = Icons.Rounded.Home,
-        iconTextId = title_home,
-        titleTextId = title_home,
+        selectedIcon = Icons.Rounded.TravelExplore,
+        unselectedIcon = Icons.Rounded.TravelExplore,
+        iconTextId = explore,
+        titleTextId = explore,
         route = homeRoute,
     ),
-    SERVICES(
-        selectedIcon = Icons.Rounded.Build,
-        unselectedIcon = Icons.Rounded.Build,
-        iconTextId = services,
-        titleTextId = services,
-        route = serviceRoute,
+    TIPS(
+        selectedIcon = Icons.Rounded.LightMode,
+        unselectedIcon = Icons.Rounded.LightMode,
+        iconTextId = tips,
+        titleTextId = tips,
+        route = tipsRoute,
     ),
     TRAIL(
         selectedIcon = Icons.Rounded.Hiking,
@@ -49,26 +43,13 @@ enum class TopLevelDestination(
         titleTextId = trail,
         route = runOverviewRoute,
     ),
-    RECEIPT(
-        selectedIcon = Icons.Rounded.Cookie,
-        unselectedIcon = Icons.Rounded.Cookie,
-        iconTextId = receipt,
-        titleTextId = receipt,
-        route = receiptRoute,
-    ),
-    AID(
-        selectedIcon = Icons.Rounded.MedicalServices,
-        unselectedIcon = Icons.Rounded.MedicalServices,
-        iconTextId = aid,
-        titleTextId = aid,
-        route = aidRoute,
-    ),
-    CHECKLIST(
-        selectedIcon = Icons.Rounded.NoteAlt,
-        unselectedIcon = Icons.Rounded.NoteAlt,
-        iconTextId = checklist,
-        titleTextId = checklist,
-        route = checkListRoute,
+
+    SOCIAL(
+        selectedIcon = Icons.Rounded.People,
+        unselectedIcon = Icons.Rounded.People,
+        iconTextId = social,
+        titleTextId = social,
+        route = profileRoute,
     ),
 
 }

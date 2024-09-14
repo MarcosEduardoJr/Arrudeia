@@ -89,6 +89,7 @@ internal fun tripDetail(item: List<CheckListUIModel?>, onBackClick: () -> Unit) 
                         fillMaxSize()
                     })
                 {
+
                     GlideImage(
                         model = stringResource(R.string.background_checklist_img),
                         contentDescription = null,
@@ -96,6 +97,16 @@ internal fun tripDetail(item: List<CheckListUIModel?>, onBackClick: () -> Unit) 
                             .height(300.dp)
                             .fillMaxWidth(),
                         contentScale = ContentScale.FillBounds,
+                    )
+
+                    CircularIconButton(
+                        onClick = {
+                            onBackClick()
+                        },
+                        icon = Icons.Rounded.ArrowBack,
+                        backgroundColor = colorResource(id = background_grey_F7F7F9),
+                        iconSize = 50.dp,
+                        modifier = Modifier.align(Alignment.TopStart).padding(16.dp)
                     )
                     content(item = item)
                 }

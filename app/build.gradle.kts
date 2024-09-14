@@ -1,4 +1,4 @@
-import com.android.build.gradle.internal.dsl.SigningConfig
+
 import java.io.FileInputStream
 import java.util.Properties
 
@@ -173,14 +173,16 @@ dependencies {
     implementation(project(":feature:sign"))
     implementation(project(":feature:home"))
     implementation(project(":feature:trip"))
-    implementation(project(":feature:stories"))
+   // implementation(project(":feature:stories"))
     implementation(project(":feature:profile"))
-    implementation(project(":feature:arrudeia"))
+  //  implementation(project(":feature:arrudeia"))
     implementation(project(":feature:checklist"))
     implementation(project(":feature:receipt"))
     implementation(project(":feature:aid"))
     implementation(project(":feature:services"))
     implementation(project(":feature:trail"))
+    implementation(project(":feature:tips"))
+    implementation(project(":feature:social"))
 }
 
 apply(plugin = "com.google.gms.google-services")

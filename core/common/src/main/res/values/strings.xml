@@ -63,4 +63,12 @@
     <string name="TICKETS">ingressos</string>
     <string name="MORE_INFO">mais informações</string>
     <string name="no_tickets_available">Não há ingressos dispóniveis.</string>
+    <string name="explore">Explorar</string>
+    <string name="tips">Dicas</string>
+    <string name="social">Social</string>
+
+    <string name="receipts">Receitas</string>
+    <string name="aid">Primeiros Socorros</string>
+    <string name="checklist">Guia</string>
+
 </resources>

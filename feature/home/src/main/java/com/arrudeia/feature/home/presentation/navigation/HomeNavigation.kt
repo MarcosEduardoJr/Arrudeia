@@ -6,17 +6,15 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import androidx.navigation.toRoute
-import com.arrudeia.feature.home.presentation.ui.homeRoute
-import com.arrudeia.feature.profile.presentation.ui.profile.profileRoute
-import com.arrudeia.feature.stories.presentation.ui.storiesRoute
 import com.arrudeia.core.data.navigation.HOME_GRAPH_ROUTE_PATTERN
 import com.arrudeia.core.data.navigation.homeRoute
 import com.arrudeia.core.data.navigation.profileRoute
-import com.arrudeia.core.data.navigation.storiesRoute
 import com.arrudeia.feature.home.presentation.navigation.param.EventDetailParam
 import com.arrudeia.feature.home.presentation.navigation.param.HotelDetailParam
 import com.arrudeia.feature.home.presentation.ui.events.detail.EventDetailRoute
+import com.arrudeia.feature.home.presentation.ui.homeRoute
 import com.arrudeia.feature.home.presentation.ui.hotels.detail.HotelDetailRoute
+import com.arrudeia.feature.profile.presentation.ui.profile.profileRoute
 
 
 fun NavController.navigateToHome(navOptions: NavOptions? = null) {
@@ -55,11 +53,9 @@ fun NavGraphBuilder.homeGraph(
 ) {
     navigation(
         route = HOME_GRAPH_ROUTE_PATTERN,
-        startDestination = storiesRoute,
+        startDestination = profileRoute,
     ) {
-        composable(route = storiesRoute) {
-            storiesRoute(onBackClick)
-        }
+
         composable(route = profileRoute) {
             profileRoute(onBackClick, onRouteClick, onShowSnackbar = onShowSnackbar)
         }

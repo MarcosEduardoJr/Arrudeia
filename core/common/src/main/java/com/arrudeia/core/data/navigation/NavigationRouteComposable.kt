@@ -25,5 +25,10 @@ const val activeRunRoute = "active_run"
 const val arrudeiaRoute = "arrudeia_route"
 
 
+const val tipsRoute = "tips_route"
+
+const val socialRoute = "social_route"
+
+
 const val HOME_GRAPH_ROUTE_PATTERN = "home_graph"
 const val PROFILE_GRAPH_ROUTE_PATTERN = "profile_graph"
