@@ -3,7 +3,7 @@
 <resources>
     <string name="start">Começar</string>
     <string name="sign">Entrar</string>
-    <string name="sign_description_tired_job"><![CDATA[<h3>Descubra o mundo com o <font color="#FF6421"><br><b>Arrudeia!</b></font></h3><p>O aplicativo perfeito para turistas explorarem novos destinos de forma prática e divertida.<br>Salve trilhas, descubra lugares, receitas rápidas e dicas de viagem!</p>]]></string>
+    <string name="sign_description_tired_job"><![CDATA[<h3><font color="#FF6421"><br><b>Arrudeia!</b></font></h3><p>Conecte-se agora à nossa área social! Faça amigos de todo o mundo e planeje experiências turísticas incríveis. Tudo isso esperando por você! Cadastre-se ou faça login e comece sua jornada! </p>]]></string>
     <string name="sign_register">Cadastrar</string>
     <string name="sign_email">Email</string>
     <string name="sign_password">Senha</string>

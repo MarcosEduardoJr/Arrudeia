@@ -45,7 +45,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.autofill.AutofillType
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -71,11 +70,13 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.text.HtmlCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.arrudeia.core.designsystem.R.color.background_green_008000
+import com.arrudeia.core.data.navigation.homeRoute
 import com.arrudeia.core.designsystem.R.color.background_grey_F7F7F9
-import com.arrudeia.core.designsystem.R.color.background_red_FF0000
+import com.arrudeia.core.designsystem.R.color.colorGreen
 import com.arrudeia.core.designsystem.R.color.colorPrimary
+import com.arrudeia.core.designsystem.R.color.colorRed
 import com.arrudeia.core.designsystem.R.color.colorWhite
+import com.arrudeia.core.designsystem.R.color.text_grey
 import com.arrudeia.core.designsystem.component.ArrudeiaButtonColor
 import com.arrudeia.core.designsystem.component.ArrudeiaLoadingWheel
 import com.arrudeia.core.designsystem.component.DefaultLinkMovementMethod
@@ -92,8 +93,6 @@ import com.arrudeia.feature.sign.R.string.sign_password_not_equals_to_confirm_pa
 import com.arrudeia.feature.sign.R.string.sign_register
 import com.arrudeia.feature.sign.presentation.viewmodel.SignViewModel
 import com.arrudeia.feature.sign.presentation.viewmodel.SignViewModel.SignUiState
-import com.arrudeia.core.data.navigation.homeRoute
-import com.arrudeia.core.designsystem.R.color.text_grey
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -130,9 +129,7 @@ internal fun Sign(
     viewModel: SignViewModel,
     onShowSnackbar: suspend (String, String?) -> Boolean
 ) {
-
-
-    var isRegisterState by remember { mutableStateOf(false) }
+    var isRegisterState by remember { mutableStateOf(true) }
     var isResetPasswordState by remember { mutableStateOf(false) }
 
     var emailValueState by rememberSaveable { mutableStateOf("") }
@@ -499,7 +496,7 @@ private fun signTextField(
                             contentDescription = stringResource(
                                 id = sign,
                             ),
-                            tint = colorResource(background_green_008000),
+                            tint = colorResource(colorGreen),
                         )
                     }
                 } else if (!statusIconValid() && textValueFieldParam.isNotEmpty()) {
@@ -513,7 +510,7 @@ private fun signTextField(
                             contentDescription = stringResource(
                                 id = sign,
                             ),
-                            tint = colorResource(background_red_FF0000),
+                            tint = colorResource(colorRed),
                         )
                     }
                 }

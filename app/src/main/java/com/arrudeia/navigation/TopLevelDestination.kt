@@ -11,8 +11,8 @@ import com.arrudeia.core.common.R.string.social
 import com.arrudeia.core.common.R.string.tips
 import com.arrudeia.core.common.R.string.trail
 import com.arrudeia.core.data.navigation.homeRoute
-import com.arrudeia.core.data.navigation.profileRoute
 import com.arrudeia.core.data.navigation.runOverviewRoute
+import com.arrudeia.core.data.navigation.socialRoute
 import com.arrudeia.core.data.navigation.tipsRoute
 
 enum class TopLevelDestination(
@@ -49,7 +49,7 @@ enum class TopLevelDestination(
         unselectedIcon = Icons.Rounded.People,
         iconTextId = social,
         titleTextId = social,
-        route = profileRoute,
+        route = socialRoute,
     ),
 
 }

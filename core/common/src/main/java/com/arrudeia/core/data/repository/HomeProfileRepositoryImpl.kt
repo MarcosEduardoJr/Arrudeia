@@ -1,10 +1,10 @@
-package com.arrudeia.feature.home.data
+package com.arrudeia.core.data.repository
 
 import com.apollographql.apollo3.ApolloClient
 import com.arrudeia.core.common.R.string.generic_error
+import com.arrudeia.core.data.repository.entity.UserPersonalInformationRepositoryEntity
 import com.arrudeia.core.graphql.GetUserGraphQuery
 import com.arrudeia.core.result.Result
-import com.arrudeia.feature.home.data.entity.UserPersonalInformationRepositoryEntity
 import javax.inject.Inject
 
 class HomeProfileRepositoryImpl @Inject constructor(

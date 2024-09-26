@@ -25,10 +25,11 @@ fun updateUser(
     birthDate: String,
     onShowSnackbar: suspend (String, String?) -> Boolean,
     updateUser: (Boolean) -> Unit,
+    genderChoosed: String,
 ) {
 
     viewModel.savePersonalInformation(
-        name, docId, email, phone, birthDate
+        name, docId, email, phone, birthDate, genderChoosed
     )
 
     val uiState by viewModel.sharedFlowUpdateUser.collectAsStateWithLifecycle()

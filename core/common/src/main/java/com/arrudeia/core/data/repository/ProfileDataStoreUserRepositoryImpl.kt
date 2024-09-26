@@ -1,10 +1,10 @@
-package com.arrudeia.feature.profile.data
+package com.arrudeia.core.data.repository
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.arrudeia.feature.profile.data.entity.ProfileDataStoreUserRepositoryEntity
+import com.arrudeia.core.data.repository.entity.ProfileDataStoreUserRepositoryEntity
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
@@ -46,6 +46,8 @@ class ProfileDataStoreUserRepositoryImpl @Inject constructor(
         }
     }
 
+
+
     override suspend fun saveUser(user: ProfileDataStoreUserRepositoryEntity): Boolean {
         dataStore.edit { preferences ->
             preferences[UID_KEY] = user.uid
@@ -54,6 +56,22 @@ class ProfileDataStoreUserRepositoryImpl @Inject constructor(
             preferences[IMAGE_USER_KEY] = user.image
         }
         return dataStore.data.first().contains(UID_KEY)
+    }
+
+    override suspend fun getImageUser(): String {
+        val result = dataStore.data.map { preferences ->
+            val item = preferences[IMAGE_USER_KEY] ?: return@map null
+            item
+        }.firstOrNull()
+        return result.orEmpty()
+    }
+
+    override suspend fun getUuid(): String {
+        val result = dataStore.data.map { preferences ->
+            val uid = preferences[UID_KEY] ?: return@map null
+            uid
+        }.firstOrNull()
+        return result.orEmpty()
     }
 }
 

@@ -2,8 +2,8 @@ package com.arrudeia.feature.profile.di
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import com.arrudeia.feature.profile.data.ProfileDataStoreUserRepository
-import com.arrudeia.feature.profile.data.ProfileDataStoreUserRepositoryImpl
+import com.arrudeia.core.data.repository.ProfileDataStoreUserRepository
+import com.arrudeia.core.data.repository.ProfileDataStoreUserRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

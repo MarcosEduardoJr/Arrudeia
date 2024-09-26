@@ -70,5 +70,13 @@
     <string name="receipts">Receitas</string>
     <string name="aid">Primeiros Socorros</string>
     <string name="checklist">Guia</string>
+    <string name="travelers">Viajantes</string>
+    <string name="messages">Mensagens</string>
+    <string name="plans">Planos</string>
+    <string name="interests">Interesses</string>
+    <string name="biography">Biografia</string>
+    <string name="about_me">Sobre mim</string>
+    <string name="sex">Sexo</string>
+    <string name="information">Informação</string>
 
 </resources>

@@ -1,6 +1,6 @@
-package com.arrudeia.feature.profile.data
+package com.arrudeia.core.data.repository
 
-import com.arrudeia.feature.profile.data.entity.ProfileDataStoreUserRepositoryEntity
+import com.arrudeia.core.data.repository.entity.ProfileDataStoreUserRepositoryEntity
 
 
 interface ProfileDataStoreUserRepository {
@@ -14,4 +14,9 @@ interface ProfileDataStoreUserRepository {
 
     suspend fun logoutUser(
     )
+
+
+    suspend fun getUuid(): String
+
+    suspend fun getImageUser(): String
 }

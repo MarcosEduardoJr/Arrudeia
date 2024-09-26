@@ -1,4 +1,4 @@
-package com.arrudeia.feature.home.domain.entity
+package com.arrudeia.core.domain.entity
 
 import kotlinx.serialization.Serializable
 

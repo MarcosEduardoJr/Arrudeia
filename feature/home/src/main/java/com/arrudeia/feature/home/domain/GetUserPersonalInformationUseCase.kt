@@ -1,11 +1,11 @@
 package com.arrudeia.feature.home.domain
 
+import com.arrudeia.core.data.repository.HomeProfileDataStoreUserRepositoryImpl
+import com.arrudeia.core.data.repository.HomeProfileRepositoryImpl
+import com.arrudeia.core.data.repository.entity.ProfileDataStoreUserRepositoryEntity
+import com.arrudeia.core.data.repository.entity.UserPersonalInformationRepositoryEntity
+import com.arrudeia.core.domain.entity.UserPersonalInformationUseCaseEntity
 import com.arrudeia.core.result.Result
-import com.arrudeia.feature.home.data.HomeProfileDataStoreUserRepositoryImpl
-import com.arrudeia.feature.home.data.HomeProfileRepositoryImpl
-import com.arrudeia.feature.home.data.entity.ProfileDataStoreUserRepositoryEntity
-import com.arrudeia.feature.home.data.entity.UserPersonalInformationRepositoryEntity
-import com.arrudeia.feature.home.domain.entity.UserPersonalInformationUseCaseEntity
 import javax.inject.Inject
 
 class GetUserPersonalInformationUseCase @Inject constructor(

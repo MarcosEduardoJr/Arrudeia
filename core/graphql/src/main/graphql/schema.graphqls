@@ -13,6 +13,21 @@ type UserGraph {
     city: String
     state: String
     country: String
+    interests: String
+    biography: String
+    gender: String
+    lastCity: String
+    lastCountry: String
+}
+
+type TravelerGraph {
+    uuid: String
+    name: String
+    city: String
+    interests: String
+    aboutMe: String
+    gender: String
+    img: String
 }
 
 type ArrudeiaPlace {
@@ -138,14 +153,15 @@ type Key {
     key: String!
 }
 
-
-
 type Query {
     _entities(representations: [_Any!]!): [_Entity]!
 
     _service: _Service!
 
     user(uuid: String!): UserGraph
+
+    travelers(userUuid: String!): [TravelerGraph]
+
 
     arrudeiaPlaces(state: String!): [ArrudeiaPlace]
     arrudeiaPlace(uuid: String!): ArrudeiaPlace
@@ -207,6 +223,11 @@ type Mutation {
         state: String,
         country: String,
         idUserDoc: String,
+        interests: String,
+        biography: String,
+        gender: String,
+        lastCity: String,
+        lastCountry: String
     ) : String
 
     updateUserAddress(

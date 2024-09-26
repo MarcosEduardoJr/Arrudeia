@@ -8,7 +8,6 @@ import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.content.MediaType.Companion.HtmlText
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -31,11 +30,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.arrudeia.core.data.navigation.profileRoute
+import com.arrudeia.core.designsystem.R.color.colorBlack
 import com.arrudeia.core.designsystem.R.drawable.ic_arrudeia_logo
 import com.arrudeia.core.designsystem.component.HtmlText
 import com.arrudeia.core.ui.hasFineLocationPermission
@@ -43,7 +41,6 @@ import com.arrudeia.core.ui.hasNotificationPermission
 import com.arrudeia.core.utils.ShowPermissionLocationDialog
 import com.arrudeia.feature.home.R.string.messageHeaderHome
 import com.arrudeia.feature.home.presentation.viewmodel.HomeViewModel
-import com.arrudeia.feature.home.presentation.viewmodel.ProfileUiState
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.Placeholder
@@ -51,7 +48,6 @@ import com.bumptech.glide.integration.compose.placeholder
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.Task
-import com.arrudeia.core.designsystem.R.color.colorBlack
 
 private const val SPACING_FIX = 3f
 
@@ -63,16 +59,8 @@ fun header(
     onRouteClick: (String) -> Unit,
     viewModel: HomeViewModel,
 ) {
-    val uiState by viewModel.userSharedFlow.collectAsStateWithLifecycle()
-    var image by rememberSaveable { mutableStateOf("") }
-    when (uiState) {
-        is ProfileUiState.Success -> {
-            image =
-                (uiState as ProfileUiState.Success).data.image.orEmpty()
-        }
+    var user  = viewModel.user
 
-        else -> {}
-    }
     Box(
         modifier = modifier
     ) {
@@ -90,8 +78,8 @@ fun header(
                 .size(50.dp)
                 .align(Alignment.CenterEnd)
                 .clickable { onRouteClick(profileRoute) },
-            image,
-            placeholder(painterResource(id = ic_arrudeia_logo)),
+            user.value?.image.orEmpty(),
+            placeholder( ic_arrudeia_logo),
             null
         )
     }

@@ -1,5 +1,5 @@
 package com.arrudeia.feature.profile.domain
-import com.arrudeia.feature.profile.data.ProfileDataStoreUserRepository
+import com.arrudeia.core.data.repository.ProfileDataStoreUserRepository
 import javax.inject.Inject
 
 class LogoutCurrentUserDataStoreUseCase @Inject constructor(

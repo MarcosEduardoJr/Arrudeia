@@ -1,0 +1,12 @@
+query GetTravelers($userUuid: String!) {
+    travelers(userUuid: $userUuid) {
+    uuid
+    name
+    city
+    interests
+        aboutMe
+    gender
+        img
+    }
+}
+

@@ -1,9 +1,8 @@
 package com.arrudeia.feature.services.domain
 
 import com.arrudeia.core.result.Result
-import com.arrudeia.feature.services.data.HomeProfileDataStoreUserRepositoryImpl
 import com.arrudeia.feature.services.data.HomeProfileRepositoryImpl
-import com.arrudeia.feature.services.data.entity.ProfileDataStoreUserRepositoryEntity
+import com.arrudeia.feature.services.data.entity.ServiceProfileDataStoreUserRepositoryEntity
 import com.arrudeia.feature.services.data.entity.UserPersonalInformationRepositoryEntity
 import com.arrudeia.feature.services.domain.entity.UserPersonalInformationUseCaseEntity
 import javax.inject.Inject
@@ -17,7 +16,7 @@ class GetUserPersonalInformationUseCase @Inject constructor(
         ).toUseCaseEntity()
 
 
-    private fun Result<ProfileDataStoreUserRepositoryEntity?>.getUid(): String {
+    private fun Result<ServiceProfileDataStoreUserRepositoryEntity?>.getUid(): String {
         return when (this) {
             is Result.Success -> {
                 this.data?.uid.orEmpty()

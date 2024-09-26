@@ -2,15 +2,20 @@ package com.arrudeia.core.designsystem.component
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.colorResource
+import com.arrudeia.core.designsystem.R.color.background_grey_F7F7F9
+import com.arrudeia.core.designsystem.R.color.colorPrimary
 
 @Composable
-fun ArrudeiaTopicTag(
+fun ArrudeiaTextTopicTag(
     modifier: Modifier = Modifier,
     followed: Boolean,
     onClick: () -> Unit,
@@ -18,23 +23,18 @@ fun ArrudeiaTopicTag(
     text: @Composable () -> Unit,
 ) {
     Box(modifier = modifier) {
-        val containerColor = if (followed) {
-            MaterialTheme.colorScheme.primaryContainer
-        } else {
-            MaterialTheme.colorScheme.surfaceVariant.copy(
-                alpha = ArrudeiaTagDefaults.UnfollowedTopicTagContainerAlpha,
-            )
-        }
+        val containerColor =
+            colorResource(id = if (followed) colorPrimary else background_grey_F7F7F9)
+
         TextButton(
             onClick = onClick,
             enabled = enabled,
             colors = ButtonDefaults.textButtonColors(
                 containerColor = containerColor,
                 contentColor = contentColorFor(backgroundColor = containerColor),
-                disabledContainerColor = MaterialTheme.colorScheme.onSurface.copy(
-                    alpha = ArrudeiaTagDefaults.DisabledTopicTagContainerAlpha,
-                ),
+                colorResource(id = background_grey_F7F7F9),
             ),
+            modifier = Modifier
         ) {
             ProvideTextStyle(value = MaterialTheme.typography.labelSmall) {
                 text()
@@ -43,13 +43,28 @@ fun ArrudeiaTopicTag(
     }
 }
 
-/**
- *  tag default values.
- */
-object ArrudeiaTagDefaults {
-    const val UnfollowedTopicTagContainerAlpha = 0.5f
 
-    // TODO: File bug
-    // Button disabled container alpha value not exposed by ButtonDefaults
-    const val DisabledTopicTagContainerAlpha = 0.12f
+@Composable
+fun ArrudeiaTopicTag(
+    modifier: Modifier = Modifier,
+    followed: Boolean,
+    onClick: () -> Unit,
+    enabled: Boolean = true,
+    content: @Composable () -> Unit,
+) {
+    Box(modifier = modifier) {
+        val containerColor =
+            colorResource(id = if (followed) colorPrimary else background_grey_F7F7F9)
+
+        IconButton(
+            onClick = onClick,
+            enabled = enabled,
+            colors = IconButtonDefaults.iconButtonColors(
+                containerColor = containerColor,
+            ),
+            modifier = Modifier
+        ) {
+            content()
+        }
+    }
 }

@@ -8,15 +8,30 @@ import androidx.activity.ComponentActivity
 import androidx.core.content.ContextCompat
 
 fun ComponentActivity.shouldShowFineLocationPermissionRationale(): Boolean {
-    return Build.VERSION.SDK_INT >= 23 &&  shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION)
+    return Build.VERSION.SDK_INT >= 23 && shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION)
 }
 
 fun ComponentActivity.shouldShowCoarseLocationPermissionRationale(): Boolean {
-    return Build.VERSION.SDK_INT >= 23 &&  shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_COARSE_LOCATION)
+    return Build.VERSION.SDK_INT >= 23 && shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_COARSE_LOCATION)
+}
+
+fun ComponentActivity.shouldShowCoarseLocationPermissionRationaleLess23(): Boolean {
+    return ContextCompat.checkSelfPermission(
+        this,
+        Manifest.permission.ACCESS_COARSE_LOCATION
+    ) == PackageManager.PERMISSION_DENIED
+}
+
+fun ComponentActivity.shouldShowFineLocationPermissionRationaleLess23(): Boolean {
+    return ContextCompat.checkSelfPermission(
+        this,
+        Manifest.permission.ACCESS_FINE_LOCATION
+    ) == PackageManager.PERMISSION_DENIED
 }
 
 fun ComponentActivity.showShouldLocationPermission(): Boolean {
-    return this.shouldShowFineLocationPermissionRationale()  || this.shouldShowCoarseLocationPermissionRationale()
+    return  (  this.shouldShowCoarseLocationPermissionRationaleLess23()
+            || this.shouldShowFineLocationPermissionRationaleLess23() )
 }
 
 
@@ -41,7 +56,7 @@ fun Context.hasCoarseLocationPermission(): Boolean {
 }
 
 fun Context.hasNotificationPermission(): Boolean {
-    return if(Build.VERSION.SDK_INT >= 33) {
+    return if (Build.VERSION.SDK_INT >= 33) {
         hasPermission(Manifest.permission.POST_NOTIFICATIONS)
     } else true
 }

@@ -5,10 +5,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.arrudeia.core.data.navigation.PROFILE_GRAPH_ROUTE_PATTERN
 import com.arrudeia.core.data.navigation.profileAddressRoute
+import com.arrudeia.core.data.navigation.profileInterestRoute
 import com.arrudeia.core.data.navigation.profilePersonalInformationRoute
 import com.arrudeia.core.data.navigation.profileRoute
 import com.arrudeia.core.profile.param.ProfilePersonalParam
 import com.arrudeia.feature.profile.presentation.ui.address.profileAddressRoute
+import com.arrudeia.feature.profile.presentation.ui.interest.ProfileInterestRoute
 import com.arrudeia.feature.profile.presentation.ui.personal.profilePersonalInformationRoute
 import com.arrudeia.feature.profile.presentation.ui.profile.profileRoute
 
@@ -71,6 +73,11 @@ fun NavGraphBuilder.profileGraph(
         composable(route = profileAddressRoute) {
             profileAddressRoute(onBackClick, onShowSnackbar = onShowSnackbar)
         }
+
+        composable(route = profileInterestRoute) {
+            ProfileInterestRoute(onBackClick, onShowSnackbar = onShowSnackbar)
+        }
+
         nestedGraphs()
     }
 }

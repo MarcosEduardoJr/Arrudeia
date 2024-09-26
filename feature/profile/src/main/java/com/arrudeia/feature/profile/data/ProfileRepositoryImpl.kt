@@ -1,12 +1,15 @@
 package com.arrudeia.feature.profile.data
 
 import com.apollographql.apollo3.ApolloClient
+import com.arrudeia.core.graphql.GetUserAboutMeQuery
 import com.arrudeia.core.graphql.GetUserAddressGraphQuery
 import com.arrudeia.core.graphql.GetUserGraphQuery
 import com.arrudeia.core.graphql.UpdateUserAddressGraphMutation
+import com.arrudeia.core.graphql.UpdateUserInterestMutation
 import com.arrudeia.core.graphql.UpdateUserPersonalInfoGraphMutation
 import com.arrudeia.core.result.Result
 import com.arrudeia.feature.profile.R
+import com.arrudeia.feature.profile.data.entity.UserAboutMeEntity
 import com.arrudeia.feature.profile.data.entity.UserAddressRepositoryEntity
 import com.arrudeia.feature.profile.data.entity.UserPersonalInformationRepositoryEntity
 import javax.inject.Inject
@@ -30,6 +33,13 @@ class ProfileRepositoryImpl @Inject constructor(
         return Result.Success(response.data?.user?.toAddressEntity())
     }
 
+    override suspend fun getUserAboutMe(uuid: String): Result<UserAboutMeEntity> {
+        val response = apolloClient.query(GetUserAboutMeQuery(uuid)).execute()
+        if (response.hasErrors())
+            return Result.Error(R.string.error_get_user)
+        return Result.Success(response.data?.user?.toAboutMeEntity()!!)
+    }
+
     override suspend fun updateUserPersonalInformation(
         userInput: UserPersonalInformationRepositoryEntity
     ): Result<String?> {
@@ -41,7 +51,8 @@ class ProfileRepositoryImpl @Inject constructor(
                 userInput.phone.orEmpty(),
                 userInput.idDocument.orEmpty(),
                 userInput.birthDate.orEmpty(),
-                userInput.profileImage.orEmpty()
+                userInput.profileImage.orEmpty(),
+                userInput.gender.orEmpty()
             )
         ).execute()
         if (response.hasErrors())
@@ -66,6 +77,24 @@ class ProfileRepositoryImpl @Inject constructor(
             return Result.Error(R.string.error_update_user)
         return Result.Success(response.data?.updateUser.orEmpty())
     }
+
+    override suspend fun updateUserAboutMe(
+        uuid: String,
+        interests: String,
+        biography: String
+    ): Result<String?> {
+        val response = apolloClient.mutation(
+            UpdateUserInterestMutation(
+                uuid,
+                interests,
+                biography
+            )
+        ).execute()
+        if (response.hasErrors())
+            return Result.Error(R.string.error_update_user)
+        return Result.Success(response.data?.updateUser.orEmpty())
+    }
+
 }
 
 

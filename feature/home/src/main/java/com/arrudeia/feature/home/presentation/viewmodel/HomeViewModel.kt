@@ -1,41 +1,35 @@
 package com.arrudeia.feature.home.presentation.viewmodel
 
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.arrudeia.core.result.Result
+import com.arrudeia.core.data.repository.entity.ProfileDataStoreUserRepositoryEntity
+import com.arrudeia.core.domain.GetUserPersonalInformationLocalUseCase
 import com.arrudeia.feature.home.data.entity.events.GoogleEventResponse
 import com.arrudeia.feature.home.data.entity.hotel.HotelDetailResponse
 import com.arrudeia.feature.home.data.entity.hotel.HotelSearchResponse
 import com.arrudeia.feature.home.domain.FetchHotelDetailUseCase
-import com.arrudeia.feature.home.domain.GetUserPersonalInformationUseCase
 import com.arrudeia.feature.home.domain.SearchGoogleEventUseCase
 import com.arrudeia.feature.home.domain.SearchHotelsUseCase
-import com.arrudeia.feature.home.domain.entity.UserPersonalInformationUseCaseEntity
 import com.arrudeia.feature.home.presentation.model.ArrudeiaTvUIModel
 import com.arrudeia.feature.home.presentation.model.ProfileUiModel
 import com.arrudeia.feature.home.presentation.model.StateUIModel
 import com.arrudeia.feature.home.presentation.model.TravelUIModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val userUseCase: GetUserPersonalInformationUseCase,
+    private val userUseCase: GetUserPersonalInformationLocalUseCase,
     private val searchHotelsUseCase: SearchHotelsUseCase,
     private val fetchHotelDetailUseCase: FetchHotelDetailUseCase,
     private val searchGoogleEventUseCase: SearchGoogleEventUseCase
 ) : ViewModel() {
-
-
-
-
 
     private val _hotelSearchState = MutableStateFlow<HotelSearchState>(HotelSearchState.Loading)
     val hotelSearchState: StateFlow<HotelSearchState> = _hotelSearchState.asStateFlow()
@@ -136,46 +130,24 @@ class HomeViewModel @Inject constructor(
     var loading = mutableStateOf(false)
 
 
-    var userUiState: MutableStateFlow<ProfileUiState> =
-        MutableStateFlow(ProfileUiState.Loading)
-    val userSharedFlow = userUiState.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(),
-        initialValue = ProfileUiState.Loading
-    )
+
+
+    private val _user = mutableStateOf<ProfileUiModel?>(null)
+    val user: State<ProfileUiModel?> = _user
 
     fun getUserPersonalInformation() {
         viewModelScope.launch {
-            when (val result = userUseCase()) {
-                is Result.Success -> {
-                    result.data?.let { data ->
-                        userUiState.value = ProfileUiState.Success(
-                            data.toUiModel()
-                        )
-                    }
-                }
-
-                is Result.Error -> {
-                    userUiState.value = ProfileUiState.Error(
-                        result.message
-                    )
-                }
-
-                Result.Loading -> {
-                    userUiState.value = ProfileUiState.Loading
-
-                }
-            }
+            _user.value = userUseCase()?.toUiModel()
         }
     }
 
-    private fun UserPersonalInformationUseCaseEntity.toUiModel(): ProfileUiModel {
+    private fun ProfileDataStoreUserRepositoryEntity.toUiModel(): ProfileUiModel {
         var result: ProfileUiModel
         this.let {
             result = ProfileUiModel(
                 name = it.name,
                 email = it.email,
-                image = it.profileImage
+                image = it.image
             )
         }
         return result

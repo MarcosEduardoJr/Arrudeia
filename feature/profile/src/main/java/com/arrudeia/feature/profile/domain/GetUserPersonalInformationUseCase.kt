@@ -1,7 +1,7 @@
 package com.arrudeia.feature.profile.domain
 
 import com.arrudeia.core.result.Result
-import com.arrudeia.feature.profile.data.ProfileDataStoreUserRepositoryImpl
+import com.arrudeia.core.data.repository.ProfileDataStoreUserRepositoryImpl
 import com.arrudeia.feature.profile.data.ProfileRepositoryImpl
 import com.arrudeia.feature.profile.data.entity.UserPersonalInformationRepositoryEntity
 import com.arrudeia.feature.profile.domain.entity.UserPersonalInformationUseCaseEntity
@@ -28,7 +28,8 @@ class GetUserPersonalInformationUseCase @Inject constructor(
                         phone = data?.phone,
                         idDocument = data?.idDocument,
                         birthDate = data?.birthDate,
-                        profileImage = data?.profileImage
+                        profileImage = data?.profileImage,
+                        gender = data?.gender.orEmpty()
                     )
                 )
             }

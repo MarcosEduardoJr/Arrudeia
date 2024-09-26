@@ -1,3 +1,18 @@
+query GetUserAboutMe($uuidUser: String!) {
+    user(uuid: $uuidUser) {
+        interests
+        biography
+    }
+}
+
+query GetLastLocation($uuidUser: String!) {
+    user(uuid: $uuidUser) {
+        lastCity
+        lastCountry
+    }
+}
+
+
 query GetUserGraph($uuidUser: String!) {
     user(uuid: $uuidUser) {
         uuid
@@ -7,10 +22,11 @@ query GetUserGraph($uuidUser: String!) {
         phone
         profileImage
         birthDate
+        gender
     }
 }
 
-mutation UpdateUserPersonalInfoGraph($uuid: String!, $name: String!, $email: String!, $phone: String!, $idDocument: String!, $birthDate: String!, $profileImage: String!) {
+mutation UpdateUserPersonalInfoGraph($uuid: String!, $name: String!, $email: String!, $phone: String!, $idDocument: String!, $birthDate: String!, $profileImage: String!, $gender: String!) {
     updateUser(
         uuid: $uuid,
         name: $name,
@@ -18,7 +34,24 @@ mutation UpdateUserPersonalInfoGraph($uuid: String!, $name: String!, $email: Str
         phone: $phone,
         idDocument: $idDocument,
         birthDate: $birthDate,
-        profileImage: $profileImage
+        profileImage: $profileImage,
+        gender: $gender
+    )
+}
+
+mutation UpdateUserInterest($uuid: String!, $interests: String!, $biography: String!) {
+    updateUser(
+        uuid: $uuid,
+        interests: $interests,
+        biography: $biography,
+    )
+}
+
+mutation UpdateUserLastLocation($uuid: String!, $lastCity: String!, $lastCountry: String!) {
+    updateUser(
+        uuid: $uuid,
+        lastCity: $lastCity,
+        lastCountry: $lastCountry,
     )
 }
 

@@ -1,16 +1,15 @@
-package com.arrudeia.feature.home.data
+package com.arrudeia.core.data.repository
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
+import com.arrudeia.core.common.R.string.generic_error
+import com.arrudeia.core.data.repository.entity.ProfileDataStoreUserRepositoryEntity
 import com.arrudeia.core.result.Result
-import com.arrudeia.feature.home.R
-import com.arrudeia.feature.home.data.entity.ProfileDataStoreUserRepositoryEntity
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
-import com.arrudeia.core.common.R.string.generic_error
 
 class HomeProfileDataStoreUserRepositoryImpl @Inject constructor(
     private val dataStore: DataStore<Preferences>
@@ -41,6 +40,17 @@ class HomeProfileDataStoreUserRepositoryImpl @Inject constructor(
         }.firstOrNull()
         return if (result != null) Result.Success(result) else Result.Error(generic_error)
     }
+
+
+    override suspend fun getUuid(): String? {
+        val result = dataStore.data.map { preferences ->
+            val uid = preferences[UID_KEY] ?: return@map null
+            uid
+        }.firstOrNull()
+        return result
+    }
+
+
 
 }
 

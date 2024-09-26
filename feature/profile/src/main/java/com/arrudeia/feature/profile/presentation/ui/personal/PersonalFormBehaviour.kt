@@ -4,14 +4,19 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.arrudeia.core.common.R.string.information
+import com.arrudeia.feature.profile.presentation.ui.profile.ProfileHeaderBackButton
 import com.arrudeia.feature.profile.presentation.viewmodel.ProfilePersonalInformationViewModel
 
 @Composable
@@ -36,18 +41,15 @@ fun formBehaviour(
     modifier: Modifier,
     onBackClick: () -> Unit,
     showDocumentAnalysisChange: (Boolean) -> Unit,
-    showDocumentAnalysis: Boolean
+    showDocumentAnalysis: Boolean,
+    genderChoosedChange: (String) -> Unit
 ) {
+    var previousGenderChoosed by rememberSaveable { mutableStateOf("") }
     Column(
         modifier = modifier
     ) {
-        Spacer(modifier = Modifier.size(30.dp))
-        header(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 16.dp)
-        )
-        Spacer(modifier = Modifier.size(20.dp))
+        ProfileHeaderBackButton( information, onBackClick)
+        Spacer(modifier = Modifier.size(10.dp))
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -62,7 +64,7 @@ fun formBehaviour(
                     showDialogChangePhoto = showDialogChangePhotoChange
                 )
         }
-        Spacer(modifier = Modifier.size(8.dp))
+        Spacer(modifier = Modifier.size(2.dp))
         if (showForm)
             form(
                 name, onNameChange,
@@ -73,7 +75,9 @@ fun formBehaviour(
                 onBackClick = onBackClick,
                 onShowSnackbar = onShowSnackbar,
                 showDocumentAnalysisChange,
-                showDocumentAnalysis
+                showDocumentAnalysis,
+                genderChooseChange = genderChoosedChange,
+                previousGenderChoosed = previousGenderChoosed
             )
         else {
             fetchUser(
@@ -85,7 +89,8 @@ fun formBehaviour(
                 onBirthDateChange,
                 onShowFormChange,
                 onProfileImageChange,
-                onShowSnackbar
+                onShowSnackbar,
+                previousGenderChoosed = { previousGenderChoosed = it }
             )
         }
     }
