@@ -9,7 +9,6 @@ class GetTravelersUseCase @Inject constructor(
     private val repository: TravelerRepositoryImpl,
     private val repositoryDataStore: ProfileDataStoreUserRepositoryImpl,
 ) {
-    suspend operator fun invoke() =
-        repository.getTravelers(repositoryDataStore.getUserData()?.uid.orEmpty())
+    suspend operator fun invoke(page: Int) =     repository.getTravelers(repositoryDataStore.getUserData()?.uid.orEmpty(),page)
 
 }

@@ -12,6 +12,9 @@ import androidx.compose.animation.core.keyframes
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -32,15 +35,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+import com.arrudeia.core.designsystem.R.color.colorPrimary
+import com.arrudeia.core.designsystem.R.string.loading
 import com.arrudeia.core.designsystem.theme.ArrudeiaTheme
 import kotlinx.coroutines.launch
 
-import com.arrudeia.core.designsystem.R.color.colorPrimary
-import com.arrudeia.core.designsystem.R.string.loading
-
 @Composable
 fun ArrudeiaLoadingWheel(
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier.height(50.dp),
 ) {
     val infiniteTransition = rememberInfiniteTransition(label = "wheel transition")
 
@@ -93,25 +95,33 @@ fun ArrudeiaLoadingWheel(
     }
     val loadingContetDescription = stringResource(id = loading)
     // Draws out the LoadingWheel Canvas composable and sets the animations
-    Canvas(
-        modifier = modifier
-            .size(48.dp)
-            .padding(8.dp)
-            .graphicsLayer { rotationZ = rotationAnim }
-            .semantics { contentDescription = loadingContetDescription }
-            .testTag("loadingWheel"),
+    Box(
+        Modifier
+            .fillMaxSize()
     ) {
-        repeat(NUM_OF_LINES) { index ->
-            rotate(degrees = index * 30f) {
-                drawLine(
-                    color = colorAnimValues[index].value,
-                    // Animates the initially drawn 1 pixel alpha from 0 to 1
-                    alpha = if (floatAnimValues[index].value < 1f) 1f else 0f,
-                    strokeWidth = 4F,
-                    cap = StrokeCap.Round,
-                    start = Offset(size.width / 2, size.height / 4),
-                    end = Offset(size.width / 2, floatAnimValues[index].value * size.height / 4),
-                )
+        Canvas(
+            modifier = modifier
+                .size(48.dp)
+                .padding(8.dp)
+                .graphicsLayer { rotationZ = rotationAnim }
+                .semantics { contentDescription = loadingContetDescription }
+                .testTag("loadingWheel"),
+        ) {
+            repeat(NUM_OF_LINES) { index ->
+                rotate(degrees = index * 30f) {
+                    drawLine(
+                        color = colorAnimValues[index].value,
+                        // Animates the initially drawn 1 pixel alpha from 0 to 1
+                        alpha = if (floatAnimValues[index].value < 1f) 1f else 0f,
+                        strokeWidth = 4F,
+                        cap = StrokeCap.Round,
+                        start = Offset(size.width / 2, size.height / 4),
+                        end = Offset(
+                            size.width / 2,
+                            floatAnimValues[index].value * size.height / 4
+                        ),
+                    )
+                }
             }
         }
     }

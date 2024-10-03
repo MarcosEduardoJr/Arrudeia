@@ -1,7 +1,8 @@
 package com.arrudeia.feature.social.data.entity
 
 class TravelersEntity(
-    val uuid: String? = "",
+    val travelerReceiveId: String? = "",
+    val travelerSendId: String? = "",
     val name: String? = "",
     val gender: String? = "",
     val city: String? = "",

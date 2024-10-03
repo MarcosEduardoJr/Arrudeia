@@ -21,7 +21,8 @@ type UserGraph {
 }
 
 type TravelerGraph {
-    uuid: String
+    travelerReceiveId: String
+    travelerSendId: String
     name: String
     city: String
     interests: String
@@ -160,7 +161,9 @@ type Query {
 
     user(uuid: String!): UserGraph
 
-    travelers(userUuid: String!): [TravelerGraph]
+
+    travelers(userUuid: String!,page : Int, pageSize: Int): [TravelerGraph]
+    travelersMatch(userUuid: String!): [TravelerGraph]
 
 
     arrudeiaPlaces(state: String!): [ArrudeiaPlace]
@@ -267,6 +270,21 @@ type Mutation {
     createServiceCategory(
         serviceType : Service
     ) : Int
+
+    updateTravelerConnection(
+        travelerReceive: String,
+        travelerReceiveMatch: String,
+        travelerSend: String,
+        travelerSendMatch: String
+    ) : String
+
+
+    createTravelerConnection(
+    travelerReceive: String,
+    travelerReceiveMatch: String,
+    travelerSend: String,
+    travelerSendMatch: String
+    ) : String
 }
 
 union _Entity = UserGraph

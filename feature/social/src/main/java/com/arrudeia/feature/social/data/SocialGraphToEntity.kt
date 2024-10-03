@@ -8,7 +8,8 @@ fun List<GetTravelersQuery.Traveler?>?.toEntity(): List<TravelersEntity>? {
     return this?.let { list ->
         list.map {
             TravelersEntity(
-                uuid = it?.uuid.orEmpty(),
+                travelerReceiveId = it?.travelerReceiveId.orEmpty(),
+                travelerSendId = it?.travelerSendId.orEmpty(),
                 name = it?.name.orEmpty(),
                 img = it?.img,
                 city = it?.city.orEmpty(),

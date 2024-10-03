@@ -78,25 +78,29 @@ class SocialViewModel @Inject constructor(
         initialValue = TravelersUiState.Loading
     )
 
+    var currentTravelersPage = 0
+
+    // SocialViewModel.kt
     fun getTravelers() {
         viewModelScope.launch {
-            when (val result = getTravelersUseCase()) {
+            when (val result = getTravelersUseCase(++currentTravelersPage)) {
                 is Result.Success -> {
                     result.data?.let { data ->
-                        travelersUiState.value = TravelersUiState.Success(
-                            data
-                        )
+                        if (data.isNotEmpty()) {
+                           _travelers.addAll(result.data.orEmpty())
+                            travelersUiState.value = TravelersUiState.None
+                        } else {
+                            travelersUiState.value = TravelersUiState.NoMoreTravelers
+                        }
                     }
                 }
 
                 is Result.Error -> {
-                    travelersUiState.value = TravelersUiState.Error(
-                        null
-                    )
+                    travelersUiState.value = TravelersUiState.NoMoreTravelers
                 }
 
                 else -> {
-
+                    travelersUiState.value = TravelersUiState.NoMoreTravelers
                 }
             }
         }
@@ -116,8 +120,7 @@ class SocialViewModel @Inject constructor(
 }
 
 sealed interface TravelersUiState {
-    data class Success(val data: List<TravelersEntity>) : TravelersUiState
-    data class Error(val message: Int?) : TravelersUiState
     data object Loading : TravelersUiState
     data object None : TravelersUiState
+    data object NoMoreTravelers : TravelersUiState
 }

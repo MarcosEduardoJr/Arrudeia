@@ -1,6 +1,7 @@
-query GetTravelers($userUuid: String!) {
-    travelers(userUuid: $userUuid) {
-    uuid
+query GetTravelers($userUuid: String!,$page : Int, $pageSize: Int) {
+    travelers(userUuid: $userUuid,page : $page , pageSize:  $pageSize ) {
+        travelerReceiveId
+        travelerSendId
     name
     city
     interests
@@ -10,3 +11,39 @@ query GetTravelers($userUuid: String!) {
     }
 }
 
+
+query GetTravelersMatch($userUuid: String!) {
+    travelersMatch(userUuid: $userUuid) {
+        travelerReceiveId
+        travelerSendId
+        name
+        city
+        interests
+        aboutMe
+        gender
+        img
+    }
+}
+
+
+mutation UpdateTravelerConnection(
+    $travelerReceive: String!, $travelerReceiveMatch: String!,
+    $travelerSend: String!, $travelerSendMatch: String!){
+    updateTravelerConnection(
+        travelerReceive: $travelerReceive,
+        travelerReceiveMatch: $travelerReceiveMatch,
+        travelerSend: $travelerSend,
+        travelerSendMatch: $travelerSendMatch,
+    )
+}
+
+mutation CreateTravelerConnection(
+    $travelerReceive: String!, $travelerReceiveMatch: String!,
+    $travelerSend: String!, $travelerSendMatch: String!){
+    createTravelerConnection(
+        travelerReceive: $travelerReceive,
+        travelerReceiveMatch: $travelerReceiveMatch,
+        travelerSend: $travelerSend,
+        travelerSendMatch: $travelerSendMatch,
+    )
+}
