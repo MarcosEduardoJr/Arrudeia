@@ -11,11 +11,13 @@ fun List<GetTravelersQuery.Traveler?>?.toEntity(): List<TravelersEntity>? {
                 travelerReceiveId = it?.travelerReceiveId.orEmpty(),
                 travelerSendId = it?.travelerSendId.orEmpty(),
                 name = it?.name.orEmpty(),
-                img = it?.img,
+                img = it?.img.orEmpty(),
                 city = it?.city.orEmpty(),
                 interests = it?.interests.orEmpty(),
                 aboutMe = it?.aboutMe.orEmpty(),
-                gender = it?.gender.orEmpty()
+                gender = it?.gender.orEmpty(),
+                travelerReceiveMatch = it?.travelerReceiveMatch?:0,
+                travelerSendMatch = it?.travelerSendMatch?:0,
             )
         }
     }

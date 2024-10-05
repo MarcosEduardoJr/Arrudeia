@@ -8,6 +8,8 @@ query GetTravelers($userUuid: String!,$page : Int, $pageSize: Int) {
         aboutMe
     gender
         img
+        travelerReceiveMatch
+        travelerSendMatch
     }
 }
 
@@ -27,8 +29,8 @@ query GetTravelersMatch($userUuid: String!) {
 
 
 mutation UpdateTravelerConnection(
-    $travelerReceive: String!, $travelerReceiveMatch: String!,
-    $travelerSend: String!, $travelerSendMatch: String!){
+    $travelerReceive: String!,  $travelerSend: String!,
+    $travelerSendMatch: Int!,  $travelerReceiveMatch: Int!,){
     updateTravelerConnection(
         travelerReceive: $travelerReceive,
         travelerReceiveMatch: $travelerReceiveMatch,

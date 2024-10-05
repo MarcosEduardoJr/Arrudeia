@@ -131,7 +131,12 @@ dependencies {
 
     implementation(libs.androidx.compose.material.iconsExtended)
 
-
+    implementation(libs.firebase.bom)
+    implementation(libs.firebase.firestore)
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.database)
+    implementation(libs.firebase.storage)
+    implementation(libs.accompanist.swiperefresh)
     implementation(libs.retrofit.core)
     implementation(libs.retrofit.kotlin.serialization)
     implementation(libs.converter.gson)

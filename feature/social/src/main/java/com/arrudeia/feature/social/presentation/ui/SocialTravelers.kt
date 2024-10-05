@@ -19,6 +19,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -38,6 +41,7 @@ import com.arrudeia.core.profile.InterestsOptions
 import com.arrudeia.feature.social.data.entity.TravelersEntity
 import com.arrudeia.feature.social.presentation.viewmodel.SocialViewModel
 import com.arrudeia.feature.social.presentation.viewmodel.TravelersUiState
+import com.arrudeia.feature.social.presentation.viewmodel.UpdateTravelerUiState
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.Placeholder
@@ -49,6 +53,10 @@ import com.bumptech.glide.integration.compose.placeholder
 fun SocialTravelers(viewModel: SocialViewModel = hiltViewModel()) {
     val textGrey = colorResource(id = R.color.text_grey)
     val uiState by viewModel.travelersSharedFlow.collectAsStateWithLifecycle()
+
+    var isUpdateSaved by remember { mutableStateOf(true) }
+    val updateUiState by viewModel.updateTravelersSharedFlow.collectAsStateWithLifecycle()
+
     when (uiState) {
         is TravelersUiState.Loading -> {
             ArrudeiaLoadingWheel()
@@ -73,19 +81,28 @@ fun SocialTravelers(viewModel: SocialViewModel = hiltViewModel()) {
 
         else -> {}
     }
+    when (updateUiState) {
+        is UpdateTravelerUiState.Loading -> {
+            ArrudeiaLoadingWheel()
+        }
+        else -> {    isUpdateSaved = true}
+    }
 
 
     val placeholder = placeholder(R.drawable.ic_arrudeia_logo)
     val travelers = viewModel.travelers
 
 
-    if (travelers.isNotEmpty())
+    if (travelers.isNotEmpty() && isUpdateSaved)
         TravelerItem(
             travelers.first(),
             placeholder,
             textGrey,
             matchClick = { travelersEntity, isMatch ->
-                viewModel.removeTraveler(travelersEntity)
+                if (isUpdateSaved) {
+                    isUpdateSaved = false
+                    viewModel.removeTraveler(travelersEntity, isMatch)
+                }
             })
 
 }

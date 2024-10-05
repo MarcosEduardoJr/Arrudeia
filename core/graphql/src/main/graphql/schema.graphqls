@@ -29,6 +29,8 @@ type TravelerGraph {
     aboutMe: String
     gender: String
     img: String
+    travelerReceiveMatch: Int!
+    travelerSendMatch: Int!
 }
 
 type ArrudeiaPlace {
@@ -273,9 +275,9 @@ type Mutation {
 
     updateTravelerConnection(
         travelerReceive: String,
-        travelerReceiveMatch: String,
         travelerSend: String,
-        travelerSendMatch: String
+        travelerSendMatch: Int,
+        travelerReceiveMatch: Int,
     ) : String
 
 

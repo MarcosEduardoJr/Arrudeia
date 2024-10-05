@@ -22,10 +22,10 @@ class TravelerRepositoryImpl @Inject constructor(
 
     override suspend fun updateUserAboutMe(
         travelerReceive: String,
-        travelerReceiveMatch: String,
         travelerSend: String,
-        travelerSendMatch: String,
-    ): String? {
+        travelerSendMatch: Int,
+        travelerReceiveMatch: Int,
+    ): Result<String?> {
         val response = apolloClient.mutation(
             UpdateTravelerConnectionMutation(
                 travelerReceive = travelerReceive,
@@ -35,8 +35,8 @@ class TravelerRepositoryImpl @Inject constructor(
             )
         ).execute()
         if (response.hasErrors())
-            return null
-        return response.data?.updateTravelerConnection.orEmpty()
+            return Result.Error(null)
+        return Result.Success(response.data?.updateTravelerConnection.orEmpty())
     }
 
 }

@@ -23,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.StrokeCap
@@ -100,7 +101,7 @@ fun ArrudeiaLoadingWheel(
             .fillMaxSize()
     ) {
         Canvas(
-            modifier = modifier
+            modifier = modifier.align(Alignment.Center)
                 .size(48.dp)
                 .padding(8.dp)
                 .graphicsLayer { rotationZ = rotationAnim }
