@@ -50,6 +50,8 @@ class TripDetailViewModel @Inject constructor(
                 is Result.Loading -> {
                     travelUiState.value = TripDetailUiState.Loading
                 }
+
+                is Result.ErrorMessage -> TODO()
             }
         }
     }

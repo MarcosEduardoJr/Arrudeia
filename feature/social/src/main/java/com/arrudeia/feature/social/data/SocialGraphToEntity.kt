@@ -18,6 +18,8 @@ fun List<GetTravelersQuery.Traveler?>?.toEntity(): List<TravelersEntity>? {
                 gender = it?.gender.orEmpty(),
                 travelerReceiveMatch = it?.travelerReceiveMatch?:0,
                 travelerSendMatch = it?.travelerSendMatch?:0,
+                travelerReceiveEmail = it?.travelerReceiveEmail.orEmpty(),
+                travelerSendEmail = it?.travelerSendEmail.orEmpty(),
             )
         }
     }

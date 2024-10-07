@@ -2,6 +2,7 @@ package com.arrudeia.feature.aid.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.arrudeia.core.common.R.string.generic_error
 import com.arrudeia.core.result.Result
 import com.arrudeia.feature.aid.domain.GetAidsUseCase
 import com.arrudeia.feature.aid.presentation.map.mapToUiModel
@@ -12,7 +13,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import com.arrudeia.core.common.R.string.generic_error
 
 @HiltViewModel
 class AidViewModel @Inject constructor(
@@ -43,6 +43,8 @@ class AidViewModel @Inject constructor(
                 is Result.Loading -> {
                     uiState.value = AidsUiState.Loading
                 }
+
+                is Result.ErrorMessage -> TODO()
             }
         }
     }

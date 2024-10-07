@@ -77,6 +77,7 @@ class FirebaseUserRepositoryImpl @Inject constructor(
         }
     }
 
+
     suspend fun createOrUpdateProfileImageToFirebaseDatabaseChat(
         imgUrl: String,
         userUUID: String,
@@ -84,7 +85,7 @@ class FirebaseUserRepositoryImpl @Inject constructor(
         userName: String
     ) {
         val databaseReference =
-            database.getReference("Profiles").child(userUUID).child("profile")
+            database.getReference("Traveler_Profiles").child(userUUID).child("profile")
         val childUpdates = mutableMapOf<String, Any>()
         childUpdates["/profileUUID/"] = userUUID
         if (userEmail.isNotEmpty()) childUpdates["/userEmail/"] = userEmail

@@ -91,6 +91,8 @@ class ReceiptDetailViewModel @Inject constructor(
                 is Result.Loading -> {
                     uiState.value = ReceiptsDetailUiState.Loading
                 }
+
+                is Result.ErrorMessage -> TODO()
             }
         }
     }

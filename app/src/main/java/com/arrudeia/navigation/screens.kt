@@ -15,6 +15,7 @@ import com.arrudeia.feature.receipt.presentation.navigation.receiptScreen
 import com.arrudeia.feature.services.presentation.navigation.newServiceScreen
 import com.arrudeia.feature.services.presentation.navigation.servicesScreen
 import com.arrudeia.feature.sign.presentation.navigation.signScreen
+import com.arrudeia.feature.social.presentation.navigation.messageScreen
 import com.arrudeia.feature.social.presentation.navigation.socialScreen
 import com.arrudeia.feature.tips.presentation.navigation.tipsScreen
 import com.arrudeia.runOverviewScreen
@@ -92,7 +93,12 @@ fun NavGraphBuilder.screens(
         onShowSnackbar = onShowSnackbar,
     )
     tipsScreen(navController::navigateToRoute)
-    socialScreen(navController::navigateToRoute)
+    socialScreen(navController::navigateToRoute, onMessageClick = { navController.navigate(it) })
+
+    messageScreen(
+        onBackClick = { navController.popBackStack() },
+        onShowSnackbar = onShowSnackbar,
+    )
 }
 
 

@@ -11,4 +11,6 @@ class TravelersEntity(
     val img: String,
     val travelerReceiveMatch: Int,
     val travelerSendMatch: Int,
+    val travelerSendEmail: String,
+    val travelerReceiveEmail: String,
 )

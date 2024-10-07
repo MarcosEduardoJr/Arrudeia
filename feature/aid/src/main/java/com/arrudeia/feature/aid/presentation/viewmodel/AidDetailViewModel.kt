@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
+import com.arrudeia.core.common.R.string.generic_error
 import com.arrudeia.core.result.Result
 import com.arrudeia.core.ui.MetaDataReader
 import com.arrudeia.core.ui.VideoItem
@@ -18,7 +19,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import com.arrudeia.core.common.R.string.generic_error
 
 @HiltViewModel
 class AidDetailViewModel @Inject constructor(
@@ -91,6 +91,8 @@ class AidDetailViewModel @Inject constructor(
                 is Result.Loading -> {
                     uiState.value = AidDetailUiState.Loading
                 }
+
+                is Result.ErrorMessage -> TODO()
             }
         }
     }

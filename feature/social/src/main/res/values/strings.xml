@@ -2,4 +2,5 @@
 <resources>
     <string name="messageHeaderSocial"><![CDATA[Não fique sozinho! <br>A viagem se torna melhor quando é <b><font color="#FF6421">Compartilhada</font>!</b>  ]]></string>
     <string name="create_a_plan">Criar um plano</string>
+    <string name="start_now_to_talk">Uau! Isso é um match!</string>
 </resources>

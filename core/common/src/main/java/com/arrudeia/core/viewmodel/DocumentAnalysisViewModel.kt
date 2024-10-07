@@ -59,6 +59,8 @@ class DocumentAnalysisViewModel @Inject constructor(
                     isLoading.value = false
                     toastMessage.value = response.message ?: 0
                 }
+
+                is Result.ErrorMessage -> TODO()
             }
         }
     }

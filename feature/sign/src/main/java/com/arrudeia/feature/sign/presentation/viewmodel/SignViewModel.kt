@@ -33,7 +33,7 @@ class SignViewModel @Inject constructor(
     fun signUp(email: String, password: String) {
         viewModelScope.launch {
             uiState.value = SignUiState.Loading
-            val result = createUserUseCase.invoke(email, password)
+            val result = createUserUseCase(email, password)
             if (result != null) {
                 saveLocally(result)
             } else {

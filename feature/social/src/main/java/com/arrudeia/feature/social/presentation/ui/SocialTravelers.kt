@@ -39,7 +39,7 @@ import com.arrudeia.core.designsystem.component.ArrudeiaLoadingWheel
 import com.arrudeia.core.profile.GenderOptions
 import com.arrudeia.core.profile.InterestsOptions
 import com.arrudeia.feature.social.data.entity.TravelersEntity
-import com.arrudeia.feature.social.presentation.viewmodel.SocialViewModel
+import com.arrudeia.feature.social.presentation.viewmodel.SocialTravelersViewModel
 import com.arrudeia.feature.social.presentation.viewmodel.TravelersUiState
 import com.arrudeia.feature.social.presentation.viewmodel.UpdateTravelerUiState
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
@@ -50,7 +50,7 @@ import com.bumptech.glide.integration.compose.placeholder
 // SocialTravelers.kt
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun SocialTravelers(viewModel: SocialViewModel = hiltViewModel()) {
+fun SocialTravelers(viewModel: SocialTravelersViewModel = hiltViewModel()) {
     val textGrey = colorResource(id = R.color.text_grey)
     val uiState by viewModel.travelersSharedFlow.collectAsStateWithLifecycle()
 

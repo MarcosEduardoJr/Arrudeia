@@ -10,6 +10,8 @@ query GetTravelers($userUuid: String!,$page : Int, $pageSize: Int) {
         img
         travelerReceiveMatch
         travelerSendMatch
+        travelerSendEmail
+        travelerReceiveEmail
     }
 }
 

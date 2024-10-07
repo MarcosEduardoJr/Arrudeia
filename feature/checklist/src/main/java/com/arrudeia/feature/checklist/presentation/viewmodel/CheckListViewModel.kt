@@ -3,8 +3,10 @@ package com.arrudeia.feature.checklist.presentation.viewmodel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.arrudeia.core.common.R.string.generic_error
 import com.arrudeia.core.result.Result
 import com.arrudeia.feature.checklist.domain.GetCheckListUseCase
+import com.arrudeia.feature.checklist.presentation.map.mapToCheckListUiModel
 import com.arrudeia.feature.checklist.presentation.model.CheckListUIModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,8 +14,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import com.arrudeia.feature.checklist.presentation.map.mapToCheckListUiModel
-import com.arrudeia.core.common.R.string.generic_error
 
 @HiltViewModel
 class CheckListViewModel @Inject constructor(
@@ -47,6 +47,8 @@ class CheckListViewModel @Inject constructor(
                 is Result.Loading -> {
                     uiState.value = CheckListUiState.Loading
                 }
+
+                is Result.ErrorMessage -> TODO()
             }
         }
     }

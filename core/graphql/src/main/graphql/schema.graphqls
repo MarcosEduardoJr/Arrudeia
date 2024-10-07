@@ -31,6 +31,8 @@ type TravelerGraph {
     img: String
     travelerReceiveMatch: Int!
     travelerSendMatch: Int!
+    travelerSendEmail: String
+    travelerReceiveEmail: String
 }
 
 type ArrudeiaPlace {

@@ -14,15 +14,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.arrudeia.core.common.R.string.messages
+import com.arrudeia.core.common.R
 import com.arrudeia.core.common.R.string.plans
 import com.arrudeia.core.common.R.string.travelers
 import com.arrudeia.core.data.navigation.signRoute
 import com.arrudeia.core.designsystem.component.SimpleTabSwitch
+import com.arrudeia.feature.social.presentation.navigation.param.MessageParam
 import com.arrudeia.feature.social.presentation.viewmodel.SocialViewModel
 
 @Composable
-fun SocialRoute(onRouteClick: (String) -> Unit, viewModel: SocialViewModel = hiltViewModel()) {
+fun SocialRoute(
+    onRouteClick: (String) -> Unit,
+    viewModel: SocialViewModel = hiltViewModel(),
+    onMessageClick: (MessageParam) -> Unit
+) {
     val isUserLogged = viewModel.isUserLoggedUseCase
     viewModel.isUserLogged()
     if (isUserLogged.value) {
@@ -33,7 +38,7 @@ fun SocialRoute(onRouteClick: (String) -> Unit, viewModel: SocialViewModel = hil
                     .fillMaxWidth(),
                 onRouteClick
             )
-            SocialContent()
+            SocialContent(onMessageClick)
         }
     } else
         onRouteClick(signRoute)
@@ -41,11 +46,11 @@ fun SocialRoute(onRouteClick: (String) -> Unit, viewModel: SocialViewModel = hil
 }
 
 @Composable
-fun SocialContent() {
+fun SocialContent(onMessageClick: (MessageParam) -> Unit) {
     val pages = listOf(
+        stringResource(id = R.string.messages),
         stringResource(id = travelers),
         stringResource(id = plans),
-        stringResource(id = messages),
     )
     var pagerState = rememberPagerState(initialPage = 0) { pages.size }
     var selectedTab by rememberSaveable { mutableIntStateOf(pagerState.currentPage) }
@@ -62,9 +67,13 @@ fun SocialContent() {
         Modifier,
         pages,
         listOf(
+            {
+                SocialMessagesList(
+                    onChatClick = { onMessageClick(it) },
+                    onShowSnackbar = { title, desc -> false })
+            },
             { SocialTravelers() },
             { SocialEvents() },
-            { SocialMessages() },
         )
     )
 }

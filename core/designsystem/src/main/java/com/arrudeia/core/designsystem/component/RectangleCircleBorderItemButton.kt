@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -25,6 +26,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.arrudeia.core.designsystem.R
@@ -200,8 +202,8 @@ fun RectangleItemButtonImage(
                             .size(58.dp)
                             .padding(2.dp)
                             .clip(CircleShape),
-                        loading = placeholder( ic_arrudeia_logo),
-                        failure = placeholder( ic_arrudeia_logo),
+                        loading = placeholder(ic_arrudeia_logo),
+                        failure = placeholder(ic_arrudeia_logo),
                         colorFilter = null
                     )
                 }
@@ -242,5 +244,87 @@ fun RectangleItemButtonImage(
     }
 }
 
+
+@OptIn(ExperimentalGlideComposeApi::class)
+@Composable
+fun RectangleItemButtonChat(
+    img: String = "",
+    modifier: Modifier,
+    name: String,
+    tag: String? = null,
+    description: String? = null
+) {
+
+    Column() {
+        Card(
+            modifier = modifier,
+            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+            shape = RoundedCornerShape(50.dp)
+        ) {
+            Row(
+                modifier = Modifier
+                    .background(Color.White),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                img?.let {
+
+                    GlideImage(
+                        model = img,
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .size(78.dp)
+                            .padding(2.dp)
+                            .clip(CircleShape),
+                        loading = placeholder(ic_arrudeia_logo),
+                        failure = placeholder(ic_arrudeia_logo),
+                        colorFilter = null
+                    )
+                }
+
+                Spacer(modifier = Modifier.size(12.dp))
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(6.dp),
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Row(modifier = Modifier.fillMaxWidth()) {
+                        Text(
+                            text = name,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 14.sp,
+                            color = Color.Black,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            modifier = Modifier
+                                .weight(1f)
+                        )
+
+                        tag?.let {
+                            Text(
+                                text = tag,
+                                fontSize = 10.sp,
+                                color = Color.Black,
+                                modifier = Modifier.padding(end = 10.dp),
+                            )
+                        }
+
+                    }
+                    description?.let {
+                        Text(
+                            text = description,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 12.sp,
+                            maxLines = 2,
+                            overflow = TextOverflow.Ellipsis,
+                            color = colorResource(id = R.color.text_grey)
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
 
 
