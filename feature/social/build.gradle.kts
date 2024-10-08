@@ -131,6 +131,8 @@ dependencies {
 
     implementation(libs.androidx.compose.material.iconsExtended)
 
+    implementation(libs.accompanist.insets)
+
     implementation(libs.firebase.bom)
     implementation(libs.firebase.firestore)
     implementation(libs.firebase.auth)

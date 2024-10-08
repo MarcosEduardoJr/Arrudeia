@@ -45,7 +45,7 @@ fun ChatTextField(
         shape = RoundedCornerShape(24.dp),
     ) {
         Row(
-            modifier = Modifier
+            modifier = modifier
                 .padding(2.dp),
             verticalAlignment = Alignment.Bottom
         ) {

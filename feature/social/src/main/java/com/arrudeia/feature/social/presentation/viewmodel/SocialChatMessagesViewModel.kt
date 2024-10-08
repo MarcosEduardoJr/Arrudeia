@@ -45,7 +45,7 @@ class SocialChatMessagesViewModel @Inject constructor(
         registerUUID: String,
     ) {
         viewModelScope.launch {
-             insertMessageToFirebase.invoke(
+            insertMessageToFirebase.invoke(
                 chatRoomUUID,
                 messageContent,
                 registerUUID,
@@ -68,7 +68,7 @@ class SocialChatMessagesViewModel @Inject constructor(
 
     fun loadMessagesFromFirebase(chatRoomUUID: String, opponentUUID: String, registerUUID: String) {
         viewModelScope.launch {
-             loadMessageFromFirebase(chatRoomUUID, opponentUUID, registerUUID)
+            loadMessageFromFirebase(chatRoomUUID, opponentUUID, registerUUID)
                 .collect { response ->
                     when (response) {
                         is Result.Loading -> {}
@@ -85,12 +85,14 @@ class SocialChatMessagesViewModel @Inject constructor(
                             }
                             messagesLoadedFirstTime.value = true
                         }
+
                         is Result.Error -> {}
                         is Result.ErrorMessage -> {}
                     }
                 }
         }
     }
+
     fun loadOpponentProfileFromFirebase(opponentUUID: String) {
         viewModelScope.launch {
             opponentProfileFromFirebaseUseCase(opponentUUID).collect { response ->
@@ -99,6 +101,7 @@ class SocialChatMessagesViewModel @Inject constructor(
                     is Result.Success -> {
                         opponentProfileFromFirebase.value = response.data
                     }
+
                     is Result.Error -> {}
                     is Result.ErrorMessage -> TODO()
                 }
@@ -108,7 +111,7 @@ class SocialChatMessagesViewModel @Inject constructor(
 
     fun blockFriendToFirebase(registerUUID: String) {
         viewModelScope.launch {
-             blockFriendToFirebase.invoke(registerUUID).collect { response ->
+            blockFriendToFirebase.invoke(registerUUID).collect { response ->
                 when (response) {
                     is Result.Loading -> {
                         toastMessage.value = ""

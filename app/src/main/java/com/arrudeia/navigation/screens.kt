@@ -93,11 +93,15 @@ fun NavGraphBuilder.screens(
         onShowSnackbar = onShowSnackbar,
     )
     tipsScreen(navController::navigateToRoute)
-    socialScreen(navController::navigateToRoute, onMessageClick = { navController.navigate(it) })
+    socialScreen(
+        navController::navigateToRoute, onMessageClick = { navController.navigate(it) },
+        showBottomBar = showBottomBar
+    )
 
     messageScreen(
         onBackClick = { navController.popBackStack() },
         onShowSnackbar = onShowSnackbar,
+        showBottomBar = showBottomBar
     )
 }
 

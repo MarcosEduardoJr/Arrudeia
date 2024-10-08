@@ -127,7 +127,7 @@ fun SocialMessagesList(
                     detectTapGestures(onTap = { keyboardController?.hide() })
                 }
         ) {
-            Spacer(modifier = Modifier.size(32.dp))
+
             //  ProfileAppBar()
             LazyColumn(
                 modifier = Modifier
@@ -135,7 +135,7 @@ fun SocialMessagesList(
 //                .weight(1f),
                 state = scrollState,
             ) {
-
+                item { Spacer(modifier = Modifier.size(32.dp)) }
                 items(acceptedFriendRequestList.value) { item ->
 
                     RectangleItemButtonChat(
@@ -160,6 +160,7 @@ fun SocialMessagesList(
 
 
                 }
+                item { Spacer(modifier = Modifier.size(32.dp)) }
             }
         }
     }

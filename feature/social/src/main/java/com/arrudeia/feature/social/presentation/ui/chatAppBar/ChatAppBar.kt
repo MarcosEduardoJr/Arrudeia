@@ -62,7 +62,7 @@ fun ChatAppBar(
     val context = LocalContext.current
     var expanded by remember { mutableStateOf(false) }
     TopAppBar(
-        modifier = Modifier,
+        modifier = modifier,
         title = {
             Row {
                 Card(
@@ -73,8 +73,8 @@ fun ChatAppBar(
                     Column(
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier =  Modifier
-                                .align(Alignment.CenterHorizontally)
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
                             .size(54.dp)
 
                     ) {
@@ -89,7 +89,7 @@ fun ChatAppBar(
                                     .fillMaxHeight()
                                     .aspectRatio(1f)
                                     .clickable { onUserProfilePictureClick?.invoke() },
-                                loading = placeholder( R.drawable.ic_arrudeia_logo),
+                                loading = placeholder(R.drawable.ic_arrudeia_logo),
                                 failure = placeholder(R.drawable.ic_arrudeia_logo)
                             )
                         } else {
@@ -131,7 +131,7 @@ fun ChatAppBar(
             }
         },
         navigationIcon = {
-            IconButton(onClick = { onBackClick()}) {
+            IconButton(onClick = { onBackClick() }) {
                 Icon(
                     imageVector = Icons.Filled.ArrowBack,
                     contentDescription = "Localized description",
@@ -171,6 +171,6 @@ fun ChatAppBar(
                     )
                 }
             }
-        }
+        },
     )
 }

@@ -1,20 +1,17 @@
 package com.arrudeia.feature.social.presentation.ui.chatInput
 
 import android.annotation.SuppressLint
-import android.widget.Toast
 import androidx.compose.foundation.background
-import androidx.compose.foundation.focusable
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -27,13 +24,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import com.arrudeia.core.designsystem.R
-import com.arrudeia.feature.social.presentation.chat.theme.spacing
+import com.arrudeia.core.designsystem.R.color.colorPrimary
+import com.arrudeia.core.designsystem.R.color.text_grey
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnrememberedMutableState")
@@ -41,46 +39,29 @@ import com.arrudeia.feature.social.presentation.chat.theme.spacing
 internal fun ChatInput(
     modifier: Modifier = Modifier,
     onMessageChange: (String) -> Unit,
-    onFocusEvent: (Boolean) -> Unit
 ) {
 
     val context = LocalContext.current
 
-    var input by remember { mutableStateOf(TextFieldValue("")) }
-    val textEmpty: Boolean by derivedStateOf { input.text.isEmpty() }
+    var input by remember { mutableStateOf("") }
+    val textEmpty: Boolean by derivedStateOf { input.isEmpty() }
 
-//    val imePaddingValues = rememberInsetsPaddingValues(insets = LocalWindowInsets.current.ime)
-//    val imeBottomPadding = imePaddingValues.calculateBottomPadding().value.toInt()
-    val imePaddingValues = PaddingValues()
     Row(
         modifier = modifier
-            .fillMaxWidth()
-            .padding(vertical = MaterialTheme.spacing.extraSmall),
+            .fillMaxWidth(),
         verticalAlignment = Alignment.Bottom
     ) {
 
-//        ChatTextField(
-//            modifier = modifier.weight(1f).focusable(true),
-//            input = input,
-//            empty = textEmpty,
-//            onValueChange = {
-//                input = it
-//            }, onFocusEvent = {
-//                onFocusEvent(it)
-//            }
-//        )
-//
-//        Spacer(modifier = Modifier.width(6.dp))
         TextField(
             modifier = Modifier
-                .clip(MaterialTheme.shapes.extraLarge)
-                .weight(1f).padding(start = 16.dp, end = 8.dp)
-                .focusable(true)
+                .weight(1f)
                 .clip(CircleShape)
-                .background(Color.White),
-//                .padding(bottom = MaterialTheme.spacing.extraSmall),
+                .background(Color.White)
+                .shadow(8.dp, CircleShape, spotColor = Color.Black, ambientColor = Color.Black),
             value = input,
-            onValueChange = { input = it },
+            onValueChange = {
+                input = it
+            },
             colors = TextFieldDefaults.colors(
                 focusedTextColor = Color.Black,
                 focusedContainerColor = Color.White,
@@ -92,28 +73,26 @@ internal fun ChatInput(
             ),
             placeholder = {
                 Text(text = "Message", color = Color.Black)
-            }
+            },
+
+            )
 
 
 
+        Spacer(modifier = Modifier.size(8.dp))
 
-        )
         FloatingActionButton(
             shape = CircleShape,
-            modifier = Modifier.padding(end = 16.dp),
+            modifier = Modifier,
             onClick = {
                 if (!textEmpty) {
-                    onMessageChange(input.text)
-                    input = TextFieldValue("")
-                } else {
-                    Toast.makeText(
-                        context,
-                        "Sound Recorder Clicked.\n(Not Available)",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    onMessageChange(input)
+                    input = ""
                 }
             },
-            containerColor =  if (textEmpty) colorResource(id = R.color.text_grey)  else colorResource(id = R.color.colorPrimary),
+            containerColor = if (textEmpty) colorResource(id = text_grey) else colorResource(
+                id = colorPrimary
+            ),
             contentColor = Color.White
         ) {
             Icon(

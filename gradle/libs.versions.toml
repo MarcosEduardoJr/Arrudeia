@@ -80,6 +80,7 @@ ktor = "2.3.11"
 ktorClientLogging = "2.3.8"
 ktorServerCallLogging = "2.3.7"
 work = "2.9.0"
+accompanistInsets = "0.26.2-beta"
 
 #wear
 accompanistDrawablepainterVersion = "0.20.0"
@@ -96,6 +97,7 @@ health = "1.0.0-rc02"
 composeRuntimendroid = "1.7.0-beta05"
 composeAnimation = "1.0.0"
 [libraries]
+accompanist-insets = { group = "com.google.accompanist", name = "accompanist-insets", version.ref = "accompanistInsets" }
 androidx-compose-animation = { group = "androidx.compose.animation", name = "animation", version.ref = "composeAnimation" }
 google-maps-android-compose = { module = "com.google.maps.android:maps-compose", version.ref = "maps" }
 accompanist-drawablepainter = { group = "com.google.accompanist", name = "accompanist-drawablepainter", version.ref = "accompanistDrawablepainterVersion" }
