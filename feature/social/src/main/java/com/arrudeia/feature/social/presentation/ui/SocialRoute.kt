@@ -15,7 +15,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.arrudeia.core.common.R
-import com.arrudeia.core.common.R.string.plans
 import com.arrudeia.core.common.R.string.travelers
 import com.arrudeia.core.data.navigation.signRoute
 import com.arrudeia.core.designsystem.component.SimpleTabSwitch
@@ -48,9 +47,10 @@ fun SocialRoute(
 @Composable
 fun SocialContent(onMessageClick: (MessageParam) -> Unit) {
     val pages = listOf(
-        stringResource(id = R.string.messages),
         stringResource(id = travelers),
-        stringResource(id = plans),
+        stringResource(id = R.string.messages),
+
+        //   stringResource(id = plans),
     )
     var pagerState = rememberPagerState(initialPage = 0) { pages.size }
     var selectedTab by rememberSaveable { mutableIntStateOf(pagerState.currentPage) }
@@ -67,13 +67,14 @@ fun SocialContent(onMessageClick: (MessageParam) -> Unit) {
         Modifier,
         pages,
         listOf(
+            { SocialTravelers() },
             {
                 SocialMessagesList(
                     onChatClick = { onMessageClick(it) },
                     onShowSnackbar = { title, desc -> false })
             },
-            { SocialTravelers() },
-            { SocialEvents() },
+
+            // { SocialEvents() },
         )
     )
 }

@@ -87,3 +87,42 @@ mutation UpdateIdUserDocGraph($uuid: String!, $idUserDoc: String!) {
         idUserDoc: $idUserDoc,
     )
 }
+
+mutation CreateUserGraph(
+    $uuid: String!,
+$birthDate: String,
+$city: String,
+$country: String,
+$district: String,
+$email: String,
+$idDocument: String,
+$lastCity: String,
+$lastCountry: String,
+$name: String,
+$number: Int,
+$profileImage: String,
+$phone: String,
+$state: String,
+$street: String,
+$zipCode: String,
+
+) {
+    createUser(
+        uuid: $uuid,
+        birthDate:   $birthDate,
+        city :   $city,
+        country:  $country,
+        district:  $district,
+        email:   $email,
+        idDocument:   $idDocument,
+        lastCity:   $lastCity,
+        lastCountry:  $lastCountry,
+        name:   $name,
+        number:  $number,
+        profileImage:  $profileImage,
+        phone:  $phone,
+        state:  $state,
+        street: $street,
+        zipCode:  $zipCode,
+    )
+}

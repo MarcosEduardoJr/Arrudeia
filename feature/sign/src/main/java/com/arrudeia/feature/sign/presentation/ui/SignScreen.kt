@@ -319,7 +319,7 @@ internal fun Sign(
                         enableBtn = true
                         colorBtn = colorPrimary
                     } else {
-                        colorBtn = com.arrudeia.core.designsystem.R.color.text_grey
+                        colorBtn =  text_grey
                         enableBtn = false
                     }
 

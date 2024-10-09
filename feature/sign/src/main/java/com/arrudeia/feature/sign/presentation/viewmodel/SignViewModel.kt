@@ -35,7 +35,7 @@ class SignViewModel @Inject constructor(
             uiState.value = SignUiState.Loading
             val result = createUserUseCase(email, password)
             if (result != null) {
-                saveLocally(result)
+                uiState.value = SignUiState.Success()
             } else {
                 uiState.value = SignUiState.Error(
                     erro_sign_user
