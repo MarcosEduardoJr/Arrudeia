@@ -4,6 +4,7 @@
     <string name="start">Começar</string>
     <string name="sign">Entrar</string>
     <string name="sign_description_tired_job"><![CDATA[<h3><font color="#FF6421"><br><b>Arrudeia!</b></font></h3><p>Conecte-se agora à nossa área social! Faça amigos de todo o mundo e planeje experiências turísticas incríveis. Tudo isso esperando por você! Cadastre-se ou faça login e comece sua jornada! </p>]]></string>
+    <string name="register_description_important"><![CDATA[<h3><font color="#FF6421"><br><b></b></font></h3><p>Para a segurança de todos os Viajantes, precisamos de algumas informações.</p><p>Depois disso você poderá conhecer e conversar com os nossos viajantes!</p> ]]></string>
     <string name="sign_register">Cadastrar</string>
     <string name="sign_email">Email</string>
     <string name="sign_password">Senha</string>

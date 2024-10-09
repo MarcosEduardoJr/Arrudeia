@@ -27,7 +27,13 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDateRangePickerState
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableLongStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -38,13 +44,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.zIndex
-import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.*
 import com.arrudeia.core.designsystem.R.color.background_grey_F7F7F9
 import com.arrudeia.core.designsystem.R.color.colorPrimary
 import com.arrudeia.core.designsystem.R.color.text_grey
 import com.arrudeia.core.designsystem.R.string.save
+import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 
 @Composable
@@ -57,24 +64,28 @@ fun ArrudeiaDateRangeHotel(
 
     var showDialog by remember { mutableStateOf(false) }
     DateRagePickerDialog(showDialog, { showDialog = it }, onDateRangeSelected)
+    var startDateMillis by remember { mutableLongStateOf(0) }
+    var endDateMillis by remember { mutableLongStateOf(0) }
 
-    if (startDate.isEmpty()) {
+    if (startDateMillis == 0L) {
         val dateMilis = System.currentTimeMillis()
-        val startDateMillis = Calendar.getInstance().apply {
-            timeInMillis = dateMilis
-            add(Calendar.DAY_OF_YEAR, 1)
-        }.timeInMillis
-
-        val endDateMillis = Calendar.getInstance().apply {
+        startDateMillis = Calendar.getInstance().apply {
             timeInMillis = dateMilis
             add(Calendar.DAY_OF_YEAR, 2)
         }.timeInMillis
 
+        endDateMillis = Calendar.getInstance().apply {
+            timeInMillis = dateMilis
+            add(Calendar.DAY_OF_YEAR, 3)
+        }.timeInMillis
+
+    }
+    if (startDateMillis != 0L && endDateMillis != 0L)
         onDateRangeSelected(
             SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(startDateMillis),
             SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(endDateMillis)
         )
-    }
+
     Box(
         modifier = modifier
             .clip(CircleShape)

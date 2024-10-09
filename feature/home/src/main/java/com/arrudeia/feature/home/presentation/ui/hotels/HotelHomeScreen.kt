@@ -1,6 +1,7 @@
 package com.arrudeia.feature.home.presentation.ui.hotels
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -61,148 +62,155 @@ fun HotelSearchScreen(
             searchHotels = it
             searchNow = true
         }, viewModel)
-    search(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp)
-            .wrapContentHeight(Alignment.CenterVertically)
-            .clip(CircleShape),
-        searchHotels.orEmpty(),
-        onSearchTravelChange = { searchHotels = it },
-    )
 
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 10.dp)
-    ) {
-        ArrudeiaDateRangeHotel(
-            Modifier
-                .weight(1f)
-                .padding(end = 10.dp),
-            startDate, endDate
-        ) { startDateParam, endDateParam ->
-            startDate = startDateParam
-            endDate = endDateParam
-        }
+    Column {
 
-        ArrudeiaPeopleCount(
-            Modifier
-                .weight(0.2f),
-            adultCount, childCount,
-            { adultValue, childValue ->
-                adultCount = adultValue
-                childCount = childValue
-            },
-            maxCount = 6,
-            {
-                childAgeListValue.clear()
-                childAgeListValue.addAll(it)
-            }
-        )
-    }
 
-    ArrudeiaButtonColor(
-        onClick = {
-            searchNow = true
-
-        },
-        modifier = Modifier
-            .padding(16.dp)
-            .fillMaxWidth(),
-        colorButton = colorResource(R.color.colorPrimary),
-    ) {
-        Text(
-            text = stringResource(id = com.arrudeia.core.common.R.string.search),
-            style = MaterialTheme.typography.titleMedium,
-            color = Color.White,
-        )
-    }
-    var childAgesConcat = ""
-    if (searchNow) {
-        childAgeListValue.forEach {
-            childAgesConcat = if (childAgesConcat.isEmpty())
-                it.toString()
-            else
-                "$childAgesConcat,$it"
-        }
-        viewModel.searchHotels(
+        search(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp)
+                .wrapContentHeight(Alignment.CenterVertically)
+                .clip(CircleShape),
             searchHotels.orEmpty(),
-            startDate,
-            endDate,
-            adultCount,
-            childCount,
-            nextPage,
-            childAgesConcat
+            onSearchTravelChange = { searchHotels = it },
         )
-        searchNow = false
-    }
-    LaunchedEffect(message) {
-        if (message.isNotEmpty())
-            onShowSnackbar(message, "")
-    }
 
-    when (state) {
-        is HomeViewModel.HotelSearchState.Loading -> {
-            Box(
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 10.dp)
+        ) {
+            ArrudeiaDateRangeHotel(
                 Modifier
-                    .fillMaxWidth()
-            ) {
-                ArrudeiaLoadingWheel(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .align(Alignment.Center)
-                        .height(50.dp),
-                )
+                    .weight(1f)
+                    .padding(end = 10.dp),
+                startDate, endDate
+            ) { startDateParam, endDateParam ->
+                startDate = startDateParam
+                endDate = endDateParam
             }
+
+            ArrudeiaPeopleCount(
+                Modifier
+                    .weight(0.2f),
+                adultCount, childCount,
+                { adultValue, childValue ->
+                    adultCount = adultValue
+                    childCount = childValue
+                },
+                maxCount = 6,
+                {
+                    childAgeListValue.clear()
+                    childAgeListValue.addAll(it)
+                }
+            )
         }
 
-        is HomeViewModel.HotelSearchState.Success -> {
+        ArrudeiaButtonColor(
+            onClick = {
+                searchNow = true
+
+            },
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth(),
+            colorButton = colorResource(R.color.colorPrimary),
+        ) {
+            Text(
+                text = stringResource(id = com.arrudeia.core.common.R.string.search),
+                style = MaterialTheme.typography.titleMedium,
+                color = Color.White,
+            )
+        }
+        var childAgesConcat = ""
+        if (searchNow) {
+            childAgeListValue.forEach {
+                childAgesConcat = if (childAgesConcat.isEmpty())
+                    it.toString()
+                else
+                    "$childAgesConcat,$it"
+            }
+            viewModel.searchHotels(
+                searchHotels.orEmpty(),
+                startDate,
+                endDate,
+                adultCount,
+                childCount,
+                nextPage,
+                childAgesConcat
+            )
             searchNow = false
-            val result = (state as HomeViewModel.HotelSearchState.Success).data
-            result?.properties?.let {
-                hotelList.clear() // so dar clear se for search now se for relamente mantem
-                hotelList.addAll(it.filter { it.images?.isNotEmpty() == true })
-                nextPage = result.serpapi_pagination.next_page_token.orEmpty()
+        }
+        LaunchedEffect(message) {
+            if (message.isNotEmpty())
+                onShowSnackbar(message, "")
+        }
+
+        when (state) {
+            is HomeViewModel.HotelSearchState.Loading -> {
+                Box(
+                    Modifier
+                        .fillMaxWidth()
+                ) {
+                    ArrudeiaLoadingWheel(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .align(Alignment.Center)
+                            .height(50.dp),
+                    )
+                }
+            }
+
+            is HomeViewModel.HotelSearchState.Success -> {
+                searchNow = false
+                val result = (state as HomeViewModel.HotelSearchState.Success).data
+                result?.properties?.let {
+                    hotelList.clear() // so dar clear se for search now se for relamente mantem
+                    hotelList.addAll(it.filter { it.images?.isNotEmpty() == true })
+                    nextPage = result.serpapi_pagination.next_page_token.orEmpty()
+                }
+            }
+
+            is HomeViewModel.HotelSearchState.Error -> {
+                message = (state as HomeViewModel.HotelSearchState.Error).message
+
             }
         }
-
-        is HomeViewModel.HotelSearchState.Error -> {
-            message = (state as HomeViewModel.HotelSearchState.Error).message
-
-        }
-    }
-    /*
-        hotelList.addAll(
-            listOf(
-                Property(
-                    name = "Yana Villas Kemenuh",
-                    overall_rating = 4.5,
-                    reviews = 100,
-                    total_rate = TotalRate(lowest = "R$ 100"),
-                    images = listOf(
-                        HotelItemImage(original_image = "https://q-xx.bstatic.com/xdata/images/hotel/max1440x1080/223247563.jpg?k=17e4b19b4710d224007544d313b2e012e33475d53877bdea8cf036d8f6a60c1c&o="),
-                        HotelItemImage(original_image = "https://q-xx.bstatic.com/xdata/images/hotel/max1440x1080/223247563.jpg?k=17e4b19b4710d224007544d313b2e012e33475d53877bdea8cf036d8f6a60c1c&o="),
-                        HotelItemImage(original_image = "https://q-xx.bstatic.com/xdata/images/hotel/max1440x1080/223247563.jpg?k=17e4b19b4710d224007544d313b2e012e33475d53877bdea8cf036d8f6a60c1c&o="),
-                        HotelItemImage(original_image = "https://q-xx.bstatic.com/xdata/images/hotel/max1440x1080/223247563.jpg?k=17e4b19b4710d224007544d313b2e012e33475d53877bdea8cf036d8f6a60c1c&o="),
-                        HotelItemImage(original_image = "https://q-xx.bstatic.com/xdata/images/hotel/max1440x1080/223247563.jpg?k=17e4b19b4710d224007544d313b2e012e33475d53877bdea8cf036d8f6a60c1c&o="),
-                        HotelItemImage(original_image = "https://q-xx.bstatic.com/xdata/images/hotel/max1440x1080/223247563.jpg?k=17e4b19b4710d224007544d313b2e012e33475d53877bdea8cf036d8f6a60c1c&o="),
+        /*
+            hotelList.addAll(
+                listOf(
+                    Property(
+                        name = "Yana Villas Kemenuh",
+                        overall_rating = 4.5,
+                        reviews = 100,
+                        total_rate = TotalRate(lowest = "R$ 100"),
+                        images = listOf(
+                            HotelItemImage(original_image = "https://q-xx.bstatic.com/xdata/images/hotel/max1440x1080/223247563.jpg?k=17e4b19b4710d224007544d313b2e012e33475d53877bdea8cf036d8f6a60c1c&o="),
+                            HotelItemImage(original_image = "https://q-xx.bstatic.com/xdata/images/hotel/max1440x1080/223247563.jpg?k=17e4b19b4710d224007544d313b2e012e33475d53877bdea8cf036d8f6a60c1c&o="),
+                            HotelItemImage(original_image = "https://q-xx.bstatic.com/xdata/images/hotel/max1440x1080/223247563.jpg?k=17e4b19b4710d224007544d313b2e012e33475d53877bdea8cf036d8f6a60c1c&o="),
+                            HotelItemImage(original_image = "https://q-xx.bstatic.com/xdata/images/hotel/max1440x1080/223247563.jpg?k=17e4b19b4710d224007544d313b2e012e33475d53877bdea8cf036d8f6a60c1c&o="),
+                            HotelItemImage(original_image = "https://q-xx.bstatic.com/xdata/images/hotel/max1440x1080/223247563.jpg?k=17e4b19b4710d224007544d313b2e012e33475d53877bdea8cf036d8f6a60c1c&o="),
+                            HotelItemImage(original_image = "https://q-xx.bstatic.com/xdata/images/hotel/max1440x1080/223247563.jpg?k=17e4b19b4710d224007544d313b2e012e33475d53877bdea8cf036d8f6a60c1c&o="),
+                        )
                     )
                 )
-            )
-        )*/
-    if (hotelList.isNotEmpty())
-        HotelItem(hotelList) {
-            val param = HotelDetailParam(
-                query = searchHotels.orEmpty(),
-                checkInDate = startDate,
-                checkOutDate = endDate,
-                adults = adultCount,
-                children = childCount,
-                childrenAges = childAgesConcat,
-                propertyToken = it.property_token.orEmpty(),
-                it.amenities.orEmpty()
-            )
-            onHotelDetailsClick(param)
-        }
+            )*/
+        if (hotelList.isNotEmpty())
+            HotelItem(hotelList) {
+                val param = HotelDetailParam(
+                    query = searchHotels.orEmpty(),
+                    checkInDate = startDate,
+                    checkOutDate = endDate,
+                    adults = adultCount,
+                    children = childCount,
+                    childrenAges = childAgesConcat,
+                    propertyToken = it.property_token.orEmpty(),
+                    it.amenities.orEmpty()
+                )
+                onHotelDetailsClick(param)
+            }
+    }
+
+
 }

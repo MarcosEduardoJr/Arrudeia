@@ -4,11 +4,9 @@ package com.arrudeia.feature.home.presentation.ui
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -61,21 +59,7 @@ fun homeView(
             .fillMaxSize()
             .background(color = colorResource(id = background_grey_F7F7F9))
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 16.dp)
-                .align(Alignment.TopCenter)
-        ) {
-
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.TopCenter)
-            ) {
-
-                Spacer(modifier = Modifier.size(10.dp))
-
+            Column(modifier = Modifier.align(Alignment.TopCenter) ){
                 header(
                     modifier = Modifier
                         .padding(horizontal = 16.dp)
@@ -84,9 +68,6 @@ fun homeView(
                     onRouteClick,
                     viewModel
                 )
-
-                Spacer(modifier = Modifier.size(10.dp))
-
                 PagerHome(
                     viewModel,
                     searchChange = { searchTravel = it },
@@ -95,7 +76,6 @@ fun homeView(
                     onEventDetailsClick
                 )
             }
-        }
     }
 }
 

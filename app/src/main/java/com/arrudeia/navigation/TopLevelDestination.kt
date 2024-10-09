@@ -1,18 +1,12 @@
 package com.arrudeia.navigation
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Hiking
 import androidx.compose.material.icons.rounded.LightMode
-import androidx.compose.material.icons.rounded.People
 import androidx.compose.material.icons.rounded.TravelExplore
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.arrudeia.core.common.R.string.explore
-import com.arrudeia.core.common.R.string.social
 import com.arrudeia.core.common.R.string.tips
-import com.arrudeia.core.common.R.string.trail
 import com.arrudeia.core.data.navigation.homeRoute
-import com.arrudeia.core.data.navigation.runOverviewRoute
-import com.arrudeia.core.data.navigation.socialRoute
 import com.arrudeia.core.data.navigation.tipsRoute
 
 enum class TopLevelDestination(
@@ -36,7 +30,7 @@ enum class TopLevelDestination(
         titleTextId = tips,
         route = tipsRoute,
     ),
-    TRAIL(
+  /*  TRAIL(
         selectedIcon = Icons.Rounded.Hiking,
         unselectedIcon = Icons.Rounded.Hiking,
         iconTextId = trail,
@@ -51,5 +45,5 @@ enum class TopLevelDestination(
         titleTextId = social,
         route = socialRoute,
     ),
-
+*/
 }

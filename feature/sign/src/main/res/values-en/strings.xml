@@ -2,6 +2,7 @@
     <string name="start">Start</string>
     <string name="sign">Login</string>
     <string name="sign_description_tired_job"><![CDATA[<h3><font color=\"#FF6421\"><br><b>Arrudeia!</b></font></h3><p>Connect now to our social area! Make friends from all over the world and plan amazing travel experiences. It\'s all waiting for you! Sign up or log in and start your journey!</p>]]></string>
+    <string name="register_description_important"><![CDATA[<h3><font color=\"#FF6421\"><br><b></b></font></h3><p>For the safety of all Travelers, we need some information.</p> <p>After that you can meet and chat with our travelers!</p>]]></string>
     <string name="sign_register">Register</string>
     <string name="sign_email">Email</string>
     <string name="sign_password">Password</string>

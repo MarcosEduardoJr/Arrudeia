@@ -12,12 +12,18 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -37,10 +43,21 @@ import com.arrudeia.core.data.navigation.receiptRoute
 import com.arrudeia.core.designsystem.R
 import com.arrudeia.core.designsystem.R.color.background_grey_F7F7F9
 import com.arrudeia.core.designsystem.component.HtmlText
+import com.arrudeia.core.designsystem.component.SimpleTabSwitch
+import com.arrudeia.feature.aid.presentation.navigation.param.AidDetailParam
+import com.arrudeia.feature.aid.presentation.ui.AidRoute
+import com.arrudeia.feature.checklist.presentation.ui.CheckListRoute
+import com.arrudeia.feature.receipt.presentation.navigation.param.ReceiptDetailParam
+import com.arrudeia.feature.receipt.presentation.ui.ReceiptRoute
 import com.arrudeia.feature.tips.R.string.headeMessageTips
 
 @Composable
-internal fun TipsRoute(routeClick: (String) -> Unit) {
+internal fun TipsRoute(
+    routeClick: (String) -> Unit, onShowSnackbar: suspend (String, String?) -> Boolean,
+    onReceiptDetailClick: (ReceiptDetailParam) -> Unit,
+    onBackClick: () -> Unit,
+    onAidDetailClick: (AidDetailParam) -> Unit,
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -56,6 +73,52 @@ internal fun TipsRoute(routeClick: (String) -> Unit) {
             TipsHeader(
                 modifier = Modifier
                     .fillMaxWidth(),
+            )
+
+            val pages = listOf(
+                stringResource(id = receipts),
+                stringResource(id = aid),
+                stringResource(id = checklist),
+            )
+            var pagerState = rememberPagerState(initialPage = 0) { pages.size }
+            var selectedTab by rememberSaveable { mutableIntStateOf(pagerState.currentPage) }
+
+            LaunchedEffect(selectedTab) {
+                pagerState.scrollToPage(selectedTab)
+            }
+
+            LaunchedEffect(pagerState.currentPage) {
+                selectedTab = pagerState.currentPage
+            }
+
+            Spacer(modifier = Modifier.size(10.dp))
+            SimpleTabSwitch(
+                modifier = Modifier,
+                tabsTitle = pages,
+                screens = listOf(
+                    {
+                        ReceiptRoute(
+                            onShowSnackbar = onShowSnackbar,
+                            onReceiptDetailClick = onReceiptDetailClick,
+                            onBackClick
+                        )
+                    },
+                    {
+                        AidRoute(
+                            onAidDetailClick = onAidDetailClick,
+                            onBackClick = onBackClick,
+                            onShowSnackbar = onShowSnackbar
+                        )
+                    },
+                    {
+                        CheckListRoute(
+                            onBackClick = onBackClick
+                        )
+                    },
+                )
+                //     onSelectionChange = {
+                //         selectedTab = it
+                //    }
             )
 
             LazyColumn(modifier = Modifier) {

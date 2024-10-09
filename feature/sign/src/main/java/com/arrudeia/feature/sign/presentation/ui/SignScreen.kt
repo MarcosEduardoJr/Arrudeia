@@ -146,7 +146,10 @@ internal fun Sign(
         }
 
         is SignUiState.Success -> {
-            onRouteClick(homeRoute)
+            if (isRegisterState)
+
+            else
+                onRouteClick(homeRoute)
             isLoading = false
         }
 
@@ -319,7 +322,7 @@ internal fun Sign(
                         enableBtn = true
                         colorBtn = colorPrimary
                     } else {
-                        colorBtn =  text_grey
+                        colorBtn = text_grey
                         enableBtn = false
                     }
 

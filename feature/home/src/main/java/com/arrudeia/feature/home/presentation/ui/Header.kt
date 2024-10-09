@@ -7,7 +7,6 @@ import android.location.Location
 import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -32,9 +31,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.arrudeia.core.data.navigation.profileRoute
 import com.arrudeia.core.designsystem.R.color.colorBlack
-import com.arrudeia.core.designsystem.R.drawable.ic_arrudeia_logo
 import com.arrudeia.core.designsystem.component.HtmlText
 import com.arrudeia.core.ui.hasFineLocationPermission
 import com.arrudeia.core.ui.hasNotificationPermission
@@ -44,7 +41,6 @@ import com.arrudeia.feature.home.presentation.viewmodel.HomeViewModel
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.Placeholder
-import com.bumptech.glide.integration.compose.placeholder
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.Task
@@ -73,6 +69,7 @@ fun header(
             alignmentText = View.TEXT_ALIGNMENT_TEXT_START,
             textStyle = MaterialTheme.typography.titleMedium
         )
+        /*
         imageHeader(
             modifier = Modifier
                 .size(50.dp)
@@ -81,7 +78,7 @@ fun header(
             user.value?.image.orEmpty(),
             placeholder( ic_arrudeia_logo),
             null
-        )
+        )*/
     }
 }
 

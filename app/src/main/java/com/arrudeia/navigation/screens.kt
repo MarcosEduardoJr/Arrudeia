@@ -14,6 +14,7 @@ import com.arrudeia.feature.receipt.presentation.navigation.receiptDetailScreen
 import com.arrudeia.feature.receipt.presentation.navigation.receiptScreen
 import com.arrudeia.feature.services.presentation.navigation.newServiceScreen
 import com.arrudeia.feature.services.presentation.navigation.servicesScreen
+import com.arrudeia.feature.sign.presentation.navigation.registerOnboarding
 import com.arrudeia.feature.sign.presentation.navigation.signScreen
 import com.arrudeia.feature.social.presentation.navigation.messageScreen
 import com.arrudeia.feature.social.presentation.navigation.socialScreen
@@ -92,7 +93,13 @@ fun NavGraphBuilder.screens(
         onBackClick = { navController.popBackStack() },
         onShowSnackbar = onShowSnackbar,
     )
-    tipsScreen(navController::navigateToRoute)
+    tipsScreen(
+        navController::navigateToRoute,
+        onReceiptDetailClick = { navController.navigate(it) },
+        onShowSnackbar = onShowSnackbar,
+        onBackClick = { navController.popBackStack() },
+        onAidDetailClick = { navController.navigate(it) },
+    )
     socialScreen(
         navController::navigateToRoute, onMessageClick = { navController.navigate(it) },
         showBottomBar = showBottomBar
@@ -100,6 +107,12 @@ fun NavGraphBuilder.screens(
 
     messageScreen(
         onBackClick = { navController.popBackStack() },
+        onShowSnackbar = onShowSnackbar,
+        showBottomBar = showBottomBar
+    )
+
+    registerOnboarding(
+        onRouteClick = navController::navigateToRoute,
         onShowSnackbar = onShowSnackbar,
         showBottomBar = showBottomBar
     )

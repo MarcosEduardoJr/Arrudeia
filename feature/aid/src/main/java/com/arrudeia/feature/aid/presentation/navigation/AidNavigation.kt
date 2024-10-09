@@ -17,7 +17,7 @@ fun NavGraphBuilder.aidScreen(
     composable(route = aidRoute) {
         AidRoute(
             onShowSnackbar = onShowSnackbar,
-            onReceiptDetailClick = onReceiptDetailClick,
+            onAidDetailClick = onReceiptDetailClick,
             onBackClick
         )
     }

@@ -42,6 +42,9 @@ dependencies {
     implementation(project(":core:designsystem"))
     implementation(project(":core:common"))
     implementation(project(":core:graphql"))
+    implementation(project(":feature:receipt"))
+    implementation(project(":feature:aid"))
+    implementation(project(":feature:checklist"))
     implementation(libs.androidx.compose.material3)
     implementation(libs.glide.compose)
 

@@ -2,8 +2,8 @@ package com.arrudeia.feature.sign.presentation.navigation
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.arrudeia.feature.sign.presentation.ui.SignRoute
 import com.arrudeia.core.data.navigation.signRoute
+import com.arrudeia.feature.sign.presentation.ui.RegisterOnboardingScreen
 
 fun NavGraphBuilder.signScreen(
     onRouteClick: (String) -> Unit,
@@ -12,6 +12,26 @@ fun NavGraphBuilder.signScreen(
 ) {
 
     composable(route = signRoute) {
-        SignRoute(onRouteClick, onShowSnackbar, showBottomBar = showBottomBar)
+        showBottomBar(false)
+        RegisterOnboardingScreen(
+            onRouteClick = onRouteClick,
+            onShowSnackbar = onShowSnackbar,
+        )
+        //  SignRoute(onRouteClick, onShowSnackbar, showBottomBar = showBottomBar)
+    }
+}
+
+
+fun NavGraphBuilder.registerOnboarding(
+    onRouteClick: (String) -> Unit,
+    showBottomBar: (Boolean) -> Unit,
+    onShowSnackbar: suspend (String, String?) -> Boolean,
+) {
+    composable<RegisterOnboardingParam> {
+        showBottomBar(false)
+        RegisterOnboardingScreen(
+            onRouteClick = onRouteClick,
+            onShowSnackbar = onShowSnackbar,
+        )
     }
 }

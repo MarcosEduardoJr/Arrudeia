@@ -3,7 +3,6 @@ package com.arrudeia.core.designsystem.component
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
@@ -71,9 +70,7 @@ fun SimpleTabSwitch(
                                     indication = null,
                                     enabled = true,
                                     onClick = {
-                                        coroutineScope.launch {
-                                            pagerState.animateScrollToPage(index)
-                                        }
+
                                     }
                                 ),
 
@@ -87,14 +84,16 @@ fun SimpleTabSwitch(
                     },
                     selected = pagerState.currentPage == index,
                     onClick = {
-
+                        coroutineScope.launch {
+                            pagerState.animateScrollToPage(index)
+                        }
                     }
                 )
             }
         }
         HorizontalPager(
             state = pagerState,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxWidth()
         ) { page ->
             screens[page]()
         }

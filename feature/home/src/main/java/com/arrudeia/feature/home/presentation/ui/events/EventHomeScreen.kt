@@ -1,6 +1,7 @@
 package com.arrudeia.feature.home.presentation.ui.events
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -31,7 +32,6 @@ import com.arrudeia.feature.home.presentation.navigation.param.EventDetailParam
 import com.arrudeia.feature.home.presentation.ui.CurrentCity
 import com.arrudeia.feature.home.presentation.ui.search
 import com.arrudeia.feature.home.presentation.viewmodel.HomeViewModel
-import com.google.gson.Gson
 
 @Composable
 fun EventHomeScreen(
@@ -50,6 +50,10 @@ fun EventHomeScreen(
             query = it
             searchNow = true
         }, viewModel)
+    Column {
+
+
+
     search(
         modifier = Modifier
             .fillMaxWidth()
@@ -141,4 +145,5 @@ fun EventHomeScreen(
         EventItem(list) {
             onEventDetailsClick(it)
         }
+    }
 }
