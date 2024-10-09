@@ -95,6 +95,8 @@ class NewServiceViewModel @Inject constructor(
                 is Result.Loading -> {
                     uiStateZipCode.value = AddressUiState.Loading
                 }
+
+                is Result.ErrorMessage -> TODO()
             }
         }
     }
@@ -121,6 +123,8 @@ class NewServiceViewModel @Inject constructor(
                 is Result.Loading -> {
                     uiState.value = NewServiceUiState.Loading
                 }
+
+                is Result.ErrorMessage -> TODO()
             }
         }
     }
@@ -142,6 +146,8 @@ class NewServiceViewModel @Inject constructor(
                 is Result.Loading -> {
                     uiStateExpertise.value = ServiceExpertiseUiState.Loading
                 }
+
+                is Result.ErrorMessage -> TODO()
             }
         }
     }

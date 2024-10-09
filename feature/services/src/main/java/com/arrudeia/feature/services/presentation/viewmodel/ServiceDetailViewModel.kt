@@ -103,6 +103,8 @@ class ServiceDetailViewModel @Inject constructor(
                 is Result.Loading -> {
                     uiState.value = ServiceDetailUiState.Loading
                 }
+
+                is Result.ErrorMessage -> TODO()
             }
         }
     }
@@ -154,6 +156,7 @@ class ServiceDetailViewModel @Inject constructor(
                 }
 
                 is Result.Error -> {}
+                is Result.ErrorMessage -> TODO()
             }
         }
     }

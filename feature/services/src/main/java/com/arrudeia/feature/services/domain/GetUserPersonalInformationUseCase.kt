@@ -23,6 +23,7 @@ class GetUserPersonalInformationUseCase @Inject constructor(
             }
             is Result.Error -> String()
             is Result.Loading -> String()
+            is Result.ErrorMessage -> TODO()
         }
     }
 
@@ -48,6 +49,7 @@ class GetUserPersonalInformationUseCase @Inject constructor(
 
             is Result.Error -> Result.Error(this.message)
             is Result.Loading -> Result.Loading
+            is Result.ErrorMessage -> TODO()
         }
     }
 }

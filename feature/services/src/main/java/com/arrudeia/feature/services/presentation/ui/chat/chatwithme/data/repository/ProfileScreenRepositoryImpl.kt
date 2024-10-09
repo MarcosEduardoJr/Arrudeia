@@ -2,10 +2,10 @@ package com.arrudeia.feature.services.presentation.ui.chat.chatwithme.data.repos
 
 import android.net.Uri
 import com.arrudeia.feature.services.presentation.ui.chat.chatwithme.core.Constants.ERROR_MESSAGE
+import com.arrudeia.feature.services.presentation.ui.chat.chatwithme.utils.Response
 import com.example.chatwithme.domain.model.User
 import com.example.chatwithme.domain.model.UserStatus
 import com.example.chatwithme.domain.repository.ProfileScreenRepository
-import com.arrudeia.feature.services.presentation.ui.chat.chatwithme.utils.Response
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError

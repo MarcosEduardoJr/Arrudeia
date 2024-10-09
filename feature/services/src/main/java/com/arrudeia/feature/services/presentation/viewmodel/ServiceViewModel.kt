@@ -3,6 +3,7 @@ package com.arrudeia.feature.services.presentation.viewmodel
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.arrudeia.core.common.R.string.generic_error
 import com.arrudeia.core.designsystem.component.DropListUiModel
 import com.arrudeia.core.domain.IsSavedIdDocUserDataStoreUseCase
 import com.arrudeia.core.result.Result
@@ -17,7 +18,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import com.arrudeia.core.common.R.string.generic_error
 
 @HiltViewModel
 class ServiceViewModel @Inject constructor(
@@ -58,6 +58,8 @@ class ServiceViewModel @Inject constructor(
                 is Result.Loading -> {
                     uiState.value = ServiceUiState.Loading
                 }
+
+                is Result.ErrorMessage -> TODO()
             }
         }
     }
@@ -80,6 +82,8 @@ class ServiceViewModel @Inject constructor(
                 is Result.Loading -> {
                     uiStateExpertise.value = ServiceExpertiseUiState.Loading
                 }
+
+                is Result.ErrorMessage -> TODO()
             }
         }
     }
