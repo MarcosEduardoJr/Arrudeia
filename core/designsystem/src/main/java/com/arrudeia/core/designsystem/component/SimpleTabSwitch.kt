@@ -70,7 +70,9 @@ fun SimpleTabSwitch(
                                     indication = null,
                                     enabled = true,
                                     onClick = {
-
+                                        coroutineScope.launch {
+                                            pagerState.animateScrollToPage(index)
+                                        }
                                     }
                                 ),
 

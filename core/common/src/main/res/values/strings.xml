@@ -78,5 +78,7 @@
     <string name="about_me">Sobre mim</string>
     <string name="sex">Sexo</string>
     <string name="information">Informação</string>
+    <string name="expedia">Expedia</string>
+    <string name="hoteis">Hoteis</string>
 
 </resources>

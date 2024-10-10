@@ -167,7 +167,7 @@ fun HotelSearchScreen(
                 val result = (state as HomeViewModel.HotelSearchState.Success).data
                 result?.properties?.let {
                     hotelList.clear() // so dar clear se for search now se for relamente mantem
-                    hotelList.addAll(it.filter { it.images?.isNotEmpty() == true })
+                    hotelList.addAll(it.filter { it.images?.isNotEmpty() == true    })
                     nextPage = result.serpapi_pagination.next_page_token.orEmpty()
                 }
             }

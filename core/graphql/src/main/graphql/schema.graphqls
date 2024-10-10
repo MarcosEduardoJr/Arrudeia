@@ -109,6 +109,15 @@ type AidGraph {
     urlVideo: String
 }
 
+type PromotionsGraph {
+    name: String
+    images: String
+    affiliate : String
+    totalValue : String
+    urlClick: String
+    date : String
+}
+
 type AidSteps{
     id: Int
     aidId: String
@@ -181,6 +190,8 @@ type Query {
 
     aids: [AidGraph]
     aid(id: String!): AidGraph
+
+    promotions: [PromotionsGraph]
 
     services: [GetServiceType]
     service(id: Int!): GetServiceType

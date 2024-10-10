@@ -16,6 +16,7 @@ import com.arrudeia.feature.home.presentation.navigation.param.EventDetailParam
 import com.arrudeia.feature.home.presentation.navigation.param.HotelDetailParam
 import com.arrudeia.feature.home.presentation.ui.events.EventHomeScreen
 import com.arrudeia.feature.home.presentation.ui.hotels.HotelSearchScreen
+import com.arrudeia.feature.home.presentation.ui.promotion.PromotionScreen
 import com.arrudeia.feature.home.presentation.viewmodel.HomeViewModel
 
 @Composable
@@ -27,6 +28,7 @@ fun PagerHome(
     onEventDetailsClick: (EventDetailParam) -> Unit,
 ) {
     val pages = listOf(
+        "Promotion",
         stringResource(id = hotels),
         stringResource(id = events),
     )
@@ -50,6 +52,7 @@ fun PagerHome(
         //    items = pages,
         tabsTitle = pages,
         screens = listOf(
+            { PromotionScreen() },
             { HotelSearchScreen(viewModel, onShowSnackbar, onHotelDetailsClick) },
             { EventHomeScreen(viewModel, onShowSnackbar, onEventDetailsClick) }
 
