@@ -26,9 +26,11 @@ fun NavGraphBuilder.aidScreen(
 fun NavGraphBuilder.aidDetailScreen(
     onBackClick: () -> Unit,
     onShowSnackbar: suspend (String, String?) -> Boolean,
+    showBottomBar: (Boolean) -> Unit,
 ) {
     composable<AidDetailParam> {
         val args = it.toRoute<AidDetailParam>()
+        showBottomBar(false)
         AidDetailRoute(
             onBackClick = onBackClick,
             onShowSnackbar = onShowSnackbar,

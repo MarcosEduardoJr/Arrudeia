@@ -26,9 +26,11 @@ fun NavGraphBuilder.receiptScreen(
 fun NavGraphBuilder.receiptDetailScreen(
     onBackClick: () -> Unit,
     onShowSnackbar: suspend (String, String?) -> Boolean,
+    showBottomBar: (Boolean) -> Unit,
 ) {
     composable<ReceiptDetailParam> {
         val args = it.toRoute<ReceiptDetailParam>()
+        showBottomBar(false)
         ReceiptDetailRoute(
             onBackClick = onBackClick,
             onShowSnackbar = onShowSnackbar,

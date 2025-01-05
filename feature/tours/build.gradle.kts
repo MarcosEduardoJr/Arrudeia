@@ -9,7 +9,7 @@ plugins {
 
 android {
     compileSdk = 34
-    namespace = "com.arrudeia.feature.home"
+    namespace = "com.arrudeia.feature.tours"
     defaultConfig {
         minSdk = 21
         targetSdk = 34
@@ -44,8 +44,7 @@ dependencies {
   //  implementation(project(":feature:stories"))
     implementation(project(":feature:trip"))
     implementation(project(":feature:profile"))
-    implementation(project(":feature:tours"))
-  // implementation(project(":feature:arrudeia"))
+ //  implementation(project(":feature:arrudeia"))
     implementation(libs.androidx.compose.material3)
     implementation(libs.glide.compose)
 
@@ -77,22 +76,24 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtimeCompose)
     implementation(libs.androidx.compose.runtime.tracing)
     implementation(libs.androidx.compose.material3.windowSizeClass)
-    implementation(libs.androidx.compose.runtime.android)
+
     implementation(libs.kotlinx.coroutines.test)
     implementation(libs.mockito.core)
     implementation(libs.mockk)
     implementation(libs.coreTesting)
-    implementation(libs.androidx.compose.material.iconsExtended)
+
 
     implementation(libs.junit4)
     testImplementation(libs.junit4)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.ui.test.junit4)
 
-    implementation(libs.converter.gson)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.kotlinx.serialization.json)
 
-    implementation("com.google.android.gms:play-services-maps:18.2.0")
-    implementation("com.google.android.gms:play-services-location:21.2.0")
+    implementation(libs.androidx.media3.exoplayer)
+    implementation(libs.androidx.media3.ui)
+    implementation(libs.androidyoutubeplayer)
 
 }
 

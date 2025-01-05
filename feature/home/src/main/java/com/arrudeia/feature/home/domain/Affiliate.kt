@@ -9,7 +9,7 @@ enum class Affiliate(
     EXPEDIA(
         icon = ExpediaIcon,
     ),
-    HOTELS(
+    HOTEIS(
         icon = HoteisIcon,
     ),
 }

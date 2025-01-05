@@ -19,6 +19,7 @@ import com.arrudeia.feature.sign.presentation.navigation.signScreen
 import com.arrudeia.feature.social.presentation.navigation.messageScreen
 import com.arrudeia.feature.social.presentation.navigation.socialScreen
 import com.arrudeia.feature.tips.presentation.navigation.tipsScreen
+import com.arrudeia.feature.tours.presentation.navigation.toursStoreScreen
 import com.arrudeia.runOverviewScreen
 
 fun NavGraphBuilder.screens(
@@ -54,20 +55,22 @@ fun NavGraphBuilder.screens(
     receiptScreen(
         onReceiptDetailClick = { navController.navigate(it) },
         onShowSnackbar = onShowSnackbar,
-        onBackClick = { navController.popBackStack() }
+        onBackClick = { navController.popBackStack() },
     )
     receiptDetailScreen(
         onShowSnackbar = onShowSnackbar,
-        onBackClick = { navController.popBackStack() }
+        onBackClick = { navController.popBackStack() },
+        showBottomBar = showBottomBar
     )
     aidScreen(
         onReceiptDetailClick = { navController.navigate(it) },
         onShowSnackbar = onShowSnackbar,
-        onBackClick = { navController.popBackStack() }
+        onBackClick = { navController.popBackStack() },
     )
     aidDetailScreen(
         onShowSnackbar = onShowSnackbar,
-        onBackClick = { navController.popBackStack() }
+        onBackClick = { navController.popBackStack() },
+        showBottomBar = showBottomBar
     )
     servicesScreen(
         serviceDetailNavigationClick = { navController.navigate(it) },
@@ -99,6 +102,7 @@ fun NavGraphBuilder.screens(
         onShowSnackbar = onShowSnackbar,
         onBackClick = { navController.popBackStack() },
         onAidDetailClick = { navController.navigate(it) },
+        showBottomBar = showBottomBar
     )
     socialScreen(
         navController::navigateToRoute, onMessageClick = { navController.navigate(it) },
@@ -116,7 +120,15 @@ fun NavGraphBuilder.screens(
         onShowSnackbar = onShowSnackbar,
         showBottomBar = showBottomBar
     )
+
+    toursStoreScreen(
+        onBackClick = { navController.popBackStack() },
+        showBottomBar = showBottomBar,
+        onShowSnackbar = onShowSnackbar,
+    )
 }
+
+
 
 
 

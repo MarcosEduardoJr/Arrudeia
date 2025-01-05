@@ -80,5 +80,8 @@
     <string name="information">Informação</string>
     <string name="expedia">Expedia</string>
     <string name="hoteis">Hoteis</string>
+    <string name="promotion">Promoção</string>
+    <string name="tours">Passeios</string>
+    <string name="products">Produtos</string>
 
 </resources>

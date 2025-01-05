@@ -41,6 +41,7 @@ include(":feature:services")
 include(":feature:trail")
 include(":feature:social")
 include(":feature:tips")
+include(":feature:tours")
 
 
 include(":wear:app")

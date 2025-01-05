@@ -15,7 +15,6 @@ class PromotionViewModel @Inject constructor(
     private val useCase: GetPromotionsUseCase,
 ) : ViewModel() {
 
-
     private val _list = mutableStateListOf<PromotionUseCaseEntity>()
     val list: List<PromotionUseCaseEntity> = _list
 

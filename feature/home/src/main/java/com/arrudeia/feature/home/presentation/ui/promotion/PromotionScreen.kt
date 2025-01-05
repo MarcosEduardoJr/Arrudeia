@@ -50,9 +50,11 @@ private fun PromotionList(
     viewModel: PromotionViewModel = hiltViewModel(),
     OnClick: (String) -> Unit
 ) {
+    val isLoading = viewModel.isLoading
+
     if (viewModel.list.isEmpty())
         viewModel.fetchPromotions()
-    else if (viewModel.isLoading.value)
+    else if (isLoading.value)
         ArrudeiaLoadingWheel()
     else if (viewModel.list.isNotEmpty())
         Box(

@@ -14,9 +14,11 @@ fun NavGraphBuilder.tipsScreen(
     onReceiptDetailClick: (ReceiptDetailParam) -> Unit,
     onBackClick: () -> Unit,
     onAidDetailClick: (AidDetailParam) -> Unit,
+    showBottomBar: (Boolean) -> Unit,
 ) {
 
     composable(route = tipsRoute) {
+        showBottomBar(true)
         TipsRoute(
             routeClick,
             onShowSnackbar = onShowSnackbar,

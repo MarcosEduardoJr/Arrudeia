@@ -22,10 +22,10 @@ android {
     defaultConfig {
         multiDexEnabled = true
         applicationId = "com.arrudeia"
-        versionCode = 25
+        versionCode = 26
         minSdk = 21
         targetSdk = 34
-        versionName = "1.7.2" // X.Y.Z; X = Major, Y = minor, Z = Patch level
+        versionName = "1.7.4" // X.Y.Z; X = Major, Y = minor, Z = Patch level
 
         // Custom test runner to set up Hilt dependency graph
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -183,6 +183,7 @@ dependencies {
     implementation(project(":feature:trail"))
     implementation(project(":feature:tips"))
     implementation(project(":feature:social"))
+    implementation(project(":feature:tours"))
 }
 
 apply(plugin = "com.google.gms.google-services")

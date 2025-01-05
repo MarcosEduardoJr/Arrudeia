@@ -54,28 +54,29 @@ fun homeView(
     onEventDetailsClick: (EventDetailParam) -> Unit
 ) {
     var searchTravel by rememberSaveable { mutableStateOf("") }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(color = colorResource(id = background_grey_F7F7F9))
     ) {
-            Column(modifier = Modifier.align(Alignment.TopCenter) ){
-                header(
-                    modifier = Modifier
-                        .padding(horizontal = 16.dp)
-                        .fillMaxWidth(),
-                    onShowSnackbar,
-                    onRouteClick,
-                    viewModel
-                )
-                PagerHome(
-                    viewModel,
-                    searchChange = { searchTravel = it },
-                    onHotelDetailsClick = onHotelDetailsClick,
-                    onShowSnackbar,
-                    onEventDetailsClick
-                )
-            }
+        Column(modifier = Modifier.align(Alignment.TopCenter)) {
+            header(
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .fillMaxWidth(),
+                onShowSnackbar,
+                onRouteClick,
+                viewModel
+            )
+            PagerHome(
+                viewModel,
+                searchChange = { searchTravel = it },
+                onHotelDetailsClick = onHotelDetailsClick,
+                onShowSnackbar,
+                onEventDetailsClick
+            )
+        }
     }
 }
 

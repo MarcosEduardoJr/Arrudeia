@@ -11,6 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.arrudeia.core.common.R.string.events
 import com.arrudeia.core.common.R.string.hotels
+import com.arrudeia.core.common.R.string.promotion
+import com.arrudeia.core.common.R.string.tours
 import com.arrudeia.core.designsystem.component.SimpleTabSwitch
 import com.arrudeia.feature.home.presentation.navigation.param.EventDetailParam
 import com.arrudeia.feature.home.presentation.navigation.param.HotelDetailParam
@@ -18,6 +20,7 @@ import com.arrudeia.feature.home.presentation.ui.events.EventHomeScreen
 import com.arrudeia.feature.home.presentation.ui.hotels.HotelSearchScreen
 import com.arrudeia.feature.home.presentation.ui.promotion.PromotionScreen
 import com.arrudeia.feature.home.presentation.viewmodel.HomeViewModel
+import com.arrudeia.feature.tours.presentation.ui.ToursScreen
 
 @Composable
 fun PagerHome(
@@ -28,9 +31,11 @@ fun PagerHome(
     onEventDetailsClick: (EventDetailParam) -> Unit,
 ) {
     val pages = listOf(
-        "Promotion",
+        stringResource(tours),
+        stringResource(promotion),
         stringResource(id = hotels),
         stringResource(id = events),
+
     )
     var pagerState = rememberPagerState(initialPage = 0) { pages.size }
     var selectedTab by rememberSaveable { mutableIntStateOf(pagerState.currentPage) }
@@ -52,9 +57,10 @@ fun PagerHome(
         //    items = pages,
         tabsTitle = pages,
         screens = listOf(
+            {  ToursScreen() },
             { PromotionScreen() },
             { HotelSearchScreen(viewModel, onShowSnackbar, onHotelDetailsClick) },
-            { EventHomeScreen(viewModel, onShowSnackbar, onEventDetailsClick) }
+            { EventHomeScreen(viewModel, onShowSnackbar, onEventDetailsClick) },
 
         )
         //     onSelectionChange = {

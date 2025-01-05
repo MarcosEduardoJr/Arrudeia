@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,6 +17,9 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.PlatformTextStyle
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -39,7 +41,9 @@ fun SimpleTabSwitch(
     Column {
         TabRow(
             selectedTabIndex = pagerState.currentPage,
-            modifier = modifier.fillMaxWidth(),
+            modifier = modifier
+                .padding(horizontal = 16.dp, vertical = 6.dp)
+                .fillMaxWidth(),
             contentColor = Color.Transparent,
             containerColor = Color.Transparent,
             divider = { },
@@ -53,44 +57,50 @@ fun SimpleTabSwitch(
             }
         ) {
             tabsTitle.forEachIndexed { index, title ->
-                Tab(
-                    text = {
-                        Text(
-                            modifier = Modifier
-                                //  .defaultMinSize(minWidth = 20.dp, minHeight = 1.dp)
-                                .drawBehind {
-                                    drawRoundRect(
-                                        color = if (pagerState.currentPage == index) colorPrimary else Color.Transparent,
-                                        cornerRadius = CornerRadius(100f)
-                                    )
-                                }
-                                .padding(horizontal = 16.dp, vertical = 8.dp)
-                                .clickable(
-                                    interactionSource = interactionSource,
-                                    indication = null,
-                                    enabled = true,
-                                    onClick = {
-                                        coroutineScope.launch {
-                                            pagerState.animateScrollToPage(index)
-                                        }
-                                    }
-                                ),
-
-                            text = title,
-                            fontSize = 14.sp,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                            color = if (pagerState.currentPage == index) Color.White else textGrey
-                        )
-
-                    },
-                    selected = pagerState.currentPage == index,
-                    onClick = {
-                        coroutineScope.launch {
-                            pagerState.animateScrollToPage(index)
+                //  Tab(
+                //   text = {
+                Text(
+                    modifier = Modifier
+                        .drawBehind {
+                            drawRoundRect(
+                                color = if (pagerState.currentPage == index) colorPrimary else Color.Transparent,
+                                cornerRadius = CornerRadius(100f)
+                            )
                         }
-                    }
+                        .weight(1f)
+                        .padding(vertical = 4.dp)
+                        .clickable(
+                            interactionSource = interactionSource,
+                            indication = null,
+                            enabled = true,
+                            onClick = {
+                                coroutineScope.launch {
+                                    pagerState.animateScrollToPage(index)
+                                }
+                            }
+                        ),
+
+                    text = title,
+                    fontSize = 14.sp,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    color = if (pagerState.currentPage == index) Color.White else textGrey,
+                    style = TextStyle(
+                        platformStyle = PlatformTextStyle(
+                            includeFontPadding = false
+                        ),
+                    ),
+                    textAlign = TextAlign.Center
                 )
+
+                //  },
+                //   selected = pagerState.currentPage == index,
+                //  onClick = {
+                //      coroutineScope.launch {
+                //          pagerState.animateScrollToPage(index)
+                //      }
+                //  }
+                //  )
             }
         }
         HorizontalPager(
