@@ -9,6 +9,8 @@
     <string name="finish">Finish</string>
     <string name="search">Search</string>
     <string name="places">Places</string>
+    <string name="hotels">Hotels</string>
+    <string name="flights">Flights</string>
     <string name="trips">Trips</string>
     <string name="permission_required">Permission required</string>
     <string name="location_rationale">To track your location, this app needs your permission to do so. Confirm to grant.</string>
@@ -55,4 +57,17 @@
     <string name="yes">Sim</string>
     <string name="no">No</string>
     <string name="open_camera">Open the camera</string>
+    <string name="events">Events</string>
+    <string name="more_info_on">More information at</string>
+    <string name="TICKETS">tickets</string>
+    <string name="MORE_INFO">more information</string>
+    <string name="no_tickets_available">There are no tickets available.</string>
+    <string name="explore">Explore</string>
+    <string name="tips">Tips</string>
+    <string name="social">Social</string>
+
+    <string name="receipts">Revenues</string>
+    <string name="aid">First aid</string>
+    <string name="checklist">Guide</string>
+
 </resources>

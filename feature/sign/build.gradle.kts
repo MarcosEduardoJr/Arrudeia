@@ -4,6 +4,7 @@ plugins {
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
     id("kotlin-android")
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -73,6 +74,9 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtimeCompose)
     implementation(libs.androidx.compose.runtime.tracing)
     implementation(libs.androidx.compose.material3.windowSizeClass)
+
+    implementation(libs.androidx.activity.ktx)
+    implementation(libs.activity)
 
 
     implementation(libs.junit4)

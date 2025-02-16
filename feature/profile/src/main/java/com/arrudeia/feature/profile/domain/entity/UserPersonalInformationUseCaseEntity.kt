@@ -11,4 +11,5 @@ data class UserPersonalInformationUseCaseEntity(
     var idDocument: String? = "",
     var birthDate: String? = "",
     var profileImage: String? = "",
+    var gender: String? = ""
 )

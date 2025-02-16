@@ -10,5 +10,6 @@ data class UserPersonalInformationRepositoryEntity(
     val phone: String?,
     val idDocument: String?,
     val birthDate: String?,
-    val profileImage: String?
+    val profileImage: String?,
+    val gender: String?
 )

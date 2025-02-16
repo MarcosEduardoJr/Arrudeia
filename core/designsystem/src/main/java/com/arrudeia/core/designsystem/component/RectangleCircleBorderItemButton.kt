@@ -1,13 +1,16 @@
 package com.arrudeia.core.designsystem.component
 
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -15,16 +18,22 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.arrudeia.core.designsystem.R
+import com.arrudeia.core.designsystem.R.drawable.ic_arrudeia_logo
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
+import com.bumptech.glide.integration.compose.placeholder
 
 @Composable
 fun RectangleCircleBorderItemButton(
@@ -117,7 +126,7 @@ fun RectangleCircleBorderItemButton(
             ) {
                 iconStart?.let {
                     Image(
-                        imageVector =  iconStart,
+                        imageVector = iconStart,
                         contentDescription = null,
                         modifier = Modifier
                             .size(24.dp),
@@ -161,5 +170,161 @@ fun RectangleCircleBorderItemButton(
     }
 }
 
+
+@OptIn(ExperimentalGlideComposeApi::class)
+@Composable
+fun RectangleItemButtonImage(
+    img: String = "",
+    modifier: Modifier,
+    name: String,
+    iconEnd: ImageVector? = null,
+    description: String? = null
+) {
+
+    Column() {
+        Card(
+            modifier = modifier,
+            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+            shape = RoundedCornerShape(50.dp)
+        ) {
+            Row(
+                modifier = Modifier
+                    .background(Color.White),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                img?.let {
+
+                    GlideImage(
+                        model = img,
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .size(58.dp)
+                            .padding(2.dp)
+                            .clip(CircleShape),
+                        loading = placeholder(ic_arrudeia_logo),
+                        failure = placeholder(ic_arrudeia_logo),
+                        colorFilter = null
+                    )
+                }
+
+                Spacer(modifier = Modifier.size(12.dp))
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(6.dp),
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = name,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 14.sp,
+                        color = Color.Black
+                    )
+                    description?.let {
+
+                        Text(
+                            text = description,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 14.sp,
+                            color = colorResource(id = R.color.text_grey)
+                        )
+                    }
+                }
+                iconEnd?.let {
+                    Image(
+                        imageVector = iconEnd,
+                        contentDescription = null,
+                        modifier = Modifier.padding(end = 2.dp),
+                        colorFilter = ColorFilter.tint(colorResource(id = R.color.colorBlack))
+                    )
+                }
+            }
+        }
+    }
+}
+
+
+@OptIn(ExperimentalGlideComposeApi::class)
+@Composable
+fun RectangleItemButtonChat(
+    img: String = "",
+    modifier: Modifier,
+    name: String,
+    tag: String? = null,
+    description: String? = null
+) {
+
+    Column() {
+        Card(
+            modifier = modifier,
+            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+            shape = RoundedCornerShape(50.dp)
+        ) {
+            Row(
+                modifier = Modifier
+                    .background(Color.White),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                img?.let {
+
+                    GlideImage(
+                        model = img,
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .size(78.dp)
+                            .padding(2.dp)
+                            .clip(CircleShape),
+                        loading = placeholder(ic_arrudeia_logo),
+                        failure = placeholder(ic_arrudeia_logo),
+                        colorFilter = null
+                    )
+                }
+
+                Spacer(modifier = Modifier.size(12.dp))
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(6.dp),
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Row(modifier = Modifier.fillMaxWidth()) {
+                        Text(
+                            text = name,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 14.sp,
+                            color = Color.Black,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            modifier = Modifier
+                                .weight(1f)
+                        )
+
+                        tag?.let {
+                            Text(
+                                text = tag,
+                                fontSize = 10.sp,
+                                color = Color.Black,
+                                modifier = Modifier.padding(end = 10.dp),
+                            )
+                        }
+
+                    }
+                    description?.let {
+                        Text(
+                            text = description,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 12.sp,
+                            maxLines = 2,
+                            overflow = TextOverflow.Ellipsis,
+                            color = colorResource(id = R.color.text_grey)
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
 
 

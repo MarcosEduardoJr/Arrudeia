@@ -11,12 +11,14 @@ import com.arrudeia.feature.aid.presentation.ui.AidRoute
 fun NavGraphBuilder.aidScreen(
     onShowSnackbar: suspend (String, String?) -> Boolean,
     onReceiptDetailClick: (AidDetailParam) -> Unit,
+    onBackClick: () -> Unit,
 ) {
 
     composable(route = aidRoute) {
         AidRoute(
             onShowSnackbar = onShowSnackbar,
-            onReceiptDetailClick = onReceiptDetailClick
+            onAidDetailClick = onReceiptDetailClick,
+            onBackClick
         )
     }
 }
@@ -24,9 +26,11 @@ fun NavGraphBuilder.aidScreen(
 fun NavGraphBuilder.aidDetailScreen(
     onBackClick: () -> Unit,
     onShowSnackbar: suspend (String, String?) -> Boolean,
+    showBottomBar: (Boolean) -> Unit,
 ) {
     composable<AidDetailParam> {
         val args = it.toRoute<AidDetailParam>()
+        showBottomBar(false)
         AidDetailRoute(
             onBackClick = onBackClick,
             onShowSnackbar = onShowSnackbar,

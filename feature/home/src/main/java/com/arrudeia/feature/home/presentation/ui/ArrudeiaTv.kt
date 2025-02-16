@@ -44,56 +44,7 @@ import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
 
-@Composable
-fun arrudeiaTv(
-    viewModel: HomeViewModel,
-    onStoriesClick: (String) -> Unit,
-    modifier: Modifier
-) {
 
-    val arrTvUiState by viewModel.arrTvSharedFlow.collectAsStateWithLifecycle()
-    viewModel.fetchDataArrTv()
-    when (arrTvUiState) {
-        is ArrudeiaTvUiState.Loading -> {
-            ArrudeiaLoadingWheel(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(50.dp)
-            )
-        }
-
-        is ArrudeiaTvUiState.Error -> {
-            Text(
-                text = stringResource((arrTvUiState as ArrudeiaTvUiState.Error).message),
-                modifier = Modifier.padding(4.dp)
-            )
-        }
-
-        is ArrudeiaTvUiState.Success -> {
-            Box(
-                modifier = modifier
-            ) {
-                val list = (arrTvUiState as ArrudeiaTvUiState.Success).list
-                LazyRow(modifier = Modifier.fillMaxHeight()) {
-                    items(items = list.toList(), itemContent = {
-                        Spacer(modifier = Modifier.size(8.dp))
-                        arrudeiaTvItem(
-                            Modifier
-                                .align(Alignment.Center)
-                                .clickable {
-                                    onStoriesClick(it.id.toString())
-                                }, it
-                        )
-
-                    })
-                }
-            }
-        }
-
-        else -> {
-        }
-    }
-}
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable

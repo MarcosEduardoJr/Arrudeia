@@ -1,6 +1,6 @@
 package com.arrudeia.feature.profile.domain
 
-import com.arrudeia.feature.profile.data.ProfileDataStoreUserRepositoryImpl
+import com.arrudeia.core.data.repository.ProfileDataStoreUserRepositoryImpl
 import com.arrudeia.feature.profile.data.ProfileRepositoryImpl
 import com.arrudeia.feature.profile.data.entity.UserAddressRepositoryEntity
 import com.arrudeia.feature.profile.domain.entity.UserAddressUseCaseEntity

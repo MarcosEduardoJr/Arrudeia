@@ -26,6 +26,7 @@ fun fetchUser(
     onShowFormChange: (Boolean) -> Unit,
     onProfileImageChange: (String) -> Unit,
     onShowSnackbar: suspend (String, String?) -> Boolean,
+    previousGenderChoosed: (String) -> Unit,
 ) {
     val uiState by viewModel.sharedFlow.collectAsStateWithLifecycle()
     when (uiState) {
@@ -58,6 +59,7 @@ fun fetchUser(
             onDocIdChange(user.idDocument.orEmpty())
             onBirthDateChange(user.birthDate.orEmpty())
             onProfileImageChange(user.profileImage.orEmpty())
+            previousGenderChoosed(user.gender.orEmpty())
             onShowFormChange(true)
         }
 

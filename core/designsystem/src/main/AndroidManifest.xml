@@ -3,4 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools" >
     <uses-sdk tools:overrideLibrary="androidx.multidex.instrumentation | dagger.hilt.android | androidx.fragment | androidx.activity |androidx.lifecycle.viewmodel.savedstate |androidx.loader" />
 
+    <application
+        android:usesCleartextTraffic="true">
+    </application>
 </manifest>

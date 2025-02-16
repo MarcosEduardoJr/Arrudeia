@@ -17,5 +17,10 @@
     <string name="city">Cidade</string>
     <string name="state">Estado</string>
     <string name="country">País</string>
+    <string name="save">Salvar</string>
+    <string name="adult">Adulto</string>
+    <string name="child">Criança</string>
+    <string name="max_people_count">O máximo de pessoas é</string>
+    <string name="age_of_child_of">Idade da criança</string>
 
 </resources>

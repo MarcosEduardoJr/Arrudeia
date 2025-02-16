@@ -72,7 +72,7 @@ fun aid(
             list = filterSearchList(searchTravel, list)
             LazyVerticalGrid(
                 modifier = Modifier
-                    .padding(16.dp)
+                    .padding(vertical = 16.dp)
                     .fillMaxSize()
                     .clipToBounds(),
                 columns = GridCells.Fixed(GRID_CELLS_COUNT),
@@ -87,8 +87,9 @@ fun aid(
                             .padding(4.dp)
                             .clickable { onReceiptDetailClick(AidDetailParam(it?.id.toString())) })
                 }
+                item { Spacer(modifier = Modifier.height(20.dp)) }
             }
-            Spacer(modifier = Modifier.height(40.dp))
+
         }
 
         else -> {

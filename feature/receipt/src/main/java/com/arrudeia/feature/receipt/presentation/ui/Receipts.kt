@@ -36,10 +36,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.arrudeia.core.common.R.string.time
 import com.arrudeia.core.designsystem.R.color.background_grey_F7F7F9
 import com.arrudeia.core.designsystem.R.color.colorPrimary
 import com.arrudeia.core.designsystem.component.ArrudeiaLoadingWheel
-import com.arrudeia.core.common.R.string.time
+import com.arrudeia.feature.receipt.R.string.portions
 import com.arrudeia.feature.receipt.presentation.model.ReceiptUIModel
 import com.arrudeia.feature.receipt.presentation.navigation.param.ReceiptDetailParam
 import com.arrudeia.feature.receipt.presentation.viewmodel.ReceiptViewModel
@@ -47,7 +48,6 @@ import com.arrudeia.feature.receipt.presentation.viewmodel.ReceiptsUiState
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
-import com.arrudeia.feature.receipt.R.string.portions
 
 @Composable
 fun receipt(
@@ -79,7 +79,7 @@ fun receipt(
             list = filterSearchList(searchTravel, list)
             LazyVerticalGrid(
                 modifier = Modifier
-                    .padding(16.dp)
+                    .padding(vertical = 16.dp)
                     .fillMaxSize()
                     .clipToBounds(),
                 columns = GridCells.Fixed(GRID_CELLS_COUNT),
@@ -94,8 +94,9 @@ fun receipt(
                             .padding(4.dp)
                             .clickable { onReceiptDetailClick(ReceiptDetailParam(it?.uuid.toString())) })
                 }
+                item { Spacer(modifier = Modifier.height(20.dp)) }
             }
-            Spacer(modifier = Modifier.height(40.dp))
+
         }
 
         else -> {

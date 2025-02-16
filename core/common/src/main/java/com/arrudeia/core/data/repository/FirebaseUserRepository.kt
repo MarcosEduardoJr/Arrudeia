@@ -7,4 +7,6 @@ interface FirebaseUserRepository {
     suspend fun saveUserDocImage(
         uri: Uri
     ) : String
+
+    suspend fun getUserImage(uuid: String): String?
 }

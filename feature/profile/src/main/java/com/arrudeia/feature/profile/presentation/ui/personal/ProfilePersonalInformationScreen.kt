@@ -43,10 +43,11 @@ fun profilePersonalInformationRoute(
     var profileImageValue by rememberSaveable { mutableStateOf("") }
     var showForm by rememberSaveable { mutableStateOf(false) }
     var showDocumentAnalysisValue by rememberSaveable { mutableStateOf(false) }
+    var genderChoosed by rememberSaveable { mutableStateOf("") }
 
     if (showDocumentAnalysisValue)
         DocumentAnalisys(
-            showDocumentAnalysis = { showDocumentAnalysisValue = it  },
+            showDocumentAnalysis = { showDocumentAnalysisValue = it },
             onShowSnackbar = onShowSnackbar,
             showBottomBar = showBottomBar
         )
@@ -76,9 +77,10 @@ fun profilePersonalInformationRoute(
             onShowSnackbar,
             onBackClick,
             showDocumentAnalysisChange = { showDocumentAnalysisValue = it },
-            showDocumentAnalysisValue
+            showDocumentAnalysisValue,
+            genderChoosedChange = { genderChoosed = it },
+            genderChoosed = genderChoosed
         )
-
 }
 
 @Suppress("LongMethod")
@@ -103,7 +105,9 @@ fun screenView(
     onShowSnackbar: suspend (String, String?) -> Boolean,
     onBackClick: () -> Unit,
     showDocumentAnalysisChange: (Boolean) -> Unit,
-    showDocumentAnalysis: Boolean
+    showDocumentAnalysis: Boolean,
+    genderChoosedChange: (String) -> Unit,
+    genderChoosed: String
 ) {
     var updatingUser by rememberSaveable { mutableStateOf(false) }
     Box(
@@ -151,7 +155,8 @@ fun screenView(
                 .align(Alignment.TopCenter),
             onBackClick = onBackClick,
             showDocumentAnalysisChange,
-            showDocumentAnalysis
+            showDocumentAnalysis,
+            genderChoosedChange
         )
         var colorButton: Color
         var clickButton: () -> Unit
@@ -164,7 +169,8 @@ fun screenView(
                 docId,
                 birthDate,
                 onShowSnackbar = onShowSnackbar,
-                updateUser = { updatingUser = it }
+                updateUser = { updatingUser = it },
+                genderChoosed
             )
             colorButton = colorResource(background_grey_F7F7F9)
             clickButton = {}
@@ -176,9 +182,8 @@ fun screenView(
         }
         updatePersonalButton(
             clickButton, colorButton, Modifier.Companion
-                .align(Alignment.BottomCenter)
-                .padding(16.dp)
-                .fillMaxWidth()
+                .align(Alignment.TopEnd)
+                .padding(top = 30.dp,end =16.dp)
         )
 
     }

@@ -33,7 +33,6 @@ fun content(
 ) {
     Column(
         modifier = Modifier
-            .padding(top = 260.dp)
             .fillMaxSize()
             .clipToBounds(),
     ) {

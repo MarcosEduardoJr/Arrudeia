@@ -1,15 +1,14 @@
 package com.arrudeia.feature.profile.domain
 
 import android.net.Uri
+import com.arrudeia.core.result.Result
 import com.arrudeia.feature.profile.data.FirebaseUserRepositoryImpl
-import com.arrudeia.feature.profile.data.ProfileDataStoreUserRepositoryImpl
+import com.arrudeia.core.data.repository.ProfileDataStoreUserRepositoryImpl
 import com.arrudeia.feature.profile.data.ProfileRepositoryImpl
-import com.arrudeia.feature.profile.data.entity.ProfileDataStoreUserRepositoryEntity
+import com.arrudeia.core.data.repository.entity.ProfileDataStoreUserRepositoryEntity
 import com.arrudeia.feature.profile.data.entity.UserPersonalInformationRepositoryEntity
 import com.arrudeia.feature.profile.domain.entity.UserPersonalInformationUseCaseEntity
 import javax.inject.Inject
-
-import com.arrudeia.core.result.Result
 
 class UpdateUserPersonalInformationUseCase @Inject constructor(
     private val repository: ProfileRepositoryImpl,
@@ -44,7 +43,8 @@ class UpdateUserPersonalInformationUseCase @Inject constructor(
             phone = this.phone,
             idDocument = this.idDocument,
             birthDate = this.birthDate,
-            profileImage = this.profileImage
+            profileImage = this.profileImage,
+            gender = this.gender
         )
     }
 

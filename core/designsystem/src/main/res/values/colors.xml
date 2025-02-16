@@ -12,6 +12,11 @@
     <color name="background_grey_F7F7F9">#F7F7F9</color>
 
     <color name="text_grey">#949494</color>
-    <color name="background_green_008000">#008000</color>
-    <color name="background_red_FF0000">#FF0000</color>
+    <color name="colorRed">#ff3a54</color>
+    <color name="colorGreen">#01ae22</color>
+    <color name="colorPink">#f21d80</color>
+    <color name="colorBeige">#ffc67d</color>
+    <color name="colorPurpleLight">#ca2fa7</color>
+    <color name="colorPurple">#8c48c2</color>
+    <color name="colorBlue">#0058cb</color>
 </resources>

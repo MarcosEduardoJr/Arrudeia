@@ -13,6 +13,26 @@ type UserGraph {
     city: String
     state: String
     country: String
+    interests: String
+    biography: String
+    gender: String
+    lastCity: String
+    lastCountry: String
+}
+
+type TravelerGraph {
+    travelerReceiveId: String
+    travelerSendId: String
+    name: String
+    city: String
+    interests: String
+    aboutMe: String
+    gender: String
+    img: String
+    travelerReceiveMatch: Int!
+    travelerSendMatch: Int!
+    travelerSendEmail: String
+    travelerReceiveEmail: String
 }
 
 type ArrudeiaPlace {
@@ -89,6 +109,15 @@ type AidGraph {
     urlVideo: String
 }
 
+type PromotionsGraph {
+    name: String
+    images: String
+    affiliate : String
+    totalValue : String
+    urlClick: String
+    date : String
+}
+
 type AidSteps{
     id: Int
     aidId: String
@@ -133,6 +162,10 @@ type CepAddress {
     zipCode: String!
 }
 
+type Key {
+    name: String!
+    key: String!
+}
 
 type Query {
     _entities(representations: [_Any!]!): [_Entity]!
@@ -140,6 +173,11 @@ type Query {
     _service: _Service!
 
     user(uuid: String!): UserGraph
+
+
+    travelers(userUuid: String!,page : Int, pageSize: Int): [TravelerGraph]
+    travelersMatch(userUuid: String!): [TravelerGraph]
+
 
     arrudeiaPlaces(state: String!): [ArrudeiaPlace]
     arrudeiaPlace(uuid: String!): ArrudeiaPlace
@@ -153,11 +191,15 @@ type Query {
     aids: [AidGraph]
     aid(id: String!): AidGraph
 
+    promotions: [PromotionsGraph]
+
     services: [GetServiceType]
     service(id: Int!): GetServiceType
     servicesExpertise: [ServicesExpertiseType]
 
     cepAddress(cep: String!): CepAddress
+
+    keys: [Key]
 }
 
 input Service {
@@ -199,6 +241,34 @@ type Mutation {
         state: String,
         country: String,
         idUserDoc: String,
+        interests: String,
+        biography: String,
+        gender: String,
+        lastCity: String,
+        lastCountry: String
+    ) : String
+
+    createUser(
+        uuid: String,
+        name: String,
+        email: String,
+        phone: String,
+        idDocument: String,
+        birthDate: String,
+        profileImage: String,
+        zipCode: String,
+        street: String,
+        number: Int,
+        district: String,
+        city: String,
+        state: String,
+        country: String,
+        idUserDoc: String,
+        interests: String,
+        biography: String,
+        gender: String,
+        lastCity: String,
+        lastCountry: String
     ) : String
 
     updateUserAddress(
@@ -238,6 +308,21 @@ type Mutation {
     createServiceCategory(
         serviceType : Service
     ) : Int
+
+    updateTravelerConnection(
+        travelerReceive: String,
+        travelerSend: String,
+        travelerSendMatch: Int,
+        travelerReceiveMatch: Int,
+    ) : String
+
+
+    createTravelerConnection(
+    travelerReceive: String,
+    travelerReceiveMatch: String,
+    travelerSend: String,
+    travelerSendMatch: String
+    ) : String
 }
 
 union _Entity = UserGraph

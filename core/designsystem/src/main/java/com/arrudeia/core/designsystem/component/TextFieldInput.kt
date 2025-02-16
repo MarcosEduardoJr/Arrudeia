@@ -16,42 +16,35 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import com.arrudeia.core.designsystem.R.color.background_grey_F7F7F9
 import com.arrudeia.core.designsystem.component.util.MaskVisualTransformation
 
 @Composable
 fun TextFieldInput(
     hint: String,
     value: String,
-    icon: Painter,
+    icon: Painter? = null,
     onValueChange: (String) -> Unit,
     keyboardType: KeyboardType,
     imeAction: ImeAction,
     enabled: Boolean = true,
     modifier: Modifier = Modifier,
-    mask: String = ""
+    mask: String = "",
+    maxLines: Int = 1
 ) {
-
     TextField(
         modifier = modifier
             .fillMaxWidth()
             .wrapContentHeight(Alignment.CenterVertically)
             .clip(CircleShape),
         value = value,
+        maxLines = maxLines,
         onValueChange = onValueChange,
         label = { Text(text = hint, color = Color.Black) },
         singleLine = true,
-        leadingIcon = {
-            Icon(
-                painter = icon,
-                contentDescription = null,
-                tint = Color.Black
-            )
-        },
+        leadingIcon = null,
         colors = TextFieldDefaults.colors(
             focusedTextColor = Color.Black,
             focusedContainerColor = Color.White,

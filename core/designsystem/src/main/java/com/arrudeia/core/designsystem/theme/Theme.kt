@@ -11,13 +11,17 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.res.colorResource
+
+
+import com.arrudeia.core.designsystem.R.color.background_grey_F7F7F9
 
 /**
  * Light default theme color scheme
  */
 @VisibleForTesting
 val LightDefaultColorScheme = lightColorScheme(
-    primary = BackgroundColorGreyF7F7F9 ,
+    primary = BackgroundColorGreyF7F7F9,
     onPrimary = BackgroundColorGreyF7F7F9,
     primaryContainer = BackgroundColorGreyF7F7F9,
     onPrimaryContainer = BackgroundColorGreyF7F7F9,
@@ -55,7 +59,6 @@ val LightAndroidGradientColors = GradientColors(container = BackgroundColorGreyF
 val LightAndroidBackgroundTheme = BackgroundTheme(color = BackgroundColorGreyF7F7F9)
 
 
-
 @Composable
 public fun ArrudeiaTheme(
 
@@ -76,7 +79,8 @@ public fun ArrudeiaTheme(
     ) {
         val view = LocalView.current
         val window = (view.context as Activity).window
-        window.statusBarColor = Color.White.toArgb() // change color status bar here
+        window.statusBarColor = colorResource(id = background_grey_F7F7F9).toArgb()
+             //Color.White.toArgb() // change color status bar here
 
         MaterialTheme(
             colorScheme = colorScheme,

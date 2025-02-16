@@ -11,19 +11,15 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.multidex.MultiDex
+import com.arrudeia.core.designsystem.R.color.background_grey_F7F7F9
+import com.arrudeia.core.designsystem.theme.ArrudeiaTheme
+import com.arrudeia.ui.arrudeiaApp
+import com.example.chatwithme.domain.model.UserStatus
 import com.google.firebase.FirebaseApp
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
 import dagger.hilt.android.AndroidEntryPoint
-import com.arrudeia.core.designsystem.R.color.background_grey_F7F7F9
-import com.arrudeia.core.designsystem.theme.ArrudeiaTheme
-import com.arrudeia.MainActivityViewModel
-import com.arrudeia.ui.arrudeiaApp
-import com.example.chatwithme.domain.model.UserStatus
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @AndroidEntryPoint

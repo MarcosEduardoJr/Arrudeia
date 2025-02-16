@@ -7,8 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.arrudeia.core.common.R
 import com.arrudeia.core.domain.GetAddressByZipCodeUseCase
 import com.arrudeia.core.result.Result
-import com.arrudeia.core.ui.model.CepAddressUiModel
 import com.arrudeia.core.ui.map.toCepAddressUiModel
+import com.arrudeia.core.ui.model.CepAddressUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -55,6 +55,8 @@ class CommonAddressFormViewModel @Inject constructor(
                 is Result.Loading -> {
                     uiStateZipCode.value = AddressUiState.Loading
                 }
+
+                is Result.ErrorMessage -> TODO()
             }
         }
     }

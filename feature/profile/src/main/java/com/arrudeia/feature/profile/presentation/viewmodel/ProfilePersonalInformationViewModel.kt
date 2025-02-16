@@ -3,13 +3,13 @@ package com.arrudeia.feature.profile.presentation.viewmodel
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.arrudeia.core.result.Result
+import com.arrudeia.feature.profile.R
 import com.arrudeia.feature.profile.domain.GetUserPersonalInformationUseCase
 import com.arrudeia.feature.profile.domain.UpdateUserPersonalInformationUseCase
 import com.arrudeia.feature.profile.domain.entity.UserPersonalInformationUseCaseEntity
-import com.arrudeia.feature.profile.R
 import com.arrudeia.feature.profile.presentation.model.ProfilePersonalInformationUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,8 +17,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
-import com.arrudeia.core.result.Result
 
 @HiltViewModel
 class ProfilePersonalInformationViewModel @Inject constructor(
@@ -36,7 +34,6 @@ class ProfilePersonalInformationViewModel @Inject constructor(
         initialValue = PersonalInformationUiState.Loading
     )
 
-
     var uiStateUpdateUser: MutableStateFlow<PersonalInformationUpdateUserUiState> =
         MutableStateFlow(PersonalInformationUpdateUserUiState.Loading)
     val sharedFlowUpdateUser = uiStateUpdateUser.stateIn(
@@ -45,13 +42,13 @@ class ProfilePersonalInformationViewModel @Inject constructor(
         initialValue = PersonalInformationUpdateUserUiState.Loading
     )
 
-
     fun savePersonalInformation(
         nameValue: String,
         docIdValue: String,
         emailValue: String,
         phoneValue: String,
-        birthDateValue: String
+        birthDateValue: String,
+        gender: String
     ) {
         viewModelScope.launch {
 
@@ -62,7 +59,8 @@ class ProfilePersonalInformationViewModel @Inject constructor(
                     idDocument = docIdValue,
                     email = emailValue,
                     phone = phoneValue,
-                    birthDate = birthDateValue
+                    birthDate = birthDateValue,
+                    gender = gender
                 ), uri.value
             )) {
                 is Result.Success -> {
@@ -115,7 +113,8 @@ class ProfilePersonalInformationViewModel @Inject constructor(
                 phone = it.phone,
                 idDocument = it.idDocument,
                 birthDate = it.birthDate,
-                profileImage = it.profileImage
+                profileImage = it.profileImage,
+                gender = it.gender
             )
         }
         return result
@@ -139,7 +138,4 @@ class ProfilePersonalInformationViewModel @Inject constructor(
         data class Error(val message: Int) : PersonalInformationUpdateUserUiState
         data object Loading : PersonalInformationUpdateUserUiState
     }
-
-
-
 }

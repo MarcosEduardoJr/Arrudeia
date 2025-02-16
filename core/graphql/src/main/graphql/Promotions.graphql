@@ -1,0 +1,11 @@
+query GetPromotions {
+    promotions {
+        affiliate
+        date
+        images
+        name
+        totalValue
+        urlClick
+    }
+}
+

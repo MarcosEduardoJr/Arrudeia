@@ -31,9 +31,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.arrudeia.core.common.R.string.about_me
 import com.arrudeia.core.common.R.string.address
 import com.arrudeia.core.common.R.string.logout
 import com.arrudeia.core.data.navigation.profileAddressRoute
+import com.arrudeia.core.data.navigation.profileInterestRoute
 import com.arrudeia.core.data.navigation.profilePersonalInformationRoute
 import com.arrudeia.core.designsystem.R
 import com.arrudeia.core.designsystem.component.CircularIconButton
@@ -71,7 +73,7 @@ fun profileContent(
                         .verticalScroll(rememberScrollState())
                 )
 
-                Spacer(modifier = Modifier.size(20.dp))
+                Spacer(modifier = Modifier.size(2.dp))
 
                 profileOptions(onRouteClick, viewModel)
             }
@@ -112,6 +114,15 @@ private fun profileOptions(
         name = stringResource(id = address),
         modifier = Modifier.clickable {
             onRouteClick(profileAddressRoute)
+        })
+
+    Spacer(modifier = Modifier.size(10.dp))
+
+    RectangleCircleBorderItemButton(
+        iconStart = R.drawable.ic_hiking,
+        name = stringResource(id = about_me),
+        modifier = Modifier.clickable {
+            onRouteClick(profileInterestRoute)
         })
 
     Spacer(modifier = Modifier.size(10.dp))

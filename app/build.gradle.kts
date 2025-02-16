@@ -1,4 +1,4 @@
-import com.android.build.gradle.internal.dsl.SigningConfig
+
 import java.io.FileInputStream
 import java.util.Properties
 
@@ -22,10 +22,10 @@ android {
     defaultConfig {
         multiDexEnabled = true
         applicationId = "com.arrudeia"
-        versionCode = 25
+        versionCode = 26
         minSdk = 21
         targetSdk = 34
-        versionName = "1.7.2" // X.Y.Z; X = Major, Y = minor, Z = Patch level
+        versionName = "1.7.4" // X.Y.Z; X = Major, Y = minor, Z = Patch level
 
         // Custom test runner to set up Hilt dependency graph
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -173,14 +173,17 @@ dependencies {
     implementation(project(":feature:sign"))
     implementation(project(":feature:home"))
     implementation(project(":feature:trip"))
-    implementation(project(":feature:stories"))
+   // implementation(project(":feature:stories"))
     implementation(project(":feature:profile"))
-    implementation(project(":feature:arrudeia"))
+  //  implementation(project(":feature:arrudeia"))
     implementation(project(":feature:checklist"))
     implementation(project(":feature:receipt"))
     implementation(project(":feature:aid"))
     implementation(project(":feature:services"))
     implementation(project(":feature:trail"))
+    implementation(project(":feature:tips"))
+    implementation(project(":feature:social"))
+    implementation(project(":feature:tours"))
 }
 
 apply(plugin = "com.google.gms.google-services")

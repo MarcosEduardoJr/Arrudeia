@@ -2,22 +2,24 @@ package com.arrudeia.navigation
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import com.arrudeia.activeRunScreen
 import com.arrudeia.feature.aid.presentation.navigation.aidDetailScreen
 import com.arrudeia.feature.aid.presentation.navigation.aidScreen
-import com.arrudeia.feature.arrudeia.presentation.navigation.arrudeiaScreen
 import com.arrudeia.feature.checklist.presentation.navigation.checkListScreen
 import com.arrudeia.feature.home.presentation.navigation.homeScreen
-import com.arrudeia.feature.home.presentation.navigation.placeDetailScreen
+import com.arrudeia.feature.home.presentation.navigation.hotelDetailScreen
 import com.arrudeia.feature.onboarding.presentation.navigation.onboardingScreen
 import com.arrudeia.feature.profile.presentation.navigation.profileScreen
 import com.arrudeia.feature.receipt.presentation.navigation.receiptDetailScreen
 import com.arrudeia.feature.receipt.presentation.navigation.receiptScreen
 import com.arrudeia.feature.services.presentation.navigation.newServiceScreen
 import com.arrudeia.feature.services.presentation.navigation.servicesScreen
+import com.arrudeia.feature.sign.presentation.navigation.registerOnboarding
 import com.arrudeia.feature.sign.presentation.navigation.signScreen
-import com.arrudeia.feature.stories.presentation.navigation.navigateToStories
-import com.arrudeia.feature.trip.presentation.navigation.navigateToTripDetail
-import com.arrudeia.activeRunScreen
+import com.arrudeia.feature.social.presentation.navigation.messageScreen
+import com.arrudeia.feature.social.presentation.navigation.socialScreen
+import com.arrudeia.feature.tips.presentation.navigation.tipsScreen
+import com.arrudeia.feature.tours.presentation.navigation.toursStoreScreen
 import com.arrudeia.runOverviewScreen
 
 fun NavGraphBuilder.screens(
@@ -36,41 +38,39 @@ fun NavGraphBuilder.screens(
     )
     homeScreen(
         onRouteClick = navController::navigateToRoute,
-        onStoriesClick = navController::navigateToStories,
-        onTripDetailClick = navController::navigateToTripDetail,
         onShowSnackbar = onShowSnackbar,
         showBottomBar = showBottomBar,
-        onNewPlaceClick = navController::navigateToRoute,
-        onPlaceDetailsClick = { navController.navigate(it) }
+        onHotelDetailsClick = { navController.navigate(it) },
+        onEventDetailsClick = { navController.navigate(it) }
     )
     profileScreen(
         onBackClick = { navController.popBackStack() },
         onRouteClick = navController::navigateToRoute,
         onShowSnackbar = onShowSnackbar,
     )
-    arrudeiaScreen(
-        onBackClick = { navController.popBackStack() },
-        onShowSnackbar = onShowSnackbar,
-        showBottomBar = showBottomBar
-    )
+
     checkListScreen(
         onBackClick = { navController.popBackStack() }
     )
     receiptScreen(
         onReceiptDetailClick = { navController.navigate(it) },
-        onShowSnackbar = onShowSnackbar
+        onShowSnackbar = onShowSnackbar,
+        onBackClick = { navController.popBackStack() },
     )
     receiptDetailScreen(
         onShowSnackbar = onShowSnackbar,
-        onBackClick = { navController.popBackStack() }
+        onBackClick = { navController.popBackStack() },
+        showBottomBar = showBottomBar
     )
     aidScreen(
         onReceiptDetailClick = { navController.navigate(it) },
-        onShowSnackbar = onShowSnackbar
+        onShowSnackbar = onShowSnackbar,
+        onBackClick = { navController.popBackStack() },
     )
     aidDetailScreen(
         onShowSnackbar = onShowSnackbar,
-        onBackClick = { navController.popBackStack() }
+        onBackClick = { navController.popBackStack() },
+        showBottomBar = showBottomBar
     )
     servicesScreen(
         serviceDetailNavigationClick = { navController.navigate(it) },
@@ -92,10 +92,43 @@ fun NavGraphBuilder.screens(
         onBackClick = { navController.popBackStack() },
         showBottomBar = showBottomBar
     )
-    placeDetailScreen(
+    hotelDetailScreen(
         onBackClick = { navController.popBackStack() },
+        onShowSnackbar = onShowSnackbar,
+    )
+    tipsScreen(
+        navController::navigateToRoute,
+        onReceiptDetailClick = { navController.navigate(it) },
+        onShowSnackbar = onShowSnackbar,
+        onBackClick = { navController.popBackStack() },
+        onAidDetailClick = { navController.navigate(it) },
+        showBottomBar = showBottomBar
+    )
+    socialScreen(
+        navController::navigateToRoute, onMessageClick = { navController.navigate(it) },
+        showBottomBar = showBottomBar
+    )
+
+    messageScreen(
+        onBackClick = { navController.popBackStack() },
+        onShowSnackbar = onShowSnackbar,
+        showBottomBar = showBottomBar
+    )
+
+    registerOnboarding(
+        onRouteClick = navController::navigateToRoute,
+        onShowSnackbar = onShowSnackbar,
+        showBottomBar = showBottomBar
+    )
+
+    toursStoreScreen(
+        onBackClick = { navController.popBackStack() },
+        showBottomBar = showBottomBar,
+        onShowSnackbar = onShowSnackbar,
     )
 }
+
+
 
 
 
